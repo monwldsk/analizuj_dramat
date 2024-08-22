@@ -2243,7 +2243,7 @@ const DZIADY =  "KSIĄDZ\n" +
 
     function generatePieCharts() {
       const actors = [...new Set(analyzedData.map(obj => obj.actor))];
-      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+' (dostępni: ${actors.join(', ')}):`, "KSIĄDZ, PUSTELNIK + GUSTAW");
+      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+' (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`);
       if (!selectedActors) return;
 	    selectedActors = selectedActors.toUpperCase();
 
@@ -2435,7 +2435,7 @@ const DZIADY =  "KSIĄDZ\n" +
     // }
     function generateBarCharts() {
       const actors = [...new Set(analyzedData.map(obj => obj.actor))];
-      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}):`, "KSIĄDZ, GUSTAW");
+      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, GUSTAW, PUSTELNIK`);
       if (!selectedActors) return;
 	    selectedActors = selectedActors.toUpperCase();
 
