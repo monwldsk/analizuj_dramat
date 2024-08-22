@@ -2182,7 +2182,6 @@ const DZIADY =  "KSIĄDZ\n" +
         alert("Nie wprowadzono wartości.")
         return;
       }
-	    inputText = inputText.toUpperCase();
       document.getElementById('charts').innerHTML = ''; 
       const lines = inputText.split('\n');
       analyzedData = [];
@@ -2244,8 +2243,9 @@ const DZIADY =  "KSIĄDZ\n" +
 
     function generatePieCharts() {
       const actors = [...new Set(analyzedData.map(obj => obj.actor))];
-      const selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', np. KSIADZ,GUSTAW+PUSTELNIK, (dostępni: ${actors.join(', ')}):`);
+      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', np. KSIADZ,GUSTAW+PUSTELNIK, (dostępni: ${actors.join(', ')}):`);
       if (!selectedActors) return;
+	    selectedActors = selectedActors.toUpperCase();
 
       const selectedActorsGroups = selectedActors.split(',').map(group => group.trim().split('+').map(actor => actor.trim()));
 
@@ -2437,6 +2437,7 @@ const DZIADY =  "KSIĄDZ\n" +
       const actors = [...new Set(analyzedData.map(obj => obj.actor))];
       const selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}):`);
       if (!selectedActors) return;
+	    selectedActors = selectedActors.toUpperCase();
 
       const selectedActorsArray = selectedActors.split(',').map(actor => actor.trim());
       const actorsData = {};
