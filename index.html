@@ -2435,7 +2435,7 @@ const DZIADY =  "KSIĄDZ\n" +
     // }
     function generateBarCharts() {
       const actors = [...new Set(analyzedData.map(obj => obj.actor))];
-      const selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}):`);
+      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}):`);
       if (!selectedActors) return;
 	    selectedActors = selectedActors.toUpperCase();
 
