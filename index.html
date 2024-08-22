@@ -2182,6 +2182,7 @@ const DZIADY =  "KSIĄDZ\n" +
         alert("Nie wprowadzono wartości.")
         return;
       }
+	    inputText = inputText.toUpperCase();
       document.getElementById('charts').innerHTML = ''; 
       const lines = inputText.split('\n');
       analyzedData = [];
