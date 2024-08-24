@@ -2243,7 +2243,7 @@ const DZIADY =  "KSIĄDZ\n" +
 
     function generatePieCharts() {
       const actors = [...new Set(analyzedData.map(obj => obj.actor))];
-      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+' (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`);
+      let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', jeśli chcesz, by skrypt potraktował ich w analizie łącznie (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`);
       if (!selectedActors) return;
 	    selectedActors = selectedActors.toUpperCase();
 
