@@ -182,6 +182,13 @@ flex-direction: column;
       align-items:center;
       color: gray;
     }
+.tips-img-container {
+	display: flex;
+	@media screen and (max-width: 600px) {
+	 flex-direction: column;
+    	}
+			       
+			}
   </style>
 </head>
 
@@ -193,7 +200,7 @@ flex-direction: column;
      <hr class="stylish">
     </div>
     <div class="info-note">
-      <p><strong style="text-align: left;">Narzędzie umożliwia przeanalizowanie tekstu dowolnego dramatu <u>w języku polskim</u> pod kątem jego zróżnicowania
+      <div><strong style="text-align: left;">Narzędzie umożliwia przeanalizowanie tekstu dowolnego dramatu <u>w języku polskim</u> pod kątem jego zróżnicowania
           wersyfikacyjnego.</strong></br></br>
         W pierwszej kolejności skrypt próbuje zidentyfikować samogłoski, które nie pełnią funkcji sylabotwórczej, by następnie przeliczyć
         liczbę sylab dla każdego wersu. Nie robi tego w 100% bezbłędnie — nie wykryje np., że kombinacja [ia] występująca na granicy morfemów (jak w wyrazie <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo będzie 7-sylabowe), ponieważ [i] — dość wyjątkowo jak na język polski (bo pomimo sąsiedztwa innej samogłoski z prawej strony) — będzie ośrodkiem osobnej sylaby. Błędy wynikające z takich (m.in.) wyjątków nie wpłyną znacząco na statystyki dla długich tekstów.
@@ -207,14 +214,20 @@ flex-direction: column;
         sobą następujący układ osób: KSIĄDZ <i>versus</i> (GUSTAW + PUSTELNIK) <i>versus</i> (DZIECI + DZIECIĘ + DZIECKO
         + CHÓR
         DZIECI).</br></br>
+	    <div class="tips-img-container">
+		    <div class="tips-img">
+			    <img src="pantad.jpg" alt="image">
+		    </div>
+		    <div>
         Tekst dramatu należy wstępnie przygotować (przed wklejeniem do pola tekstowego), żeby algorytm mógł poprawnie przypisać wszystkie partie tekstu do
         mówiących postaci i wykryć tekst poboczny (skrypt bazuje na konwencjach zastosowanych w <a href="https://literat.ug.edu.pl/books.htm" target="_blank">Wirtualnej Bibliotece Literatury Polskiej</a>). W tym celu:</br>
       <ol>
         <li>
           postaci dramatu powinny zostać zapisane wielkimi literami, np. PUSTELNIK</li>
         <li>teksty didaskaliów powinny zostać umieszczone w nawiasach okrągłych, np. (na stronie).</li>
-      </ol>
-      </p>
+      </ol></div>
+	    </div>
+      </div>
       <div class="info-algo">
         <p><i>Jak krok po kroku działa ten algorytm: </i></p>
         <p><span class="infotip">
