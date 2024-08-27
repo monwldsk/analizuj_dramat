@@ -104,8 +104,13 @@
          }
          .chart-container {
          margin-top: 20px;
-            width: 100%;
-            overflow: auto;
+            width:100%;
+         
+         }
+         .chart-container > div {
+             @media screen and (max-width: 600px) {
+         max-width:100%;
+         }
          }
          .title-container {
          font-size: 24px;
