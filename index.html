@@ -175,7 +175,20 @@
          .tips-img-container img {
          width:160px;
          margin-right:0;
+              @media screen and (max-width: 600px) {
+               display: none;
          }
+         }
+         .mobile-img {
+            display: none;
+            @media screen and (max-width: 600px) {
+               display: block;
+               margin: auto;
+         }
+         }
+        .mobile-img img {
+                 width:160px;
+            }
       </style>
    </head>
    <body>
@@ -183,6 +196,9 @@
          <div class="title-container">
             Analiza wersyfikacyjna dramatu
             <hr class="stylish">
+             <div class="mobile-img">
+                     <img src="pantad.jpg" alt="image">
+                  </div>
          </div>
          <div class="info-note">
             <div>
