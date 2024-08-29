@@ -2201,8 +2201,8 @@
          
                  let actor = currentActor;
          
-                 if (line.includes('(') || line.includes(')')) {
-                   actor = 'DIDASKALIA'; // Wykrywa didaskalia na podstawie zapisu w nawiasie
+                 if (line.includes('(')  ||line.includes('/') || line.includes(')')) {
+                   actor = 'DIDASKALIA'; // Wykrywa didaskalia na podstawie zapisu w nawiasie lub slasha
                  }
          
                  let lineWithE = line.replace(/ie|ia|iu|ię|ią|io|ii|iy|ió/g, 'e');
