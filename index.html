@@ -2293,6 +2293,13 @@
                let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', jeśli chcesz, by skrypt potraktował ich w analizie łącznie (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`);
                if (!selectedActors) return;
          	    selectedActors = selectedActors.toUpperCase();
+                const words = selectedActors.split(/[,+]/).map(word => word.trim());
+                const isValid = words.every(word => actors.includes(word));
+    
+                if (!isValid) {
+                    alert("Wprowadzono niepoprawne wartości");
+                   return;
+                } 
          
                const selectedActorsGroups = selectedActors.split(',').map(group => group.trim().split('+').map(actor => actor.trim()));
          
