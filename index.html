@@ -2492,6 +2492,15 @@
                let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, GUSTAW, PUSTELNIK`);
                if (!selectedActors) return;
          	    selectedActors = selectedActors.toUpperCase();
+
+               const words = selectedActors.split(",").map(word => word.trim());
+                const isValid = words.every(word => actors.includes(word));
+    
+                if (!isValid) {
+                    alert("Wprowadzono niepoprawne wartości");
+                   return;
+                } 
+         
          
                const selectedActorsArray = selectedActors.split(',').map(actor => actor.trim());
                const actorsData = {};
