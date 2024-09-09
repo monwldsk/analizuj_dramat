@@ -190,11 +190,16 @@
           .mobile-img {
              display: none;
           }
+         .close-infotip {
+            display: none;
+         }
           @media screen and (max-width: 600px) {
              .infotip .infotip-content {
                 width:190px;
-       
              }
+             .close-infotip {
+            display: block;
+         }
              .tips-img-container {
          flex-direction: column;
              }
@@ -267,10 +272,10 @@
                </div>
             </div>
             <div class="info-algo">
-               <p><i>Jak krok po kroku działa ten algorytm: </i></p>
+               <p><i>Jak działa ten algorytm: </i></p>
                <p><span class="infotip">
                   <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info">
-                  <span class="infotip-content">   Skrypt przelicza liczbę sylab dla każdego wersu na podstawie identyfikacji samogłosek, które w danej pozycji pełnią funkcję sylabotwórczą. Nie robi tego w 100% bezbłędnie — nie wykryje np., że kombinacja [ia] występująca na granicy morfemów (jak w wyrazie <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo będzie 7-sylabowe), ponieważ [i] — dość wyjątkowo jak na język polski (bo pomimo sąsiedztwa innej samogłoski z prawej strony) — będzie ośrodkiem osobnej sylaby. Nie wykryje także dyftongów takich jak [au] (por. <i>t<u>au</u>-to-lo-gia</i>, ale <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por. <i>si-nu-s<u>oi</u>-da</i>, ale <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z takich (m.in.) wyjątków nie wpłyną znacząco na statystyki dla długich tekstów. Narzędzie nie wskazuje przypadków stychomytii; umożliwia natomiast wykluczenie ich z analizy ręcznie poprzez wprowadzenie znaku ++ przed konkretnymi linijkami tekstu.</span>
+                  <span class="infotip-content" id="infotip-content">   Skrypt przelicza liczbę sylab dla każdego wersu na podstawie identyfikacji samogłosek, które w danej pozycji pełnią funkcję sylabotwórczą. Nie robi tego w 100% bezbłędnie — nie wykryje np., że kombinacja [ia] występująca na granicy morfemów (jak w wyrazie <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo będzie 7-sylabowe), ponieważ [i] — dość wyjątkowo jak na język polski (bo pomimo sąsiedztwa innej samogłoski z prawej strony) — będzie ośrodkiem osobnej sylaby. Nie wykryje także dyftongów takich jak [au] (por. <i>t<u>au</u>-to-lo-gia</i>, ale <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por. <i>si-nu-s<u>oi</u>-da</i>, ale <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z takich (m.in.) wyjątków nie wpłyną znacząco na statystyki dla długich tekstów. Narzędzie nie wskazuje przypadków stychomytii; umożliwia natomiast wykluczenie ich z analizy ręcznie poprzez wprowadzenie znaku ++ przed konkretnymi linijkami tekstu.<span class="close-infotip" onclick="hideInfotip()"><br>Zamknij okno [ x ] </span></span>
                   </span>
                </p>
             </div>
@@ -302,6 +307,11 @@
          <div id="charts" class="chart-container"></div>
       </div>
       <script>
+         const hideInfotip = ()=> {
+            const infoContent =document.getElementById("");
+            infoContent.style.display="none";
+            infoContent.style.opacity="0";
+         }
          const DZIADY =  "KSIĄDZ\n" +
          	"Dzieci, wstawajmy od stoła!\n" +
          	"Teraz, po powszednim chlebie,\n" +
