@@ -8,7 +8,6 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <link rel="icon" href="theater-2.png">
       <style>
-  
          body {
          font-family: Arial, sans-serif;
          margin: 0;
@@ -20,65 +19,61 @@
          .title-container {
          color: #002e52;
          text-align: center;
-               font-size: 24px;
+         font-size: 24px;
          display: flex;
          flex-direction: column;
          align-items: center;
          }
-       /* Domyślnie ukrywamy wersję mobilną (zakładając, że zaczynamy od desktopu) */
-.title-container-mobile {
-    display: none;
-}
-
-/* Styl dla komputerów (powyżej 600px) */
-@media screen and (min-width: 601px) {
-    .title-container-desktop {
-        display: block;
-        text-align: center;
-    }
-    /* Selektor dla obrazka wewnątrz kontenera */
-    .title-container-desktop img {
-        width: 600px;
-        height: auto; /* Zawsze warto dodać, by zachować proporcje */
-    }
-    .title-container-mobile {
-        display: none;
-    }
-}
-
-/* Styl dla telefonów (600px i mniej) */
-@media screen and (max-width: 600px) {
-    .info-note{
-        padding: 0px 20px;
-    }
-    .title-container-mobile {
-        display: block;
-        text-align: center;
-    }
-    .title-container-mobile img {
-        width: 360px;
-        height: auto;
-    }
-    .title-container-desktop {
-        display: none;
-    }
-}
-
-         .header-container {
-            font-weight:400;
-            color:#002e52;
+         /* Domyślnie ukrywamy wersję mobilną (zakładając, że zaczynamy od desktopu) */
+         .title-container-mobile {
+         display: none;
          }
-          @media screen and (max-width: 600px) {
-             body {
-                padding: 8px !important;
-             }
-         
-             .container {
-                padding:32px 12px !important;
-             }
-          }
+         /* Styl dla komputerów (powyżej 600px) */
+         @media screen and (min-width: 601px) {
+         .title-container-desktop {
+         display: block;
+         text-align: center;
+         }
+         /* Selektor dla obrazka wewnątrz kontenera */
+         .title-container-desktop img {
+         width: 600px;
+         height: auto; /* Zawsze warto dodać, by zachować proporcje */
+         }
+         .title-container-mobile {
+         display: none;
+         }
+         }
+         /* Styl dla telefonów (600px i mniej) */
+         @media screen and (max-width: 600px) {
+         .info-note{
+         padding: 0px 20px;
+         }
+         .title-container-mobile {
+         display: block;
+         text-align: center;
+         }
+         .title-container-mobile img {
+         width: 360px;
+         height: auto;
+         }
+         .title-container-desktop {
+         display: none;
+         }
+         }
+         .header-container {
+         font-weight:400;
+         color:#002e52;
+         }
+         @media screen and (max-width: 600px) {
+         body {
+         padding: 8px !important;
+         }
          .container {
-            margin: auto;
+         padding:32px 12px !important;
+         }
+         }
+         .container {
+         margin: auto;
          max-width: 900px;
          background-color: white;
          box-shadow: 0 2px 14px rgba(0, 0, 0, 0.2);
@@ -135,8 +130,8 @@
          justify-content: flex-start;
          display: none;
          }
-          @media screen and (max-width: 600px) {
-             .buttons {
+         @media screen and (max-width: 600px) {
+         .buttons {
          flex-direction: column;}
          }
          button {
@@ -153,15 +148,13 @@
          }
          .chart-container {
          margin-top: 20px;
-            width:100%;
-         
+         width:100%;
          }
-              @media screen and (max-width: 600px) {
-                 .chart-container > div {
-                  max-width:100%;
-                 }
+         @media screen and (max-width: 600px) {
+         .chart-container > div {
+         max-width:100%;
          }
-         
+         }
          .table-container {
          max-height: 260px;
          overflow: auto;
@@ -171,8 +164,8 @@
          display: flex;
          gap:15px;
          }
-           @media screen and (max-width: 600px) {
-              .buttons-first-container{
+         @media screen and (max-width: 600px) {
+         .buttons-first-container{
          flex-direction: column;}
          }
          .clear-button {
@@ -197,7 +190,7 @@
          padding: 20px;
          border-radius: 4px;
          font-size: 10px;
-/*          white-space: nowrap; */
+         /*          white-space: nowrap; */
          z-index: 1;
          opacity: 0;
          transition: opacity 0.3s;
@@ -216,82 +209,72 @@
          display: flex;
          align-items: center;  
          }
-          .mobile-img {
-             display: none;
-          }
+         .mobile-img {
+         display: none;
+         }
          .close-infotip {
-            display: none;
+         display: none;
          }
-          @media screen and (max-width: 600px) {
-             .infotip .infotip-content {
-                width:190px;
-             }
-             .close-infotip {
-            display: block;
+         @media screen and (max-width: 600px) {
+         .infotip .infotip-content {
+         width:190px;
          }
-             .tips-img-container {
+         .close-infotip {
+         display: block;
+         }
+         .tips-img-container {
          flex-direction: column;
-             }
-              .tips-img-container img {
-                   display: none;
-              }
-             .mobile-img {
-                display: flex;
-               justify-content: center;
-               margin: auto;
-             }
-           
+         }
+         .tips-img-container img {
+         display: none;
+         }
+         .mobile-img {
+         display: flex;
+         justify-content: center;
+         margin: auto;
+         }
          }
          .tips-img-container img {
          width:200px;
          margin-right:0;
-            
          }
-         
-        .mobile-img img {
-           width:220px;
-           padding-bottom:12px;
-            }
-  @media screen and (min-width: 601px) {
-        .header-container {
-             margin-bottom: 16px;
+         .mobile-img img {
+         width:220px;
+         padding-bottom:12px;
          }
-       
-          }
-
+         @media screen and (min-width: 601px) {
+         .header-container {
+         margin-bottom: 16px;
+         }
+         }
          #fileDropZone {
-            margin: 10px 0;
-            padding: 16px;
-            border: 2px dashed #0073ce;
-            border-radius: 8px;
-            text-align: center;
-            background: #f7fbff;
-            color: #002e52;
+         margin: 10px 0;
+         padding: 16px;
+         border: 2px dashed #0073ce;
+         border-radius: 8px;
+         text-align: center;
+         background: #f7fbff;
+         color: #002e52;
          }
-
          #fileDropZone.drag-over {
-            background: #e6f3ff;
+         background: #e6f3ff;
          }
-
          #additionalMetrics {
-            display:none;
-            margin-top:25px;
-            padding:20px;
-            border:1px solid #ddd;
-            border-radius:8px;
-            background:#fafafa;
+         display:none;
+         margin-top:25px;
+         padding:20px;
+         border:1px solid #ddd;
+         border-radius:8px;
+         background:#fafafa;
          }
-
          #additionalMetrics h3 {
-            margin-top:0;
-            color:#002e52;
+         margin-top:0;
+         color:#002e52;
          }
-
          #additionalMetrics p {
-            margin: 12px 0;
-            line-height: 1.45;
+         margin: 12px 0;
+         line-height: 1.45;
          }
-         
       </style>
    </head>
    <body>
@@ -299,30 +282,30 @@
          <div class="title-container-desktop">
             <img src="title_banner-desktop.png" alt="banner">
          </div>
-          <div class="title-container-mobile">
+         <div class="title-container-mobile">
             <img src="title_banner-mobile.png" alt="banner_mobile">
          </div>
          <div class="info-note">
             <div>
-               <div class="header-container">Narzędzie umożliwia przeanalizowanie tekstu dowolnego dramatu <u>w języku polskim</u> pod kątem jego <strong>zróżnicowania
-               wersyfikacyjnego</strong> oraz innych wskaźników analizy cyfrowej, takich jak np.: 
-               <ul>
-                        <li><strong>średnia długość odcinka izosylabicznego</strong>,
-                        </li>
-                         <li><strong> gęstość interakcji</strong> (średnia długość wypowiedzi jednej postaci),
-                        </li>
-                         <li><strong> wektory ekspresji interpunkcyjnej</strong> (gęstość wykrzyknień i pytań)
-                        </li>
-                          <li><strong> wskaźnik łamania wiersza</strong>- rozumiany jako procentowy udział linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, w stosunku do wszystkich linijek (z wyłączeniem didaskaliów),
-                        </li>
-                          <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierawczych związanych z 1. os. l.poj.).
-                        </li>    
-               </ul>
-
-                        </div>
-                 <div class="mobile-img">
-                     <img src="mickiewicz_komputer.png" alt="image">
-                  </div>
+               <div class="header-container">
+                  Narzędzie umożliwia przeanalizowanie tekstu dowolnego dramatu <u>w języku polskim</u> pod kątem jego <strong>zróżnicowania
+                  wersyfikacyjnego</strong> oraz innych wskaźników analizy cyfrowej, takich jak np.: 
+                  <ul>
+                     <li><strong>średnia długość odcinka izosylabicznego</strong>,
+                     </li>
+                     <li><strong> gęstość interakcji</strong> (średnia długość wypowiedzi jednej postaci),
+                     </li>
+                     <li><strong> wektory ekspresji interpunkcyjnej</strong> (gęstość wykrzyknień i pytań)
+                     </li>
+                     <li><strong> wskaźnik łamania wiersza</strong>, czyli procentowy udział linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, w stosunku do wszystkich linijek (z wyłączeniem didaskaliów),
+                     </li>
+                     <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierawczych związanych z 1. os. l.poj.).
+                     </li>
+                  </ul>
+               </div>
+               <div class="mobile-img">
+                  <img src="mickiewicz_komputer.png" alt="image">
+               </div>
                W wyniku zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę
                można wyeksportować do pliku Excel (np. w celu bardziej dogłębnej analizy).
                Ponadto, można wygenerować wykresy kołowe i słupkowe, żeby porównać pod kątem wersyfikacyjnym mówienie
@@ -345,7 +328,7 @@
                         </li>
                         <li>didaskalia powinny zostać umieszczone w nawiasach okrągłych albo wydzielone za pomocą znaku slash (ukośnik), np. (na stronie) albo / na stronie /.</li>
                      </ol>
-                   <strong>Uwaga</strong>: Skrypt bazuje na konwencjach zastosowanych w <a href="https://literat.ug.edu.pl/books.htm" target="_blank">Wirtualnej Bibliotece Literatury Polskiej</a> oraz <a href="https://wolnelektury.pl" target="_blank">Wolnych Lekturach</a> (jeśli wybierzemy opcję: <i>Pobierz książkę</i> > <i>Inne formaty</i> > <i>Plik tekstowy(.txt)</i>). Wklejenie tekstu skopiowanego z tych źródeł nie wymaga zatem ingerencji w treść w celu dostosowania jej do algorytmu (należy jednak pamiętać, aby z początku i końca zawartości pliku usunąć tytuł, przedmowę, spis osób dramatu, wszelkie noty edytorskie, dane o licencji, informacje o wydawcy, numer ISBN itd.). 
+                     <strong>Uwaga</strong>: Skrypt bazuje na konwencjach zastosowanych w <a href="https://literat.ug.edu.pl/books.htm" target="_blank">Wirtualnej Bibliotece Literatury Polskiej</a> oraz <a href="https://wolnelektury.pl" target="_blank">Wolnych Lekturach</a> (jeśli wybierzemy opcję: <i>Pobierz książkę</i> > <i>Inne formaty</i> > <i>Plik tekstowy(.txt)</i>). Wklejenie tekstu skopiowanego z tych źródeł nie wymaga zatem ingerencji w treść w celu dostosowania jej do algorytmu (należy jednak pamiętać, aby z początku i końca zawartości pliku usunąć tytuł, przedmowę, spis osób dramatu, wszelkie noty edytorskie, dane o licencji, informacje o wydawcy, numer ISBN itd.). 
                   </div>
                </div>
             </div>
@@ -387,7 +370,6 @@
             <button onclick="exportToExcel()">Eksportuj tabelę do pliku XLSX</button>
          </div>
          <div id="charts" class="chart-container"></div>
-
          <div id="additionalMetrics">
             <h3>Dodatkowe wskaźniki</h3>
             <div id="punctuationExpressionMetric"></div>
@@ -404,18 +386,18 @@
             infoContent.style.opacity="0";
          }
          fetch('dziady.txt')
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Nie udało się załadować pliku dziady.txt');
-    }
-    return response.text();
-  })
-  .then(text => {
-    document.getElementById('inputText').value = text;
-  })
-  .catch(error => {
-    console.error(error);
-  });
+         .then(response => {
+         if (!response.ok) {
+         throw new Error('Nie udało się załadować pliku dziady.txt');
+         }
+         return response.text();
+         })
+         .then(text => {
+         document.getElementById('inputText').value = text;
+         })
+         .catch(error => {
+         console.error(error);
+         });
          
            const clearText = () => {
              console.log("clear");
@@ -507,7 +489,7 @@
                 selectedActors = selectedActors.toUpperCase();
                 const words = selectedActors.split(/[,+]/).map(word => word.trim());
                 const isValid = words.every(word => actors.includes(word));
-    
+         
                 if (!isValid) {
                     alert("Wprowadzono niepoprawne wartości");
                    return;
@@ -616,10 +598,10 @@
                let selectedActors = prompt(`Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, GUSTAW, PUSTELNIK`);
                if (!selectedActors) return;
                 selectedActors = selectedActors.toUpperCase();
-
+         
                const words = selectedActors.split(",").map(word => word.trim());
                 const isValid = words.every(word => actors.includes(word));
-    
+         
                 if (!isValid) {
                     alert("Wprowadzono niepoprawne wartości");
                    return;
@@ -705,97 +687,101 @@
              function scrollToCharts() {
                document.getElementById('charts').scrollIntoView({ behavior: 'smooth' });
              }
-
+         
              const txtFileInput = document.getElementById('txtFileInput');
              const fileDropZone = document.getElementById('fileDropZone');
-
+         
              function loadTxtFile(file) {
                if (!file) return;
-
+         
                if (!file.name.toLowerCase().endsWith('.txt')) {
                   alert('Wybierz plik TXT.');
                   return;
                }
-
+         
                const reader = new FileReader();
                reader.onload = function(e) {
                   document.getElementById('inputText').value = e.target.result;
                };
                reader.readAsText(file, 'UTF-8');
              }
-
+         
              if (txtFileInput) {
                txtFileInput.addEventListener('change', function(e) {
                   loadTxtFile(e.target.files[0]);
                });
              }
-
+         
              if (fileDropZone) {
                fileDropZone.addEventListener('dragover', function(e) {
                   e.preventDefault();
                   fileDropZone.classList.add('drag-over');
                });
-
+         
                fileDropZone.addEventListener('dragleave', function(e) {
                   e.preventDefault();
                   fileDropZone.classList.remove('drag-over');
                });
-
+         
                fileDropZone.addEventListener('drop', function(e) {
                   e.preventDefault();
                   fileDropZone.classList.remove('drag-over');
                   loadTxtFile(e.dataTransfer.files[0]);
                });
              }
-
+         
              function countRegexMatches(text, regex) {
                const matches = text.match(regex);
                return matches ? matches.length : 0;
              }
-
+         
              let metricDistributionChart = null;
-
+         
              function calculateAdditionalMetrics() {
                const additionalMetrics = document.getElementById('additionalMetrics');
                if (!additionalMetrics || !analyzedData || analyzedData.length === 0) return;
-
+         
                const speechLines = analyzedData.filter(obj => obj.actor !== 'DIDASKALIA');
                const speechLineCount = speechLines.length;
-
+         
                if (speechLineCount === 0) {
                   additionalMetrics.style.display = 'block';
                   additionalMetrics.innerHTML = '<h3>Dodatkowe wskaźniki</h3><p>Brak linijek wypowiedzi po wyłączeniu didaskaliów.</p>';
                   return;
                }
-
+         
                const allSpeechText = speechLines.map(obj => obj.line).join(' ');
-
+         
                const exclamationCount = countRegexMatches(allSpeechText, /!/g);
                const questionCount = countRegexMatches(allSpeechText, /\?/g);
-
+         
                const exclamationDensity = ((exclamationCount / speechLineCount) * 100).toFixed(2);
                const questionDensity = ((questionCount / speechLineCount) * 100).toFixed(2);
-
+         
                document.getElementById('punctuationExpressionMetric').innerHTML =
-                  `<p><strong>Wektory ekspresji interpunkcyjnej: gęstość wykrzyknień i pytań</strong><br>
-                  Gęstość wykrzyknień: ${exclamationDensity}
-                  <span class="infotip">
-                     <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
-                     <span class="infotip-content">
-                        Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.
-                     </span>
-                  <br>
-                  Gęstość pytań: ${questionDensity}
-                  <span class="infotip">
-                     <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
-                     <span class="infotip-content">
-                        Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.
-                     </span>
-                  </span></p>`;
-
+                  `<p>
+         <strong>Wektory ekspresji interpunkcyjnej: gęstość wykrzyknień i pytań</strong><br>
+         
+         Gęstość wykrzyknień: ${exclamationDensity}
+         <span class="infotip">
+         <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
+         <span class="infotip-content">
+            Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.
+         </span>
+         </span> <br>
+         
+         Gęstość pytań: ${questionDensity}
+         <span class="infotip">
+         <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
+         <span class="infotip-content">
+            Gęstość pytań = liczba znaków „?” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.
+         </span>
+         </span>
+         </p>`;
+         
                let isosyllabicSegments = [];
                let currentSegmentLength = 1;
-
+         
                for (let i = 1; i < speechLines.length; i++) {
                   if (speechLines[i].vowelsNumber === speechLines[i - 1].vowelsNumber) {
                      currentSegmentLength++;
@@ -805,13 +791,13 @@
                   }
                }
                isosyllabicSegments.push(currentSegmentLength);
-
+         
                const averageIsosyllabicSegmentLength =
                   (isosyllabicSegments.reduce((a, b) => a + b, 0) / isosyllabicSegments.length).toFixed(2);
-
+         
                const syllableChangeRate =
                   (((isosyllabicSegments.length - 1) / Math.max(speechLineCount - 1, 1)) * 100).toFixed(2);
-
+         
                document.getElementById('isosyllabicMetric').innerHTML =
                   `<p><strong>Średnia długość odcinka izosylabicznego:</strong> ${averageIsosyllabicSegmentLength}<br>
                   Wskaźnik częstości zmiany liczby sylab: ${syllableChangeRate}%
@@ -823,11 +809,11 @@
                         Proponowany wskaźnik zmienności = liczba zmian liczby sylab między sąsiednimi wersami / liczba możliwych przejść między wersami × 100.
                      </span>
                   </span></p>`;
-
+         
                let speechBlocks = [];
                let previousActor = null;
                let currentBlockLength = 0;
-
+         
                speechLines.forEach(obj => {
                   if (obj.actor !== previousActor) {
                      if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
@@ -837,12 +823,12 @@
                      currentBlockLength++;
                   }
                });
-
+         
                if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
-
+         
                const averageSpeechBlockLength =
                   (speechBlocks.reduce((a, b) => a + b, 0) / speechBlocks.length).toFixed(2);
-
+         
                document.getElementById('interactionDensityMetric').innerHTML =
                   `<p><strong>Gęstość interakcji — średnia długość wypowiedzi jednej postaci:</strong> ${averageSpeechBlockLength}
                   <span class="infotip">
@@ -852,11 +838,11 @@
                         Wskaźnik = liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów / liczba bloków wypowiedzi.
                      </span>
                   </span></p>`;
-
+         
              const lineEndingRegex = /(\.|,|!|\?|;|…|:|-|—|–)$/;
                const brokenLines = speechLines.filter(obj => !lineEndingRegex.test(obj.line.trim())).length;
                const brokenLineRate = ((brokenLines / speechLineCount) * 100).toFixed(2);
-
+         
                document.getElementById('lineBreakingMetric').innerHTML =
                   `<p><strong>Współczynnik łamania wiersza:</strong> ${brokenLineRate}%
                   <span class="infotip">
@@ -867,23 +853,23 @@
                         po wyłączeniu didaskaliów × 100.
                      </span>
                   </span></p>`;
-
+         
                const selfReferencePronouns = [
                   'ja', 'mnie', 'mi', 'mną',
                   'mój', 'mojego', 'mojemu', 'moim',
                   'moja', 'mojej', 'moją',
                   'moje', 'moi', 'moich', 'moimi'
                ];
-
+         
                const words = allSpeechText
                   .toLowerCase()
                   .replace(/[^\p{L}\s]/gu, ' ')
                   .split(/\s+/)
                   .filter(Boolean);
-
+         
                const selfReferenceCount = words.filter(word => selfReferencePronouns.includes(word)).length;
                const selfReferenceRate = words.length > 0 ? ((selfReferenceCount / words.length) * 1000).toFixed(2) : '0.00';
-
+         
                document.getElementById('selfReferenceMetric').innerHTML =
                   `<p><strong>Wskaźnik referencji pierwszoosobowej</strong> ${selfReferenceRate}‰
                   <span class="infotip">
@@ -893,31 +879,31 @@
                         moją, moje, moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.
                      </span>
                   </span></p>`;
-
+         
                let metricDistributionMetric = document.getElementById('metricDistributionMetric');
-
+         
                if (!metricDistributionMetric) {
                   metricDistributionMetric = document.createElement('div');
                   metricDistributionMetric.id = 'metricDistributionMetric';
                   additionalMetrics.appendChild(metricDistributionMetric);
                }
-
+         
                const meterCounts = {};
-
+         
                speechLines.forEach(obj => {
                   const meter = obj.vowelsNumber;
                   if (!meterCounts[meter]) meterCounts[meter] = 0;
                   meterCounts[meter]++;
                });
-
+         
                const sortedMeters = Object.keys(meterCounts).sort((a, b) => Number(a) - Number(b));
                const metricLabels = [];
                const metricPercentages = [];
                let otherPercentage = 0;
-
+         
                sortedMeters.forEach(meter => {
                   const percentage = (meterCounts[meter] / speechLineCount) * 100;
-
+         
                   if (percentage < 1) {
                      otherPercentage += percentage;
                   } else {
@@ -925,19 +911,19 @@
                      metricPercentages.push(percentage);
                   }
                });
-
+         
                if (otherPercentage > 0) {
                   metricLabels.push('Inne (<1%)');
                   metricPercentages.push(otherPercentage);
                }
-
+         
                metricDistributionMetric.innerHTML = `
                   <p><strong>Rozkład metryczny (dominujące metra) całego dramatu</strong></p>
                   <div style="width:400px;height:400px;max-width:100%;">
                      <canvas id="metricDistributionChart"></canvas>
                   </div>
                `;
-
+         
                const colorPalette = {
                   "1": "hsl(55, 50%, 70%)",
                   "2": "hsl(30, 70%, 70%)",
@@ -966,11 +952,11 @@
                   "25": "hsl(720, 70%, 70%)",
                   "26": "hsl(750, 70%, 70%)"
                };
-
+         
                if (metricDistributionChart) {
                   metricDistributionChart.destroy();
                }
-
+         
                metricDistributionChart = new Chart(document.getElementById('metricDistributionChart'), {
                   type: 'pie',
                   data: {
@@ -1011,7 +997,7 @@
                      }
                   }
                });
-
+         
                additionalMetrics.style.display = 'block';
              }
            
