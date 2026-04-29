@@ -25,28 +25,41 @@
          flex-direction: column;
          align-items: center;
          }
-        @media screen and (min-width: 601px) {
-            .title-container-desktop {
-                display:none;
-                text-align: center;
-                display:block;
-                .img {
-                width:600px;
-             }
-         }
-           
-        }
-        @media screen and (max-width: 600px) {
-          .title-container-mobile {
-             display:none;
-              text-align: center;
-            display:block;
-            .img {
-                width:200px;
-             }
-         }
-        }
-      
+       /* Domyślnie ukrywamy wersję mobilną (zakładając, że zaczynamy od desktopu) */
+.title-container-mobile {
+    display: none;
+}
+
+/* Styl dla komputerów (powyżej 600px) */
+@media screen and (min-width: 601px) {
+    .title-container-desktop {
+        display: block;
+        text-align: center;
+    }
+    /* Selektor dla obrazka wewnątrz kontenera */
+    .title-container-desktop img {
+        width: 600px;
+        height: auto; /* Zawsze warto dodać, by zachować proporcje */
+    }
+    .title-container-mobile {
+        display: none;
+    }
+}
+
+/* Styl dla telefonów (600px i mniej) */
+@media screen and (max-width: 600px) {
+    .title-container-mobile {
+        display: block;
+        text-align: center;
+    }
+    .title-container-mobile img {
+        width: 200px;
+        height: auto;
+    }
+    .title-container-desktop {
+        display: none;
+    }
+}
 
          .header-container {
             font-weight:400;
