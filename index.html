@@ -8,13 +8,7 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <link rel="icon" href="theater-2.png">
       <style>
-         hr.stylish {
-         border: none;
-         border-top: 1px solid #e0e0e0; 
-         margin:20px 0px 0px 0px;
-         width: 80%; 
-         max-width: 1000px; 
-         }
+  
          body {
          font-family: Arial, sans-serif;
          margin: 0;
@@ -31,6 +25,27 @@
          flex-direction: column;
          align-items: center;
          }
+ .title-container-desktop {
+     display:none;
+     text-align: center;
+          @media screen and (min-width: 601px) {
+            display:block;
+             .img {
+                width:600px;
+             }
+         }
+        }
+          .title-container-mobile {
+             display:none;
+              text-align: center;
+          @media screen and (max-width: 600px) {
+            display:block;
+             .img {
+                width:200px;
+             }
+         }}
+      
+
          .header-container {
             font-weight:400;
             color:#002e52;
@@ -39,9 +54,7 @@
              body {
                 padding: 8px !important;
              }
-           .header-container {
-              text-align:center;
-           }
+         
              .container {
                 padding:32px 12px !important;
              }
@@ -265,10 +278,12 @@
    </head>
    <body>
       <div class="container">
-         <div class="title-container">
-            <img src="title_banner-2.png" alt="banner">
+         <div class="title-container-desktop">
+            <img src="title_banner-desktop.png" alt="banner">
          </div>
-         <hr class="stylish">
+          <div class="title-container-mobile">
+            <img src="title_banner-mobile.png" alt="banner_mobile">
+         </div>
          <div class="info-note">
             <div>
                <div class="header-container">Narzędzie umożliwia przeanalizowanie tekstu dowolnego dramatu <u>w języku polskim</u> pod kątem jego <strong>zróżnicowania
