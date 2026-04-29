@@ -268,7 +268,7 @@
    <body>
       <div class="container">
          <div class="title-container">
-            Analiza cyfrowa dramatu
+            Analiza wersyfikacyjna dramatu
             <hr class="stylish">
            
          </div>
@@ -374,63 +374,19 @@
             infoContent.style.display="none";
             infoContent.style.opacity="0";
          }
-         const DZIADY =  "KSIĄDZ\n" +
-            "Dzieci, wstawajmy od stoła!\n" +
-            "Teraz, po powszednim chlebie,\n" +
-            "Klęknijcie przy mnie dokoła,\n" +
-            "Podziękujmy Ojcu w niebie.\n" +
-            "Dzień dzisiejszy Kościół święci\n" +
-            "Za tych spółchrześcijan dusze,\n" +
-            "Którzy spomiędzy nas wzięci\n" +
-            "Czyscowe cierpią katusze.\n" +
-            "Za nich ofiarujmy Bogu.\n" +
-            "\n" +
-            "(rozkłada książkę)\n" +
-            "Oto stosowna nauka.\n" +
-            "\n" +
-            "DZIECI\n" +
-            "(czytają)\n" +
-            "\"Onego czasu...\n" +
-            "\n" +
-            "KSIĄDZ\n" +
-            "Kto tam? kto tam stuka?\n" +
-            "\n" +
-            "(Pustelnik wchodzi ubrany dziwacznie)\n" +
-            "\n" +
-            "DZIECI\n" +
-            "Jezus, Maryja!\n" +
-            "\n" +
-            "KSIĄDZ\n" +
-            "Któż to jest na progu?\n" +
-            "(zmieszany)\n" +
-            "Ktoś ty taki?... po co?... na co?\n" +
-            "\n" +
-            "DZIECI\n" +
-            "Ach, trup, trup! upiór, ladaco!\n" +
-            "W imię Ojca!... zgiń, przepadaj!\n" +
-            "\n" +
-            "KSIĄDZ\n" +
-            "Ktoś ty, bracie? odpowiadaj.\n" +
-            "\n" +
-            "PUSTELNIK\n" +
-            "(powolnie i smutnie)\n" +
-            "Trup... trup!... tak jest, moje dziecię.\n" +
-            "\n" +
-            "DZIECI\n" +
-            "Trup... trup... ach! ach! nie bierz tata!\n" +
-            "\n" +
-            "PUSTELNIK\n" +
-            "Umarły!... o nie! tylko umarły dla świata!\n" +
-            "Jestem pustelnik, czy mnie rozumiecie\n" +
-            "\n" +
-            "KSIĄDZ\n" +
-            "Skąd przychodzisz tak nierano?\n" +
-            "Kto jesteś? jakie twe miano?\n" +
-            "Kiedy się tobie przypatruję z bliska,\n" +
-            "Zdaje się, że cię kiedyś widziałem w tej stronie.\n" +
-            "Powiedz, mój bracie, jakiegoś ty rodu?\n";
-            
-           document.getElementById('inputText').innerHTML=DZIADY;
+         fetch('dziady.txt')
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Nie udało się załadować pliku dziady.txt');
+    }
+    return response.text();
+  })
+  .then(text => {
+    document.getElementById('inputText').value = text;
+  })
+  .catch(error => {
+    console.error(error);
+  });
          
            const clearText = () => {
              console.log("clear");
