@@ -386,6 +386,9 @@
             <div id="interactionDensityMetric"></div>
             <div id="lineBreakingMetric"></div>
             <div id="selfReferenceMetric"></div>
+            <div id="metacommentaryDensityMetric"></div>
+            <div id="asideStageFunctionMetric"></div>
+            <div id="asideDramaLengthMetric"></div>
          </div>
       </div>
       <script>
@@ -752,6 +755,49 @@
          
                const speechLines = analyzedData.filter(obj => obj.actor !== 'DIDASKALIA');
                const speechLineCount = speechLines.length;
+               const stageDirections = analyzedData.filter(obj => obj.actor === 'DIDASKALIA');
+const stageDirectionCount = stageDirections.length;
+
+const asideStageDirections = stageDirections.filter(obj =>
+   obj.line.toLowerCase().includes('na stronie')
+);
+const asideStageDirectionCount = asideStageDirections.length;
+
+const metacommentaryDensity =
+   speechLineCount > 0 ? ((stageDirectionCount / speechLineCount) * 100).toFixed(2) : '0.00';
+
+const asideStageFunctionDensity =
+   stageDirectionCount > 0 ? ((asideStageDirectionCount / stageDirectionCount) * 100).toFixed(2) : '0.00';
+
+const asideDramaLengthDensity =
+   speechLineCount > 0 ? ((asideStageDirectionCount / speechLineCount) * 100).toFixed(2) : '0.00';
+
+document.getElementById('metacommentaryDensityMetric').innerHTML =
+   `<p><strong>Indeks gęstości metakomentarza (didaskaliów):</strong> ${metacommentaryDensity}%
+   <span class="infotip">
+      <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
+      <span class="infotip-content">
+         Wskaźnik = liczba wykrytych didaskaliów / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.
+      </span>
+   </span></p>`;
+
+document.getElementById('asideStageFunctionMetric').innerHTML =
+   `<p><strong>Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”:</strong> ${asideStageFunctionDensity}%
+   <span class="infotip">
+      <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
+      <span class="infotip-content">
+         Wskaźnik = liczba didaskaliów zawierających tekst „na stronie” / liczba wszystkich wykrytych didaskaliów × 100.
+      </span>
+   </span></p>`;
+
+document.getElementById('asideDramaLengthMetric').innerHTML =
+   `<p><strong>Wskaźnik gęstości aparatu względem długości dramatu:</strong> ${asideDramaLengthDensity}%
+   <span class="infotip">
+      <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
+      <span class="infotip-content">
+         Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.
+      </span>
+   </span></p>`;
          
                if (speechLineCount === 0) {
                   additionalMetrics.style.display = 'block';
