@@ -49,18 +49,29 @@
          display: none;
          }
          }
+         .baner-separator, .baner-separator-mobile {
+            justify-content: center;
+         }
          .baner-separator {
-            text-align:center;
+            display:flex;
+         }
+          .baner-separator-mobile {
+            display:none;
          }
          .baner-separator img {
             width:500px;
          }
-
+           .baner-separator-mobile img {
+            width:300px;
+         }
 
          /* Styl dla telefonów (700px i mniej) */
          @media screen and (max-width: 700px) {
-.baner-separator img {
-            width:300px;
+         .baner-separator {
+            display:none;
+         }
+          .baner-separator-mobile {
+            display:flex;
          }
          .info-note{
          padding: 0px 20px;
@@ -331,7 +342,12 @@
                   </ul>
                </div>
                
-               <div class="baner-separator"><img src="pasek.png" alt="baner"></div>
+               <div class="baner-separator">
+                  <img src="pasek.png" alt="baner">
+               </div>
+                <div class="baner-separator-mobile">
+                  <img src="pasek_m.png" alt="baner_mobile">
+               </div>
                W wyniku zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę
                można wyeksportować do pliku Excel (np. w celu bardziej dogłębnej analizy).
                Ponadto, można wygenerować wykresy kołowe i słupkowe, żeby porównać pod kątem wersyfikacyjnym mówienie
