@@ -49,8 +49,19 @@
          display: none;
          }
          }
+         .baner-separator {
+            text-align:center;
+         }
+         .baner-separator img {
+            width:500px;
+         }
+
+
          /* Styl dla telefonów (700px i mniej) */
          @media screen and (max-width: 700px) {
+.baner-separator img {
+            width:300px;
+         }
          .info-note{
          padding: 0px 20px;
          }
@@ -313,15 +324,14 @@
                      </li>
                       <li><strong> wskaźnik gęstości tekstu pobocznego</strong> (liczba wystąpień didaskaliów względem długości tekstu głównego)
                      </li>
-                       <li><strong> indeks nasycenia tekstu pobocznego wypowiedziami „na stronie” (gęstość apartu)</strong>
+                       <li><strong> indeks nasycenia tekstu pobocznego wypowiedziami „na stronie”</strong> (gęstość apartu)
                      </li>
                      <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierawczych związanych z 1. os. l.poj.).
                      </li>
                   </ul>
                </div>
-               <div class="mobile-img">
-                  <img src="komputer.png" alt="image">
-               </div>
+               
+               <div class="baner-separator"><img src="pasek.png" alt="baner"></div>
                W wyniku zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę
                można wyeksportować do pliku Excel (np. w celu bardziej dogłębnej analizy).
                Ponadto, można wygenerować wykresy kołowe i słupkowe, żeby porównać pod kątem wersyfikacyjnym mówienie
@@ -331,10 +341,14 @@
                sobą następujący układ osób: KSIĄDZ, (GUSTAW + PUSTELNIK), (DZIECI + DZIECIĘ + DZIECKO
                + CHÓR
                DZIECI).<br/><br/>
+               <div class="mobile-img">
+                  <img src="komputer.png" alt="image">
+               </div>
                <div class="tips-img-container">
                   <div class="tips-img">
                      <img src="komputer.png" alt="image">
                   </div>
+
                   <div>
                      Tekst dramatu należy wstępnie przygotować (przed wklejeniem do pola tekstowego), żeby algorytm mógł poprawnie przypisać wszystkie partie do
                      mówiących postaci i wykryć didaskalia. W tym celu:<br/>
