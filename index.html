@@ -48,6 +48,10 @@
         color: var(--color-accent);
       }
 
+      h1 {
+        color: var(--color-primary);
+      }
+
       button {
         padding: 6px 20px;
         border: 2px solid var(--color-primary);
@@ -371,6 +375,45 @@
           justify-content: center;
           margin: auto;
         }
+         .chart img {
+        width: 300px;
+        }
+      }
+      .quote {
+        /* max-width: 600px; */
+        margin: 2em auto;
+        padding: 1.5em 2em;
+        background: #f9f9fb;
+        border-left: 5px solid var(--color-primary);
+        border-radius: 8px;
+        font-family: Georgia, "Times New Roman", serif;
+        color: #333;
+      }
+
+      .quote blockquote {
+        margin: 0;
+        font-size: 1.2em;
+        line-height: 1.6;
+        position: relative;
+      }
+
+      .quote blockquote::before {
+        content: "“";
+        font-size: 3em;
+        position: absolute;
+        left: -0.4em;
+        top: -0.2em;
+        color: var(--color-primary);;
+      }
+
+      .quote figcaption {
+        margin-top: 1em;
+        text-align: right;
+        font-size: 0.9em;
+        color: #666;
+      }
+      .chart img {
+        width:550px;
       }
     </style>
   </head>
@@ -388,6 +431,7 @@
       <section class="info-note">
             <div>
                <div class="header-container">
+                <h1>O narzędziu</h1>
                   Strona umożliwia przeanalizowanie tekstu dowolnego dramatu (w języku polskim) pod kątem:           
                   <ul>
                      <li><strong>jego zróżnicowania
@@ -418,8 +462,44 @@
                 <div class="banner-separator-mobile">
                   <img src="assets/pasek_m.png" alt="baner_mobile">
                </div>
-               W wyniku zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę
-               można wyeksportować do pliku Excel (np. w celu bardziej zaawansowanych analiz).
+               <h1>Po co cyfrowo badać literaturę?</h1>
+               <div>
+                Cyfrowe badanie literatury pozwala w szybki i systematyczny sposób ujawniać cechy tekstu, które wcześniej pozostawały trudno dostępne, ponieważ ich identyfikacja wymagała żmudnych, ręcznych obliczeń. Dzięki narzędziom analizy ilościowej możliwe staje się nie tylko przetwarzanie dużych korpusów tekstów, lecz także precyzyjne uchwycenie zjawisk strukturalnych i funkcjonalnych – takich jak częstotliwość określonych form wypowiedzi, rozkład elementów dramatycznych czy natężenie konkretnych funkcji (np. wypowiedzi „na stronie”). Metody cyfrowe nie zastępują interpretacji, mogą ją jednak wspierać poprzez dostarczenie danych, które odsłaniają wzorce niewidoczne w tradycyjnej lekturze. 
+                </div>
+                  <h1>Studium przypadku: Twórczość dramatyczna Juliusza Słowackiego</h1>
+                <div>Poniżej podano konkretne przykłady zastosowania badań cyfrowych do analizy twórczości Juliusza Słowackiego. W analizie wzięto pod uwagę wierszowane dramaty poety, które zostały zdigitalizowane w sposób umożliwiający ich właściwe przetworzenie przez skrypt. </div>
+                <div class="slowacki"><img src="slowacki.png" alt="slowacki"></div>
+                <h3>| Transformacja tekstów Słowackiego po przełomie mistycznym</h3>
+                <div>
+                    <p>
+                      Wielu literaturoznawców wskazuje na transformację sposobu pisania Słowackiego w okresie mistyczno-genezyjskim. Jej formalnym wykładnikiem jest na przykład ograniczenie przez poetę „romantycznych tendencji do rozbudowywania wszelkich metawypowiedzi (didaskaliów, prologów, wstępów)” (A. Ziołowicz, <i>Dramat i romantyczne „Ja”. Studium podmiotowości w dramaturgii polskiej doby romantyzmu</i>, Kraków 2022, s. 114). O tej specyficznej na tle poetyki dramatu romantycznego właściwości późnych utworów Słowackiego wspominała (za Ireną Sławińską) Ewa Nawrocka:
+
+                <figure class="quote">
+                  <blockquote>
+                    <p>
+                      zwrócono uwagę na nikłość i lakoniczność uwag inscenizacyjnych w mistycznych dramatach Słowackiego i tendencję do ich ograniczania, a zarazem poszerzenie tekstu głównego o informacje dotyczące przestrzeni i czasu
+                    </p>
+                  </blockquote>
+                  <figcaption>
+                    — E. Nawrocka, <cite>Dramaty mistyczne Juliusza Słowackiego </cite>, [w:] <cite>Dramat i teatr romantyczny</cite>, red. D. Ratajczak, Wrocław 1992, s. 87</cite>
+                  </figcaption>
+                </figure>
+                Przytoczone spostrzeżenia potwierdza analiza cyfrowa - poniższy wykres pokazuje skalę redukcji tekstu pobocznego w utworach mistyczno-genezyjskich:
+                    </p>
+                <div class="chart"><img src="assets/wykres_gestosc_didaskaliow.png" alt="wykres"></div>
+                <p>
+                  Innymi formalnymi wykładnikami zmiany sposobu pisania Słowackiego w późnej twórczości jest m.in. zmiana średniej długości odcinka izosylabicznego:</p>
+                <div class="chart"><img src="assets/wykres_izosylabizm.png" alt="wykres"></div>
+                <p>zmiana średniej długości wypowiedzi jednej postaci:</p>
+                <div class="chart"><img src="assets/wykres_srednia_dlugosc_monologu.png" alt="wykres"></div>
+                 <p>czy zmiana współczynnika łamania wiersza:</p>
+                <div class="chart"><img src="wykres_wspolczynnik_lamania_wiersza.png" alt="wykres"></div>
+               Na marginesie warto zwrócić uwagę na <i>Fantazego</i> - nie znamy dokładnej daty powstania dramatu, choć większość badaczy zalicza go do twórczości mistyczno-genezyjskiej. Przy analizie wykresów należy pamiętać, że <i>Fantazy</i> nie został zredagowany przez Słowackiego i autorami didaskaliów są często edytorzy, co dokładnie omawia Maria Prussak (zob. M. Prussak, <i>Fantazy – w poszukiwaniu nowej formuły dramatu</i>, [w:] <i>Piękno Juliusza Słowackiego</i>, t. 2: Universum, red. J. Ławski, G. Kowalski i Ł. Zabielski, Białystok 2013).
+                </div>
+
+               <h1>Jak korzystać ze strony?</h1>
+               W wyniku analizy (przycisk: <strong>Analizuj</strong>) zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę
+               można wyeksportować do pliku Excel (np. w celu bardziej zaawansowanych badań).
                Ponadto, można wygenerować wykresy kołowe i słupkowe, żeby porównać pod kątem wersyfikacyjnym mówienie
                poszczególnych postaci (wykresy pokazują procentowy udział danego formatu wiersza w całym mówieniu wybranego bohatera). Postaci na potrzeby analizy można łączyć, np. dla IV cz. <i>Dziadów</i> (domyślny przykład w polu tekstowym) można na
                wykresie kołowym porównać
@@ -493,7 +573,7 @@
       <div id="charts" class="chart-container"></div>
 
       <section id="additionalMetrics" class="additional-metrics" aria-label="Dodatkowe wskaźniki">
-        <h3>Dodatkowe wskaźniki</h3>
+        <h1>Dodatkowe wskaźniki</h1>
         <div class="additional-index-img">
           <img src="assets/wskazniki2.png" alt="Digital analysis" />
         </div>
