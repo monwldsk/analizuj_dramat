@@ -388,67 +388,78 @@
         <img src="assets/mobile_banner_new.png" alt="Cyfrowa analiza dramatu" />
       </div>
 
-      <section class="info-note" aria-label="Opis narzędzia">
-        <div class="header-container">
-          Strona umożliwia przeanalizowanie tekstu dowolnego dramatu (w języku polskim) pod kątem:
-          <ul>
-            <li><strong>jego zróżnicowania wersyfikacyjnego</strong></li>
-          </ul>
-          oraz innych wskaźników analizy cyfrowej, takich jak np.:
-          <ul>
-            <li><strong>średnia długość odcinka izosylabicznego</strong></li>
-            <li><strong>średnia długość wypowiedzi jednej postaci</strong> (pokazuje gęstość interakcji)</li>
-            <li><strong>wektory ekspresji interpunkcyjnej</strong> (gęstość wykrzyknień i pytań)</li>
-            <li><strong>wskaźnik łamania wiersza</strong>, czyli procentowy udział linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, w stosunku do wszystkich linijek (z wyłączeniem didaskaliów)</li>
-            <li><strong>wskaźnik gęstości tekstu pobocznego</strong> (liczba wystąpień didaskaliów względem długości tekstu głównego)</li>
-            <li><strong>indeks nasycenia tekstu pobocznego wypowiedziami „na stronie”</strong> (gęstość apartu)</li>
-            <li><strong>wskaźnik referencji pierwszoosobowej</strong> (gęstość zaimków osobowych i dzierżawczych związanych z 1. os. l.poj.)</li>
-          </ul>
-        </div>
+      <section class="info-note">
+            <div>
+               <div class="header-container">
+                  Strona umożliwia przeanalizowanie tekstu dowolnego dramatu (w języku polskim) pod kątem:           
+                  <ul>
+                     <li><strong>jego zróżnicowania
+                  wersyfikacyjnego</strong>
+                     </li></ul>
+                 oraz innych wskaźników analizy cyfrowej, takich jak np.: 
+                  <ul>
+                     <li><strong>średnia długość odcinka izosylabicznego</strong>,
+                     </li>
+                     <li><strong>średnia długość wypowiedzi jednej postaci</strong> (pokazuje gęstość interakcji),
+                     </li>
+                     <li><strong> wektory ekspresji interpunkcyjnej</strong> (gęstość wykrzyknień i pytań),
+                     </li>
+                     <li><strong> wskaźnik łamania wiersza</strong>, czyli procentowy udział linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, w stosunku do wszystkich linijek (z wyłączeniem didaskaliów),
+                     </li>
+                      <li><strong> wskaźnik gęstości tekstu pobocznego</strong> (liczba wystąpień didaskaliów względem długości tekstu głównego),
+                     </li>
+                       <li><strong> indeks nasycenia tekstu pobocznego wypowiedziami „na stronie”</strong> (gęstość apartu),
+                     </li>
+                     <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierżawczych związanych z 1. os. l.poj.).
+                     </li>
+                  </ul>
+               </div>
+               
+               <div class="baner-separator">
+                  <img src="assets/pasek.png" alt="baner">
+               </div>
+                <div class="baner-separator-mobile">
+                  <img src="assets/pasek_m.png" alt="baner_mobile">
+               </div>
+               W wyniku zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę
+               można wyeksportować do pliku Excel (np. w celu bardziej dogłębnej analizy).
+               Ponadto, można wygenerować wykresy kołowe i słupkowe, żeby porównać pod kątem wersyfikacyjnym mówienie
+               poszczególnych postaci (wykresy pokazują procentowy udział danego formatu wiersza w całym mówieniu wybranego bohatera). Postaci na potrzeby analizy można łączyć, np. dla IV cz. <i>Dziadów</i> (domyślny przykład w polu tekstowym) można na
+               wykresie kołowym porównać
+               między
+               sobą następujący układ osób: KSIĄDZ, (GUSTAW + PUSTELNIK), (DZIECI + DZIECIĘ + DZIECKO
+               + CHÓR
+               DZIECI).<br/><br/>
+               <div class="mobile-img">
+                  <img src="assets/computer.png" alt="image">
+               </div>
+               <div class="tips-img-container">
+                  <div class="tips-img">
+                     <img src="assets/computer.png" alt="image">
+                  </div>
 
-        <div class="banner-separator">
-          <img src="assets/pasek.png" alt="" />
-        </div>
-
-        <div class="banner-separator-mobile">
-          <img src="assets/pasek_m.png" alt="" />
-        </div>
-
-        <p>
-          W wyniku zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę można wyeksportować do pliku Excel (np. w celu bardziej dogłębnej analizy). Ponadto, można wygenerować wykresy kołowe i słupkowe, żeby porównać pod kątem wersyfikacyjnym mówienie poszczególnych postaci (wykresy pokazują procentowy udział danego formatu wiersza w całym mówieniu wybranego bohatera). Postaci na potrzeby analizy można łączyć, np. dla IV cz. <i>Dziadów</i> (domyślny przykład w polu tekstowym) można na wykresie kołowym porównać między sobą następujący układ osób: KSIĄDZ, (GUSTAW + PUSTELNIK), (DZIECI + DZIECIĘ + DZIECKO + CHÓR DZIECI).
-        </p>
-
-        <div class="mobile-img">
-          <img src="assets/computer.png" alt="Ilustracja komputera" />
-        </div>
-
-        <div class="tips-img-container">
-          <div class="tips-img">
-            <img src="assets/computer.png" alt="Ilustracja komputera" />
-          </div>
-
-          <div>
-            Tekst dramatu należy wstępnie przygotować (przed wklejeniem do pola tekstowego lub załadowaniem pliku w formacie .txt), żeby algorytm mógł poprawnie przypisać wszystkie partie do mówiących postaci i wykryć didaskalia. W tym celu:
-            <ol>
-              <li>postaci dramatu powinny zostać zapisane wielkimi literami, np. PUSTELNIK</li>
-              <li>didaskalia powinny zostać wydzielone za pomocą znaku slash (ukośnik), np. / na stronie /.</li>
-            </ol>
-            <strong>Uwaga</strong>: Skrypt bazuje na konwencjach zastosowanych w serwisie <a href="https://wolnelektury.pl" target="_blank" rel="noopener noreferrer">Wolne Lektury</a> (jeśli wybierzemy opcję: <i>Pobierz książkę</i> &gt; <i>Inne formaty</i> &gt; <i>Plik tekstowy.txt</i>). Wklejenie tekstu skopiowanego z tego źródła nie wymaga zatem ingerencji w treść w celu dostosowania jej do algorytmu (należy jednak pamiętać, żeby z początku i końca zawartości pliku usunąć tytuł, przedmowę, spis osób dramatu, wszelkie noty edytorskie, dane o licencji, informacje o wydawcy, numer ISBN itd.).
-          </div>
-        </div>
-
-        <div class="info-algo">
-          <p>Jak działa ten algorytm?</p>
-          <p>
-            <span class="infotip">
-              <img class="infotip-img" src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="Informacja" />
-              <span class="infotip-content">
-                Skrypt przelicza liczbę sylab dla każdego wersu na podstawie identyfikacji samogłosek, które w danej pozycji pełnią funkcję sylabotwórczą. Nie robi tego w 100% bezbłędnie — nie wykryje np., że kombinacja [ia] występująca na granicy morfemów (jak w wyrazie <i>miniaparatura</i>) utworzy 2 sylaby. Nie wykryje także dyftongów takich jak [au] lub [oi]. Błędy wynikające z takich wyjątków nie wpłyną znacząco na statystyki dla długich tekstów. Narzędzie nie wskazuje przypadków stychomytii; umożliwia natomiast wykluczenie ich z analizy ręcznie poprzez wprowadzenie znaku ++ przed konkretnymi linijkami tekstu.
-              </span>
-            </span>
-          </p>
-        </div>
-      </section>
+                  <div>
+                     Tekst dramatu należy wstępnie przygotować (przed wklejeniem do pola tekstowego lub załadowaniem pliku w formacie .txt), żeby algorytm mógł poprawnie przypisać wszystkie partie do
+                     mówiących postaci i wykryć didaskalia. W tym celu:<br/>
+                     <ol>
+                        <li>
+                           postaci dramatu powinny zostać zapisane wielkimi literami, np. PUSTELNIK
+                        </li>
+                        <li>didaskalia powinny zostać wydzielone za pomocą znaku slash (ukośnik), np. / na stronie /.</li>
+                     </ol>
+                     <strong>Uwaga</strong>: Skrypt bazuje na konwencjach zastosowanych w serwisie <a href="https://wolnelektury.pl" target="_blank">Wolne Lektury</a> (jeśli wybierzemy opcję: <i>Pobierz książkę</i> > <i>Inne formaty</i> > <i>Plik tekstowy.txt</i>). Wklejenie tekstu skopiowanego z tego źródła nie wymaga zatem ingerencji w treść w celu dostosowania jej do algorytmu (należy jednak pamiętać, żeby z początku i końca zawartości pliku usunąć tytuł, przedmowę, spis osób dramatu, wszelkie noty edytorskie, dane o licencji, informacje o wydawcy, numer ISBN itd.). 
+                  </div>
+               </div>
+            </div>
+            <div class="info-algo">
+               <p>Jak działa ten algorytm?</p>
+               <p><span class="infotip">
+                  <img class="infotip-img" src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info">
+                  <span class="infotip-content" id="infotip-content">   Skrypt przelicza liczbę sylab dla każdego wersu na podstawie identyfikacji samogłosek, które w danej pozycji pełnią funkcję sylabotwórczą. Nie robi tego w 100% bezbłędnie — nie wykryje np., że kombinacja [ia] występująca na granicy morfemów (jak w wyrazie <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo będzie 7-sylabowe), ponieważ [i] — dość wyjątkowo jak na język polski (bo pomimo sąsiedztwa innej samogłoski z prawej strony) — będzie ośrodkiem osobnej sylaby. Nie wykryje także dyftongów takich jak [au] (por. <i>t<u>au</u>-to-lo-gia</i>, ale <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por. <i>si-nu-s<u>oi</u>-da</i>, ale <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z takich (m.in.) wyjątków nie wpłyną znacząco na statystyki dla długich tekstów. Narzędzie nie wskazuje przypadków stychomytii; umożliwia natomiast wykluczenie ich z analizy ręcznie poprzez wprowadzenie znaku ++ przed konkretnymi linijkami tekstu.</span>
+                  </span>
+               </p>
+            </div>
+         </section>
 
       <textarea id="inputText" placeholder="Wklej tutaj tekst dramatu..."></textarea>
 
@@ -622,7 +633,7 @@
       function clearText() {
         DOM.inputText.value = '';
         state.analyzedData = [];
-        clearCharts();
+        clearAllCharts();
         resetMetrics();
         DOM.resultTableBody.innerHTML = '';
         DOM.resultTable.classList.add('hidden');
@@ -637,7 +648,7 @@
           return;
         }
 
-        clearCharts();
+        clearAllCharts();
         state.analyzedData = parseDramaText(inputText);
         renderResultsTable(state.analyzedData);
         calculateAdditionalMetrics();
@@ -723,7 +734,7 @@
         }
 
         const actorsData = getGroupedActorMeterCounts(selectedGroups);
-        clearCharts();
+        clearActorCharts();
 
         Object.entries(actorsData).forEach(([groupName, meterCounts]) => {
           const totalLines = sumValues(meterCounts);
@@ -775,7 +786,7 @@
           };
         });
 
-        clearCharts();
+        clearActorCharts();
 
         renderChart({
           type: 'bar',
@@ -897,16 +908,24 @@
         return `hsl(${Math.random() * 360}, 70%, 70%)`;
       }
 
-      function clearCharts() {
+      function clearActorCharts() {
         state.renderedCharts.forEach((chart) => chart.destroy());
         state.renderedCharts = [];
+        DOM.charts.innerHTML = '';
+      }
 
+      function clearMetricDistributionChart() {
         if (state.metricDistributionChart) {
           state.metricDistributionChart.destroy();
           state.metricDistributionChart = null;
         }
 
-        DOM.charts.innerHTML = '';
+        document.getElementById('metricDistributionMetric')?.remove();
+      }
+
+      function clearAllCharts() {
+        clearActorCharts();
+        clearMetricDistributionChart();
       }
 
       function loadTxtFile(file) {
@@ -961,8 +980,7 @@
           element.innerHTML = '';
         });
 
-        const oldMetricDistribution = document.getElementById('metricDistributionMetric');
-        oldMetricDistribution?.remove();
+        clearMetricDistributionChart();
 
         if (hide) DOM.additionalMetrics.style.display = 'none';
       }
