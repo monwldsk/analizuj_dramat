@@ -339,7 +339,7 @@
                   <ul>
                      <li><strong>średnia długość odcinka izosylabicznego</strong>,
                      </li>
-                     <li><strong> gęstość interakcji</strong> (średnia długość wypowiedzi jednej postaci),
+                     <li><strong>średnia długość wypowiedzi jednej postaci</strong> (pokazuje gęstość interakcji),
                      </li>
                      <li><strong> wektory ekspresji interpunkcyjnej</strong> (gęstość wykrzyknień i pytań),
                      </li>
@@ -349,7 +349,7 @@
                      </li>
                        <li><strong> indeks nasycenia tekstu pobocznego wypowiedziami „na stronie”</strong> (gęstość apartu),
                      </li>
-                     <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierawczych związanych z 1. os. l.poj.).
+                     <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierżawczych związanych z 1. os. l.poj.).
                      </li>
                   </ul>
                </div>
@@ -941,7 +941,7 @@ document.getElementById('asideDramaLengthMetric').innerHTML =
                   (speechBlocks.reduce((a, b) => a + b, 0) / speechBlocks.length).toFixed(2);
          
                document.getElementById('interactionDensityMetric').innerHTML =
-                  `<p><strong>Gęstość interakcji — średnia długość wypowiedzi jednej postaci:</strong> ${averageSpeechBlockLength}
+                  `<p><strong>Średnia długość wypowiedzi jednej postaci</strong> (pokazuje gęstość interakcji) ${averageSpeechBlockLength}
                   <span class="infotip">
                      <img src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info" style="width:14px;">
                      <span class="infotip-content">
