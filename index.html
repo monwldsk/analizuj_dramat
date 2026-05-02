@@ -325,14 +325,16 @@
           }
           
          .library-grid {
-         max-height: 330px;
+         /* max-height: 330px; */
          overflow-y: auto;
-         display: grid;
-         grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+         display: flex;
+         /* display: grid; */
+         /* grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); */
          gap: 16px;
          margin-top: 18px;
          }
          .library-card {
+        width:200px;
          display: flex;
          flex-direction: column;
          gap: 10px;
@@ -586,7 +588,7 @@
               Nie znaleziono dramatów pasujących do wpisanej frazy.
             </p>
              <p style="font-size:0.85em; color:#666;">
-                ↓ Przewiń, aby zobaczyć więcej dramatów
+                ⇄ Przewijaj w poziomie, aby zobaczyć więcej dramatów
             </p>
             <div class="library-grid">
                <article class="library-card">
