@@ -308,6 +308,22 @@
          .library-section p {
          line-height: 1.5;
          }
+         .library-search {
+          width: 100%;
+          margin-top: 12px;
+          padding: 10px 12px;
+          border: 1px solid var(--color-border);
+          border-radius: var(--radius-control);
+          font-size: 14px;
+          }
+
+          .library-no-results {
+          display: none;
+          margin-top: 12px;
+          color: #666;
+          font-size: 0.9em;
+          }
+          
          .library-grid {
          max-height: 330px;
          overflow-y: auto;
@@ -559,7 +575,17 @@
                Dorzucam tu m.in. te utwory, które nie zostały opracowane przez serwis Wolne Lektury
                (jak np. <i>Samuel Zborowski</i> J. Słowackiego).
             </p>
-             <p style="font-size:0.85em; color:#666; margin-top:-10px;">
+            <input
+              type="search"
+              id="librarySearch"
+              class="library-search"
+              placeholder="Wyszukaj dramat po autorze lub tytule..."
+              aria-label="Wyszukaj dramat po autorze lub tytule"
+            />
+            <p id="libraryNoResults" class="library-no-results">
+              Nie znaleziono dramatów pasujących do wpisanej frazy.
+            </p>
+             <p style="font-size:0.85em; color:#666;">
                 ↓ Przewiń, aby zobaczyć więcej dramatów
             </p>
             <div class="library-grid">
@@ -750,6 +776,8 @@
            additionalMetrics: document.getElementById('additionalMetrics'),
            fileDropZone: document.getElementById('fileDropZone'),
            txtFileInput: document.getElementById('txtFileInput'),
+           librarySearch: document.getElementById('librarySearch'),
+          libraryNoResults: document.getElementById('libraryNoResults'),
            buttons: {
              analyze: document.getElementById('analyzeButton'),
              clear: document.getElementById('clearButton'),
@@ -806,6 +834,7 @@
              DOM.fileDropZone.classList.remove('drag-over');
              loadTxtFile(event.dataTransfer.files[0]);
            });
+           DOM.librarySearch.addEventListener('input', filterLibraryCards);
            document.querySelectorAll('.library-select-button').forEach((button) => {
          button.addEventListener('click', () => {
          loadLibraryText(button.dataset.textPath);
@@ -1426,6 +1455,21 @@
          function scrollToCharts() {
            DOM.charts.scrollIntoView({ behavior: 'smooth' });
          }
+         function filterLibraryCards() {
+          const query = DOM.librarySearch.value.trim().toLowerCase();
+          let visibleCardsCount = 0;
+
+          document.querySelectorAll('.library-card').forEach((card) => {
+            const author = card.querySelector('.library-author')?.textContent.toLowerCase() || '';
+            const title = card.querySelector('.library-title')?.textContent.toLowerCase() || '';
+            const isVisible = author.includes(query) || title.includes(query);
+
+            card.style.display = isVisible ? '' : 'none';
+            if (isVisible) visibleCardsCount++;
+          });
+
+          DOM.libraryNoResults.style.display = visibleCardsCount === 0 ? 'block' : 'none';
+        }
          
          init();
       </script>
