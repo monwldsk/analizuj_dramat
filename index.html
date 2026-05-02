@@ -295,6 +295,61 @@
          font-size: 0.9em;
          color: #666;
          }
+         .library-section {
+          margin: 22px 0;
+          padding: 20px;
+          border: 1px solid var(--color-border);
+          border-radius: 12px;
+          background: #fafafa;
+          }
+
+          .library-section p {
+          line-height: 1.5;
+          }
+
+          .library-grid {
+          max-height: 360px;
+          overflow-y: auto;
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+          gap: 16px;
+          margin-top: 18px;
+          }
+
+          .library-card {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+          padding: 14px;
+          border: 1px solid var(--color-border);
+          border-radius: 14px;
+          background: var(--color-surface);
+          box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+          }
+
+          .library-card img {
+          width: 100%;
+          aspect-ratio: 1 / 1;
+          object-fit: cover;
+          border-radius: 10px;
+          background: var(--color-muted);
+          }
+
+        .library-author {
+          font-size: 0.9em;
+          color: #666;
+          }
+
+          .library-title {
+          font-weight: 700;
+          color: var(--color-primary);
+          }
+
+        .library-card button {
+        align-self: flex-start;
+        margin-top: auto;
+        }
+
          @media screen and (min-width: 601px) {
          .header-container {
          margin-bottom: 16px;
@@ -491,9 +546,116 @@
          <textarea id="inputText" placeholder="Wklej tutaj tekst dramatu..."></textarea>
          <section id="fileDropZone" class="file-drop-zone" aria-label="Wczytywanie pliku tekstowego">
             <strong>Wybierz plik .txt albo przeciągnij go tutaj</strong><br /><br />
-            <span>(możesz także ręcznie uzupełnić pole tekstowe znajdujące się powyżej)</span><br /><br />
+            <span>(możesz także ręcznie uzupełnić pole tekstowe znajdujące się powyżej lub wybrać tekst z mojej biblioteki)</span><br /><br />
             <input type="file" id="txtFileInput" accept=".txt,text/plain" />
          </section>
+         <section class="library-section" aria-label="Moja biblioteka">
+   <h2>Moja biblioteka</h2>
+   <p>
+      Poniżej znajduje się biblioteka dramatów przygotowanych pod skrypt.
+      Dorzucam tu m.in. te utwory, które nie zostały opracowane przez serwis Wolne Lektury
+      (np. <i>Samuel Zborowski</i> J. Słowackiego).
+   </p>
+
+   <div class="library-grid">
+      <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Samuel Zborowski</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-samuel-zborowski.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Balladyna</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-balladyna.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Ksiądz Marek</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-ksiadz-marek.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Fantazy</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-fantazy.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Kordian</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-kordian.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Książę niezłomny</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-ksiaze-niezlomny.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Lilla Weneda</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-lilla-weneda.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Maria Stuart</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-maria-stuart.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Mazepa</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-mazepa.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Mindowe</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-mindowe.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Juliusz Słowacki</div>
+         <div class="library-title">Sen srebrny Salomei</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-sen-srebrny-salomei.txt">
+            Wybierz
+         </button>
+      </article>
+       <article class="library-card">
+         <img src="assets/folder.png" alt="folder icon" />
+         <div class="library-author">Adam Mickiewicz</div>
+         <div class="library-title">IV cz. Dziadów</div>
+         <button type="button" class="library-select-button" data-text-path="assets/biblioteka/mickiewicz-dziady-iv.txt">
+            Wybierz
+         </button>
+      </article>
+   </div>
+</section>
          <div class="button-row">
             <button id="analyzeButton" type="button">Analizuj</button>
             <button id="clearButton" class="clear-button" type="button">Wyczyść</button>
@@ -638,6 +800,11 @@
              DOM.fileDropZone.classList.remove('drag-over');
              loadTxtFile(event.dataTransfer.files[0]);
            });
+           document.querySelectorAll('.library-select-button').forEach((button) => {
+  button.addEventListener('click', () => {
+    loadLibraryText(button.dataset.textPath);
+  });
+});
          }
          
          async function loadDefaultText() {
@@ -649,6 +816,16 @@
              console.error(error);
            }
          }
+         async function loadLibraryText(path) {
+  try {
+    const response = await fetch(path);
+    if (!response.ok) throw new Error(`Nie udało się załadować pliku: ${path}`);
+    DOM.inputText.value = await response.text();
+  } catch (error) {
+    console.error(error);
+    alert('Nie udało się załadować wybranego dramatu.');
+  }
+}
          
          function clearText() {
            DOM.inputText.value = '';
