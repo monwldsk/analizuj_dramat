@@ -5,459 +5,1047 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Cyfrowa analiza dramatu</title>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-      <script data-goatcounter="https://monikaisyd.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+      <script
+         data-goatcounter="https://monikaisyd.goatcounter.com/count"
+         async
+         src="//gc.zgo.at/count.js"
+      ></script>
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       <link rel="icon" href="assets/theater-2.png" />
       <meta property="og:title" content="Cyfrowa analiza dramatu" />
       <meta property="og:image" content="assets/banner_mob.png" />
-      <meta property="og:url" content="https://monwldsk.github.io/analizuj_dramat/" />
+      <meta
+         property="og:url"
+         content="https://monwldsk.github.io/analizuj_dramat/"
+      />
       <meta property="og:type" content="website" />
       <style>
          :root {
-         --color-primary: #002e52;
-         --color-accent: #0073ce;
-         --color-bg: #eeeeee;
-         --color-surface: #ffffff;
-         --color-border: #dddddd;
-         --color-muted: #f4f4f4;
-         --color-tip: #0073ce;
-         --shadow-card: 0 2px 14px rgba(0, 0, 0, 0.2);
-         --radius-card: 24px;
-         --radius-control: 6px;
-         --max-width: 1000px;
+            --color-primary: #002e52;
+            --color-accent: #0073ce;
+            --color-bg: #eeeeee;
+            --color-surface: #ffffff;
+            --color-border: #dddddd;
+            --color-muted: #f4f4f4;
+            --color-tip: #0073ce;
+            --shadow-card: 0 2px 14px rgba(0, 0, 0, 0.2);
+            --radius-card: 24px;
+            --radius-control: 6px;
+            --max-width: 1200px;
          }
          * {
-         box-sizing: border-box;
+            box-sizing: border-box;
          }
          body {
-         margin: 0;
-         padding: 20px;
-         font-family: Arial, sans-serif;
-         font-size: 14px;
-         color: #201e1e;
-         background: var(--color-bg);
-         line-height: 1.4;
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #201e1e;
+            background: var(--color-bg);
+            line-height: 1.4;
          }
          a {
-         color: var(--color-accent);
+            color: var(--color-accent);
          }
-         h1, h2 {
-         text-align:left;
-         color: var(--color-primary);
+         h2 {
+            text-align: left;
+            color: var(--color-primary);
+         }
+         h1 {
+            text-align: center;
+            color: var(--color-primary);
          }
          button {
-         padding: 6px 20px;
-         border: 2px solid var(--color-primary);
-         border-radius: var(--radius-control);
-         color: #fff;
-         background: var(--color-primary);
-         cursor: pointer;
+            padding: 6px 20px;
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius-control);
+            color: #fff;
+            background: var(--color-primary);
+            cursor: pointer;
          }
          button:hover {
-         border-color: #cccccc;
-         background: #cccccc;
+            border-color: #cccccc;
+            background: #cccccc;
          }
          textarea {
-         width: 100%;
-         height: 120px;
-         margin-bottom: 10px;
-         padding: 10px;
-         border: 1px solid #cccccc;
-         border-radius: 4px;
-         font-size: 10px;
-         resize: none;
+            width: 100%;
+            height: 120px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 10px;
+            resize: none;
          }
          table {
-         width: 100%;
-         max-height: 220px;
-         overflow: auto;
-         border-collapse: collapse;
-         border: 1px solid var(--color-border);
-         background: var(--color-surface);
+            width: 100%;
+            max-height: 220px;
+            overflow: auto;
+            border-collapse: collapse;
+            border: 1px solid var(--color-border);
+            background: var(--color-surface);
          }
          th,
          td {
-         padding: 2px;
-         border: 1px solid var(--color-border);
-         text-align: left;
-         font-size: 10px;
+            padding: 2px;
+            border: 1px solid var(--color-border);
+            text-align: left;
+            font-size: 10px;
          }
          th {
-         background: var(--color-muted);
+            background: var(--color-muted);
          }
          .container {
-         max-width: var(--max-width);
-         margin: auto;
-         padding: 30px 40px;
-         border-radius: var(--radius-card);
-         background: var(--color-surface);
-         box-shadow: var(--shadow-card);
+            max-width: var(--max-width);
+            margin: auto;
+            padding: 30px 40px;
+            border-radius: var(--radius-card);
+            background: var(--color-surface);
+            box-shadow: var(--shadow-card);
          }
          .title-container-desktop,
          .title-container-mobile {
-         text-align: center;
+            text-align: center;
          }
          .title-container-mobile {
-         display: none;
+            display: none;
          }
          .title-container-desktop img {
-         width: 570px;
-         height: auto;
+            width: 570px;
+            height: auto;
          }
          .title-container-mobile img {
-         width: 320px;
-         height: auto;
+            width: 320px;
+            height: auto;
          }
          .info-note {
-         padding: 20px;
-         border-radius: 4px;
-         text-align: justify;
+            padding: 20px;
+            border-radius: 4px;
+            text-align: justify;
          }
          .header-container {
-         font-weight: 400;
+            font-weight: 400;
          }
          .banner-separator,
          .banner-separator-mobile {
-         justify-content: center;
+            justify-content: center;
          }
          .banner-separator {
-         display: flex;
-         margin: 20px auto;
+            display: flex;
+            margin: 20px auto;
          }
          .banner-separator-mobile {
-         display: none;
+            display: none;
          }
          .banner-separator img {
-         width: 500px;
+            width: 500px;
          }
          .banner-separator-mobile img {
-         width: 300px;
+            width: 300px;
          }
          .mobile-img {
-         display: none;
+            display: none;
          }
          .tips-img-container {
-         display: flex;
-         align-items: center;
-         gap:16px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
          }
          .tips-img-container img {
-         width: 260px;
-         margin-right: 0;
+            width: 260px;
+            margin-right: 0;
          }
          .mobile-img img {
-         width: 220px;
-         padding-bottom: 12px;
+            width: 220px;
+            padding-bottom: 12px;
          }
          .info-algo {
-         display: flex;
-         justify-content: flex-end;
-         align-items: center;
-         color: gray;
-         font-size:0.9em;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            color: gray;
+            font-size: 0.9em;
          }
          .infotip {
-         position: relative;
-         display: inline-block;
-         margin-left: 5px;
-         cursor: pointer;
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            cursor: pointer;
          }
          .infotip-img,
          .metric-info-icon {
-         width: 14px;
+            width: 14px;
          }
          .infotip .infotip-content {
-         position: absolute;
-         bottom: 125%;
-         left: -400%;
-         z-index: 1;
-         display: none;
-         width: 300px;
-         padding: 20px;
-         border-radius: 4px;
-         color: #fff;
-         background: var(--color-tip);
-         opacity: 0;
-         transform: translateX(-50%);
-         transition: opacity 0.3s;
+            position: absolute;
+            bottom: 125%;
+            left: -400%;
+            z-index: 1;
+            display: none;
+            width: 300px;
+            padding: 20px;
+            border-radius: 4px;
+            color: #fff;
+            background: var(--color-tip);
+            opacity: 0;
+            transform: translateX(-50%);
+            transition: opacity 0.3s;
          }
          .infotip:hover .infotip-content {
-         display: block;
-         opacity: 1;
+            display: block;
+            opacity: 1;
          }
          .file-drop-zone {
-         margin: 10px 0;
-         padding: 16px;
-         border: 2px dashed var(--color-accent);
-         border-radius: 8px;
-         text-align: center;
-         color: var(--color-primary);
-         background: #f7fbff;
+            margin: 10px 0;
+            padding: 16px;
+            border: 2px dashed var(--color-accent);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--color-primary);
+            background: #f7fbff;
          }
          .file-drop-zone.drag-over {
-         background: #e6f3ff;
+            background: #e6f3ff;
          }
          .button-row,
          .action-buttons {
-         display: flex;
-         gap: 15px;
+            display: flex;
+            gap: 15px;
          }
          .action-buttons {
-         display: none;
-         margin-top: 20px;
-         justify-content: flex-start;
+            display: none;
+            margin-top: 20px;
+            justify-content: flex-start;
          }
          .clear-button {
-         border-color: var(--color-accent);
-         background: var(--color-accent);
+            border-color: var(--color-accent);
+            background: var(--color-accent);
          }
          .table-container {
-         max-height: 260px;
-         margin-top: 20px;
-         overflow: auto;
+            max-height: 260px;
+            margin-top: 20px;
+            overflow: auto;
          }
          .chart-container {
-         width: 100%;
-         margin-top: 20px;
+            width: 100%;
+            margin-top: 20px;
          }
          .chart-box {
-         width: 400px;
-         height: 400px;
-         max-width: 100%;
+            width: 400px;
+            height: 400px;
+            max-width: 100%;
          }
          .chart-box--wide {
-         width: 600px;
+            width: 600px;
          }
          .additional-metrics {
-         display: none;
-         margin-top: 25px;
-         padding: 20px;
-         border: 1px solid var(--color-border);
-         border-radius: 8px;
-         background: #fafafa;
+            display: none;
+            margin-top: 25px;
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: 8px;
+            background: #fafafa;
          }
          .additional-metrics h3 {
-         margin-top: 0;
-         color: var(--color-primary);
+            margin-top: 0;
+            color: var(--color-primary);
          }
          .additional-metrics p {
-         margin: 12px 0;
-         line-height: 1.45;
+            margin: 12px 0;
+            line-height: 1.45;
          }
          .additional-index-img img {
-         max-width: 300px;
+            max-width: 300px;
          }
          .hidden {
-         display: none !important;
+            display: none !important;
          }
          .chart {
-         display: flex;
-         justify-content: center;
+            display: flex;
+            justify-content: center;
          }
          .chart img {
-         width:550px;
+            width: 550px;
          }
          .slowacki {
-         display:flex;
-         justify-content: center;
+            display: flex;
+            justify-content: center;
          }
          .slowacki img {
-         width:600px;
+            width: 600px;
          }
          .slowacki-mobile {
-         display: none;
+            display: none;
          }
          .quote {
-         /* max-width: 800px; */
-         margin: 2em auto;
-         padding: 1.5em 2em;
-         background: #f9f9fb;
-         border-left: 5px solid var(--color-primary);
-         border-radius: 8px;
-         font-family: Georgia, "Times New Roman", serif;
-         color: #333;
+            /* max-width: 800px; */
+            margin: 2em auto;
+            padding: 1.5em 2em;
+            background: #f9f9fb;
+            border-left: 5px solid var(--color-primary);
+            border-radius: 8px;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #333;
          }
          .quote blockquote {
-         margin: 0;
-         font-size: 1.2em;
-         line-height: 1.6;
-         position: relative;
+            margin: 0;
+            font-size: 1.2em;
+            line-height: 1.6;
+            position: relative;
          }
          .quote blockquote::before {
-         content: "”";
-         font-size: 3em;
-         position: absolute;
-         left: -0.4em;
-         top: -0.2em;
-         color: var(--color-primary);;
+            content: "”";
+            font-size: 3em;
+            position: absolute;
+            left: -0.4em;
+            top: -0.2em;
+            color: var(--color-primary);
          }
          .quote figcaption {
-         margin-top: 1em;
-         text-align: right;
-         font-size: 0.9em;
-         color: #666;
+            margin-top: 1em;
+            text-align: right;
+            font-size: 0.9em;
+            color: #666;
          }
          .library-section {
-         margin: 22px 0;
-         padding: 20px;
-         border: 1px solid var(--color-border);
-         border-radius: 12px;
-         background: #fafafa;
+            margin: 22px 0;
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            background: #fafafa;
          }
          .library-section p {
-         line-height: 1.5;
+            line-height: 1.5;
          }
          .library-search {
-         width: 100%;
-         margin-top: 12px;
-         padding: 10px 12px;
-         border: 1px solid var(--color-border);
-         border-radius: var(--radius-control);
-         font-size: 14px;
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px 12px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-control);
+            font-size: 14px;
          }
          .library-no-results {
-         display: none;
-         margin-top: 12px;
-         color: #666;
-         font-size: 0.9em;
+            display: none;
+            margin-top: 12px;
+            color: #666;
+            font-size: 0.9em;
          }
          .library-grid {
-         overflow-y: auto;
-         display: flex;
-         gap: 16px;
-         padding:12px;
+            overflow-y: auto;
+            display: flex;
+            gap: 16px;
+            padding: 12px;
          }
          .library-card {
-         max-width:188px;
-         min-width:188px;
-         text-align:center;
-         display: flex;
-         align-items:center;
-         flex-direction: column;
-         gap: 10px;
-         padding: 14px;
-         border: 1px solid var(--color-border);
-         border-radius: 14px;
-         background: var(--color-surface);
-         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            max-width: 188px;
+            min-width: 188px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+            padding: 14px;
+            border: 1px solid var(--color-border);
+            border-radius: 14px;
+            background: var(--color-surface);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
          }
          .library-card img {
-         width: 100%;
-         /* aspect-ratio: 1 / 1; */
-         object-fit: cover;
-         border-radius: 10px;
-         padding:0px 30px;
-         /* background: var(--color-muted); */
+            width: 100%;
+            /* aspect-ratio: 1 / 1; */
+            object-fit: cover;
+            border-radius: 10px;
+            padding: 0px 30px;
+            /* background: var(--color-muted); */
          }
          .library-author {
-         font-size: 0.9em;
-         color: #666;
+            font-size: 0.9em;
+            color: #666;
          }
          .library-title {
-         font-weight: 700;
-         color: var(--color-primary);
+            font-weight: 700;
+            color: var(--color-primary);
          }
          .library-card button {
-         align-self: flex-start;
-         margin-top: auto;
-         width:100%;
+            align-self: flex-start;
+            margin-top: auto;
+            width: 100%;
          }
          @media screen and (min-width: 601px) {
-         .header-container {
-         margin-bottom: 16px;
-         }
+            .header-container {
+               margin-bottom: 16px;
+            }
          }
          @media screen and (min-width: 1100px) {
-         .title-container-desktop img {
-         width: 730px;
-         }
-         .banner-separator img {
-         width: 700px;
-         }
+            .title-container-desktop img {
+               width: 730px;
+            }
+            .banner-separator img {
+               width: 700px;
+            }
          }
          @media screen and (max-width: 700px) {
-         .banner-separator {
-         display: none;
-         }
-         .banner-separator-mobile {
-         display: flex;
-         margin: 20px auto;
-         }
-         .title-container-desktop {
-         display: none;
-         }
-         .title-container-mobile {
-         display: block;
-         }
-         .info-note {
-         padding: 0 20px;
-         }
+            .banner-separator {
+               display: none;
+            }
+            .banner-separator-mobile {
+               display: flex;
+               margin: 20px auto;
+            }
+            .title-container-desktop {
+               display: none;
+            }
+            .title-container-mobile {
+               display: block;
+            }
+            .info-note {
+               padding: 0 20px;
+            }
          }
          @media screen and (max-width: 600px) {
-         body {
-         padding: 8px;
-         }
-         .container {
-         padding: 32px 12px;
-         }
-         .info-note {
-         text-align: left;
-         }
-         .button-row,
-         .action-buttons {
-         flex-direction: column;
-         }
-         .chart-container > div {
-         max-width: 100%;
-         }
-         .infotip .infotip-content {
-         width: 190px;
-         }
-         .tips-img-container {
-         flex-direction: column;
-         }
-         .tips-img-container img {
-         display: none;
-         }
-         .mobile-img {
-         display: flex;
-         justify-content: center;
-         margin: auto;
-         }
-         .chart img {
-         width: 300px;
-         }
-         .slowacki {
-         display: none;
-         }
-         .slowacki-mobile {
-         display:flex;
-         justify-content: center;
-         }
-         .slowacki-mobile img {
-         width:300px;
-         }
+            body {
+               padding: 8px;
+            }
+            .container {
+               padding: 32px 12px;
+            }
+            .info-note {
+               text-align: left;
+            }
+            .button-row,
+            .action-buttons {
+               flex-direction: column;
+            }
+            .chart-container > div {
+               max-width: 100%;
+            }
+            .infotip .infotip-content {
+               width: 190px;
+            }
+            .tips-img-container {
+               flex-direction: column;
+            }
+            .tips-img-container img {
+               display: none;
+            }
+            .mobile-img {
+               display: flex;
+               justify-content: center;
+               margin: auto;
+            }
+            .chart img {
+               width: 300px;
+            }
+            .slowacki {
+               display: none;
+            }
+            .slowacki-mobile {
+               display: flex;
+               justify-content: center;
+            }
+            .slowacki-mobile img {
+               width: 300px;
+            }
          }
          .rymkiewicz-image-container {
-          max-width:500px;
-          margin:auto;
+            max-width: 500px;
+            margin: auto;
          }
          .rymkiewicz-image-container img {
-          width:100%;
+            width: 100%;
+         }
+         :root {
+            --bg: #f7f9fc;
+            --surface: rgba(255, 255, 255, 0.94);
+            --text: #0b1d37;
+            --muted: #5b6678;
+            --blue: #2f69d9;
+            --blue-dark: #163f8f;
+            --blue-soft: #edf4ff;
+            --line: #dce7f8;
+            --shadow: 0 18px 50px rgba(29, 58, 108, 0.08);
+            --radius: 22px;
+            --max: 1440px;
+         }
+
+         * {
+            box-sizing: border-box;
+         }
+
+         html {
+            scroll-behavior: smooth;
+         }
+
+         body {
+            margin: 0;
+            font-family:
+               Inter,
+               ui-sans-serif,
+               system-ui,
+               -apple-system,
+               BlinkMacSystemFont,
+               "Segoe UI",
+               sans-serif;
+            background: radial-gradient(
+                  circle at 15% 20%,
+                  rgba(47, 105, 217, 0.08),
+                  transparent 28%
+               ),
+               radial-gradient(
+                  circle at 85% 15%,
+                  rgba(47, 105, 217, 0.06),
+                  transparent 26%
+               ),
+               linear-gradient(180deg, #fbfdff, var(--bg));
+            color: var(--text);
+         }
+
+         button,
+         input,
+         textarea,
+         select {
+            font: inherit;
+         }
+
+         .metrics-section {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(72px, 9vw, 128px) 24px;
+         }
+
+         .metrics-section::before,
+         .metrics-section::after {
+            content: "";
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0.25;
+         }
+
+         .metrics-section::before {
+            background: #a8c8ff;
+            left: -160px;
+            top: 10%;
+         }
+
+         .metrics-section::after {
+            background: #dbe9ff;
+            right: -180px;
+            bottom: 8%;
+         }
+
+         .container {
+            position: relative;
+            z-index: 1;
+            width: min(100%, var(--max));
+            margin: 0 auto;
+         }
+
+         .intro {
+            max-width: 900px;
+            margin: 0 auto 48px;
+            text-align: center;
+         }
+
+         .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+         }
+
+         .eyebrow::after {
+            content: "";
+            width: 154px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            opacity: 0.85;
+         }
+
+         h1 {
+            margin: 0;
+            font-size: 32px;
+            line-height: 0.98;
+            letter-spacing: -0.045em;
+         }
+         .lead > span {
+            display: block;
+            color: var(--blue);
+            /* font-size: 22px; */
+         }
+
+         h1 span {
+            color: var(--blue);
+         }
+
+         .lead {
+            margin: 24px auto 0;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--muted);
+         }
+
+         .toolbar {
+            display: flex;
+            justify-content: center;
+            margin: 26px 0 34px;
+         }
+
+         .filter {
+            display: inline-flex;
+            gap: 6px;
+            padding: 6px;
+            border: 1px solid rgba(47, 105, 217, 0.13);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 28px rgba(29, 58, 108, 0.06);
+         }
+
+         .filter button {
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            background: transparent;
+            color: var(--muted);
+            font-weight: 750;
+            cursor: pointer;
+            transition: 0.2s ease;
+         }
+
+         .filter button:hover,
+         .filter button:focus-visible {
+            color: var(--blue-dark);
+            outline: none;
+         }
+
+         .filter button.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            box-shadow: 0 8px 18px rgba(47, 105, 217, 0.24);
+         }
+
+         .cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+         }
+
+         .card {
+            position: relative;
+            text-align: left;
+            min-height: 300px;
+            padding: 26px;
+            border: 1px solid rgba(27, 66, 127, 0.09);
+            border-radius: var(--radius);
+            background: linear-gradient(
+                  180deg,
+                  rgba(255, 255, 255, 0.98),
+                  rgba(255, 255, 255, 0.88)
+               ),
+               var(--surface);
+            box-shadow: var(--shadow);
+            transition:
+               transform 0.25s ease,
+               box-shadow 0.25s ease,
+               border-color 0.25s ease;
+            transform-style: preserve-3d;
+            overflow: hidden;
+         }
+
+         .card::after {
+            content: "";
+            position: absolute;
+            inset: auto -45px -65px auto;
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            background: radial-gradient(
+               circle,
+               rgba(47, 105, 217, 0.12),
+               transparent 65%
+            );
+            opacity: 0;
+            transition: opacity 0.25s ease;
+         }
+
+         .card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(47, 105, 217, 0.24);
+            box-shadow: 0 26px 70px rgba(29, 58, 108, 0.15);
+         }
+
+         .card:hover::after {
+            opacity: 1;
+         }
+
+         .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+         }
+
+         .icon-wrap {
+            /* width: 72px;
+      height: 72px; */
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+            /* border-radius: 50%;
+      background: linear-gradient(145deg, #f7faff, #eaf2ff);
+      color: var(--blue-dark);
+      box-shadow: inset 0 0 0 1px rgba(47,105,217,.05); */
+         }
+         .icon-wrap > img {
+            border-radius: 50%;
+            width: 54px;
+            height: 54px;
+         }
+
+         .icon {
+            width: 34px;
+            height: 34px;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+         }
+
+         .num {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: var(--blue);
+            background: var(--blue-soft);
+            font-size: 13px;
+            font-weight: 850;
+         }
+
+         .card h2 {
+            /* margin: 22px 0 13px; */
+            font-size: 16px;
+            line-height: 1.22;
+            letter-spacing: -0.02em;
+         }
+
+         .rule {
+            width: 38px;
+            height: 3px;
+            margin: 0 0 16px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--blue), #80a9f3);
+         }
+
+         .card p {
+            margin: 0;
+            color: var(--muted);
+            /* line-height: 1.62; */
+            font-size: 14px;
+         }
+
+         .summary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin: 30px auto 0;
+            padding: 18px 22px;
+            max-width: 1080px;
+            border: 1px solid rgba(47, 105, 217, 0.18);
+            border-radius: 16px;
+            background: rgba(238, 245, 255, 0.82);
+            color: var(--muted);
+            text-align: center;
+            backdrop-filter: blur(12px);
+         }
+
+         .summary strong {
+            color: var(--blue-dark);
+         }
+
+         .spark {
+            width: 32px;
+            height: 32px;
+            color: var(--blue);
+            flex: 0 0 auto;
+         }
+
+         [hidden] {
+            display: none !important;
+         }
+
+         .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+         }
+
+         .reveal.visible {
+            opacity: 1;
+            transform: none;
+            transition:
+               opacity 0.6s ease,
+               transform 0.6s ease;
+         }
+
+         @media (max-width: 1100px) {
+            .cards {
+               grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .card {
+               min-height: 280px;
+            }
+         }
+
+         @media (max-width: 680px) {
+            .metrics-section {
+               padding-inline: 16px;
+            }
+            .intro {
+               margin-bottom: 34px;
+            }
+            .toolbar {
+               justify-content: flex-start;
+               overflow-x: auto;
+               padding-bottom: 4px;
+            }
+            .filter {
+               min-width: max-content;
+            }
+            .cards {
+               grid-template-columns: 1fr;
+            }
+            .card {
+               min-height: 0;
+               padding: 24px;
+            }
+            .summary {
+               align-items: flex-start;
+               text-align: left;
+            }
+            h1 {
+               font-size: clamp(38px, 14vw, 58px);
+            }
+         }
+
+         @media (prefers-reduced-motion: reduce) {
+            html {
+               scroll-behavior: auto;
+            }
+            *,
+            *::before,
+            *::after {
+               animation-duration: 0.01ms !important;
+               transition-duration: 0.01ms !important;
+            }
+            .reveal {
+               opacity: 1;
+               transform: none;
+            }
          }
       </style>
    </head>
    <body>
       <main class="container">
          <div class="title-container-desktop">
-            <img src="assets/baner_main_op.png" alt="Baner główny - cyfrowa analiza dramatu" />
+            <img
+               src="assets/baner_main_op.png"
+               alt="Baner główny - cyfrowa analiza dramatu"
+            />
          </div>
          <div class="title-container-mobile">
-            <img src="assets/baner_mobile.png" alt="Baner - Cyfrowa analiza dramatu" />
+            <img
+               src="assets/baner_mobile.png"
+               alt="Baner - Cyfrowa analiza dramatu"
+            />
          </div>
          <section class="info-note">
             <div>
-               <div class="header-container">
+               <div class="banner-separator">
+                  <img src="assets/separator_long.png" alt="baner" />
+               </div>
+               <div class="banner-separator-mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
+               </div>
+
+               <header class="intro reveal">
+                  <h1 id="section-title">Do czego służy ta strona?</h1>
+                  <p class="lead">
+                     Strona umożliwia przeanalizowanie tekstu dowolnego dramatu
+                     w języku polskim pod kątem jego
+                     <span
+                        ><strong>zróżnicowania wersyfikacyjnego</strong></span
+                     >
+                     oraz innych wskaźników analizy cyfrowej, takich jak:
+                  </p>
+               </header>
+
+               <div class="cards" id="cards">
+                  <article class="card reveal" data-category="all">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/dramatis_personae.png" />
+                        </div>
+                        <div class="num">01</div>
+                     </div>
+                     <h2>
+                        Rozkład metryczny wypowiedzi poszczególnych postaci
+                     </h2>
+                     <div class="rule"></div>
+                     <p>
+                        Umożliwia porównanie dominujących metrów w wypowiedziach
+                        różnych osób dramatu.
+                     </p>
+                  </article>
+                  <article class="card reveal" data-category="rytm">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/izosyl.png" />
+                        </div>
+                        <div class="num">02</div>
+                     </div>
+                     <h2>Średnia długość odcinka izosylabicznego</h2>
+                     <div class="rule"></div>
+                     <p>
+                        Pozwala określić m.in. stopień stabilności rytmicznej
+                        analizowanego tekstu.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="dialog">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/interakcje.png" />
+                        </div>
+                        <div class="num">03</div>
+                     </div>
+                     <h2>Średnia długość wypowiedzi jednej postaci</h2>
+                     <div class="rule"></div>
+                     <p>
+                        Ilustruje gęstość interakcji między postaciami i pomaga
+                        porównywać dynamikę dialogu.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="dialog">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/interp.png" />
+                        </div>
+                        <div class="num">04</div>
+                     </div>
+                     <h2>Wektory ekspresji interpunkcyjnej</h2>
+                     <div class="rule"></div>
+                     <p>Odzwierciedlają gęstość wykrzyknień i pytań.</p>
+                  </article>
+
+                  <article class="card reveal" data-category="rytm">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/lamanie.png" />
+                        </div>
+                        <div class="num">05</div>
+                     </div>
+                     <h2>Wskaźnik łamania wiersza</h2>
+                     <div class="rule"></div>
+                     <p>
+                        % linijek wypowiedzi, które nie kończą się znakiem
+                        interpunkcyjnym sygnalizującym zamknięcie struktury
+                        składniowej.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="narracja">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/didaskalia.png" />
+                        </div>
+                        <div class="num">06</div>
+                     </div>
+                     <h2>Wskaźnik gęstości tekstu pobocznego</h2>
+                     <div class="rule"></div>
+                     <p>
+                        Liczba wystąpień didaskaliów względem długości tekstu
+                        głównego.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="narracja">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/apart.png" />
+                        </div>
+                        <div class="num">07</div>
+                     </div>
+                     <h2>
+                        Wskaźnik nasycenia didaskaliów wypowiedziami „na
+                        stronie”
+                     </h2>
+                     <div class="rule"></div>
+                     <p>Pokazuje gęstość apartu.</p>
+                  </article>
+
+                  <article class="card reveal" data-category="narracja">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/me.png" />
+                        </div>
+                        <div class="num">08</div>
+                     </div>
+                     <h2>Wskaźnik referencji pierwszoosobowej</h2>
+                     <div class="rule"></div>
+                     <p>
+                        Mierzy gęstość zaimków osobowych i dzierżawczych
+                        związanych z 1. osobą liczby pojedynczej.
+                     </p>
+                  </article>
+               </div>
+
+               <div class="summary reveal">
+                  <svg
+                     class="spark"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     aria-hidden="true"
+                  >
+                     <path
+                        d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5L12 2Z"
+                     />
+                     <path
+                        d="m19 15 .7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7L19 15Z"
+                     />
+                     <path
+                        d="m5 15 .7 1.8L7.5 17.5l-1.8.7L5 20l-.7-1.8-1.8-.7 1.8-.7L5 15Z"
+                     />
+                  </svg>
+                  <div style="text-align: left">
+                     Strona zostanie rozbudowana o kolejne wskaźniki oraz
+                     obsługę <strong>standardu TEI/XML</strong> – z
+                     uwzględnieniem istniejących praktyk kodowania tekstów
+                     dramatycznych, stosowanych m.in. w
+                     <a href="https://dracor.org/pol" target="_blank"
+                        >DraCor | Polish Drama Corpus</a
+                     >.
+                  </div>
+               </div>
+
+               <!-- <div class="header-container">
                   <h2>Do czego służy ta strona?</h2>
                   Strona umożliwia przeanalizowanie tekstu dowolnego dramatu (w języku polskim) pod kątem:           
                   <ul>
@@ -482,111 +1070,295 @@
                      <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierżawczych związanych z 1. os. l. poj.).
                      </li>
                   </ul>
-               </div>
+               </div> -->
                <div class="banner-separator">
-                  <img src="assets/separator_long.png" alt="baner">
+                  <img src="assets/separator_long.png" alt="baner" />
                </div>
                <div class="banner-separator-mobile">
-                  <img src="assets/separator_short.png" alt="baner_mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
                </div>
                <h2>Po co cyfrowo badać literaturę?</h2>
                <div>
-                  Cyfrowe badania literatury pozwalają w szybki i systematyczny sposób ujawnić cechy tekstu, które wcześniej pozostawały trudno dostępne, ponieważ ich identyfikacja wymagała żmudnych, ręcznych obliczeń. Dzięki narzędziom analizy ilościowej możliwe staje się nie tylko przetwarzanie dużych korpusów tekstów, lecz także precyzyjne uchwycenie zjawisk strukturalnych i funkcjonalnych, takich jak częstotliwość określonych form wypowiedzi, rozkład elementów dramatycznych czy natężenie konkretnych funkcji (np. wypowiedzi „na stronie”). Metody cyfrowe nie zastępują interpretacji, mogą ją jednak wspierać poprzez dostarczenie danych odsłaniających wzorce niewidoczne podczas tradycyjnej lektury. 
+                  Cyfrowe badania literatury pozwalają w szybki i systematyczny
+                  sposób ujawnić cechy tekstu, które wcześniej pozostawały
+                  trudno dostępne, ponieważ ich identyfikacja wymagała żmudnych,
+                  ręcznych obliczeń. Dzięki narzędziom analizy ilościowej
+                  możliwe staje się nie tylko przetwarzanie dużych korpusów
+                  tekstów, lecz także precyzyjne uchwycenie zjawisk
+                  strukturalnych i funkcjonalnych, takich jak częstotliwość
+                  określonych form wypowiedzi, rozkład elementów dramatycznych
+                  czy natężenie konkretnych funkcji (np. wypowiedzi „na
+                  stronie”). Metody cyfrowe nie zastępują interpretacji, mogą ją
+                  jednak wspierać poprzez dostarczenie danych odsłaniających
+                  wzorce niewidoczne podczas tradycyjnej lektury.
                </div>
-               <h2>Studium przypadku: Twórczość dramatyczna Juliusza Słowackiego</h2>
-               <div>Poniżej podano konkretny przykład zastosowania badań cyfrowych do analizy twórczości Juliusza Słowackiego. W analizie wzięto pod uwagę wierszowane dramaty poety, które zostały zdigitalizowane w sposób umożliwiający ich właściwe przetworzenie przez skrypt. </div>
-               <div class="slowacki"><img src="assets/slowacki.png" alt="slowacki"></div>
-               <div class="slowacki-mobile"><img src="assets/slowacki_mobile.png" alt="slowacki"></div>
-               <h3>| Transformacja tekstów Słowackiego po przełomie mistycznym</h3>
+               <h2>
+                  Studium przypadku: Twórczość dramatyczna Juliusza Słowackiego
+               </h2>
+               <div>
+                  Poniżej podano konkretny przykład zastosowania badań cyfrowych
+                  do analizy twórczości Juliusza Słowackiego. W analizie wzięto
+                  pod uwagę wierszowane dramaty poety, które zostały
+                  zdigitalizowane w sposób umożliwiający ich właściwe
+                  przetworzenie przez skrypt.
+               </div>
+               <div class="slowacki">
+                  <img src="assets/slowacki.png" alt="slowacki" />
+               </div>
+               <div class="slowacki-mobile">
+                  <img src="assets/slowacki_mobile.png" alt="slowacki" />
+               </div>
+               <h3>
+                  | Transformacja tekstów Słowackiego po przełomie mistycznym
+               </h3>
                <div>
                   <p>
-                     Wielu badaczy zauważa znaczącą zmianę w sposobie pisania Słowackiego w okresie mistyczno-genezyjskim. Jej formalnym wykładnikiem jest na przykład ograniczenie przez poetę „romantycznych tendencji do rozbudowywania wszelkich metawypowiedzi (didaskaliów, prologów, wstępów)”<span style="color:#0073ce; cursor:pointer;" onclick="alert('A. Ziołowicz, Dramat i romantyczne „Ja”. Studium podmiotowości w dramaturgii polskiej doby romantyzmu, Kraków 2022, s. 114.')">[1]</span>. O tej specyficznej na tle poetyki dramatu romantycznego właściwości późnych utworów Słowackiego wspominała (za Ireną Sławińską<span style="color:#0073ce; cursor:pointer;" onclick="alert('Zob. I. Sławińska, Przywołanie przestrzeni w dramacie Słowackiego „Zawisza Czarny”, [w:] tejże, Sceniczny gest poety. Zbiór studiów o dramacie, Kraków 1960.')">[2]</span>) Ewa Nawrocka:
+                     Wielu badaczy zauważa znaczącą zmianę w sposobie pisania
+                     Słowackiego w okresie mistyczno-genezyjskim. Jej formalnym
+                     wykładnikiem jest na przykład ograniczenie przez poetę
+                     „romantycznych tendencji do rozbudowywania wszelkich
+                     metawypowiedzi (didaskaliów, prologów, wstępów)”<span
+                        style="color: #0073ce; cursor: pointer"
+                        onclick="alert('A. Ziołowicz, Dramat i romantyczne „Ja”. Studium podmiotowości w dramaturgii polskiej doby romantyzmu, Kraków 2022, s. 114.')"
+                        >[1]</span
+                     >. O tej specyficznej na tle poetyki dramatu romantycznego
+                     właściwości późnych utworów Słowackiego wspominała (za
+                     Ireną Sławińską<span
+                        style="color: #0073ce; cursor: pointer"
+                        onclick="alert('Zob. I. Sławińska, Przywołanie przestrzeni w dramacie Słowackiego „Zawisza Czarny”, [w:] tejże, Sceniczny gest poety. Zbiór studiów o dramacie, Kraków 1960.')"
+                        >[2]</span
+                     >) Ewa Nawrocka:
                      <figure class="quote">
-                  <blockquote>
-                  <p>
-                  zwrócono uwagę na nikłość i lakoniczność uwag inscenizacyjnych w mistycznych dramatach Słowackiego i&nbsp;tendencję do ich ograniczania, a zarazem poszerzenie tekstu głównego o informacje dotyczące przestrzeni i&nbsp;czasu
+                        <blockquote>
+                           <p>
+                              zwrócono uwagę na nikłość i lakoniczność uwag
+                              inscenizacyjnych w mistycznych dramatach
+                              Słowackiego i&nbsp;tendencję do ich ograniczania,
+                              a zarazem poszerzenie tekstu głównego o informacje
+                              dotyczące przestrzeni i&nbsp;czasu
+                           </p>
+                        </blockquote>
+                        <figcaption>
+                           — E. Nawrocka,
+                           <cite>Dramaty mistyczne Juliusza Słowackiego </cite>,
+                           [w:] <cite>Dramat i teatr romantyczny</cite>, red. D.
+                           Ratajczak, Wrocław 1992, s. 87
+                        </figcaption>
+                     </figure>
+                     Przytoczone spostrzeżenia potwierdza analiza cyfrowa. Skalę
+                     redukcji tekstu pobocznego w utworach
+                     mistyczno-genezyjskich widać na poniższym wykresie:
                   </p>
-                  </blockquote>
-                  <figcaption>
-                  — E. Nawrocka, <cite>Dramaty mistyczne Juliusza Słowackiego </cite>, [w:] <cite>Dramat i teatr romantyczny</cite>, red. D. Ratajczak, Wrocław 1992, s. 87
-                  </figcaption>
-                  </figure>
-                  Przytoczone spostrzeżenia potwierdza analiza cyfrowa. Skalę redukcji tekstu pobocznego w utworach mistyczno-genezyjskich widać na poniższym wykresie:
-                  
-                  <div class="chart"><img src="assets/wykres_gestosc_didaskaliow.png" alt="wykres"></div>
+
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_gestosc_didaskaliow.png"
+                        alt="wykres"
+                     />
+                  </div>
                   <p>
-                     Innym formalnym wykładnikiem transformacji tekstów późnego Słowackiego jest m.in. zmiana średniej długości odcinka izosylabicznego (obrazująca zwiększenie stabilności rytmicznej tekstów mistyczno-genezyjskich):
+                     Innym formalnym wykładnikiem transformacji tekstów późnego
+                     Słowackiego jest m.in. zmiana średniej długości odcinka
+                     izosylabicznego (obrazująca zwiększenie stabilności
+                     rytmicznej tekstów mistyczno-genezyjskich):
                   </p>
-                  <div class="chart"><img src="assets/wykres_izosylabizm.png" alt="wykres"></div>
-                  <p>zmiana średniej długości wypowiedzi jednej postaci (ilustrująca zmianę dynamiki interakcji między postaciami):</p>
-                  <div class="chart"><img src="assets/wykres_srednia_dlugosc_monologu.png" alt="wykres"></div>
-                  <p>a także zmiana współczynnika łamania wiersza (związana ze znacznym zanikiem sygnalizowania końca struktury składniowej w wygłosie):</p>
-                  <div class="chart"><img src="assets/wykres_wspolczynnik_lamania_wiersza.png" alt="wykres"></div>
-                  <p>oraz wyraźne wyciszenie pytań i wykrzyknień (świadczące być może o przejściu od emocji i epistemologicznej niepewności do pewności – ton staje się bardziej profetyczny i płynny):</p>
-                  <div class="chart"><img src="assets/wykres_pytania.png" alt="wykres"></div>
-                  <div class="chart"><img src="assets/wykres_wykrzyknienia.png" alt="wykres"></div>
-                  Na marginesie – warto zwrócić uwagę, jak na powyższych wykresach wypada <i>Fantazy</i>. Choć nie znamy dokładnej daty powstania dramatu, większość badaczy zalicza go do twórczości mistyczno-genezyjskiej. Niektóre zbadane parametry sugerują jednak, że bliżej mu do tekstów sprzed przełomu mistycznego. Oczywiście przy interpretacji wykresów należy pamiętać, że <i>Fantazy</i> nie został ostatecznie zredagowany przez Słowackiego (poeta pozostawił utwór w rękopisie; pierwodruk ukazał się w tomie <i>Pism pośmiertnych</i> wydanym w 1866 roku), więc np. didaskalia czy rozkład partii dialogowych (rozczłonkowanie wypowiedzi dramatycznej na kwestie poszczególnych postaci) są w dużym stopniu dziełem edytorów. Zakres ingerencji edytorskich (wpływających niewątpliwie na przeanalizowane wskaźniki) szerzej omawia Maria Prussak<span style="color:#0073ce; cursor:pointer;" onclick="alert('Zob. M. Prussak, Fantazy – w poszukiwaniu nowej formuły dramatu, w: Piękno Juliusza Słowackiego, t. 2: Universum, red. J. Ławski, G. Kowalski i Ł. Zabielski, Białystok 2013.')">[3]</span>. Jednocześnie pewne parametry pozostają w znikomej mierze zależne od decyzji kolejnych edytorów (patrz: średnia długość odcinka izosylabicznego, znacznie odstająca w przypadku <i>Fantazego</i> od innych późnych utworów). Szerzej zakrojone badania cyfrowe być może ujawniłyby zatem więcej argumentów, że dramat – jak uważano jeszcze do lat 50. XX wieku i jak na powrót przekonywał J.M. Rymkiewicz w książce <i>Juliusz Słowacki pyta o godzinę</i><span style="color:#0073ce; cursor:pointer;" onclick="alert('Zob. J.M. Rymkiewicz, Juliusz Słowacki pyta o godzinę, Warszawa 1982, s. 37–51.')">[4]</span> – nie należy do fazy mistycznej i powstał około roku 1841.
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_izosylabizm.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  <p>
+                     zmiana średniej długości wypowiedzi jednej postaci
+                     (ilustrująca zmianę dynamiki interakcji między postaciami):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_srednia_dlugosc_monologu.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  <p>
+                     a także zmiana współczynnika łamania wiersza (związana ze
+                     znacznym zanikiem sygnalizowania końca struktury
+                     składniowej w wygłosie):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_wspolczynnik_lamania_wiersza.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  <p>
+                     oraz wyraźne wyciszenie pytań i wykrzyknień (świadczące być
+                     może o przejściu od emocji i epistemologicznej niepewności
+                     do pewności – ton staje się bardziej profetyczny i płynny):
+                  </p>
+                  <div class="chart">
+                     <img src="assets/charts/wykres_pytania.png" alt="wykres" />
+                  </div>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_wykrzyknienia.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  Na marginesie – warto zwrócić uwagę, jak na powyższych
+                  wykresach wypada <i>Fantazy</i>. Choć nie znamy dokładnej daty
+                  powstania dramatu, większość badaczy zalicza go do twórczości
+                  mistyczno-genezyjskiej. Niektóre zbadane parametry sugerują
+                  jednak, że bliżej mu do tekstów sprzed przełomu mistycznego.
+                  Oczywiście przy interpretacji wykresów należy pamiętać, że
+                  <i>Fantazy</i> nie został ostatecznie zredagowany przez
+                  Słowackiego (poeta pozostawił utwór w rękopisie; pierwodruk
+                  ukazał się w tomie <i>Pism pośmiertnych</i> wydanym w 1866
+                  roku), więc np. didaskalia czy rozkład partii dialogowych
+                  (rozczłonkowanie wypowiedzi dramatycznej na kwestie
+                  poszczególnych postaci) są w dużym stopniu dziełem edytorów.
+                  Zakres ingerencji edytorskich (wpływających niewątpliwie na
+                  przeanalizowane wskaźniki) szerzej omawia Maria Prussak<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. M. Prussak, Fantazy – w poszukiwaniu nowej formuły dramatu, w: Piękno Juliusza Słowackiego, t. 2: Universum, red. J. Ławski, G. Kowalski i Ł. Zabielski, Białystok 2013.')"
+                     >[3]</span
+                  >. Jednocześnie pewne parametry pozostają w znikomej mierze
+                  zależne od decyzji kolejnych edytorów (patrz: średnia długość
+                  odcinka izosylabicznego, znacznie odstająca w przypadku
+                  <i>Fantazego</i> od innych późnych utworów). Szerzej zakrojone
+                  badania cyfrowe być może ujawniłyby zatem więcej argumentów,
+                  że dramat – jak uważano jeszcze do lat 50. XX wieku i jak na
+                  powrót przekonywał J.M. Rymkiewicz w książce
+                  <i>Juliusz Słowacki pyta o godzinę</i
+                  ><span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. J.M. Rymkiewicz, Juliusz Słowacki pyta o godzinę, Warszawa 1982, s. 37–51.')"
+                     >[4]</span
+                  >
+                  – nie należy do fazy mistycznej i powstał około roku 1841.
                </div>
-                <div class="rymkiewicz-image-container">
-                  <img src="assets/slowacki_i_rymkiewicz_biale.png" alt="Slowacki i Rymkiewicz">
+               <div class="rymkiewicz-image-container">
+                  <img
+                     src="assets/slowacki_i_rymkiewicz_biale.png"
+                     alt="Slowacki i Rymkiewicz"
+                  />
                </div>
                <div class="banner-separator">
-                  <img src="assets/separator_long.png" alt="baner">
+                  <img src="assets/separator_long.png" alt="baner" />
                </div>
                <div class="banner-separator-mobile">
-                  <img src="assets/separator_short.png" alt="baner_mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
                </div>
                <h2>Jak korzystać ze strony?</h2>
-               W wyniku analizy (przycisk <strong>Analizuj</strong>) zwracana jest tabela z formatem wiersza każdej linijki dramatu i bohaterem, który daną linijkę mówi. Tabelę
-               można wyeksportować do pliku Excel (np. w celu bardziej zaawansowanych badań).
-               Ponadto, można wygenerować wykresy kołowe i słupkowe, żeby porównać pod kątem wersyfikacyjnym mówienie
-               poszczególnych postaci (wykresy pokazują procentowy udział danego formatu wiersza w całym mówieniu wybranego bohatera). Postaci na potrzeby analizy można łączyć, np. dla IV cz. <i>Dziadów</i> (domyślny przykład w polu tekstowym) można na
-               wykresie kołowym porównać
-               między
-               sobą następujący układ osób: KSIĄDZ, (GUSTAW + PUSTELNIK), (DZIECI + DZIECIĘ + DZIECKO
-               + CHÓR
-               DZIECI). Poniżej tabeli znajduje się sekcja <strong>Dodatkowe wskaźniki</strong> z wyliczonymi parametrami poszerzającymi zakres analizy.<br/><br/>
+               W wyniku analizy (przycisk <strong>Analizuj</strong>) zwracana
+               jest tabela z formatem wiersza każdej linijki dramatu i
+               bohaterem, który daną linijkę mówi. Tabelę można wyeksportować do
+               pliku Excel (np. w celu bardziej zaawansowanych badań). Ponadto,
+               można wygenerować wykresy kołowe i słupkowe, żeby porównać pod
+               kątem wersyfikacyjnym mówienie poszczególnych postaci (wykresy
+               pokazują procentowy udział danego formatu wiersza w całym
+               mówieniu wybranego bohatera). Postaci na potrzeby analizy można
+               łączyć, np. dla IV cz. <i>Dziadów</i> (domyślny przykład w polu
+               tekstowym) można na wykresie kołowym porównać między sobą
+               następujący układ osób: KSIĄDZ, (GUSTAW + PUSTELNIK), (DZIECI +
+               DZIECIĘ + DZIECKO + CHÓR DZIECI). Poniżej tabeli znajduje się
+               sekcja <strong>Dodatkowe wskaźniki</strong> z wyliczonymi
+               parametrami poszerzającymi zakres analizy.<br /><br />
                <div class="mobile-img">
-                  <img src="assets/computer-3.png" alt="image">
+                  <img src="assets/computer-3.png" alt="image" />
                </div>
                <div class="tips-img-container">
                   <div class="tips-img">
-                     <img src="assets/computer-3.png" alt="image">
+                     <img src="assets/computer-3.png" alt="image" />
                   </div>
                   <div>
-                     Tekst dramatu należy wstępnie przygotować (przed wklejeniem do pola tekstowego lub załadowaniem pliku w formacie .txt), żeby algorytm mógł poprawnie przypisać wszystkie partie do
-                     mówiących postaci i wykryć didaskalia. W tym celu:<br/>
+                     Tekst dramatu należy wstępnie przygotować (przed wklejeniem
+                     do pola tekstowego lub załadowaniem pliku w formacie .txt),
+                     żeby algorytm mógł poprawnie przypisać wszystkie partie do
+                     mówiących postaci i wykryć didaskalia. W tym celu:<br />
                      <ul>
                         <li>
-                           postaci dramatu powinny zostać zapisane wielkimi literami, np. PUSTELNIK,
+                           postaci dramatu powinny zostać zapisane wielkimi
+                           literami, np. PUSTELNIK,
                         </li>
-                        <li>didaskalia powinny zostać wydzielone za pomocą znaku slash (ukośnik), np. / na stronie /.</li>
+                        <li>
+                           didaskalia powinny zostać wydzielone za pomocą znaku
+                           slash (ukośnik), np. / na stronie /.
+                        </li>
                      </ul>
-                     <strong>Uwaga</strong>: Aktualnie skrypt bazuje na konwencjach zastosowanych w serwisie <a href="https://wolnelektury.pl" target="_blank">Wolne Lektury</a> (jeśli wybierzemy opcję: <i>Pobierz książkę</i> > <i>Inne formaty</i> > <i>Plik tekstowy.txt</i>). Wklejenie tekstu skopiowanego z tego źródła nie wymaga zatem ingerencji w treść w celu dostosowania jej do algorytmu (należy jednak pamiętać, żeby z początku i końca zawartości pliku usunąć tytuł, spis osób dramatu, wszelkie noty edytorskie, numer ISBN itd.). Skrypt zostanie rozszerzony także o obsługę standardu TEI/XML – z uwzględnieniem istniejących praktyk kodowania tekstów dramatycznych, stosowanych m.in. w <a href="https://dracor.org/pol" target="_blank"> PolDraCor</a>. 
+                     <strong>Uwaga</strong>: Aktualnie skrypt bazuje na
+                     konwencjach zastosowanych w serwisie
+                     <a href="https://wolnelektury.pl" target="_blank"
+                        >Wolne Lektury</a
+                     >
+                     (jeśli wybierzemy opcję: <i>Pobierz książkę</i> >
+                     <i>Inne formaty</i> > <i>Plik tekstowy.txt</i>). Wklejenie
+                     tekstu skopiowanego z tego źródła nie wymaga zatem
+                     ingerencji w treść w celu dostosowania jej do algorytmu
+                     (należy jednak pamiętać, żeby z początku i końca zawartości
+                     pliku usunąć tytuł, spis osób dramatu, wszelkie noty
+                     edytorskie, numer ISBN itd.).
                   </div>
                </div>
             </div>
             <div class="info-algo">
                <p>Jak działa ten algorytm?</p>
-               <p><span class="infotip">
-                  <img class="infotip-img" src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="info">
-                  <span class="infotip-content" id="infotip-content">   Skrypt przelicza liczbę sylab dla każdego wersu na podstawie identyfikacji samogłosek, które w danej pozycji pełnią funkcję sylabotwórczą. Nie robi tego w 100% bezbłędnie — nie wykryje np., że kombinacja [ia] występująca na granicy morfemów (jak w wyrazie <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo będzie 7-sylabowe), ponieważ [i] — dość wyjątkowo jak na język polski (bo pomimo sąsiedztwa innej samogłoski z prawej strony) — będzie ośrodkiem osobnej sylaby. Nie wykryje także dyftongów takich jak [au] (por. <i>t<u>au</u>-to-lo-gia</i>, ale <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por. <i>si-nu-s<u>oi</u>-da</i>, ale <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z takich (m.in.) wyjątków nie wpłyną znacząco na statystyki dla długich tekstów. Narzędzie nie wskazuje przypadków, w których na jeden wers metryczny przypadają repliki dialogowe różnych postaci; umożliwia natomiast wykluczenie ich z analizy ręcznie poprzez wprowadzenie znaku ++ przed konkretnymi linijkami tekstu.</span>
+               <p>
+                  <span class="infotip">
+                     <img
+                        class="infotip-img"
+                        src="https://img.icons8.com/material-outlined/48/808080/info.png"
+                        alt="info"
+                     />
+                     <span class="infotip-content" id="infotip-content">
+                        Skrypt przelicza liczbę sylab dla każdego wersu na
+                        podstawie identyfikacji samogłosek, które w danej
+                        pozycji pełnią funkcję sylabotwórczą. Nie robi tego w
+                        100% bezbłędnie — nie wykryje np., że kombinacja [ia]
+                        występująca na granicy morfemów (jak w wyrazie
+                        <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo
+                        będzie 7-sylabowe), ponieważ [i] — dość wyjątkowo jak na
+                        język polski (bo pomimo sąsiedztwa innej samogłoski z
+                        prawej strony) — będzie ośrodkiem osobnej sylaby. Nie
+                        wykryje także dyftongów takich jak [au] (por.
+                        <i>t<u>au</u>-to-lo-gia</i>, ale
+                        <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por.
+                        <i>si-nu-s<u>oi</u>-da</i>, ale
+                        <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z
+                        takich (m.in.) wyjątków nie wpłyną znacząco na
+                        statystyki dla długich tekstów. Narzędzie nie wskazuje
+                        przypadków, w których na jeden wers metryczny przypadają
+                        repliki dialogowe różnych postaci; umożliwia natomiast
+                        wykluczenie ich z analizy ręcznie poprzez wprowadzenie
+                        znaku ++ przed konkretnymi linijkami tekstu.</span
+                     >
                   </span>
                </p>
             </div>
          </section>
-         <textarea id="inputText" placeholder="Wklej tutaj tekst dramatu..."></textarea>
-         <section id="fileDropZone" class="file-drop-zone" aria-label="Wczytywanie pliku tekstowego">
-            <strong>Wybierz plik .txt albo przeciągnij go tutaj</strong><br /><br />
-            <span>(możesz także ręcznie uzupełnić pole tekstowe znajdujące się powyżej lub wybrać tekst z mojej biblioteki)</span><br /><br />
+         <textarea
+            id="inputText"
+            placeholder="Wklej tutaj tekst dramatu..."
+         ></textarea>
+         <section
+            id="fileDropZone"
+            class="file-drop-zone"
+            aria-label="Wczytywanie pliku tekstowego"
+         >
+            <strong>Wybierz plik .txt albo przeciągnij go tutaj</strong
+            ><br /><br />
+            <span
+               >(możesz także ręcznie uzupełnić pole tekstowe znajdujące się
+               powyżej lub wybrać tekst z mojej biblioteki)</span
+            ><br /><br />
             <input type="file" id="txtFileInput" accept=".txt,text/plain" />
          </section>
          <section class="library-section" aria-label="Moja biblioteka">
             <h2>Biblioteka dramatów</h2>
             <p>
-               Poniżej znajduje się biblioteka dramatów przygotowanych pod wymagania skryptu (docelowo teksty zostaną dostosowane także do standardu TEI/XML).
-               Dorzucono tu m.in. te utwory, które nie zostały opracowane przez serwis Wolne Lektury
-               (jak np. <i>Samuel Zborowski</i> J. Słowackiego).
+               Poniżej znajduje się biblioteka dramatów przygotowanych pod
+               wymagania skryptu (docelowo teksty zostaną dostosowane także do
+               standardu TEI/XML). Dorzucono tu m.in. te utwory, które nie
+               zostały opracowane przez serwis Wolne Lektury (jak np.
+               <i>Samuel Zborowski</i> J. Słowackiego).
             </p>
             <input
                type="search"
@@ -594,11 +1366,11 @@
                class="library-search"
                placeholder="Wyszukaj dramat po autorze lub tytule..."
                aria-label="Wyszukaj dramat po autorze lub tytule"
-               />
+            />
             <p id="libraryNoResults" class="library-no-results">
                Nie znaleziono dramatów pasujących do wpisanej frazy.
             </p>
-            <p style="font-size:0.85em; :#666;">
+            <p style="font-size: 0.85em; color: #666">
                ⇄ Przewijaj w poziomie, aby zobaczyć więcej pozycji
             </p>
             <div class="library-grid">
@@ -606,135 +1378,201 @@
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Samuel Zborowski</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-samuel-zborowski.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-samuel-zborowski.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Cyprian Norwid</div>
                   <div class="library-title">Pierścień Wielkiej Damy</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/norwid-pierscien-wielkiej-damy.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/norwid-pierscien-wielkiej-damy.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Balladyna</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-balladyna.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-balladyna.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Ksiądz Marek</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-ksiadz-marek.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-ksiadz-marek.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Fantazy</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-fantazy.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-fantazy.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Kordian</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-kordian.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-kordian.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Książę niezłomny</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-ksiaze-niezlomny.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-ksiaze-niezlomny.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Lilla Weneda</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-lilla-weneda.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-lilla-weneda.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Maria Stuart</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-maria-stuart.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-maria-stuart.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Mazepa</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-mazepa.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-mazepa.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Mindowe</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-mindowe.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-mindowe.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Juliusz Słowacki</div>
                   <div class="library-title">Sen srebrny Salomei</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/slowacki-sen-srebrny-salomei.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-sen-srebrny-salomei.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Adam Mickiewicz</div>
                   <div class="library-title">II cz. Dziadów</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/mickiewicz-dziady-ii.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-dziady-ii.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Adam Mickiewicz</div>
                   <div class="library-title">IV cz. Dziadów</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/mickiewicz-dziady-iv.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-dziady-iv.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Adam Mickiewicz</div>
                   <div class="library-title">III cz. Dziadów</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/mickiewicz-dziady-iii.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-dziady-iii.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
                <article class="library-card">
                   <img src="assets/folder2.png" alt="folder icon" />
                   <div class="library-author">Adam Mickiewicz</div>
                   <div class="library-title">I cz. Dziadów</div>
-                  <button type="button" class="library-select-button" data-text-path="assets/biblioteka/mickiewicz-widowisko-czesc-i.txt">
-                  Wybierz
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-widowisko-czesc-i.txt"
+                  >
+                     Wybierz
                   </button>
                </article>
             </div>
          </section>
          <div class="button-row">
             <button id="analyzeButton" type="button">Analizuj</button>
-            <button id="clearButton" class="clear-button" type="button">Wyczyść</button>
+            <button id="clearButton" class="clear-button" type="button">
+               Wyczyść
+            </button>
          </div>
          <div class="table-container">
             <table id="resultTable" class="hidden">
@@ -749,17 +1587,34 @@
             </table>
          </div>
          <div class="action-buttons" id="actionButtons">
-            <button id="pieChartsButton" type="button">Generuj wykresy kołowe dla wybranych bohaterów</button>
-            <button id="barChartsButton" type="button">Generuj wykresy słupkowe</button>
-            <button id="exportButton" type="button">Eksportuj tabelę do pliku XLSX</button>
+            <button id="pieChartsButton" type="button">
+               Generuj wykresy kołowe dla wybranych bohaterów
+            </button>
+            <button id="barChartsButton" type="button">
+               Generuj wykresy słupkowe
+            </button>
+            <button id="exportButton" type="button">
+               Eksportuj tabelę do pliku XLSX
+            </button>
          </div>
          <div id="charts" class="chart-container"></div>
-         <section id="additionalMetrics" class="additional-metrics" aria-label="Dodatkowe wskaźniki">
+         <section
+            id="additionalMetrics"
+            class="additional-metrics"
+            aria-label="Dodatkowe wskaźniki"
+         >
             <h2>Dodatkowe wskaźniki</h2>
             <div class="additional-index-img">
                <img src="assets/wskazniki2.png" alt="Digital analysis" />
             </div>
-            <div style="color:red; font-size:0.8em;">Uwaga: Narzędzie nie wykrywa na razie przypadków, w których wypowiedzi postaci współdzielą między sobą jeden wers metryczny (czyli sytuacji, gdy na jeden wers metryczny przypadają repliki dialogowe różnych postaci). Może to wpływać na wyniki analizy (średnią długość odcinka izosylabicznego i zróżnicowanie metryczne dramatu).</div>
+            <div style="color: red; font-size: 0.8em">
+               Uwaga: Narzędzie nie wykrywa na razie przypadków, w których
+               wypowiedzi postaci współdzielą między sobą jeden wers metryczny
+               (czyli sytuacji, gdy na jeden wers metryczny przypadają repliki
+               dialogowe różnych postaci). Może to wpływać na wyniki analizy
+               (średnią długość odcinka izosylabicznego i zróżnicowanie
+               metryczne dramatu).
+            </div>
             <div id="isosyllabicMetric"></div>
             <div id="interactionDensityMetric"></div>
             <div id="lineBreakingMetric"></div>
@@ -771,751 +1626,941 @@
          </section>
       </main>
       <script>
-         const APP_CONFIG = {
-           defaultTextPath: 'assets/biblioteka/mickiewicz-dziady-iv.txt',
-           syllableReplacementRegex: /ie|ia|iu|ię|ią|io|ii|iy|ió/g,
-           vowelRegex: /[aeiouąęóy]/gi,
-           lineEndingRegex: /(\.|,|!|\?|;|…|:|-|—|–)$/,
-           selfReferencePronouns: new Set([
-             'ja', 'mnie', 'mi', 'mną',
-             'mój', 'mojego', 'mojemu', 'moim',
-             'moja', 'mojej', 'moją',
-             'moje', 'moi', 'moich', 'moimi'
-           ]),
-           meterColors: {
-             1: 'hsl(55, 50%, 70%)',
-             2: 'hsl(30, 70%, 70%)',
-             3: 'hsl(60, 70%, 70%)',
-             4: 'hsl(90, 70%, 70%)',
-             5: 'hsl(120, 70%, 70%)',
-             6: 'hsl(150, 70%, 70%)',
-             7: 'hsl(180, 70%, 70%)',
-             8: 'hsl(210, 70%, 70%)',
-             9: 'hsl(240, 70%, 70%)',
-             10: 'hsl(270, 70%, 70%)',
-             11: 'hsl(300, 70%, 70%)',
-             12: 'hsl(330, 70%, 70%)',
-             13: 'hsl(360, 70%, 70%)',
-             14: 'hsl(18, 70%, 50%)',
-             15: 'hsl(420, 70%, 70%)',
-             16: 'hsl(450, 70%, 70%)',
-             17: 'hsl(480, 70%, 70%)',
-             18: 'hsl(510, 70%, 70%)',
-             19: 'hsl(540, 70%, 70%)',
-             20: 'hsl(570, 70%, 70%)',
-             21: 'hsl(600, 70%, 70%)',
-             22: 'hsl(630, 70%, 70%)',
-             23: 'hsl(660, 70%, 70%)',
-             24: 'hsl(690, 70%, 70%)',
-             25: 'hsl(720, 70%, 70%)',
-             26: 'hsl(750, 70%, 70%)'
-           }
-         };
-         
-         const DOM = {
-           inputText: document.getElementById('inputText'),
-           resultTable: document.getElementById('resultTable'),
-           resultTableBody: document.querySelector('#resultTable tbody'),
-           actionButtons: document.getElementById('actionButtons'),
-           charts: document.getElementById('charts'),
-           additionalMetrics: document.getElementById('additionalMetrics'),
-           fileDropZone: document.getElementById('fileDropZone'),
-           txtFileInput: document.getElementById('txtFileInput'),
-           librarySearch: document.getElementById('librarySearch'),
-          libraryNoResults: document.getElementById('libraryNoResults'),
-           buttons: {
-             analyze: document.getElementById('analyzeButton'),
-             clear: document.getElementById('clearButton'),
-             pieCharts: document.getElementById('pieChartsButton'),
-             barCharts: document.getElementById('barChartsButton'),
-             export: document.getElementById('exportButton')
-           },
-           metrics: {
-             punctuationExpression: document.getElementById('punctuationExpressionMetric'),
-             isosyllabic: document.getElementById('isosyllabicMetric'),
-             interactionDensity: document.getElementById('interactionDensityMetric'),
-             lineBreaking: document.getElementById('lineBreakingMetric'),
-             selfReference: document.getElementById('selfReferenceMetric'),
-             metacommentaryDensity: document.getElementById('metacommentaryDensityMetric'),
-             asideStageFunction: document.getElementById('asideStageFunctionMetric'),
-             asideDramaLength: document.getElementById('asideDramaLengthMetric')
-           }
-         };
-         
-         const state = {
-           analyzedData: [],
-           metricDistributionChart: null,
-           renderedCharts: []
-         };
-         
-         function init() {
-           bindEvents();
-           loadDefaultText();
-         }
-         
-         function bindEvents() {
-           DOM.buttons.analyze.addEventListener('click', analyzeText);
-           DOM.buttons.clear.addEventListener('click', clearText);
-           DOM.buttons.pieCharts.addEventListener('click', generatePieCharts);
-           DOM.buttons.barCharts.addEventListener('click', generateBarCharts);
-           DOM.buttons.export.addEventListener('click', exportToExcel);
-         
-           DOM.txtFileInput.addEventListener('change', (event) => {
-             loadTxtFile(event.target.files[0]);
-           });
-         
-           DOM.fileDropZone.addEventListener('dragover', (event) => {
-             event.preventDefault();
-             DOM.fileDropZone.classList.add('drag-over');
-           });
-         
-           DOM.fileDropZone.addEventListener('dragleave', (event) => {
-             event.preventDefault();
-             DOM.fileDropZone.classList.remove('drag-over');
-           });
-         
-           DOM.fileDropZone.addEventListener('drop', (event) => {
-             event.preventDefault();
-             DOM.fileDropZone.classList.remove('drag-over');
-             loadTxtFile(event.dataTransfer.files[0]);
-           });
-           DOM.librarySearch.addEventListener('input', filterLibraryCards);
-           document.querySelectorAll('.library-select-button').forEach((button) => {
-         button.addEventListener('click', () => {
-         loadLibraryText(button.dataset.textPath);
-         });
-         });
-         }
-         
-         async function loadDefaultText() {
-           try {
-             const response = await fetch(APP_CONFIG.defaultTextPath);
-             if (!response.ok) throw new Error('Nie udało się załadować pliku dziady.txt');
-             DOM.inputText.value = await response.text();
-           } catch (error) {
-             console.error(error);
-           }
-         }
-          async function loadLibraryText(path) {
-            try {
-              const response = await fetch(path);
-              if (!response.ok) throw new Error(`Nie udało się załadować pliku: ${path}`);
-              
-              const text = await response.text();
-              DOM.inputText.value = text;
-         
-              // automatyczna analiza po załadowaniu
-              analyzeText();
-         
-            } catch (error) {
-              console.error(error);
-              alert('Nie udało się załadować wybranego dramatu.');
-            }
-          }
-         
-         function clearText() {
-           DOM.inputText.value = '';
-           state.analyzedData = [];
-           clearAllCharts();
-           resetMetrics();
-           DOM.resultTableBody.innerHTML = '';
-           DOM.resultTable.classList.add('hidden');
-           DOM.actionButtons.style.display = 'none';
-         }
-         
-         function analyzeText() {
-           const inputText = DOM.inputText.value.trim();
-         
-           if (!inputText) {
-             alert('Nie wprowadzono wartości.');
-             return;
-           }
-         
-           clearAllCharts();
-           state.analyzedData = parseDramaText(inputText);
-           renderResultsTable(state.analyzedData);
-           calculateAdditionalMetrics();
-         
-           DOM.resultTable.classList.remove('hidden');
-           DOM.actionButtons.style.display = 'flex';
-           scrollToBottom();
-         }
-         
-         function parseDramaText(text) {
-           let currentActor = '';
-         
-           return text
-             .split('\n')
-             .map((line) => line.trim())
-             .filter((line) => line && !line.startsWith('++'))
-             .reduce((rows, line) => {
-               if (isActorLine(line)) {
-                 currentActor = line;
-                 return rows;
-               }
-         
-               rows.push({
-                 line,
-                 vowelsNumber: countSyllables(line),
-                 actor: isStageDirection(line) ? 'DIDASKALIA' : currentActor
+         const buttons = document.querySelectorAll("[data-filter]");
+         const cards = document.querySelectorAll(".card");
+
+         buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+               const filter = button.dataset.filter;
+
+               buttons.forEach((btn) =>
+                  btn.classList.toggle("active", btn === button),
+               );
+
+               cards.forEach((card) => {
+                  const category = card.dataset.category;
+                  const shouldShow =
+                     filter === "all" ||
+                     category === filter ||
+                     category === "all";
+
+                  card.hidden = !shouldShow;
+                  if (shouldShow) {
+                     card.animate(
+                        [
+                           {
+                              opacity: 0,
+                              transform: "translateY(12px) scale(.985)",
+                           },
+                           { opacity: 1, transform: "translateY(0) scale(1)" },
+                        ],
+                        { duration: 280, easing: "ease-out" },
+                     );
+                  }
                });
-         
-               return rows;
-             }, []);
+            });
+         });
+
+         const observer = new IntersectionObserver(
+            (entries) => {
+               entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                     entry.target.classList.add("visible");
+                     observer.unobserve(entry.target);
+                  }
+               });
+            },
+            { threshold: 0.12 },
+         );
+
+         document.querySelectorAll(".reveal").forEach((el, index) => {
+            el.style.transitionDelay = `${Math.min(index * 45, 280)}ms`;
+            observer.observe(el);
+         });
+
+         document.querySelectorAll(".card").forEach((card) => {
+            card.addEventListener("pointermove", (e) => {
+               if (
+                  window.matchMedia("(prefers-reduced-motion: reduce)").matches
+               )
+                  return;
+               const rect = card.getBoundingClientRect();
+               const x = (e.clientX - rect.left) / rect.width - 0.5;
+               const y = (e.clientY - rect.top) / rect.height - 0.5;
+               card.style.transform = `translateY(-7px) rotateX(${(-y * 2.3).toFixed(2)}deg) rotateY(${(x * 2.3).toFixed(2)}deg)`;
+            });
+
+            card.addEventListener("pointerleave", () => {
+               card.style.transform = "";
+            });
+         });
+         const APP_CONFIG = {
+            defaultTextPath: "assets/biblioteka/mickiewicz-dziady-iv.txt",
+            syllableReplacementRegex: /ie|ia|iu|ię|ią|io|ii|iy|ió/g,
+            vowelRegex: /[aeiouąęóy]/gi,
+            lineEndingRegex: /(\.|,|!|\?|;|…|:|-|—|–)$/,
+            selfReferencePronouns: new Set([
+               "ja",
+               "mnie",
+               "mi",
+               "mną",
+               "mój",
+               "mojego",
+               "mojemu",
+               "moim",
+               "moja",
+               "mojej",
+               "moją",
+               "moje",
+               "moi",
+               "moich",
+               "moimi",
+            ]),
+            meterColors: {
+               1: "hsl(55, 50%, 70%)",
+               2: "hsl(30, 70%, 70%)",
+               3: "hsl(60, 70%, 70%)",
+               4: "hsl(90, 70%, 70%)",
+               5: "hsl(120, 70%, 70%)",
+               6: "hsl(150, 70%, 70%)",
+               7: "hsl(180, 70%, 70%)",
+               8: "hsl(210, 70%, 70%)",
+               9: "hsl(240, 70%, 70%)",
+               10: "hsl(270, 70%, 70%)",
+               11: "hsl(300, 70%, 70%)",
+               12: "hsl(330, 70%, 70%)",
+               13: "hsl(360, 70%, 70%)",
+               14: "hsl(18, 70%, 50%)",
+               15: "hsl(420, 70%, 70%)",
+               16: "hsl(450, 70%, 70%)",
+               17: "hsl(480, 70%, 70%)",
+               18: "hsl(510, 70%, 70%)",
+               19: "hsl(540, 70%, 70%)",
+               20: "hsl(570, 70%, 70%)",
+               21: "hsl(600, 70%, 70%)",
+               22: "hsl(630, 70%, 70%)",
+               23: "hsl(660, 70%, 70%)",
+               24: "hsl(690, 70%, 70%)",
+               25: "hsl(720, 70%, 70%)",
+               26: "hsl(750, 70%, 70%)",
+            },
+         };
+
+         const DOM = {
+            inputText: document.getElementById("inputText"),
+            resultTable: document.getElementById("resultTable"),
+            resultTableBody: document.querySelector("#resultTable tbody"),
+            actionButtons: document.getElementById("actionButtons"),
+            charts: document.getElementById("charts"),
+            additionalMetrics: document.getElementById("additionalMetrics"),
+            fileDropZone: document.getElementById("fileDropZone"),
+            txtFileInput: document.getElementById("txtFileInput"),
+            librarySearch: document.getElementById("librarySearch"),
+            libraryNoResults: document.getElementById("libraryNoResults"),
+            buttons: {
+               analyze: document.getElementById("analyzeButton"),
+               clear: document.getElementById("clearButton"),
+               pieCharts: document.getElementById("pieChartsButton"),
+               barCharts: document.getElementById("barChartsButton"),
+               export: document.getElementById("exportButton"),
+            },
+            metrics: {
+               punctuationExpression: document.getElementById(
+                  "punctuationExpressionMetric",
+               ),
+               isosyllabic: document.getElementById("isosyllabicMetric"),
+               interactionDensity: document.getElementById(
+                  "interactionDensityMetric",
+               ),
+               lineBreaking: document.getElementById("lineBreakingMetric"),
+               selfReference: document.getElementById("selfReferenceMetric"),
+               metacommentaryDensity: document.getElementById(
+                  "metacommentaryDensityMetric",
+               ),
+               asideStageFunction: document.getElementById(
+                  "asideStageFunctionMetric",
+               ),
+               asideDramaLength: document.getElementById(
+                  "asideDramaLengthMetric",
+               ),
+            },
+         };
+
+         const state = {
+            analyzedData: [],
+            metricDistributionChart: null,
+            renderedCharts: [],
+         };
+
+         function init() {
+            bindEvents();
+            loadDefaultText();
          }
-         
+
+         function bindEvents() {
+            DOM.buttons.analyze.addEventListener("click", analyzeText);
+            DOM.buttons.clear.addEventListener("click", clearText);
+            DOM.buttons.pieCharts.addEventListener("click", generatePieCharts);
+            DOM.buttons.barCharts.addEventListener("click", generateBarCharts);
+            DOM.buttons.export.addEventListener("click", exportToExcel);
+
+            DOM.txtFileInput.addEventListener("change", (event) => {
+               loadTxtFile(event.target.files[0]);
+            });
+
+            DOM.fileDropZone.addEventListener("dragover", (event) => {
+               event.preventDefault();
+               DOM.fileDropZone.classList.add("drag-over");
+            });
+
+            DOM.fileDropZone.addEventListener("dragleave", (event) => {
+               event.preventDefault();
+               DOM.fileDropZone.classList.remove("drag-over");
+            });
+
+            DOM.fileDropZone.addEventListener("drop", (event) => {
+               event.preventDefault();
+               DOM.fileDropZone.classList.remove("drag-over");
+               loadTxtFile(event.dataTransfer.files[0]);
+            });
+            DOM.librarySearch.addEventListener("input", filterLibraryCards);
+            document
+               .querySelectorAll(".library-select-button")
+               .forEach((button) => {
+                  button.addEventListener("click", () => {
+                     loadLibraryText(button.dataset.textPath);
+                  });
+               });
+         }
+
+         async function loadDefaultText() {
+            try {
+               const response = await fetch(APP_CONFIG.defaultTextPath);
+               if (!response.ok)
+                  throw new Error("Nie udało się załadować pliku dziady.txt");
+               DOM.inputText.value = await response.text();
+            } catch (error) {
+               console.error(error);
+            }
+         }
+         async function loadLibraryText(path) {
+            try {
+               const response = await fetch(path);
+               if (!response.ok)
+                  throw new Error(`Nie udało się załadować pliku: ${path}`);
+
+               const text = await response.text();
+               DOM.inputText.value = text;
+
+               // automatyczna analiza po załadowaniu
+               analyzeText();
+            } catch (error) {
+               console.error(error);
+               alert("Nie udało się załadować wybranego dramatu.");
+            }
+         }
+
+         function clearText() {
+            DOM.inputText.value = "";
+            state.analyzedData = [];
+            clearAllCharts();
+            resetMetrics();
+            DOM.resultTableBody.innerHTML = "";
+            DOM.resultTable.classList.add("hidden");
+            DOM.actionButtons.style.display = "none";
+         }
+
+         function analyzeText() {
+            const inputText = DOM.inputText.value.trim();
+
+            if (!inputText) {
+               alert("Nie wprowadzono wartości.");
+               return;
+            }
+
+            clearAllCharts();
+            state.analyzedData = parseDramaText(inputText);
+            renderResultsTable(state.analyzedData);
+            calculateAdditionalMetrics();
+
+            DOM.resultTable.classList.remove("hidden");
+            DOM.actionButtons.style.display = "flex";
+            scrollToBottom();
+         }
+
+         function parseDramaText(text) {
+            let currentActor = "";
+
+            return text
+               .split("\n")
+               .map((line) => line.trim())
+               .filter((line) => line && !line.startsWith("++"))
+               .reduce((rows, line) => {
+                  if (isActorLine(line)) {
+                     currentActor = line;
+                     return rows;
+                  }
+
+                  rows.push({
+                     line,
+                     vowelsNumber: countSyllables(line),
+                     actor: isStageDirection(line)
+                        ? "DIDASKALIA"
+                        : currentActor,
+                  });
+
+                  return rows;
+               }, []);
+         }
+
          function isActorLine(line) {
-           return line === line.toUpperCase() && /[A-ZĄĆĘŁŃÓŚŹŻ]/.test(line);
+            return line === line.toUpperCase() && /[A-ZĄĆĘŁŃÓŚŹŻ]/.test(line);
          }
-         
+
          function isStageDirection(line) {
-           return line.includes('/');
+            return line.includes("/");
          }
-         
+
          function countSyllables(line) {
-           const normalizedLine = line.replace(APP_CONFIG.syllableReplacementRegex, 'e');
-           return (normalizedLine.match(APP_CONFIG.vowelRegex) || []).length;
+            const normalizedLine = line.replace(
+               APP_CONFIG.syllableReplacementRegex,
+               "e",
+            );
+            return (normalizedLine.match(APP_CONFIG.vowelRegex) || []).length;
          }
-         
+
          function renderResultsTable(data) {
-           DOM.resultTableBody.innerHTML = '';
-         
-           data.forEach(({ line, vowelsNumber, actor }) => {
-             const row = DOM.resultTableBody.insertRow();
-             row.insertCell(0).textContent = line;
-             row.insertCell(1).textContent = vowelsNumber;
-             row.insertCell(2).textContent = actor;
-           });
+            DOM.resultTableBody.innerHTML = "";
+
+            data.forEach(({ line, vowelsNumber, actor }) => {
+               const row = DOM.resultTableBody.insertRow();
+               row.insertCell(0).textContent = line;
+               row.insertCell(1).textContent = vowelsNumber;
+               row.insertCell(2).textContent = actor;
+            });
          }
-         
+
          function exportToExcel() {
-           const workbook = XLSX.utils.book_new();
-           const rows = [
-             ['Treść linijki', 'Liczba sylab', 'Bohater'],
-             ...state.analyzedData.map(({ line, vowelsNumber, actor }) => [line, vowelsNumber, actor])
-           ];
-           const worksheet = XLSX.utils.aoa_to_sheet(rows);
-         
-           XLSX.utils.book_append_sheet(workbook, worksheet, 'Wyniki');
-           XLSX.writeFile(workbook, 'wyniki.xlsx');
+            const workbook = XLSX.utils.book_new();
+            const rows = [
+               ["Treść linijki", "Liczba sylab", "Bohater"],
+               ...state.analyzedData.map(({ line, vowelsNumber, actor }) => [
+                  line,
+                  vowelsNumber,
+                  actor,
+               ]),
+            ];
+            const worksheet = XLSX.utils.aoa_to_sheet(rows);
+
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Wyniki");
+            XLSX.writeFile(workbook, "wyniki.xlsx");
          }
-         
+
          function generatePieCharts() {
-           const actors = getActors();
-           let selectedActors = prompt(
-             `Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', jeśli chcesz, by skrypt potraktował ich w analizie łącznie (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`
-           );
-         
-           if (!selectedActors) return;
-         
-           selectedActors = selectedActors.toUpperCase();
-           const selectedGroups = parseActorGroups(selectedActors);
-         
-           if (!areActorGroupsValid(selectedGroups, actors)) {
-             alert('Wprowadzono niepoprawne wartości.');
-             return;
-           }
-         
-           const actorsData = getGroupedActorMeterCounts(selectedGroups);
-           clearActorCharts();
-         
-           Object.entries(actorsData).forEach(([groupName, meterCounts]) => {
-             const totalLines = sumValues(meterCounts);
-             const labels = Object.keys(meterCounts);
-             const values = Object.values(meterCounts).map((count) => (count / totalLines) * 100);
-         
-             renderChart({
-               type: 'pie',
-               className: 'chart-box',
-               data: {
-                 labels,
-                 datasets: [{
-                   data: values,
-                   backgroundColor: labels.map(getMeterColor)
-                 }]
-               },
-               options: getPieChartOptions(`Wykres kołowy dla: ${groupName}`)
-             });
-           });
-         
-           scrollToCharts();
+            const actors = getActors();
+            let selectedActors = prompt(
+               `Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', jeśli chcesz, by skrypt potraktował ich w analizie łącznie (dostępni: ${actors.join(", ")}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`,
+            );
+
+            if (!selectedActors) return;
+
+            selectedActors = selectedActors.toUpperCase();
+            const selectedGroups = parseActorGroups(selectedActors);
+
+            if (!areActorGroupsValid(selectedGroups, actors)) {
+               alert("Wprowadzono niepoprawne wartości.");
+               return;
+            }
+
+            const actorsData = getGroupedActorMeterCounts(selectedGroups);
+            clearActorCharts();
+
+            Object.entries(actorsData).forEach(([groupName, meterCounts]) => {
+               const totalLines = sumValues(meterCounts);
+               const labels = Object.keys(meterCounts);
+               const values = Object.values(meterCounts).map(
+                  (count) => (count / totalLines) * 100,
+               );
+
+               renderChart({
+                  type: "pie",
+                  className: "chart-box",
+                  data: {
+                     labels,
+                     datasets: [
+                        {
+                           data: values,
+                           backgroundColor: labels.map(getMeterColor),
+                        },
+                     ],
+                  },
+                  options: getPieChartOptions(
+                     `Wykres kołowy dla: ${groupName}`,
+                  ),
+               });
+            });
+
+            scrollToCharts();
          }
-         
+
          function generateBarCharts() {
-           const actors = getActors();
-           let selectedActors = prompt(
-             `Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(', ')}). Przykład: KSIĄDZ, GUSTAW, PUSTELNIK`
-           );
-         
-           if (!selectedActors) return;
-         
-           selectedActors = selectedActors.toUpperCase();
-           const selectedActorsArray = selectedActors.split(',').map((actor) => actor.trim()).filter(Boolean);
-         
-           if (!selectedActorsArray.every((actor) => actors.includes(actor))) {
-             alert('Wprowadzono niepoprawne wartości.');
-             return;
-           }
-         
-           const actorsData = getActorMeterCounts(selectedActorsArray);
-           const labels = [...new Set(state.analyzedData.map(({ vowelsNumber }) => vowelsNumber))].sort((a, b) => a - b);
-           const datasets = selectedActorsArray.map((actor) => {
-             const totalLines = sumValues(actorsData[actor]);
-         
-             return {
-               label: actor,
-               data: labels.map((label) => ((actorsData[actor][label] || 0) / totalLines) * 100),
-               backgroundColor: getRandomColor()
-             };
-           });
-         
-           clearActorCharts();
-         
-           renderChart({
-             type: 'bar',
-             className: 'chart-box chart-box--wide',
-             data: { labels, datasets },
-             options: getBarChartOptions()
-           });
-         
-           scrollToCharts();
+            const actors = getActors();
+            let selectedActors = prompt(
+               `Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(", ")}). Przykład: KSIĄDZ, GUSTAW, PUSTELNIK`,
+            );
+
+            if (!selectedActors) return;
+
+            selectedActors = selectedActors.toUpperCase();
+            const selectedActorsArray = selectedActors
+               .split(",")
+               .map((actor) => actor.trim())
+               .filter(Boolean);
+
+            if (!selectedActorsArray.every((actor) => actors.includes(actor))) {
+               alert("Wprowadzono niepoprawne wartości.");
+               return;
+            }
+
+            const actorsData = getActorMeterCounts(selectedActorsArray);
+            const labels = [
+               ...new Set(
+                  state.analyzedData.map(({ vowelsNumber }) => vowelsNumber),
+               ),
+            ].sort((a, b) => a - b);
+            const datasets = selectedActorsArray.map((actor) => {
+               const totalLines = sumValues(actorsData[actor]);
+
+               return {
+                  label: actor,
+                  data: labels.map(
+                     (label) =>
+                        ((actorsData[actor][label] || 0) / totalLines) * 100,
+                  ),
+                  backgroundColor: getRandomColor(),
+               };
+            });
+
+            clearActorCharts();
+
+            renderChart({
+               type: "bar",
+               className: "chart-box chart-box--wide",
+               data: { labels, datasets },
+               options: getBarChartOptions(),
+            });
+
+            scrollToCharts();
          }
-         
+
          function getActors() {
-           return [...new Set(state.analyzedData.map(({ actor }) => actor))];
+            return [...new Set(state.analyzedData.map(({ actor }) => actor))];
          }
-         
+
          function parseActorGroups(value) {
-           return value.split(',').map((group) => group.split('+').map((actor) => actor.trim()).filter(Boolean));
+            return value.split(",").map((group) =>
+               group
+                  .split("+")
+                  .map((actor) => actor.trim())
+                  .filter(Boolean),
+            );
          }
-         
+
          function areActorGroupsValid(groups, actors) {
-           return groups.flat().every((actor) => actors.includes(actor));
+            return groups.flat().every((actor) => actors.includes(actor));
          }
-         
+
          function getGroupedActorMeterCounts(groups) {
-           const groupedCounts = {};
-         
-           groups.forEach((group) => {
-             groupedCounts[group.join(' + ')] = {};
-           });
-         
-           state.analyzedData.forEach(({ actor, vowelsNumber }) => {
-             groups.forEach((group) => {
-               if (!group.includes(actor)) return;
-               const groupName = group.join(' + ');
-               groupedCounts[groupName][vowelsNumber] = (groupedCounts[groupName][vowelsNumber] || 0) + 1;
-             });
-           });
-         
-           return groupedCounts;
+            const groupedCounts = {};
+
+            groups.forEach((group) => {
+               groupedCounts[group.join(" + ")] = {};
+            });
+
+            state.analyzedData.forEach(({ actor, vowelsNumber }) => {
+               groups.forEach((group) => {
+                  if (!group.includes(actor)) return;
+                  const groupName = group.join(" + ");
+                  groupedCounts[groupName][vowelsNumber] =
+                     (groupedCounts[groupName][vowelsNumber] || 0) + 1;
+               });
+            });
+
+            return groupedCounts;
          }
-         
+
          function getActorMeterCounts(actors) {
-           const counts = Object.fromEntries(actors.map((actor) => [actor, {}]));
-         
-           state.analyzedData.forEach(({ actor, vowelsNumber }) => {
-             if (!actors.includes(actor)) return;
-             counts[actor][vowelsNumber] = (counts[actor][vowelsNumber] || 0) + 1;
-           });
-         
-           return counts;
+            const counts = Object.fromEntries(
+               actors.map((actor) => [actor, {}]),
+            );
+
+            state.analyzedData.forEach(({ actor, vowelsNumber }) => {
+               if (!actors.includes(actor)) return;
+               counts[actor][vowelsNumber] =
+                  (counts[actor][vowelsNumber] || 0) + 1;
+            });
+
+            return counts;
          }
-         
+
          function renderChart({ type, data, options, className }) {
-           const chartContainer = document.createElement('div');
-           chartContainer.className = className;
-         
-           const canvas = document.createElement('canvas');
-           chartContainer.appendChild(canvas);
-           DOM.charts.appendChild(chartContainer);
-         
-           const chart = new Chart(canvas, { type, data, options });
-           state.renderedCharts.push(chart);
-           return chart;
+            const chartContainer = document.createElement("div");
+            chartContainer.className = className;
+
+            const canvas = document.createElement("canvas");
+            chartContainer.appendChild(canvas);
+            DOM.charts.appendChild(chartContainer);
+
+            const chart = new Chart(canvas, { type, data, options });
+            state.renderedCharts.push(chart);
+            return chart;
          }
-         
+
          function getPieChartOptions(title) {
-           return {
-             responsive: true,
-             plugins: {
-               legend: {
-                 position: 'left',
-                 fullSize: true,
-                 title: {
-                   display: true,
-                   text: 'Format wiersza',
-                   font: { size: 8, weight: 600 }
-                 }
+            return {
+               responsive: true,
+               plugins: {
+                  legend: {
+                     position: "left",
+                     fullSize: true,
+                     title: {
+                        display: true,
+                        text: "Format wiersza",
+                        font: { size: 8, weight: 600 },
+                     },
+                  },
+                  title: {
+                     display: true,
+                     text: title,
+                  },
                },
-               title: {
-                 display: true,
-                 text: title
-               }
-             }
-           };
+            };
          }
-         
+
          function getBarChartOptions() {
-           return {
-             responsive: true,
-             plugins: {
-               legend: { position: 'top' },
-               title: {
-                 display: true,
-                 text: 'Wykres słupkowy procentowego udziału formatu danego wiersza (wersu o danej liczbie sylab) we wszystkich linijkach danego bohatera'
-               }
-             },
-             scales: {
-               x: {
-                 title: {
-                   display: true,
-                   text: 'Format wiersza (liczba sylab)'
-                 }
+            return {
+               responsive: true,
+               plugins: {
+                  legend: { position: "top" },
+                  title: {
+                     display: true,
+                     text: "Wykres słupkowy procentowego udziału formatu danego wiersza (wersu o danej liczbie sylab) we wszystkich linijkach danego bohatera",
+                  },
                },
-               y: {
-                 title: {
-                   display: true,
-                   text: 'Procentowy udział (%)'
-                 }
-               }
-             }
-           };
+               scales: {
+                  x: {
+                     title: {
+                        display: true,
+                        text: "Format wiersza (liczba sylab)",
+                     },
+                  },
+                  y: {
+                     title: {
+                        display: true,
+                        text: "Procentowy udział (%)",
+                     },
+                  },
+               },
+            };
          }
-         
+
          function getMeterColor(meter) {
-           return APP_CONFIG.meterColors[meter] || getRandomColor();
+            return APP_CONFIG.meterColors[meter] || getRandomColor();
          }
-         
+
          function getRandomColor() {
-           return `hsl(${Math.random() * 360}, 70%, 70%)`;
+            return `hsl(${Math.random() * 360}, 70%, 70%)`;
          }
-         
+
          function clearActorCharts() {
-           state.renderedCharts.forEach((chart) => chart.destroy());
-           state.renderedCharts = [];
-           DOM.charts.innerHTML = '';
+            state.renderedCharts.forEach((chart) => chart.destroy());
+            state.renderedCharts = [];
+            DOM.charts.innerHTML = "";
          }
-         
+
          function clearMetricDistributionChart() {
-           if (state.metricDistributionChart) {
-             state.metricDistributionChart.destroy();
-             state.metricDistributionChart = null;
-           }
-         
-           document.getElementById('metricDistributionMetric')?.remove();
+            if (state.metricDistributionChart) {
+               state.metricDistributionChart.destroy();
+               state.metricDistributionChart = null;
+            }
+
+            document.getElementById("metricDistributionMetric")?.remove();
          }
-         
+
          function clearAllCharts() {
-           clearActorCharts();
-           clearMetricDistributionChart();
+            clearActorCharts();
+            clearMetricDistributionChart();
          }
-         
+
          function loadTxtFile(file) {
-           if (!file) return;
-         
-           if (!file.name.toLowerCase().endsWith('.txt')) {
-             alert('Wybierz plik TXT.');
-             return;
-           }
-         
-           const reader = new FileReader();
-           reader.onload = (event) => {
-             DOM.inputText.value = event.target.result;
-            // automatyczna analiza po wczytaniu pliku
-              analyzeText();
-           };
-           reader.readAsText(file, 'UTF-8');
+            if (!file) return;
+
+            if (!file.name.toLowerCase().endsWith(".txt")) {
+               alert("Wybierz plik TXT.");
+               return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+               DOM.inputText.value = event.target.result;
+               // automatyczna analiza po wczytaniu pliku
+               analyzeText();
+            };
+            reader.readAsText(file, "UTF-8");
          }
-         
+
          function calculateAdditionalMetrics() {
-           if (!state.analyzedData.length) return;
-         
-           resetMetrics(false);
-         
-           const speechLines = state.analyzedData.filter(({ actor }) => actor !== 'DIDASKALIA');
-           const stageDirections = state.analyzedData.filter(({ actor }) => actor === 'DIDASKALIA');
-           const speechLineCount = speechLines.length;
-           const stageDirectionCount = stageDirections.length;
-           const asideStageDirectionCount = stageDirections.filter(({ line }) => line.toLowerCase().includes('na stronie')).length;
-         
-           renderStageDirectionMetrics({ speechLineCount, stageDirectionCount, asideStageDirectionCount });
-         
-           if (speechLineCount === 0) {
-             DOM.additionalMetrics.innerHTML = '<h3>Dodatkowe wskaźniki</h3><p>Brak linijek wypowiedzi po wyłączeniu didaskaliów.</p>';
-             DOM.additionalMetrics.style.display = 'block';
-             return;
-           }
-         
-           const allSpeechText = speechLines.map(({ line }) => line).join(' ');
-           const words = getWords(allSpeechText);
-         
-           renderPunctuationMetric(allSpeechText, speechLineCount);
-           renderIsosyllabicMetric(speechLines, speechLineCount);
-           renderInteractionDensityMetric(speechLines);
-           renderLineBreakingMetric(speechLines, speechLineCount);
-           renderSelfReferenceMetric(words);
-           renderMetricDistributionChart(speechLines, speechLineCount);
-         
-           DOM.additionalMetrics.style.display = 'block';
+            if (!state.analyzedData.length) return;
+
+            resetMetrics(false);
+
+            const speechLines = state.analyzedData.filter(
+               ({ actor }) => actor !== "DIDASKALIA",
+            );
+            const stageDirections = state.analyzedData.filter(
+               ({ actor }) => actor === "DIDASKALIA",
+            );
+            const speechLineCount = speechLines.length;
+            const stageDirectionCount = stageDirections.length;
+            const asideStageDirectionCount = stageDirections.filter(
+               ({ line }) => line.toLowerCase().includes("na stronie"),
+            ).length;
+
+            renderStageDirectionMetrics({
+               speechLineCount,
+               stageDirectionCount,
+               asideStageDirectionCount,
+            });
+
+            if (speechLineCount === 0) {
+               DOM.additionalMetrics.innerHTML =
+                  "<h3>Dodatkowe wskaźniki</h3><p>Brak linijek wypowiedzi po wyłączeniu didaskaliów.</p>";
+               DOM.additionalMetrics.style.display = "block";
+               return;
+            }
+
+            const allSpeechText = speechLines.map(({ line }) => line).join(" ");
+            const words = getWords(allSpeechText);
+
+            renderPunctuationMetric(allSpeechText, speechLineCount);
+            renderIsosyllabicMetric(speechLines, speechLineCount);
+            renderInteractionDensityMetric(speechLines);
+            renderLineBreakingMetric(speechLines, speechLineCount);
+            renderSelfReferenceMetric(words);
+            renderMetricDistributionChart(speechLines, speechLineCount);
+
+            DOM.additionalMetrics.style.display = "block";
          }
-         
+
          function resetMetrics(hide = true) {
-           Object.values(DOM.metrics).forEach((element) => {
-             element.innerHTML = '';
-           });
-         
-           clearMetricDistributionChart();
-         
-           if (hide) DOM.additionalMetrics.style.display = 'none';
+            Object.values(DOM.metrics).forEach((element) => {
+               element.innerHTML = "";
+            });
+
+            clearMetricDistributionChart();
+
+            if (hide) DOM.additionalMetrics.style.display = "none";
          }
-         
-         function renderStageDirectionMetrics({ speechLineCount, stageDirectionCount, asideStageDirectionCount }) {
-           const metacommentaryDensity = percent(stageDirectionCount, speechLineCount);
-           const asideStageFunctionDensity = percent(asideStageDirectionCount, stageDirectionCount);
-           const asideDramaLengthDensity = percent(asideStageDirectionCount, speechLineCount);
-         
-           DOM.metrics.metacommentaryDensity.innerHTML = metricHtml(
-             'Indeks gęstości metakomentarza (didaskaliów):',
-             `${metacommentaryDensity}%`,
-             'Wskaźnik = liczba wykrytych didaskaliów / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.'
-           );
-         
-           DOM.metrics.asideStageFunction.innerHTML = metricHtml(
-             'Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”:',
-             `${asideStageFunctionDensity}%`,
-             'Wskaźnik = liczba didaskaliów zawierających tekst „na stronie” / liczba wszystkich wykrytych didaskaliów × 100.'
-           );
-         
-           DOM.metrics.asideDramaLength.innerHTML = metricHtml(
-             'Wskaźnik gęstości apartu względem długości dramatu:',
-             `${asideDramaLengthDensity}%`,
-             'Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.'
-           );
+
+         function renderStageDirectionMetrics({
+            speechLineCount,
+            stageDirectionCount,
+            asideStageDirectionCount,
+         }) {
+            const metacommentaryDensity = percent(
+               stageDirectionCount,
+               speechLineCount,
+            );
+            const asideStageFunctionDensity = percent(
+               asideStageDirectionCount,
+               stageDirectionCount,
+            );
+            const asideDramaLengthDensity = percent(
+               asideStageDirectionCount,
+               speechLineCount,
+            );
+
+            DOM.metrics.metacommentaryDensity.innerHTML = metricHtml(
+               "Indeks gęstości metakomentarza (didaskaliów):",
+               `${metacommentaryDensity}%`,
+               "Wskaźnik = liczba wykrytych didaskaliów / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.",
+            );
+
+            DOM.metrics.asideStageFunction.innerHTML = metricHtml(
+               "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”:",
+               `${asideStageFunctionDensity}%`,
+               "Wskaźnik = liczba didaskaliów zawierających tekst „na stronie” / liczba wszystkich wykrytych didaskaliów × 100.",
+            );
+
+            DOM.metrics.asideDramaLength.innerHTML = metricHtml(
+               "Wskaźnik gęstości apartu względem długości dramatu:",
+               `${asideDramaLengthDensity}%`,
+               "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.",
+            );
          }
-         
+
          function renderPunctuationMetric(text, speechLineCount) {
-           const exclamationDensity = percent(countRegexMatches(text, /!/g), speechLineCount);
-           const questionDensity = percent(countRegexMatches(text, /\?/g), speechLineCount);
-         
-           DOM.metrics.punctuationExpression.innerHTML = `
+            const exclamationDensity = percent(
+               countRegexMatches(text, /!/g),
+               speechLineCount,
+            );
+            const questionDensity = percent(
+               countRegexMatches(text, /\?/g),
+               speechLineCount,
+            );
+
+            DOM.metrics.punctuationExpression.innerHTML = `
              <p>
                <strong>Wektory ekspresji interpunkcyjnej:</strong><br>
                Gęstość wykrzyknień: ${exclamationDensity}
-               ${infoTip('Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.')}<br>
+               ${infoTip("Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.")}<br>
                Gęstość pytań: ${questionDensity}
-               ${infoTip('Gęstość pytań = liczba znaków „?” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.')}
+               ${infoTip("Gęstość pytań = liczba znaków „?” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.")}
              </p>`;
          }
-         
+
          function renderIsosyllabicMetric(speechLines, speechLineCount) {
-           const segments = getIsosyllabicSegments(speechLines);
-           const averageSegmentLength = average(segments).toFixed(2);
-           const syllableChangeRate = (((segments.length - 1) / Math.max(speechLineCount - 1, 1)) * 100).toFixed(2);
-         
-           DOM.metrics.isosyllabic.innerHTML = `
+            const segments = getIsosyllabicSegments(speechLines);
+            const averageSegmentLength = average(segments).toFixed(2);
+            const syllableChangeRate = (
+               ((segments.length - 1) / Math.max(speechLineCount - 1, 1)) *
+               100
+            ).toFixed(2);
+
+            DOM.metrics.isosyllabic.innerHTML = `
              <p>
                <strong>Średnia długość odcinka izosylabicznego:</strong> ${averageSegmentLength}<br>
                Wskaźnik częstości zmiany liczby sylab: ${syllableChangeRate}%
-               ${infoTip('Odcinek izosylabiczny to ciąg kolejnych linijek mających tę samą liczbę sylab. Średnia długość = suma długości takich odcinków / liczba odcinków. Proponowany wskaźnik zmienności = liczba zmian liczby sylab między sąsiednimi wersami / liczba możliwych przejść między wersami × 100.')}
+               ${infoTip("Odcinek izosylabiczny to ciąg kolejnych linijek mających tę samą liczbę sylab. Średnia długość = suma długości takich odcinków / liczba odcinków. Proponowany wskaźnik zmienności = liczba zmian liczby sylab między sąsiednimi wersami / liczba możliwych przejść między wersami × 100.")}
              </p>`;
          }
-         
+
          function getIsosyllabicSegments(speechLines) {
-           const segments = [];
-           let currentSegmentLength = 1;
-         
-           for (let i = 1; i < speechLines.length; i++) {
-             if (speechLines[i].vowelsNumber === speechLines[i - 1].vowelsNumber) {
-               currentSegmentLength++;
-             } else {
-               segments.push(currentSegmentLength);
-               currentSegmentLength = 1;
-             }
-           }
-         
-           segments.push(currentSegmentLength);
-           return segments;
-         }
-         
-         function renderInteractionDensityMetric(speechLines) {
-           const speechBlocks = [];
-           let previousActor = null;
-           let currentBlockLength = 0;
-         
-           speechLines.forEach(({ actor }) => {
-             if (actor !== previousActor) {
-               if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
-               previousActor = actor;
-               currentBlockLength = 1;
-             } else {
-               currentBlockLength++;
-             }
-           });
-         
-           if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
-         
-           DOM.metrics.interactionDensity.innerHTML = metricHtml(
-             'Średnia długość wypowiedzi jednej postaci (pokazuje gęstość interakcji):',
-             average(speechBlocks).toFixed(2),
-             'Wypowiedź jednej postaci jest liczona jako ciąg kolejnych linijek przypisanych temu samemu bohaterowi. Wskaźnik = liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów / liczba bloków wypowiedzi.'
-           );
-         }
-         
-         function renderLineBreakingMetric(speechLines, speechLineCount) {
-           const brokenLines = speechLines.filter(({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim())).length;
-         
-           DOM.metrics.lineBreaking.innerHTML = metricHtml(
-             'Współczynnik łamania wiersza:',
-             `${percent(brokenLines, speechLineCount)}%`,
-             'Wskaźnik = liczba linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów × 100.'
-           );
-         }
-         
-         function renderSelfReferenceMetric(words) {
-           const selfReferenceCount = words.filter((word) => APP_CONFIG.selfReferencePronouns.has(word)).length;
-           const selfReferenceRate = words.length > 0 ? ((selfReferenceCount / words.length) * 1000).toFixed(2) : '0.00';
-         
-           DOM.metrics.selfReference.innerHTML = metricHtml(
-             'Wskaźnik referencji pierwszoosobowej:',
-             `${selfReferenceRate}‰`,
-             'Wskaźnik = liczba wystąpień form: ja, mnie, mi, mną, mój, mojego, mojemu, moim, moja, mojej, moją, moje, moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.'
-           );
-         }
-         
-         function renderMetricDistributionChart(speechLines, speechLineCount) {
-           const meterCounts = speechLines.reduce((counts, { vowelsNumber }) => {
-             counts[vowelsNumber] = (counts[vowelsNumber] || 0) + 1;
-             return counts;
-           }, {});
-         
-           const metricLabels = [];
-           const metricPercentages = [];
-           let otherPercentage = 0;
-         
-           Object.keys(meterCounts)
-             .sort((a, b) => Number(a) - Number(b))
-             .forEach((meter) => {
-               const percentage = (meterCounts[meter] / speechLineCount) * 100;
-               if (percentage < 1) {
-                 otherPercentage += percentage;
+            const segments = [];
+            let currentSegmentLength = 1;
+
+            for (let i = 1; i < speechLines.length; i++) {
+               if (
+                  speechLines[i].vowelsNumber ===
+                  speechLines[i - 1].vowelsNumber
+               ) {
+                  currentSegmentLength++;
                } else {
-                 metricLabels.push(`${meter}-zgłoskowiec`);
-                 metricPercentages.push(percentage);
+                  segments.push(currentSegmentLength);
+                  currentSegmentLength = 1;
                }
-             });
-         
-           if (otherPercentage > 0) {
-             metricLabels.push('Inne (<1%)');
-             metricPercentages.push(otherPercentage);
-           }
-         
-           const metricDistributionMetric = document.createElement('div');
-           metricDistributionMetric.id = 'metricDistributionMetric';
-           metricDistributionMetric.innerHTML = `
+            }
+
+            segments.push(currentSegmentLength);
+            return segments;
+         }
+
+         function renderInteractionDensityMetric(speechLines) {
+            const speechBlocks = [];
+            let previousActor = null;
+            let currentBlockLength = 0;
+
+            speechLines.forEach(({ actor }) => {
+               if (actor !== previousActor) {
+                  if (currentBlockLength > 0)
+                     speechBlocks.push(currentBlockLength);
+                  previousActor = actor;
+                  currentBlockLength = 1;
+               } else {
+                  currentBlockLength++;
+               }
+            });
+
+            if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
+
+            DOM.metrics.interactionDensity.innerHTML = metricHtml(
+               "Średnia długość wypowiedzi jednej postaci (pokazuje gęstość interakcji):",
+               average(speechBlocks).toFixed(2),
+               "Wypowiedź jednej postaci jest liczona jako ciąg kolejnych linijek przypisanych temu samemu bohaterowi. Wskaźnik = liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów / liczba bloków wypowiedzi.",
+            );
+         }
+
+         function renderLineBreakingMetric(speechLines, speechLineCount) {
+            const brokenLines = speechLines.filter(
+               ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
+            ).length;
+
+            DOM.metrics.lineBreaking.innerHTML = metricHtml(
+               "Współczynnik łamania wiersza:",
+               `${percent(brokenLines, speechLineCount)}%`,
+               "Wskaźnik = liczba linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów × 100.",
+            );
+         }
+
+         function renderSelfReferenceMetric(words) {
+            const selfReferenceCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePronouns.has(word),
+            ).length;
+            const selfReferenceRate =
+               words.length > 0
+                  ? ((selfReferenceCount / words.length) * 1000).toFixed(2)
+                  : "0.00";
+
+            DOM.metrics.selfReference.innerHTML = metricHtml(
+               "Wskaźnik referencji pierwszoosobowej:",
+               `${selfReferenceRate}‰`,
+               "Wskaźnik = liczba wystąpień form: ja, mnie, mi, mną, mój, mojego, mojemu, moim, moja, mojej, moją, moje, moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.",
+            );
+         }
+
+         function renderMetricDistributionChart(speechLines, speechLineCount) {
+            const meterCounts = speechLines.reduce(
+               (counts, { vowelsNumber }) => {
+                  counts[vowelsNumber] = (counts[vowelsNumber] || 0) + 1;
+                  return counts;
+               },
+               {},
+            );
+
+            const metricLabels = [];
+            const metricPercentages = [];
+            let otherPercentage = 0;
+
+            Object.keys(meterCounts)
+               .sort((a, b) => Number(a) - Number(b))
+               .forEach((meter) => {
+                  const percentage =
+                     (meterCounts[meter] / speechLineCount) * 100;
+                  if (percentage < 1) {
+                     otherPercentage += percentage;
+                  } else {
+                     metricLabels.push(`${meter}-zgłoskowiec`);
+                     metricPercentages.push(percentage);
+                  }
+               });
+
+            if (otherPercentage > 0) {
+               metricLabels.push("Inne (<1%)");
+               metricPercentages.push(otherPercentage);
+            }
+
+            const metricDistributionMetric = document.createElement("div");
+            metricDistributionMetric.id = "metricDistributionMetric";
+            metricDistributionMetric.innerHTML = `
              <p><strong>Rozkład metryczny (dominujące metra) całego dramatu:</strong></p>
              <div class="chart-box">
                <canvas id="metricDistributionChart"></canvas>
              </div>`;
-           DOM.additionalMetrics.appendChild(metricDistributionMetric);
-         
-           state.metricDistributionChart = new Chart(document.getElementById('metricDistributionChart'), {
-             type: 'pie',
-             data: {
-               labels: metricLabels,
-               datasets: [{
-                 data: metricPercentages,
-                 backgroundColor: metricLabels.map((label) => {
-                   const meter = label.match(/^\d+/)?.[0];
-                   return getMeterColor(meter);
-                 })
-               }]
-             },
-             options: {
-               responsive: true,
-               plugins: {
-                 legend: {
-                   position: 'left',
-                   fullSize: true,
-                   title: {
-                     display: true,
-                     text: 'Format wiersza',
-                     font: { size: 8, weight: 600 }
-                   }
-                 },
-                 title: { display: false },
-                 tooltip: {
-                   callbacks: {
-                     label: (context) => `${context.label}: ${context.raw.toFixed(2)}%`
-                   }
-                 }
-               }
-             }
-           });
+            DOM.additionalMetrics.appendChild(metricDistributionMetric);
+
+            state.metricDistributionChart = new Chart(
+               document.getElementById("metricDistributionChart"),
+               {
+                  type: "pie",
+                  data: {
+                     labels: metricLabels,
+                     datasets: [
+                        {
+                           data: metricPercentages,
+                           backgroundColor: metricLabels.map((label) => {
+                              const meter = label.match(/^\d+/)?.[0];
+                              return getMeterColor(meter);
+                           }),
+                        },
+                     ],
+                  },
+                  options: {
+                     responsive: true,
+                     plugins: {
+                        legend: {
+                           position: "left",
+                           fullSize: true,
+                           title: {
+                              display: true,
+                              text: "Format wiersza",
+                              font: { size: 8, weight: 600 },
+                           },
+                        },
+                        title: { display: false },
+                        tooltip: {
+                           callbacks: {
+                              label: (context) =>
+                                 `${context.label}: ${context.raw.toFixed(2)}%`,
+                           },
+                        },
+                     },
+                  },
+               },
+            );
          }
-         
+
          function metricHtml(label, value, tip) {
-           return `<p><strong>${label}</strong> ${value} ${infoTip(tip)}</p>`;
+            return `<p><strong>${label}</strong> ${value} ${infoTip(tip)}</p>`;
          }
-         
+
          function infoTip(content) {
-           return `
+            return `
              <span class="infotip">
                <img class="metric-info-icon" src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="Informacja">
                <span class="infotip-content">${content}</span>
              </span>`;
          }
-         
+
          function countRegexMatches(text, regex) {
-           return (text.match(regex) || []).length;
+            return (text.match(regex) || []).length;
          }
-         
+
          function getWords(text) {
-           return text
-             .toLowerCase()
-             .replace(/[^\p{L}\s]/gu, ' ')
-             .split(/\s+/)
-             .filter(Boolean);
+            return text
+               .toLowerCase()
+               .replace(/[^\p{L}\s]/gu, " ")
+               .split(/\s+/)
+               .filter(Boolean);
          }
-         
+
          function percent(numerator, denominator) {
-           return denominator > 0 ? ((numerator / denominator) * 100).toFixed(2) : '0.00';
+            return denominator > 0
+               ? ((numerator / denominator) * 100).toFixed(2)
+               : "0.00";
          }
-         
+
          function average(numbers) {
-           return numbers.length ? sumValues(numbers) / numbers.length : 0;
+            return numbers.length ? sumValues(numbers) / numbers.length : 0;
          }
-         
+
          function sumValues(values) {
-           return Object.values(values).reduce((sum, value) => sum + value, 0);
+            return Object.values(values).reduce((sum, value) => sum + value, 0);
          }
-         
+
          function scrollToBottom() {
-           window.scrollTo({
-             top: document.body.scrollHeight,
-             behavior: 'smooth'
-           });
+            window.scrollTo({
+               top: document.body.scrollHeight,
+               behavior: "smooth",
+            });
          }
-         
+
          function scrollToCharts() {
-           DOM.charts.scrollIntoView({ behavior: 'smooth' });
+            DOM.charts.scrollIntoView({ behavior: "smooth" });
          }
          function filterLibraryCards() {
-          const query = DOM.librarySearch.value.trim().toLowerCase();
-          let visibleCardsCount = 0;
-         
-          document.querySelectorAll('.library-card').forEach((card) => {
-            const author = card.querySelector('.library-author')?.textContent.toLowerCase() || '';
-            const title = card.querySelector('.library-title')?.textContent.toLowerCase() || '';
-            const isVisible = author.includes(query) || title.includes(query);
-         
-            card.style.display = isVisible ? '' : 'none';
-            if (isVisible) visibleCardsCount++;
-          });
-         
-          DOM.libraryNoResults.style.display = visibleCardsCount === 0 ? 'block' : 'none';
+            const query = DOM.librarySearch.value.trim().toLowerCase();
+            let visibleCardsCount = 0;
+
+            document.querySelectorAll(".library-card").forEach((card) => {
+               const author =
+                  card
+                     .querySelector(".library-author")
+                     ?.textContent.toLowerCase() || "";
+               const title =
+                  card
+                     .querySelector(".library-title")
+                     ?.textContent.toLowerCase() || "";
+               const isVisible =
+                  author.includes(query) || title.includes(query);
+
+               card.style.display = isVisible ? "" : "none";
+               if (isVisible) visibleCardsCount++;
+            });
+
+            DOM.libraryNoResults.style.display =
+               visibleCardsCount === 0 ? "block" : "none";
          }
-         
+
          init();
       </script>
    </body>
