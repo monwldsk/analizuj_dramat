@@ -189,6 +189,8 @@
             color: #fff;
             background: var(--color-tip);
             opacity: 0;
+            font-size:10px;
+            font-weight:200;
             transform: translateX(-50%);
             transition: opacity 0.3s;
          }
@@ -241,23 +243,210 @@
          }
          .additional-metrics {
             display: none;
-            margin-top: 25px;
-            padding: 20px;
-            border: 1px solid var(--color-border);
-            border-radius: 8px;
-            background: #fafafa;
+            margin-top: 32px;
+            padding: 28px;
+            border: 1px solid #dce7f8;
+            border-radius: 20px;
+            background: #fbfdff;
+            box-shadow: 0 14px 40px rgba(29, 58, 108, 0.07);
          }
+
          .additional-metrics h3 {
-            margin-top: 0;
+            margin: 0;
             color: var(--color-primary);
          }
+
          .additional-metrics p {
-            margin: 12px 0;
+            margin: 0;
             line-height: 1.45;
          }
-         .additional-index-img img {
-            max-width: 300px;
+
+         .metrics-results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 18px;
          }
+
+         .metrics-results-header h2 {
+            margin: 0 0 6px;
+            font-size: 30px;
+         }
+
+         .metrics-results-header p {
+            color: #65758b;
+         }
+
+         .additional-index-img img {
+            display: block;
+            width: 220px;
+            max-width: 100%;
+         }
+
+         .metrics-warning {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 12px 14px;
+            border: 1px solid #f2c7c2;
+            border-radius: 10px;
+            color: #c83c31;
+            background: #fff8f7;
+            font-size: 0.8em;
+            line-height: 1.5;
+         }
+
+         .metrics-warning-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 22px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ffe9e5;
+            font-weight: 800;
+         }
+
+         .metrics-dashboard {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(400px, 1fr);
+            gap: 18px;
+            align-items: stretch;
+         }
+
+         .metrics-panel {
+            min-width: 0;
+            padding: 18px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .metrics-panel-title {
+            margin-bottom: 14px !important;
+            font-size: 16px;
+         }
+
+         .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+         }
+
+         .metric-card {
+            min-width: 0;
+            min-height: 130px;
+            padding: 14px;
+            border: 1px solid #e5edf8;
+            border-radius: 11px;
+            background: linear-gradient(180deg, #fff, #fbfdff);
+            box-shadow: 0 4px 14px rgba(29, 58, 108, 0.04);
+         }
+
+         .metric-card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+         }
+
+         .metric-card-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 30px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: #2f69d9;
+            background: #edf4ff;
+            font-weight: 800;
+         }
+
+         .metric-card-label {
+            color: #10233f;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.35;
+         }
+
+         .metric-card-value {
+            margin: 8px 0 0 0px;
+            color: #2f69d9;
+            font-size: 21px;
+            font-weight: 800;
+            line-height: 1.15;
+         }
+
+         .metric-card-secondary {
+            margin: 7px 0 0 0px;
+            color: #65758b;
+            font-size: 11px;
+            line-height: 1.45;
+         }
+
+         .metric-chart-panel {
+            display: flex;
+            flex-direction: column;
+         }
+
+         .metric-chart-panel .chart-box {
+            position: relative;
+            width: 100%;
+            height: 430px;
+            max-width: none;
+            margin-top: 4px;
+         }
+
+         .metric-chart-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 9px;
+            color: #65758b;
+            background: #f5f9ff;
+            font-size: 11px;
+            line-height: 1.45;
+         }
+
+         .metrics-empty-state {
+            display: none;
+            padding: 24px;
+            border: 1px dashed #dce7f8;
+            border-radius: 12px;
+            color: #65758b;
+            text-align: center;
+            background: #fff;
+         }
+
+         @media screen and (max-width: 1000px) {
+            .metrics-dashboard {
+               grid-template-columns: 1fr;
+            }
+         }
+
+         @media screen and (max-width: 600px) {
+            .additional-metrics {
+               padding: 16px 12px;
+            }
+
+            .metrics-results-header {
+               align-items: flex-start;
+               flex-direction: column;
+            }
+
+            .additional-index-img img {
+               width: 180px;
+            }
+
+            .metrics-grid {
+               grid-template-columns: 1fr;
+            }
+
+            .metric-chart-panel .chart-box {
+               height: 360px;
+            }
+         }
+
          .hidden {
             display: none !important;
          }
@@ -1040,7 +1229,7 @@
                   <div style="text-align: left">
                      Strona uzupełnia możliwości oferowane przez <a href="https://dracor.org/pol" target="_blank"
                         >DraCor | Polish Drama Corpus</a
-                     >, który obejmuje wyłącznie dramaty niewierszowane i nie pozwala na analizę cech związanych ze strukturą wierszową tekstu.
+                     >, który obejmuje wyłącznie dramaty niewierszowane i tym samym nie zajmuje się analizą cech związanych ze strukturą wierszową tekstu.
                   </div>
                </div>
 
@@ -1608,26 +1797,57 @@
             class="additional-metrics"
             aria-label="Dodatkowe wskaźniki"
          >
-            <h2>Dodatkowe wskaźniki</h2>
-            <div class="additional-index-img">
-               <img src="assets/wskazniki2.png" alt="Digital analysis" />
+            <div class="metrics-results-header">
+               <div>
+                  <h2>Dodatkowe wskaźniki</h2>
+                  <p>Przegląd dodatkowych wskaźników analizy cyfrowej dramatu.</p>
+               </div>
+              
             </div>
-            <div style="color: red; font-size: 0.8em">
-               Uwaga: Narzędzie nie wykrywa na razie przypadków, w których
-               wypowiedzi postaci współdzielą między sobą jeden wers metryczny
-               (czyli sytuacji, gdy na jeden wers metryczny przypadają repliki
-               dialogowe różnych postaci). Może to wpływać na wyniki analizy
-               (średnią długość odcinka izosylabicznego i zróżnicowanie
-               metryczne dramatu).
+
+            <div class="metrics-warning">
+               <span class="metrics-warning-icon" aria-hidden="true">!</span>
+               <div>
+                  <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie przypadków, w których
+                  wypowiedzi postaci współdzielą między sobą jeden wers metryczny
+                  (czyli sytuacji, gdy na jeden wers metryczny przypadają repliki
+                  dialogowe różnych postaci). Może to wpływać na wyniki analizy
+                  (średnią długość odcinka izosylabicznego i zróżnicowanie
+                  metryczne dramatu).
+               </div>
             </div>
-            <div id="isosyllabicMetric"></div>
-            <div id="interactionDensityMetric"></div>
-            <div id="lineBreakingMetric"></div>
-            <div id="punctuationExpressionMetric"></div>
-            <div id="selfReferenceMetric"></div>
-            <div id="metacommentaryDensityMetric"></div>
-            <div id="asideStageFunctionMetric"></div>
-            <div id="asideDramaLengthMetric"></div>
+
+            <div id="metricsEmptyState" class="metrics-empty-state">
+               Brak linijek wypowiedzi po wyłączeniu didaskaliów.
+            </div>
+
+            <div id="metricsDashboardContent" class="metrics-dashboard">
+               <div class="metrics-panel">
+                  <h3 class="metrics-panel-title">Kluczowe wskaźniki</h3>
+                  <div class="metrics-grid">
+                     <div id="isosyllabicMetric" class="metric-card"></div>
+                     <div id="interactionDensityMetric" class="metric-card"></div>
+                     <div id="lineBreakingMetric" class="metric-card"></div>
+                     <div id="punctuationExpressionMetric" class="metric-card"></div>
+                     <div id="selfReferenceMetric" class="metric-card"></div>
+                     <div id="metacommentaryDensityMetric" class="metric-card"></div>
+                     <div id="asideStageFunctionMetric" class="metric-card"></div>
+                     <div id="asideDramaLengthMetric" class="metric-card"></div>
+                  </div>
+               </div>
+
+               <div id="metricDistributionMetric" class="metrics-panel metric-chart-panel">
+                  <h3 class="metrics-panel-title">
+                     Rozkład metryczny (dominujące metra) całego dramatu
+                  </h3>
+                  <div class="chart-box">
+                     <canvas id="metricDistributionChart"></canvas>
+                  </div>
+                  <div class="metric-chart-note">
+                     Formaty poniżej 1% są grupowane (i sumowane) jako „Inne”.
+                  </div>
+               </div>
+            </div>
          </section>
       </main>
       <script>
@@ -2188,8 +2408,6 @@
                state.metricDistributionChart.destroy();
                state.metricDistributionChart = null;
             }
-
-            document.getElementById("metricDistributionMetric")?.remove();
          }
 
          function clearAllCharts() {
@@ -2237,12 +2455,18 @@
                asideStageDirectionCount,
             });
 
+            const dashboard = document.getElementById("metricsDashboardContent");
+            const emptyState = document.getElementById("metricsEmptyState");
+
             if (speechLineCount === 0) {
-               DOM.additionalMetrics.innerHTML =
-                  "<h3>Dodatkowe wskaźniki</h3><p>Brak linijek wypowiedzi po wyłączeniu didaskaliów.</p>";
+               if (dashboard) dashboard.style.display = "none";
+               if (emptyState) emptyState.style.display = "block";
                DOM.additionalMetrics.style.display = "block";
                return;
             }
+
+            if (dashboard) dashboard.style.display = "grid";
+            if (emptyState) emptyState.style.display = "none";
 
             const allSpeechText = speechLines.map(({ line }) => line).join(" ");
             const words = getWords(allSpeechText);
@@ -2315,13 +2539,15 @@
             );
 
             DOM.metrics.punctuationExpression.innerHTML = `
-             <p>
-               <strong>Wektory ekspresji interpunkcyjnej:</strong><br>
-               Gęstość wykrzyknień: ${exclamationDensity}
+             <div class="metric-card-top">
+               <div class="metric-card-label">Wektory ekspresji interpunkcyjnej</div>
+             </div>
+             <div class="metric-card-secondary">
+               <strong>Gęstość wykrzyknień:</strong> ${exclamationDensity}
                ${infoTip("Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.")}<br>
-               Gęstość pytań: ${questionDensity}
+               <strong>Gęstość pytań:</strong> ${questionDensity}
                ${infoTip("Gęstość pytań = liczba znaków „?” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.")}
-             </p>`;
+             </div>`;
          }
 
          function renderIsosyllabicMetric(speechLines, speechLineCount) {
@@ -2333,11 +2559,17 @@
             ).toFixed(2);
 
             DOM.metrics.isosyllabic.innerHTML = `
-             <p>
-               <strong>Średnia długość odcinka izosylabicznego:</strong> ${averageSegmentLength}<br>
-               Wskaźnik częstości zmiany liczby sylab: ${syllableChangeRate}%
+             <div class="metric-card-top">
+              
+               <div class="metric-card-label">Średnia długość odcinka izosylabicznego</div>
+             </div>
+             <div class="metric-card-value">
+               ${averageSegmentLength}
                ${infoTip("Odcinek izosylabiczny to ciąg kolejnych linijek mających tę samą liczbę sylab. Średnia długość = suma długości takich odcinków / liczba odcinków. Proponowany wskaźnik zmienności = liczba zmian liczby sylab między sąsiednimi wersami / liczba możliwych przejść między wersami × 100.")}
-             </p>`;
+             </div>
+             <div class="metric-card-secondary">
+               Wskaźnik częstości zmiany liczby sylab: <strong>${syllableChangeRate}%</strong>
+             </div>`;
          }
 
          function getIsosyllabicSegments(speechLines) {
@@ -2444,58 +2676,64 @@
                metricPercentages.push(otherPercentage);
             }
 
-            const metricDistributionMetric = document.createElement("div");
-            metricDistributionMetric.id = "metricDistributionMetric";
-            metricDistributionMetric.innerHTML = `
-             <p><strong>Rozkład metryczny (dominujące metra) całego dramatu:</strong></p>
-             <div class="chart-box">
-               <canvas id="metricDistributionChart"></canvas>
-             </div>`;
-            DOM.additionalMetrics.appendChild(metricDistributionMetric);
+            const canvas = document.getElementById("metricDistributionChart");
+            if (!canvas) return;
 
-            state.metricDistributionChart = new Chart(
-               document.getElementById("metricDistributionChart"),
-               {
-                  type: "pie",
-                  data: {
-                     labels: metricLabels,
-                     datasets: [
-                        {
-                           data: metricPercentages,
-                           backgroundColor: metricLabels.map((label) => {
-                              const meter = label.match(/^\d+/)?.[0];
-                              return getMeterColor(meter);
-                           }),
+            state.metricDistributionChart = new Chart(canvas, {
+               type: "pie",
+               data: {
+                  labels: metricLabels,
+                  datasets: [
+                     {
+                        data: metricPercentages,
+                        backgroundColor: metricLabels.map((label) => {
+                           const meter = label.match(/^\d+/)?.[0];
+                           return getMeterColor(meter);
+                        }),
+                        borderColor: "#ffffff",
+                        borderWidth: 2,
+                     },
+                  ],
+               },
+               options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                     legend: {
+                        position: "left",
+                        fullSize: true,
+                        labels: {
+                           boxWidth: 18,
+                           padding: 10,
+                           color: "#56677d",
+                           font: { size: 11 },
                         },
-                     ],
-                  },
-                  options: {
-                     responsive: true,
-                     plugins: {
-                        legend: {
-                           position: "left",
-                           fullSize: true,
-                           title: {
-                              display: true,
-                              text: "Format wiersza",
-                              font: { size: 8, weight: 600 },
-                           },
+                        title: {
+                           display: true,
+                           text: "Format wiersza",
+                           font: { size: 8, weight: 600 },
                         },
-                        title: { display: false },
-                        tooltip: {
-                           callbacks: {
-                              label: (context) =>
-                                 `${context.label}: ${context.raw.toFixed(2)}%`,
-                           },
+                     },
+                     title: { display: false },
+                     tooltip: {
+                        callbacks: {
+                           label: (context) =>
+                              `${context.label}: ${context.raw.toFixed(2)}%`,
                         },
                      },
                   },
                },
-            );
+            });
          }
 
          function metricHtml(label, value, tip) {
-            return `<p><strong>${label}</strong> ${value} ${infoTip(tip)}</p>`;
+            return `
+             <div class="metric-card-top">
+               <div class="metric-card-label">${label.replace(/:$/, "")}</div>
+             </div>
+             <div class="metric-card-value">
+               ${value} ${infoTip(tip)}
+             </div>`;
          }
 
          function infoTip(content) {
