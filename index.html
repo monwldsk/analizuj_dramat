@@ -1448,7 +1448,7 @@
                tekstowym) można na wykresie kołowym porównać między sobą
                następujący układ osób: KSIĄDZ, (GUSTAW + PUSTELNIK), (DZIECI +
                DZIECIĘ + DZIECKO + CHÓR DZIECI). Poniżej tabeli znajduje się
-               sekcja <strong>Dodatkowe wskaźniki</strong> z wyliczonymi
+               sekcja <strong>Wskaźniki analizy</strong> z wyliczonymi
                parametrami poszerzającymi zakres analizy.<br /><br />
                <div class="mobile-img">
                   <img src="assets/computer-3.png" alt="image" />
@@ -1768,7 +1768,24 @@
                Wyczyść
             </button>
          </div>
-         <div class="table-container">
+         <section
+            id="additionalMetrics"
+            class="additional-metrics"
+            aria-label="Wskaźniki analizy"
+         >
+            <div class="metrics-results-header">
+               <div>
+                  <h2>Wynik analizy</h2>
+                  <p>Przegląd wskaźników analizy cyfrowej dramatu.</p>
+               </div>
+              
+            </div>
+
+            <div id="metricsEmptyState" class="metrics-empty-state">
+               Brak linijek wypowiedzi po wyłączeniu didaskaliów.
+            </div>
+            <div>
+                <div class="table-container">
             <table id="resultTable" class="hidden">
                <thead>
                   <tr>
@@ -1792,20 +1809,9 @@
             </button>
          </div>
          <div id="charts" class="chart-container"></div>
-         <section
-            id="additionalMetrics"
-            class="additional-metrics"
-            aria-label="Dodatkowe wskaźniki"
-         >
-            <div class="metrics-results-header">
-               <div>
-                  <h2>Dodatkowe wskaźniki</h2>
-                  <p>Przegląd dodatkowych wskaźników analizy cyfrowej dramatu.</p>
-               </div>
-              
             </div>
 
-            <div class="metrics-warning">
+             <div class="metrics-warning">
                <span class="metrics-warning-icon" aria-hidden="true">!</span>
                <div>
                   <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie przypadków, w których
@@ -1817,13 +1823,9 @@
                </div>
             </div>
 
-            <div id="metricsEmptyState" class="metrics-empty-state">
-               Brak linijek wypowiedzi po wyłączeniu didaskaliów.
-            </div>
-
             <div id="metricsDashboardContent" class="metrics-dashboard">
                <div class="metrics-panel">
-                  <h3 class="metrics-panel-title">Kluczowe wskaźniki</h3>
+                  <h3 class="metrics-panel-title">Główne wskaźniki</h3>
                   <div class="metrics-grid">
                      <div id="isosyllabicMetric" class="metric-card"></div>
                      <div id="interactionDensityMetric" class="metric-card"></div>
