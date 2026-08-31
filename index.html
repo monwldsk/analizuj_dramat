@@ -32,6 +32,7 @@
             --radius-card: 24px;
             --radius-control: 6px;
             --max-width: 1200px;
+            --border: #d9e8f8;
          }
          * {
             box-sizing: border-box;
@@ -144,22 +145,17 @@
          .banner-separator-mobile img {
             width: 300px;
          }
-         .mobile-img {
-            display: none;
-         }
-         .tips-img-container {
+       
+         .tips-container {
             display: flex;
             align-items: center;
             gap: 16px;
          }
-         .tips-img-container img {
+         .tips-container img {
             width: 260px;
             margin-right: 0;
          }
-         .mobile-img img {
-            width: 220px;
-            padding-bottom: 12px;
-         }
+   
          .info-algo {
             display: flex;
             justify-content: flex-end;
@@ -616,17 +612,8 @@
             .infotip .infotip-content {
                width: 190px;
             }
-            .tips-img-container {
-               flex-direction: column;
-            }
-            .tips-img-container img {
-               display: none;
-            }
-            .mobile-img {
-               display: flex;
-               justify-content: center;
-               margin: auto;
-            }
+           
+          
             .chart img {
                width: 300px;
             }
@@ -994,7 +981,35 @@
                opacity 0.6s ease,
                transform 0.6s ease;
          }
-
+         .tips-card-container {
+            display: flex;
+            gap: 16px;
+         }
+         .tips-card {
+            flex: 1;
+            border-radius: var(--radius-card);
+            padding:16px;
+            border: 1px solid var(--border);
+            background:
+               linear-gradient(
+                  135deg,
+                  rgba(238, 247, 255, 0.88),
+                  rgba(249, 252, 255, 0.96)
+               );
+            box-shadow:
+               0 7px 18px rgba(35, 84, 133, 0.035);
+         }
+         .tips-card-header {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1em;
+         }
+         .tips-card-header img {
+            width:40px;
+            /* border-radius:50%; */
+         }
          @media (max-width: 1100px) {
             .cards {
                grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1002,6 +1017,13 @@
             .card {
                min-height: 280px;
             }
+             .tips-container {
+               flex-direction: column;
+            }
+            .tips-card-container {
+            flex-direction: column;
+         }
+         
          }
 
          @media (max-width: 680px) {
@@ -1450,14 +1472,16 @@
                DZIECIĘ + DZIECKO + CHÓR DZIECI). Poniżej tabeli znajduje się
                sekcja <strong>Główne wskaźniki</strong> z wyliczonymi
                parametrami poszerzającymi zakres analizy.<br /><br />
-               <div class="mobile-img">
-                  <img src="assets/computer-3.png" alt="image" />
-               </div>
-               <div class="tips-img-container">
+               <div class="tips-container">
                   <div class="tips-img">
                      <img src="assets/computer-3.png" alt="image" />
                   </div>
-                  <div>
+                  <div class="tips-card-container">
+                     <div class="tips-card">
+                                <div class="tips-card-header">
+                           <div><img src="assets/text.png"></div>
+                     <div>Przygotuj tekst dramatu</div>
+                  </div>
                      Tekst dramatu należy wstępnie przygotować (przed wklejeniem
                      do pola tekstowego lub załadowaniem pliku w formacie .txt),
                      żeby algorytm mógł poprawnie przypisać wszystkie partie do
@@ -1472,7 +1496,13 @@
                            slash (ukośnik), np. / na stronie /.
                         </li>
                      </ul>
-                     <strong>Uwaga</strong>: Aktualnie skrypt bazuje na
+                     </div>
+                     <div class="tips-card">
+                        <div class="tips-card-header">
+                           <div><img src="assets/zarowka.png"></div>
+                     <div>Uwaga</div>
+                  </div>
+                     Skrypt bazuje na
                      konwencjach zastosowanych w serwisie
                      <a href="https://wolnelektury.pl" target="_blank"
                         >Wolne Lektury</a
@@ -1490,6 +1520,7 @@
                      <a href="https://dracor.org/pol" target="_blank"
                         >DraCor | Polish Drama Corpus</a
                      >.
+                     </div>
                   </div>
                </div>
             </div>
