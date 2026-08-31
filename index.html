@@ -145,7 +145,7 @@
          .banner-separator-mobile img {
             width: 300px;
          }
-       
+
          .tips-container {
             display: flex;
             align-items: center;
@@ -155,7 +155,7 @@
             width: 260px;
             margin-right: 0;
          }
-   
+
          .info-algo {
             display: flex;
             justify-content: flex-end;
@@ -185,8 +185,8 @@
             color: #fff;
             background: var(--color-tip);
             opacity: 0;
-            font-size:10px;
-            font-weight:200;
+            font-size: 10px;
+            font-weight: 200;
             transform: translateX(-50%);
             transition: opacity 0.3s;
          }
@@ -572,8 +572,8 @@
             }
          }
          @media screen and (max-width: 700px) {
-            #section-title{
-              font-size:30px;
+            #section-title {
+               font-size: 30px;
             }
             .banner-separator {
                display: none;
@@ -612,8 +612,7 @@
             .infotip .infotip-content {
                width: 190px;
             }
-           
-          
+
             .chart img {
                width: 300px;
             }
@@ -878,15 +877,9 @@
          }
 
          .icon-wrap {
-            /* width: 72px;
-      height: 72px; */
             display: grid;
             place-items: center;
             flex: 0 0 auto;
-            /* border-radius: 50%;
-      background: linear-gradient(145deg, #f7faff, #eaf2ff);
-      color: var(--blue-dark);
-      box-shadow: inset 0 0 0 1px rgba(47,105,217,.05); */
          }
          .icon-wrap > img {
             border-radius: 50%;
@@ -988,16 +981,14 @@
          .tips-card {
             flex: 1;
             border-radius: var(--radius-card);
-            padding:16px;
+            padding: 16px;
             border: 1px solid var(--border);
-            background:
-               linear-gradient(
-                  135deg,
-                  rgba(238, 247, 255, 0.88),
-                  rgba(249, 252, 255, 0.96)
-               );
-            box-shadow:
-               0 7px 18px rgba(35, 84, 133, 0.035);
+            background: linear-gradient(
+               135deg,
+               rgba(238, 247, 255, 0.88),
+               rgba(249, 252, 255, 0.96)
+            );
+            box-shadow: 0 7px 18px rgba(35, 84, 133, 0.035);
          }
          .tips-card-header {
             display: flex;
@@ -1007,7 +998,7 @@
             font-size: 1.1em;
          }
          .tips-card-header img {
-            width:40px;
+            width: 40px;
             /* border-radius:50%; */
          }
          @media (max-width: 1100px) {
@@ -1017,13 +1008,12 @@
             .card {
                min-height: 280px;
             }
-             .tips-container {
+            .tips-container {
                flex-direction: column;
             }
             .tips-card-container {
-            flex-direction: column;
-         }
-         
+               flex-direction: column;
+            }
          }
 
          @media (max-width: 680px) {
@@ -1072,6 +1062,177 @@
                transform: none;
             }
          }
+         .drama-option {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+         }
+
+         .drama-input-section {
+            --navy: #07345b;
+            --blue: #0b72d9;
+            --blue-dark: #064f98;
+            --blue-light: #eaf4ff;
+            --blue-lighter: #f6fbff;
+            --text: #102b4a;
+            --muted: #62748a;
+            --border: #d7e5f4;
+            --border-strong: #bdd4ec;
+            color: var(--text);
+         }
+
+         .drama-input-header {
+            margin-bottom: 26px;
+         }
+
+         .drama-input-header p {
+            margin: 0;
+            color: var(--muted);
+
+            font-size: 16px;
+            line-height: 1.5;
+         }
+
+         .drama-methods-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+
+            margin-bottom: 34px;
+         }
+
+         .drama-method-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+
+            padding: 18px 19px;
+
+            border: 1px solid var(--border);
+            border-radius: 15px;
+
+            background: linear-gradient(
+               135deg,
+               rgba(245, 250, 255, 0.95),
+               rgba(255, 255, 255, 1)
+            );
+
+            box-shadow: 0 5px 16px rgba(29, 74, 119, 0.035);
+         }
+
+         .drama-method-card h3 {
+            margin: 1px 0 5px;
+
+            color: var(--navy);
+            font-size: 17px;
+            font-weight: 800;
+         }
+
+         .drama-method-card p {
+            margin: 0;
+
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.45;
+         }
+
+         .drama-method-number {
+            flex: 0 0 auto;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #edf5ff;
+            border: 1px solid #d7e7fa;
+
+            color: #1269c9;
+            font-size: 13px;
+            font-weight: 800;
+         }
+
+         .drama-method-section,
+         .drama-library-section {
+            margin-top: 8px;
+         }
+
+         .drama-method-title {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            margin-bottom: 15px;
+         }
+
+         .drama-method-title h3 {
+            margin: 0;
+
+            color: var(--navy);
+            font-size: 21px;
+            line-height: 1.2;
+            font-weight: 800;
+         }
+
+         .drama-method-title p {
+            margin: 4px 0 0;
+
+            color: var(--muted);
+            font-size: 14px;
+         }
+
+         .drama-or-divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            margin: 26px 0;
+         }
+
+         .drama-or-divider span {
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+         }
+
+         .drama-or-divider strong {
+            color: #92a0ad;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+         }
+
+         @media (max-width: 900px) {
+            .drama-methods-overview {
+               grid-template-columns: 1fr;
+            }
+         }
+
+         @media (max-width: 600px) {
+            .drama-input-section {
+               padding: 26px 18px 32px;
+            }
+
+            .drama-input-header h2 {
+               font-size: 28px;
+            }
+
+            .drama-method-card {
+               padding: 15px;
+            }
+
+            .drama-method-title {
+               align-items: flex-start;
+            }
+
+            .drama-method-title h3 {
+               font-size: 19px;
+            }
+         }
       </style>
    </head>
    <body>
@@ -1099,8 +1260,9 @@
 
                <header class="intro reveal">
                   <p class="lead">
-                     Strona umożliwia przeanalizowanie tekstu dowolnego wierszowanego dramatu
-                     napisanego w języku polskim pod kątem jego 
+                     Strona umożliwia przeanalizowanie tekstu dowolnego
+                     wierszowanego dramatu napisanego w języku polskim pod kątem
+                     jego
                      <span
                         ><strong>zróżnicowania wersyfikacyjnego</strong></span
                      >
@@ -1116,9 +1278,7 @@
                         </div>
                         <div class="num">01</div>
                      </div>
-                     <h2>
-                        Rozkład metryczny wypowiedzi wybranych postaci
-                     </h2>
+                     <h2>Rozkład metryczny wypowiedzi wybranych postaci</h2>
                      <div class="rule"></div>
                      <p>
                         Umożliwia porównanie dominujących metrów w wypowiedziach
@@ -1249,7 +1409,10 @@
                      />
                   </svg>
                   <div style="text-align: left">
-                     Niniejsza strona – uwzględniająca cechy związane z wierszową organizacją tekstu – stanowi uzupełnienie możliwości analitycznych oferowanych przez narzędzie <a href="https://dracor.org/pol" target="_blank"
+                     Niniejsza strona – uwzględniająca cechy związane z
+                     wierszową organizacją tekstu – stanowi uzupełnienie
+                     możliwości analitycznych oferowanych przez narzędzie
+                     <a href="https://dracor.org/pol" target="_blank"
                         >DraCor | Polish Drama Corpus</a
                      >, które obejmuje dramaty niewierszowane.
                   </div>
@@ -1478,48 +1641,49 @@
                   </div>
                   <div class="tips-card-container">
                      <div class="tips-card">
-                                <div class="tips-card-header">
-                           <div><img src="assets/text.png"></div>
-                     <div>Przygotuj tekst dramatu</div>
-                  </div>
-                     Tekst dramatu należy wstępnie przygotować (przed wklejeniem
-                     do pola tekstowego lub załadowaniem pliku w formacie .txt),
-                     żeby algorytm mógł poprawnie przypisać wszystkie partie do
-                     mówiących postaci i wykryć didaskalia. W tym celu:<br />
-                     <ul>
-                        <li>
-                           postaci dramatu powinny zostać zapisane wielkimi
-                           literami, np. PUSTELNIK,
-                        </li>
-                        <li>
-                           didaskalia powinny zostać wydzielone za pomocą znaku
-                           slash (ukośnik), np. / na stronie /.
-                        </li>
-                     </ul>
+                        <div class="tips-card-header">
+                           <div><img src="assets/text.png" /></div>
+                           <div>Przygotuj tekst dramatu</div>
+                        </div>
+                        Tekst dramatu należy wstępnie przygotować (przed
+                        wklejeniem do pola tekstowego lub załadowaniem pliku w
+                        formacie .txt), żeby algorytm mógł poprawnie przypisać
+                        wszystkie partie do mówiących postaci i wykryć
+                        didaskalia. W tym celu:<br />
+                        <ul>
+                           <li>
+                              postaci dramatu powinny zostać zapisane wielkimi
+                              literami, np. PUSTELNIK,
+                           </li>
+                           <li>
+                              didaskalia powinny zostać wydzielone za pomocą
+                              znaku slash (ukośnik), np. / na stronie /.
+                           </li>
+                        </ul>
                      </div>
                      <div class="tips-card">
                         <div class="tips-card-header">
-                           <div><img src="assets/zarowka.png"></div>
-                     <div>Uwaga</div>
-                  </div>
-                     Skrypt bazuje na
-                     konwencjach zastosowanych w serwisie
-                     <a href="https://wolnelektury.pl" target="_blank"
-                        >Wolne Lektury</a
-                     >
-                     (jeśli wybierzemy opcję: <i>Pobierz książkę</i> >
-                     <i>Inne formaty</i> > <i>Plik tekstowy.txt</i>). Wklejenie
-                     tekstu skopiowanego z tego źródła nie wymaga zatem
-                     ingerencji w treść w celu dostosowania jej do algorytmu
-                     (należy jednak pamiętać, żeby z początku i końca zawartości
-                     pliku usunąć tytuł, spis osób dramatu, wszelkie noty
-                     edytorskie, numer ISBN itd.) Strona zostanie rozbudowana o
-                     obsługę <strong>standardu TEI/XML</strong> – z
-                     uwzględnieniem istniejących praktyk kodowania tekstów
-                     dramatycznych, stosowanych m.in. w
-                     <a href="https://dracor.org/pol" target="_blank"
-                        >DraCor | Polish Drama Corpus</a
-                     >.
+                           <div><img src="assets/zarowka.png" /></div>
+                           <div>Uwaga</div>
+                        </div>
+                        Skrypt bazuje na konwencjach zastosowanych w serwisie
+                        <a href="https://wolnelektury.pl" target="_blank"
+                           >Wolne Lektury</a
+                        >
+                        (jeśli wybierzemy opcję: <i>Pobierz książkę</i> >
+                        <i>Inne formaty</i> > <i>Plik tekstowy.txt</i>).
+                        Wklejenie tekstu skopiowanego z tego źródła nie wymaga
+                        zatem ingerencji w treść w celu dostosowania jej do
+                        algorytmu (należy jednak pamiętać, żeby z początku i
+                        końca zawartości pliku usunąć tytuł, spis osób dramatu,
+                        wszelkie noty edytorskie, numer ISBN itd.) Strona
+                        zostanie rozbudowana o obsługę
+                        <strong>standardu TEI/XML</strong> – z uwzględnieniem
+                        istniejących praktyk kodowania tekstów dramatycznych,
+                        stosowanych m.in. w
+                        <a href="https://dracor.org/pol" target="_blank"
+                           >DraCor | Polish Drama Corpus</a
+                        >.
                      </div>
                   </div>
                </div>
@@ -1559,23 +1723,77 @@
                </p>
             </div>
          </section>
-         <textarea
-            id="inputText"
-            placeholder="Wklej tutaj tekst dramatu..."
-         ></textarea>
+         <section class="drama-input-section">
+            <div class="drama-input-header">
+               <h2>Wprowadź tekst dramatu</h2>
+               <p>Dostępne są 3 sposoby wprowadzenia tekstu:</p>
+            </div>
+            <div class="drama-methods-overview">
+               <div class="drama-method-card">
+                  <span class="drama-method-number">01</span>
+                  <div>
+                     <h3>Wklejenie tekstu</h3>
+                     <p>
+                        Wprowadź treść dramatu bezpośrednio w polu tekstowym.
+                     </p>
+                  </div>
+               </div>
+
+               <div class="drama-method-card">
+                  <span class="drama-method-number">02</span>
+                  <div>
+                     <h3>Wczytanie pliku .txt</h3>
+                     <p>Przeciągnij plik lub wybierz go z dysku.</p>
+                  </div>
+               </div>
+
+               <div class="drama-method-card">
+                  <span class="drama-method-number">03</span>
+                  <div>
+                     <h3>Wybór z biblioteki</h3>
+                     <p>Skorzystaj z przygotowanego tekstu.</p>
+                  </div>
+               </div>
+            </div>
+         </section>
+         <section>
+            <div class="drama-option">
+               <span class="drama-method-number">01</span>
+               <h3>Wklej tekst</h3>
+            </div>
+            <textarea
+               id="inputText"
+               placeholder="Wklej tutaj tekst dramatu..."
+            ></textarea>
+         </section>
+         <div class="drama-or-divider">
+            <span></span>
+            <strong>LUB</strong>
+            <span></span>
+         </div>
+         <div class="drama-option">
+            <span class="drama-method-number">02</span>
+            <h3>Wczytaj plik .txt</h3>
+         </div>
          <section
             id="fileDropZone"
             class="file-drop-zone"
             aria-label="Wczytywanie pliku tekstowego"
          >
-            <strong>Wybierz plik .txt albo przeciągnij go tutaj</strong
-            ><br /><br />
-            <span
-               >(możesz także ręcznie uzupełnić pole tekstowe znajdujące się
-               powyżej lub wybrać tekst z mojej biblioteki)</span
-            ><br /><br />
+            <strong>Wybierz plik .txt albo przeciągnij go tutaj</strong>
+            <br /><br />
             <input type="file" id="txtFileInput" accept=".txt,text/plain" />
          </section>
+         <div class="drama-or-divider">
+            <span></span>
+            <strong>LUB</strong>
+            <span></span>
+         </div>
+
+         <div class="drama-option">
+            <span class="drama-method-number">03</span>
+            <h3>Wybierz z biblioteki</h3>
+         </div>
          <section class="library-section" aria-label="Moja biblioteka">
             <h2>Biblioteka dramatów</h2>
             <p>
@@ -1809,48 +2027,47 @@
                   <h2>Wynik analizy</h2>
                   <p>Przegląd wskaźników analizy cyfrowej dramatu.</p>
                </div>
-              
             </div>
 
             <div id="metricsEmptyState" class="metrics-empty-state">
                Brak linijek wypowiedzi po wyłączeniu didaskaliów.
             </div>
             <div>
-                <div class="table-container">
-            <table id="resultTable" class="hidden">
-               <thead>
-                  <tr>
-                     <th>Treść wersu</th>
-                     <th>Lb. sylab</th>
-                     <th>Bohater</th>
-                  </tr>
-               </thead>
-               <tbody></tbody>
-            </table>
-         </div>
-         <div class="action-buttons" id="actionButtons">
-            <button id="pieChartsButton" type="button">
-               Generuj wykresy kołowe dla wybranych bohaterów
-            </button>
-            <button id="barChartsButton" type="button">
-               Generuj wykresy słupkowe
-            </button>
-            <button id="exportButton" type="button">
-               Eksportuj tabelę do pliku XLSX
-            </button>
-         </div>
-         <div id="charts" class="chart-container"></div>
+               <div class="table-container">
+                  <table id="resultTable" class="hidden">
+                     <thead>
+                        <tr>
+                           <th>Treść wersu</th>
+                           <th>Lb. sylab</th>
+                           <th>Bohater</th>
+                        </tr>
+                     </thead>
+                     <tbody></tbody>
+                  </table>
+               </div>
+               <div class="action-buttons" id="actionButtons">
+                  <button id="pieChartsButton" type="button">
+                     Generuj wykresy kołowe dla wybranych bohaterów
+                  </button>
+                  <button id="barChartsButton" type="button">
+                     Generuj wykresy słupkowe
+                  </button>
+                  <button id="exportButton" type="button">
+                     Eksportuj tabelę do pliku XLSX
+                  </button>
+               </div>
+               <div id="charts" class="chart-container"></div>
             </div>
 
-             <div class="metrics-warning">
+            <div class="metrics-warning">
                <span class="metrics-warning-icon" aria-hidden="true">!</span>
                <div>
-                  <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie przypadków, w których
-                  wypowiedzi postaci współdzielą między sobą jeden wers metryczny
-                  (czyli sytuacji, gdy na jeden wers metryczny przypadają repliki
-                  dialogowe różnych postaci). Może to wpływać na wyniki analizy
-                  (średnią długość odcinka izosylabicznego i zróżnicowanie
-                  metryczne dramatu).
+                  <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie
+                  przypadków, w których wypowiedzi postaci współdzielą między
+                  sobą jeden wers metryczny (czyli sytuacji, gdy na jeden wers
+                  metryczny przypadają repliki dialogowe różnych postaci). Może
+                  to wpływać na wyniki analizy (średnią długość odcinka
+                  izosylabicznego i zróżnicowanie metryczne dramatu).
                </div>
             </div>
 
@@ -1859,17 +2076,32 @@
                   <h3 class="metrics-panel-title">Główne wskaźniki</h3>
                   <div class="metrics-grid">
                      <div id="isosyllabicMetric" class="metric-card"></div>
-                     <div id="interactionDensityMetric" class="metric-card"></div>
+                     <div
+                        id="interactionDensityMetric"
+                        class="metric-card"
+                     ></div>
                      <div id="lineBreakingMetric" class="metric-card"></div>
-                     <div id="punctuationExpressionMetric" class="metric-card"></div>
+                     <div
+                        id="punctuationExpressionMetric"
+                        class="metric-card"
+                     ></div>
                      <div id="selfReferenceMetric" class="metric-card"></div>
-                     <div id="metacommentaryDensityMetric" class="metric-card"></div>
-                     <div id="asideStageFunctionMetric" class="metric-card"></div>
+                     <div
+                        id="metacommentaryDensityMetric"
+                        class="metric-card"
+                     ></div>
+                     <div
+                        id="asideStageFunctionMetric"
+                        class="metric-card"
+                     ></div>
                      <div id="asideDramaLengthMetric" class="metric-card"></div>
                   </div>
                </div>
 
-               <div id="metricDistributionMetric" class="metrics-panel metric-chart-panel">
+               <div
+                  id="metricDistributionMetric"
+                  class="metrics-panel metric-chart-panel"
+               >
                   <h3 class="metrics-panel-title">
                      Rozkład metryczny (dominujące metra) całego dramatu
                   </h3>
@@ -2488,7 +2720,9 @@
                asideStageDirectionCount,
             });
 
-            const dashboard = document.getElementById("metricsDashboardContent");
+            const dashboard = document.getElementById(
+               "metricsDashboardContent",
+            );
             const emptyState = document.getElementById("metricsEmptyState");
 
             if (speechLineCount === 0) {
