@@ -909,11 +909,12 @@
             font-weight: 850;
          }
 
-         .card h2 {
-            /* margin: 22px 0 13px; */
+         .card-title {
+            margin: 22px 0 13px;
             font-size: 16px;
             line-height: 1.22;
             letter-spacing: -0.02em;
+            font-weight: 600;
          }
 
          .rule {
@@ -1299,7 +1300,7 @@
                         </div>
                         <div class="num">01</div>
                      </div>
-                     <h2>Rozkład metryczny wypowiedzi wybranych postaci</h2>
+                     <div class="card-title">Rozkład metryczny wypowiedzi wybranych postaci</div>
                      <div class="rule"></div>
                      <p>
                         Umożliwia porównanie dominujących metrów w wypowiedziach
@@ -1313,7 +1314,7 @@
                         </div>
                         <div class="num">02</div>
                      </div>
-                     <h2>Średnia długość odcinka izosylabicznego</h2>
+                     <div class="card-title">Średnia długość odcinka izosylabicznego</div>
                      <div class="rule"></div>
                      <p>
                         Pozwala określić m.in. stopień stabilności rytmicznej
@@ -1328,7 +1329,7 @@
                         </div>
                         <div class="num">03</div>
                      </div>
-                     <h2>Średnia długość wypowiedzi jednej postaci</h2>
+                     <div class="card-title">Średnia długość wypowiedzi jednej postaci</div>
                      <div class="rule"></div>
                      <p>
                         Ilustruje gęstość interakcji między postaciami i pomaga
@@ -1343,7 +1344,7 @@
                         </div>
                         <div class="num">04</div>
                      </div>
-                     <h2>Wektory ekspresji interpunkcyjnej</h2>
+                     <div class="card-title">Wektory ekspresji interpunkcyjnej</div>
                      <div class="rule"></div>
                      <p>Odzwierciedlają gęstość wykrzyknień i pytań.</p>
                   </article>
@@ -1355,7 +1356,7 @@
                         </div>
                         <div class="num">05</div>
                      </div>
-                     <h2>Wskaźnik łamania wiersza</h2>
+                     <div class="card-title">Wskaźnik łamania wiersza</div>
                      <div class="rule"></div>
                      <p>
                         % linijek wypowiedzi, które nie kończą się znakiem
@@ -1371,7 +1372,7 @@
                         </div>
                         <div class="num">06</div>
                      </div>
-                     <h2>Wskaźnik gęstości tekstu pobocznego</h2>
+                     <div class="card-title">Wskaźnik gęstości tekstu pobocznego</div>
                      <div class="rule"></div>
                      <p>
                         Liczba wystąpień didaskaliów względem długości tekstu
@@ -1386,10 +1387,10 @@
                         </div>
                         <div class="num">07</div>
                      </div>
-                     <h2>
+                     <div class="card-title">
                         Wskaźnik nasycenia didaskaliów wypowiedziami „na
                         stronie”
-                     </h2>
+                     </div>
                      <div class="rule"></div>
                      <p>Pokazuje gęstość apartu.</p>
                   </article>
@@ -1401,7 +1402,7 @@
                         </div>
                         <div class="num">08</div>
                      </div>
-                     <h2>Wskaźnik referencji pierwszoosobowej</h2>
+                     <div class="card-title">Wskaźnik referencji pierwszoosobowej</div>
                      <div class="rule"></div>
                      <p>
                         Mierzy gęstość zaimków osobowych i dzierżawczych
@@ -1810,13 +1811,11 @@
             <strong>LUB</strong>
             <span></span>
          </div>
-
-         <div class="drama-option">
+         <section id="drama-library" class="library-section" aria-label="Moja biblioteka">
+             <div class="drama-option">
             <span class="drama-method-number">03</span>
             <h3>Wybierz z biblioteki</h3>
          </div>
-         <section id="drama-library" class="library-section" aria-label="Moja biblioteka">
-            <h2>Biblioteka dramatów</h2>
             <p>
                Poniżej znajduje się biblioteka dramatów przygotowanych pod
                wymagania skryptu (docelowo teksty zostaną dostosowane także do
