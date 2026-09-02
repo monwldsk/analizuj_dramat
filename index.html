@@ -404,6 +404,22 @@
             line-height: 1.45;
          }
 
+         .speaker-share-section {
+            margin-bottom: 18px;
+            padding: 18px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .speaker-share-section .chart-box {
+            position: relative;
+            width: 100%;
+            min-height: 360px;
+            max-width: none;
+            margin-top: 4px;
+         }
+
          .metrics-empty-state {
             display: none;
             padding: 24px;
@@ -2078,6 +2094,24 @@
                <div id="charts" class="chart-container"></div>
             </div>
 
+            <div
+               id="speakerShareSection"
+               class="speaker-share-section"
+               aria-label="Udział wypowiedzi bohaterów"
+            >
+               <h3 class="metrics-panel-title">
+                  Kto ma najwięcej do powiedzenia?*  
+               </h3>
+               <p>*Czyli procentowy udział bohaterów w całym tekście dramatu.</p>
+               <div class="chart-box">
+                  <canvas id="speakerShareChart"></canvas>
+               </div>
+               <div class="metric-chart-note">
+                  Wykres pokazuje, jaki procent wszystkich linijek wypowiedzi
+                  dramatu przypada na każdego bohatera. Wypowiedzi poniżej 1% zsumowano i przedstawiono jako „Inni bohaterowie (poniżej 1%) – razem”.
+               </div>
+            </div>
+
             <div class="metrics-warning">
                <span class="metrics-warning-icon" aria-hidden="true">!</span>
                <div>
@@ -2298,6 +2332,7 @@
          const state = {
             analyzedData: [],
             metricDistributionChart: null,
+            speakerShareChart: null,
             renderedCharts: [],
          };
 
@@ -2763,6 +2798,7 @@
             renderLineBreakingMetric(speechLines, speechLineCount);
             renderSelfReferenceMetric(words);
             renderMetricDistributionChart(speechLines, speechLineCount);
+            renderSpeakerShareChart(state.analyzedData);
 
             DOM.additionalMetrics.style.display = "block";
          }
@@ -2773,6 +2809,7 @@
             });
 
             clearMetricDistributionChart();
+            clearSpeakerShareChart();
 
             if (hide) DOM.additionalMetrics.style.display = "none";
          }
@@ -2929,6 +2966,113 @@
                `${selfReferenceRate}‰`,
                "Wskaźnik = liczba wystąpień form: ja, mnie, mi, mną, mój, mojego, mojemu, moim, moja, mojej, moją, moje, moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.",
             );
+         }
+
+         function clearSpeakerShareChart() {
+            if (state.speakerShareChart) {
+               state.speakerShareChart.destroy();
+               state.speakerShareChart = null;
+            }
+         }
+
+         function renderSpeakerShareChart(data) {
+            const eligibleLines = data.filter(({ actor }) => {
+               const normalizedActor = (actor || "").trim();
+               return (
+                  normalizedActor &&
+                  normalizedActor !== "DIDASKALIA" &&
+                  !/^AKT(?:\s|$)/i.test(normalizedActor)
+               );
+            });
+
+            const speakerCounts = eligibleLines.reduce((counts, { actor }) => {
+               const normalizedActor = actor.trim();
+               counts[normalizedActor] = (counts[normalizedActor] || 0) + 1;
+               return counts;
+            }, {});
+
+            const totalEligibleLines = eligibleLines.length;
+            const speakerDataRaw = Object.entries(speakerCounts)
+               .map(([actor, count]) => ({
+                  actor,
+                  percentage: (count / totalEligibleLines) * 100,
+               }));
+
+            const minorSpeakersPercentage = speakerDataRaw
+               .filter(({ percentage }) => percentage < 1)
+               .reduce((sum, { percentage }) => sum + percentage, 0);
+
+            const speakerData = speakerDataRaw
+               .filter(({ percentage }) => percentage >= 1)
+               .sort((a, b) => b.percentage - a.percentage);
+
+            if (minorSpeakersPercentage > 0) {
+               speakerData.push({
+                  actor: "Inni bohaterowie (poniżej 1%) – razem",
+                  percentage: minorSpeakersPercentage,
+               });
+            }
+
+            const canvas = document.getElementById("speakerShareChart");
+            const section = document.getElementById("speakerShareSection");
+            if (!canvas || !section) return;
+
+            clearSpeakerShareChart();
+
+            if (!speakerData.length) {
+               section.style.display = "none";
+               return;
+            }
+
+            section.style.display = "block";
+            canvas.parentElement.style.height = `${Math.max(
+               360,
+               speakerData.length * 32,
+            )}px`;
+
+            state.speakerShareChart = new Chart(canvas, {
+               type: "bar",
+               data: {
+                  labels: speakerData.map(({ actor }) => actor),
+                  datasets: [
+                     {
+                        data: speakerData.map(({ percentage }) => percentage),
+                        backgroundColor: "#2f69d9",
+                        borderColor: "#2f69d9",
+                        borderWidth: 1,
+                     },
+                  ],
+               },
+               options: {
+                  indexAxis: "y",
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                     legend: { display: false },
+                     tooltip: {
+                        callbacks: {
+                           label: (context) =>
+                              `${context.raw.toFixed(2)}%`,
+                        },
+                     },
+                  },
+                  scales: {
+                     x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                           display: true,
+                           text: "Procent wszystkich linijek wypowiedzi (%)",
+                        },
+                     },
+                     y: {
+                        ticks: {
+                           autoSkip: false,
+                        },
+                     },
+                  },
+               },
+            });
          }
 
          function renderMetricDistributionChart(speechLines, speechLineCount) {
