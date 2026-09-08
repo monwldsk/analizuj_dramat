@@ -2782,6 +2782,7 @@
 
             if (dashboard) dashboard.style.display = "grid";
             if (emptyState) emptyState.style.display = "none";
+            DOM.additionalMetrics.style.display = "block";
 
             const allSpeechText = speechLines.map(({ line }) => line).join(" ");
             const words = getWords(allSpeechText);
@@ -2793,8 +2794,6 @@
             renderSelfReferenceMetric(words);
             renderMetricDistributionChart(speechLines, speechLineCount);
             renderSpeakerShareChart(state.analyzedData);
-
-            DOM.additionalMetrics.style.display = "block";
          }
 
          function resetMetrics(hide = true) {
