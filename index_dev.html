@@ -2923,7 +2923,7 @@
 
             DOM.resultTable.classList.remove("hidden");
             DOM.actionButtons.style.display = "flex";
-            scrollToBottom();
+            scrollToAnalysisResults();
          }
 
          function parseDramaText(text) {
@@ -3864,10 +3864,17 @@
             return Object.values(values).reduce((sum, value) => sum + value, 0);
          }
 
-         function scrollToBottom() {
-            window.scrollTo({
-               top: document.body.scrollHeight,
-               behavior: "smooth",
+         function scrollToAnalysisResults() {
+            const resultsSection =
+               DOM.additionalMetrics || document.getElementById("additionalMetrics");
+
+            if (!resultsSection) return;
+
+            requestAnimationFrame(() => {
+               resultsSection.scrollIntoView({
+                  behavior: "smooth",
+                  block: "start",
+               });
             });
          }
 
