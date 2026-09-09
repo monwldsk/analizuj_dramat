@@ -1312,7 +1312,6 @@
          }
 
          .comparison-header p {
-            max-width: 840px;
             margin: 0;
             color: #65758b;
             line-height: 1.55;
@@ -1619,7 +1618,7 @@
          .comparison-chart-wrap {
             position: relative;
             width: 100%;
-            min-height: 430px;
+            max-height: 430px;
          }
 
          .comparison-chart-note {
@@ -2499,17 +2498,7 @@
                </div>
             </div>
 
-            <!-- <div class="metrics-warning">
-               <span class="metrics-warning-icon" aria-hidden="true">!</span>
-               <div>
-                  <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie
-                  przypadków, w których wypowiedzi postaci współdzielą między
-                  sobą jeden wers metryczny (czyli sytuacji, gdy na jeden wers
-                  metryczny przypadają repliki dialogowe różnych postaci). Może
-                  to wpływać na wyniki analizy (średnią długość odcinka
-                  izosylabicznego i zróżnicowanie metryczne dramatu).
-               </div>
-            </div> -->
+      
 
             <div id="metricsDashboardContent" class="metrics-dashboard">
                <div class="metrics-panel">
@@ -2577,7 +2566,7 @@
                <div class="comparison-panel">
                   <h3>1. Wybierz teksty z biblioteki</h3>
                   <p class="comparison-panel-intro">
-                     Utwory Juliusza Słowackiego widoczne na wykresie ze studium
+                     Utwory Juliusza Słowackiego widoczne na wykresach z opisanego wyżej studium
                      przypadku są zaznaczone domyślnie.
                   </p>
                   <input
@@ -2594,7 +2583,7 @@
                   ></div>
                   <div class="comparison-mini-actions">
                      <button id="comparisonSelectSlowacki" type="button">
-                        Zaznacz zestaw Słowackiego
+                        Zaznacz dramaty Słowackiego
                      </button>
                      <button
                         id="comparisonClearSelection"
@@ -2641,8 +2630,8 @@
                <h3>3. Ustal kolejność na wykresie</h3>
                <p class="comparison-panel-intro">
                   Przeciągaj pozycje za uchwyt ⋮⋮ albo użyj strzałek. Kolejność tej
-                  listy jest dokładnie kolejnością słupków na wykresie. Nazwę możesz
-                  edytować — szczególnie przydaje się to dla własnych plików.
+                  listy jest dokładnie kolejnością słupków na wykresie. Nazwę, która będzie widoczna na wykresie możesz
+                  edytować.
                </p>
                <ol id="comparisonOrderList" class="comparison-order-list"></ol>
             </div>
@@ -2693,11 +2682,7 @@
                <div id="comparisonChartWrap" class="comparison-chart-wrap">
                   <canvas id="comparisonChart"></canvas>
                </div>
-               <div class="comparison-chart-note">
-                  Wartości są liczone przez te same funkcje analityczne co w sekcji
-                  „Wynik analizy”. Szara nakładka okresu mistyczno-genezyjskiego nie
-                  jest dodawana; wykres pokazuje wyłącznie wybrane teksty i wartości.
-               </div>
+              
             </div>
          </section>
       </main>
