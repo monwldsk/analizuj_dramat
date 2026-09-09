@@ -2066,9 +2066,11 @@
                   <table id="resultTable" class="hidden">
                      <thead>
                         <tr>
+                           <th>Nr wersu</th>
                            <th>Treść wersu</th>
                            <th>Lb. sylab</th>
                            <th>Bohater</th>
+                           <th>Wers współdziel.</th>
                         </tr>
                      </thead>
                      <tbody></tbody>
@@ -2096,17 +2098,16 @@
                <h3 class="metrics-panel-title">
                   Kto ma najwięcej do powiedzenia?*  
                </h3>
-               <p class="note">*Czyli procentowy udział kwestii poszczególnych bohaterów w całym tekście dramatu.</p>
+               <p class="note">*Czyli procentowy udział wersów przypadających na poszczególnych bohaterów w całym tekście dramatu.</p>
                <div class="chart-box">
                   <canvas id="speakerShareChart"></canvas>
                </div>
                <div class="metric-chart-note">
-                  Wykres pokazuje, jaki procent wszystkich linijek
-                  dramatu przypada na każdego bohatera. Wypowiedzi poniżej 1% zsumowano i zgrupowano pod etykietą „Inni bohaterowie (poniżej 1%) – razem”.
+                  Wykres pokazuje, jaki procent wszystkich wersów przypada na każdego bohatera. Wspólny wers P_1 + P_2 jest liczony tylko raz; jeśli tworzą go różni bohaterowie, jego udział jest dzielony między nich proporcjonalnie do liczby sylab poszczególnych fragmentów. Udziały poniżej 1% zsumowano i zgrupowano pod etykietą „Inni bohaterowie (poniżej 1%) – razem”.
                </div>
             </div>
 
-            <div class="metrics-warning">
+            <!-- <div class="metrics-warning">
                <span class="metrics-warning-icon" aria-hidden="true">!</span>
                <div>
                   <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie
@@ -2116,7 +2117,7 @@
                   to wpływać na wyniki analizy (średnią długość odcinka
                   izosylabicznego i zróżnicowanie metryczne dramatu).
                </div>
-            </div>
+            </div> -->
 
             <div id="metricsDashboardContent" class="metrics-dashboard">
                <div class="metrics-panel">
@@ -2428,27 +2429,126 @@
 
          function parseDramaText(text) {
             let currentActor = "";
+            let verseNumber = 0;
+            let sharedLineCandidateIndex = null;
+            const rows = [];
 
-            return text
-               .split("\n")
-               .map((line) => line.trim())
-               .filter((line) => line && !line.startsWith("++"))
-               .reduce((rows, line) => {
-                  if (isActorLine(line)) {
-                     currentActor = line;
-                     return rows;
-                  }
+            text.split("\n").forEach((rawLine) => {
+               const line = rawLine.trim();
 
+               if (!line || line.startsWith("++")) return;
+
+               if (isActorLine(line)) {
+                  currentActor = line;
+                  return;
+               }
+
+               const stageDirection = isStageDirection(line);
+
+               if (stageDirection) {
                   rows.push({
+                     verseNumber: "",
                      line,
                      vowelsNumber: countSyllables(line),
-                     actor: isStageDirection(line)
-                        ? "DIDASKALIA"
-                        : currentActor,
+                     actor: "DIDASKALIA",
+                     sharedLine: "",
+                  });
+                  // Didaskalia nie przerywają potencjalnego wspólnego wersu:
+                  // P_1 i P_2 mogą być rozdzielone tekstem pobocznym.
+                  return;
+               }
+
+               const leadingWhitespace = rawLine.match(/^[\t ]*/)?.[0] || "";
+               const indentWidth = [...leadingWhitespace].reduce(
+                  (width, char) => width + (char === "\t" ? 24 : 1),
+                  0,
+               );
+               // W materiałach wejściowych drugie części wspólnego wersu mają
+               // wyraźne wcięcie (zwykle 24 spacje). Małe wcięcia 2–4 spacje,
+               // używane np. w partiach śpiewanych, nie są traktowane jako shared lines.
+               const isSharedLineIndent = indentWidth >= 20;
+               const previousSpeechRow =
+                  sharedLineCandidateIndex !== null
+                     ? rows[sharedLineCandidateIndex]
+                     : null;
+               const isSharedLineSecondPart =
+                  isSharedLineIndent && previousSpeechRow;
+
+               if (isSharedLineSecondPart) {
+                  previousSpeechRow.sharedLine = "P_1";
+
+                  rows.push({
+                     verseNumber: previousSpeechRow.verseNumber,
+                     line,
+                     vowelsNumber: countSyllables(line),
+                     actor: currentActor,
+                     sharedLine: "P_2",
                   });
 
-                  return rows;
-               }, []);
+                  // Parę P_1 + P_2 traktujemy jako jeden wers metryczny.
+                  sharedLineCandidateIndex = null;
+                  return;
+               }
+
+               verseNumber++;
+               rows.push({
+                  verseNumber,
+                  line,
+                  vowelsNumber: countSyllables(line),
+                  actor: currentActor,
+                  sharedLine: "",
+               });
+               sharedLineCandidateIndex = rows.length - 1;
+            });
+
+            return rows;
+         }
+
+         function buildMetricLines(data) {
+            const metricLines = [];
+            const metricLinesByVerse = new Map();
+
+            data.forEach((row) => {
+               if (row.actor === "DIDASKALIA" || row.verseNumber === "") return;
+
+               const key = String(row.verseNumber);
+               const existingMetricLine = metricLinesByVerse.get(key);
+
+               if (!existingMetricLine) {
+                  const actorContributions = {};
+                  if (row.actor) actorContributions[row.actor] = row.vowelsNumber;
+
+                  const metricLine = {
+                     verseNumber: row.verseNumber,
+                     line: row.line,
+                     vowelsNumber: row.vowelsNumber,
+                     actors: row.actor ? [row.actor] : [],
+                     actorContributions,
+                     sharedLine: row.sharedLine === "P_1" || row.sharedLine === "P_2",
+                  };
+
+                  metricLinesByVerse.set(key, metricLine);
+                  metricLines.push(metricLine);
+                  return;
+               }
+
+               // P_1 + P_2 (także rozdzielone didaskaliami) stanowią jeden
+               // wers metryczny: łączymy zatem tekst i sumujemy liczbę sylab.
+               existingMetricLine.line = `${existingMetricLine.line} ${row.line}`.trim();
+               existingMetricLine.vowelsNumber += row.vowelsNumber;
+               existingMetricLine.sharedLine = true;
+
+               if (row.actor) {
+                  if (!existingMetricLine.actors.includes(row.actor)) {
+                     existingMetricLine.actors.push(row.actor);
+                  }
+                  existingMetricLine.actorContributions[row.actor] =
+                     (existingMetricLine.actorContributions[row.actor] || 0) +
+                     row.vowelsNumber;
+               }
+            });
+
+            return metricLines;
          }
 
          function isActorLine(line) {
@@ -2470,23 +2570,31 @@
          function renderResultsTable(data) {
             DOM.resultTableBody.innerHTML = "";
 
-            data.forEach(({ line, vowelsNumber, actor }) => {
-               const row = DOM.resultTableBody.insertRow();
-               row.insertCell(0).textContent = line;
-               row.insertCell(1).textContent = vowelsNumber;
-               row.insertCell(2).textContent = actor;
-            });
+            data.forEach(
+               ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => {
+                  const row = DOM.resultTableBody.insertRow();
+                  row.insertCell(0).textContent = verseNumber;
+                  row.insertCell(1).textContent = line;
+                  row.insertCell(2).textContent = vowelsNumber;
+                  row.insertCell(3).textContent = actor;
+                  row.insertCell(4).textContent = sharedLine;
+               },
+            );
          }
 
          function exportToExcel() {
             const workbook = XLSX.utils.book_new();
             const rows = [
-               ["Treść linijki", "Liczba sylab", "Bohater"],
-               ...state.analyzedData.map(({ line, vowelsNumber, actor }) => [
-                  line,
-                  vowelsNumber,
-                  actor,
-               ]),
+               ["Nr wersu", "Treść wersu", "Liczba sylab", "Bohater", "SL"],
+               ...state.analyzedData.map(
+                  ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => [
+                     verseNumber,
+                     line,
+                     vowelsNumber,
+                     actor,
+                     sharedLine,
+                  ],
+               ),
             ];
             const worksheet = XLSX.utils.aoa_to_sheet(rows);
 
@@ -2563,7 +2671,9 @@
             const actorsData = getActorMeterCounts(selectedActorsArray);
             const labels = [
                ...new Set(
-                  state.analyzedData.map(({ vowelsNumber }) => vowelsNumber),
+                  buildMetricLines(state.analyzedData).map(
+                     ({ vowelsNumber }) => vowelsNumber,
+                  ),
                ),
             ].sort((a, b) => a - b);
             const datasets = selectedActorsArray.map((actor) => {
@@ -2592,7 +2702,18 @@
          }
 
          function getActors() {
-            return [...new Set(state.analyzedData.map(({ actor }) => actor))];
+            return [
+               ...new Set(
+                  state.analyzedData
+                     .map(({ actor }) => (actor || "").trim())
+                     .filter(
+                        (actor) =>
+                           actor &&
+                           actor !== "DIDASKALIA" &&
+                           !/^AKT(?:\s|$)/i.test(actor),
+                     ),
+               ),
+            ];
          }
 
          function parseActorGroups(value) {
@@ -2610,14 +2731,17 @@
 
          function getGroupedActorMeterCounts(groups) {
             const groupedCounts = {};
+            const metricLines = buildMetricLines(state.analyzedData);
 
             groups.forEach((group) => {
                groupedCounts[group.join(" + ")] = {};
             });
 
-            state.analyzedData.forEach(({ actor, vowelsNumber }) => {
+            metricLines.forEach(({ actors, vowelsNumber }) => {
                groups.forEach((group) => {
-                  if (!group.includes(actor)) return;
+                  // Jeden współdzielony wers liczymy dla grupy tylko raz,
+                  // nawet jeśli należą do niej obaj jego uczestnicy.
+                  if (!actors.some((actor) => group.includes(actor))) return;
                   const groupName = group.join(" + ");
                   groupedCounts[groupName][vowelsNumber] =
                      (groupedCounts[groupName][vowelsNumber] || 0) + 1;
@@ -2631,11 +2755,16 @@
             const counts = Object.fromEntries(
                actors.map((actor) => [actor, {}]),
             );
+            const metricLines = buildMetricLines(state.analyzedData);
 
-            state.analyzedData.forEach(({ actor, vowelsNumber }) => {
-               if (!actors.includes(actor)) return;
-               counts[actor][vowelsNumber] =
-                  (counts[actor][vowelsNumber] || 0) + 1;
+            metricLines.forEach(({ actors: lineActors, vowelsNumber }) => {
+               actors.forEach((actor) => {
+                  if (!lineActors.includes(actor)) return;
+                  // Jeśli bohater uczestniczy w P_1/P_2, przypisujemy mu
+                  // metrum całego zrekonstruowanego wersu, nie fragmentu.
+                  counts[actor][vowelsNumber] =
+                     (counts[actor][vowelsNumber] || 0) + 1;
+               });
             });
 
             return counts;
@@ -2750,20 +2879,27 @@
 
             resetMetrics(false);
 
-            const speechLines = state.analyzedData.filter(
+            // Dwie reprezentacje są celowo utrzymywane równolegle:
+            // 1) speechFragments — surowe fragmenty przypisane bohaterom;
+            //    na nich liczymy dynamikę wypowiedzi i udział mówców.
+            // 2) metricLines — rzeczywiste wersy metryczne; P_1 + P_2 są
+            //    scalane w jeden wers, także gdy rozdziela je didaskalium.
+            const speechFragments = state.analyzedData.filter(
                ({ actor }) => actor !== "DIDASKALIA",
             );
+            const metricLines = buildMetricLines(state.analyzedData);
             const stageDirections = state.analyzedData.filter(
                ({ actor }) => actor === "DIDASKALIA",
             );
-            const speechLineCount = speechLines.length;
+
+            const metricLineCount = metricLines.length;
             const stageDirectionCount = stageDirections.length;
             const asideStageDirectionCount = stageDirections.filter(
                ({ line }) => line.toLowerCase().includes("na stronie"),
             ).length;
 
             renderStageDirectionMetrics({
-               speechLineCount,
+               metricLineCount,
                stageDirectionCount,
                asideStageDirectionCount,
             });
@@ -2773,7 +2909,7 @@
             );
             const emptyState = document.getElementById("metricsEmptyState");
 
-            if (speechLineCount === 0) {
+            if (metricLineCount === 0) {
                if (dashboard) dashboard.style.display = "none";
                if (emptyState) emptyState.style.display = "block";
                DOM.additionalMetrics.style.display = "block";
@@ -2784,15 +2920,23 @@
             if (emptyState) emptyState.style.display = "none";
             DOM.additionalMetrics.style.display = "block";
 
-            const allSpeechText = speechLines.map(({ line }) => line).join(" ");
+            const allSpeechText = metricLines.map(({ line }) => line).join(" ");
             const words = getWords(allSpeechText);
 
-            renderPunctuationMetric(allSpeechText, speechLineCount);
-            renderIsosyllabicMetric(speechLines, speechLineCount);
-            renderInteractionDensityMetric(speechLines);
-            renderLineBreakingMetric(speechLines, speechLineCount);
+            renderPunctuationMetric(allSpeechText, metricLineCount);
+            renderIsosyllabicMetric(metricLines, metricLineCount);
+
+            // Tego wskaźnika NIE liczymy na scalonych wersach metrycznych.
+            // P_1/P_2 pozostają odrębnymi fragmentami przypisanymi bohaterom,
+            // żeby nie zniekształcać struktury dialogowej.
+            renderInteractionDensityMetric(speechFragments);
+
+            renderLineBreakingMetric(metricLines, metricLineCount);
             renderSelfReferenceMetric(words);
-            renderMetricDistributionChart(speechLines, speechLineCount);
+            renderMetricDistributionChart(metricLines, metricLineCount);
+
+            // Udział bohaterów nadal dotyczy ich rzeczywistych fragmentów mowy,
+            // a nie sztucznie scalonych wersów wieloosobowych.
             renderSpeakerShareChart(state.analyzedData);
          }
 
@@ -2808,13 +2952,13 @@
          }
 
          function renderStageDirectionMetrics({
-            speechLineCount,
+            metricLineCount,
             stageDirectionCount,
             asideStageDirectionCount,
          }) {
             const metacommentaryDensity = percent(
                stageDirectionCount,
-               speechLineCount,
+               metricLineCount,
             );
             const asideStageFunctionDensity = percent(
                asideStageDirectionCount,
@@ -2822,13 +2966,13 @@
             );
             const asideDramaLengthDensity = percent(
                asideStageDirectionCount,
-               speechLineCount,
+               metricLineCount,
             );
 
             DOM.metrics.metacommentaryDensity.innerHTML = metricHtml(
                "Indeks gęstości metakomentarza (didaskaliów):",
                `${metacommentaryDensity}%`,
-               "Wskaźnik = liczba wykrytych didaskaliów / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.",
+               "Wskaźnik = liczba wykrytych didaskaliów / liczba rzeczywistych wersów metrycznych dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
             );
 
             DOM.metrics.asideStageFunction.innerHTML = metricHtml(
@@ -2840,18 +2984,18 @@
             DOM.metrics.asideDramaLength.innerHTML = metricHtml(
                "Wskaźnik gęstości apartu względem długości dramatu:",
                `${asideDramaLengthDensity}%`,
-               "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba wszystkich linijek dramatu po wyłączeniu didaskaliów × 100.",
+               "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba rzeczywistych wersów metrycznych dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
             );
          }
 
-         function renderPunctuationMetric(text, speechLineCount) {
+         function renderPunctuationMetric(text, metricLineCount) {
             const exclamationDensity = percent(
                countRegexMatches(text, /!/g),
-               speechLineCount,
+               metricLineCount,
             );
             const questionDensity = percent(
                countRegexMatches(text, /\?/g),
-               speechLineCount,
+               metricLineCount,
             );
 
             DOM.metrics.punctuationExpression.innerHTML = `
@@ -2860,17 +3004,17 @@
              </div>
              <div class="metric-card-secondary">
                <strong>Gęstość wykrzyknień:</strong> ${exclamationDensity}
-               ${infoTip("Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.")}<br>
+               ${infoTip("Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}<br>
                <strong>Gęstość pytań:</strong> ${questionDensity}
-               ${infoTip("Gęstość pytań = liczba znaków „?” podzielona przez liczbę wszystkich linijek tekstu po wyłączeniu didaskaliów × 100.")}
+               ${infoTip("Gęstość pytań = liczba znaków „?” podzielona przez liczbę rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}
              </div>`;
          }
 
-         function renderIsosyllabicMetric(speechLines, speechLineCount) {
-            const segments = getIsosyllabicSegments(speechLines);
+         function renderIsosyllabicMetric(metricLines, metricLineCount) {
+            const segments = getIsosyllabicSegments(metricLines);
             const averageSegmentLength = average(segments).toFixed(2);
             const syllableChangeRate = (
-               ((segments.length - 1) / Math.max(speechLineCount - 1, 1)) *
+               ((segments.length - 1) / Math.max(metricLineCount - 1, 1)) *
                100
             ).toFixed(2);
 
@@ -2881,21 +3025,21 @@
              </div>
              <div class="metric-card-value">
                ${averageSegmentLength}
-               ${infoTip("Odcinek izosylabiczny to ciąg kolejnych linijek mających tę samą liczbę sylab. Średnia długość = suma długości takich odcinków / liczba odcinków. Proponowany wskaźnik zmienności = liczba zmian liczby sylab między sąsiednimi wersami / liczba możliwych przejść między wersami × 100.")}
+               ${infoTip("Odcinek izosylabiczny to ciąg kolejnych rzeczywistych wersów metrycznych mających tę samą liczbę sylab. Fragmenty P_1 + P_2 są wcześniej scalane, a ich liczby sylab sumowane. Średnia długość = suma długości takich odcinków / liczba odcinków. Wskaźnik zmienności = liczba zmian liczby sylab między sąsiednimi wersami / liczba możliwych przejść między wersami × 100.")}
              </div>
              <div class="metric-card-secondary">
                Wskaźnik częstości zmiany liczby sylab: <strong>${syllableChangeRate}%</strong>
              </div>`;
          }
 
-         function getIsosyllabicSegments(speechLines) {
+         function getIsosyllabicSegments(metricLines) {
             const segments = [];
             let currentSegmentLength = 1;
 
-            for (let i = 1; i < speechLines.length; i++) {
+            for (let i = 1; i < metricLines.length; i++) {
                if (
-                  speechLines[i].vowelsNumber ===
-                  speechLines[i - 1].vowelsNumber
+                  metricLines[i].vowelsNumber ===
+                  metricLines[i - 1].vowelsNumber
                ) {
                   currentSegmentLength++;
                } else {
@@ -2933,15 +3077,15 @@
             );
          }
 
-         function renderLineBreakingMetric(speechLines, speechLineCount) {
-            const brokenLines = speechLines.filter(
+         function renderLineBreakingMetric(metricLines, metricLineCount) {
+            const brokenLines = metricLines.filter(
                ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
             ).length;
 
             DOM.metrics.lineBreaking.innerHTML = metricHtml(
                "Współczynnik łamania wiersza:",
-               `${percent(brokenLines, speechLineCount)}%`,
-               "Wskaźnik = liczba linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów × 100.",
+               `${percent(brokenLines, metricLineCount)}%`,
+               "Wskaźnik = liczba rzeczywistych wersów metrycznych, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Dla wersów współdzielonych lub przełamanych didaskaliami (P_1 + P_2) badane jest zakończenie całego scalonego wersu, czyli końcówka P_2.",
             );
          }
 
@@ -2969,26 +3113,54 @@
          }
 
          function renderSpeakerShareChart(data) {
-            const eligibleLines = data.filter(({ actor }) => {
-               const normalizedActor = (actor || "").trim();
-               return (
-                  normalizedActor &&
-                  normalizedActor !== "DIDASKALIA" &&
-                  !/^AKT(?:\s|$)/i.test(normalizedActor)
+            const metricLines = buildMetricLines(data);
+            const speakerCounts = {};
+            let totalEligibleLines = 0;
+
+            metricLines.forEach(({ actors, actorContributions }) => {
+               const eligibleActors = actors.filter((actor) => {
+                  const normalizedActor = (actor || "").trim();
+                  return (
+                     normalizedActor &&
+                     normalizedActor !== "DIDASKALIA" &&
+                     !/^AKT(?:\s|$)/i.test(normalizedActor)
+                  );
+               });
+
+               if (!eligibleActors.length) return;
+               totalEligibleLines += 1;
+
+               if (eligibleActors.length === 1) {
+                  const actor = eligibleActors[0];
+                  speakerCounts[actor] = (speakerCounts[actor] || 0) + 1;
+                  return;
+               }
+
+               // Wspólny wers liczymy jako jeden wers w mianowniku.
+               // Jego udział rozdzielamy między bohaterów proporcjonalnie
+               // do liczby sylab wypowiedzianych przez każdego z nich.
+               const contributionTotal = eligibleActors.reduce(
+                  (sum, actor) => sum + (actorContributions?.[actor] || 0),
+                  0,
                );
+
+               eligibleActors.forEach((actor) => {
+                  const share =
+                     contributionTotal > 0
+                        ? (actorContributions?.[actor] || 0) /
+                          contributionTotal
+                        : 1 / eligibleActors.length;
+                  speakerCounts[actor] = (speakerCounts[actor] || 0) + share;
+               });
             });
 
-            const speakerCounts = eligibleLines.reduce((counts, { actor }) => {
-               const normalizedActor = actor.trim();
-               counts[normalizedActor] = (counts[normalizedActor] || 0) + 1;
-               return counts;
-            }, {});
-
-            const totalEligibleLines = eligibleLines.length;
             const speakerDataRaw = Object.entries(speakerCounts)
                .map(([actor, count]) => ({
                   actor,
-                  percentage: (count / totalEligibleLines) * 100,
+                  percentage:
+                     totalEligibleLines > 0
+                        ? (count / totalEligibleLines) * 100
+                        : 0,
                }));
 
             const minorSpeakersPercentage = speakerDataRaw
@@ -3055,7 +3227,7 @@
                         max: 100,
                         title: {
                            display: true,
-                           text: "Procent wszystkich linijek wypowiedzi (%)",
+                           text: "Procent wszystkich wersów wypowiedzi (%)",
                         },
                      },
                      y: {
@@ -3068,8 +3240,8 @@
             });
          }
 
-         function renderMetricDistributionChart(speechLines, speechLineCount) {
-            const meterCounts = speechLines.reduce(
+         function renderMetricDistributionChart(metricLines, metricLineCount) {
+            const meterCounts = metricLines.reduce(
                (counts, { vowelsNumber }) => {
                   counts[vowelsNumber] = (counts[vowelsNumber] || 0) + 1;
                   return counts;
@@ -3085,7 +3257,7 @@
                .sort((a, b) => Number(a) - Number(b))
                .forEach((meter) => {
                   const percentage =
-                     (meterCounts[meter] / speechLineCount) * 100;
+                     (meterCounts[meter] / metricLineCount) * 100;
                   if (percentage < 1) {
                      otherPercentage += percentage;
                   } else {
