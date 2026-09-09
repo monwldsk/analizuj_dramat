@@ -1274,6 +1274,397 @@
             font-size: 11px;
             line-height: 1.45;
          }
+
+
+         /* ===== Analiza porównawcza ===== */
+         .comparison-section {
+            margin-top: 38px;
+            padding: 30px;
+            border: 1px solid #dce7f8;
+            border-radius: 24px;
+            background: linear-gradient(180deg, #ffffff, #fbfdff);
+            box-shadow: 0 14px 40px rgba(29, 58, 108, 0.08);
+         }
+
+         .comparison-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 24px;
+         }
+
+         .comparison-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 7px;
+            color: var(--color-accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+         }
+
+         .comparison-header h2 {
+            margin: 0 0 8px;
+            font-size: 30px;
+         }
+
+         .comparison-header p {
+            margin: 0;
+            color: #65758b;
+            line-height: 1.55;
+         }
+
+         .comparison-source-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+         }
+
+         .comparison-panel {
+            min-width: 0;
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .comparison-panel:first-child,
+         .comparison-source-grid .comparison-panel {
+            margin-top: 0;
+         }
+
+         .comparison-panel h3 {
+            margin: 0 0 7px;
+            color: var(--color-primary);
+            font-size: 17px;
+         }
+
+         .comparison-panel-intro {
+            margin: 0 0 13px;
+            color: #65758b;
+            font-size: 12px;
+            line-height: 1.5;
+         }
+
+         .comparison-search,
+         .comparison-select,
+         .comparison-name-input {
+            width: 100%;
+            border: 1px solid #cbdced;
+            border-radius: 8px;
+            background: #fff;
+            color: #10233f;
+         }
+
+         .comparison-search,
+         .comparison-select {
+            min-height: 42px;
+            padding: 9px 11px;
+            font-size: 14px;
+         }
+
+         .comparison-library-list {
+            max-height: 315px;
+            margin-top: 10px;
+            overflow: auto;
+            border: 1px solid #e5edf8;
+            border-radius: 10px;
+            background: #fbfdff;
+         }
+
+         .comparison-library-option {
+            display: grid;
+            grid-template-columns: 22px minmax(0, 1fr);
+            gap: 10px;
+            align-items: center;
+            padding: 10px 12px;
+            border-bottom: 1px solid #edf2f8;
+            cursor: pointer;
+         }
+
+         .comparison-library-option:last-child {
+            border-bottom: 0;
+         }
+
+         .comparison-library-option:hover {
+            background: #f1f7ff;
+         }
+
+         .comparison-library-option input {
+            width: 17px;
+            height: 17px;
+            margin: 0;
+            accent-color: #0b72d9;
+         }
+
+         .comparison-library-text {
+            min-width: 0;
+         }
+
+         .comparison-library-title {
+            display: block;
+            color: #10233f;
+            font-weight: 750;
+         }
+
+         .comparison-library-author {
+            display: block;
+            margin-top: 2px;
+            color: #74849a;
+            font-size: 11px;
+         }
+
+         .comparison-mini-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 11px;
+         }
+
+         .comparison-mini-actions button {
+            padding: 7px 12px;
+            font-size: 12px;
+         }
+
+         .comparison-secondary-button {
+            border-color: #bfd2e7;
+            color: #163f8f;
+            background: #f4f8fd;
+         }
+
+         .comparison-secondary-button:hover {
+            border-color: #d6e2ef;
+            color: #163f8f;
+            background: #eaf2fb;
+         }
+
+         .comparison-upload-zone {
+            display: grid;
+            place-items: center;
+            min-height: 142px;
+            padding: 20px;
+            border: 2px dashed #8fb9e7;
+            border-radius: 12px;
+            text-align: center;
+            color: #163f8f;
+            background: #f7fbff;
+            cursor: pointer;
+            transition: 0.2s ease;
+         }
+
+         .comparison-upload-zone:hover,
+         .comparison-upload-zone.drag-over {
+            border-color: #0b72d9;
+            background: #edf6ff;
+         }
+
+         .comparison-upload-zone strong {
+            display: block;
+            margin-bottom: 4px;
+         }
+
+         .comparison-upload-zone small {
+            color: #6e8096;
+         }
+
+         .comparison-upload-zone input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+         }
+
+         .comparison-uploaded-summary {
+            margin-top: 10px;
+            color: #65758b;
+            font-size: 12px;
+            line-height: 1.5;
+         }
+
+         .comparison-order-list {
+            display: grid;
+            gap: 8px;
+            margin: 12px 0 0;
+            padding: 0;
+            list-style: none;
+         }
+
+         .comparison-order-item {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr) auto;
+            gap: 9px;
+            align-items: center;
+            padding: 9px;
+            border: 1px solid #dfeaf6;
+            border-radius: 10px;
+            background: #fbfdff;
+         }
+
+         .comparison-order-item.dragging {
+            opacity: 0.48;
+         }
+
+         .comparison-drag-handle {
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 34px;
+            border-radius: 7px;
+            color: #6b7e95;
+            background: #eef4fb;
+            cursor: grab;
+            font-size: 17px;
+            user-select: none;
+         }
+
+         .comparison-name-input {
+            min-height: 34px;
+            padding: 6px 9px;
+            font-size: 13px;
+            font-weight: 650;
+         }
+
+         .comparison-item-actions {
+            display: flex;
+            gap: 5px;
+         }
+
+         .comparison-item-actions button {
+            display: grid;
+            place-items: center;
+            width: 31px;
+            height: 31px;
+            padding: 0;
+            border-width: 1px;
+            border-color: #c9d9ea;
+            color: #274c78;
+            background: #fff;
+            font-size: 13px;
+         }
+
+         .comparison-item-actions button:hover {
+            color: #163f8f;
+            background: #edf4ff;
+         }
+
+         .comparison-empty-order {
+            padding: 18px;
+            border: 1px dashed #cbdced;
+            border-radius: 10px;
+            color: #6a7d94;
+            text-align: center;
+            background: #fbfdff;
+         }
+
+         .comparison-metric-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: end;
+         }
+
+         .comparison-metric-row label {
+            display: block;
+            margin-bottom: 6px;
+            color: #344c68;
+            font-size: 12px;
+            font-weight: 750;
+         }
+
+         .comparison-generate-button {
+            min-height: 42px;
+            white-space: nowrap;
+         }
+
+         .comparison-status {
+            min-height: 20px;
+            margin-top: 10px;
+            color: #65758b;
+            font-size: 12px;
+         }
+
+         .comparison-status.error {
+            color: #b33128;
+         }
+
+         .comparison-results {
+            margin-top: 18px;
+            padding: 20px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .comparison-results[hidden] {
+            display: none !important;
+         }
+
+         .comparison-results h3 {
+            margin: 0 0 4px;
+            color: var(--color-primary);
+         }
+
+         .comparison-chart-subtitle {
+            margin: 0 0 10px;
+            color: #65758b;
+            font-size: 12px;
+         }
+
+         .comparison-chart-wrap {
+            position: relative;
+            width: 100%;
+            max-height: 430px;
+         }
+
+         .comparison-chart-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 9px;
+            color: #65758b;
+            background: #f5f9ff;
+            font-size: 11px;
+            line-height: 1.45;
+         }
+
+         @media (max-width: 850px) {
+            .comparison-source-grid,
+            .comparison-metric-row {
+               grid-template-columns: 1fr;
+            }
+
+            .comparison-generate-button {
+               width: 100%;
+            }
+         }
+
+         @media (max-width: 600px) {
+            .comparison-section {
+               padding: 18px 12px;
+            }
+
+            .comparison-header {
+               flex-direction: column;
+            }
+
+            .comparison-header h2 {
+               font-size: 25px;
+            }
+
+            .comparison-order-item {
+               grid-template-columns: 26px minmax(0, 1fr);
+            }
+
+            .comparison-item-actions {
+               grid-column: 2;
+               justify-content: flex-end;
+            }
+         }
       </style>
    </head>
    <body>
@@ -1571,18 +1962,7 @@
                   </div>
                   <p>
                      Innym formalnym wykładnikiem transformacji tekstów późnego
-                     Słowackiego jest m.in. zmiana średniej długości odcinka
-                     izosylabicznego (obrazująca zwiększenie stabilności
-                     rytmicznej tekstów mistyczno-genezyjskich):
-                  </p>
-                  <div class="chart">
-                     <img
-                        src="assets/charts/wykres_izosylabizm.png"
-                        alt="wykres"
-                     />
-                  </div>
-                  <p>
-                     zmiana średniej długości wypowiedzi jednej postaci
+                     Słowackiego jest m.in. zmiana średniej długości wypowiedzi jednej postaci
                      (ilustrująca zmianę dynamiki interakcji między postaciami):
                   </p>
                   <div class="chart">
@@ -1592,18 +1972,7 @@
                      />
                   </div>
                   <p>
-                     a także zmiana współczynnika łamania wiersza (związana ze
-                     znacznym zanikiem sygnalizowania końca struktury
-                     składniowej w wygłosie):
-                  </p>
-                  <div class="chart">
-                     <img
-                        src="assets/charts/wykres_wspolczynnik_lamania_wiersza.png"
-                        alt="wykres"
-                     />
-                  </div>
-                  <p>
-                     oraz wyraźne wyciszenie pytań i wykrzyknień (świadczące być
+                     a także wyraźne wyciszenie pytań i wykrzyknień (świadczące być
                      może o przejściu od emocji i epistemologicznej niepewności
                      do pewności – ton staje się bardziej profetyczny i płynny):
                   </p>
@@ -1634,9 +2003,7 @@
                      onclick="alert('Zob. M. Prussak, Fantazy – w poszukiwaniu nowej formuły dramatu, w: Piękno Juliusza Słowackiego, t. 2: Universum, red. J. Ławski, G. Kowalski i Ł. Zabielski, Białystok 2013.')"
                      >[3]</span
                   >. Jednocześnie pewne parametry pozostają w znikomej mierze
-                  zależne od decyzji kolejnych edytorów (patrz: średnia długość
-                  odcinka izosylabicznego, znacznie odstająca w przypadku
-                  <i>Fantazego</i> od innych późnych utworów). Szerzej zakrojone
+                  zależne od decyzji kolejnych edytorów. Szerzej zakrojone
                   badania cyfrowe być może ujawniłyby zatem więcej argumentów,
                   że dramat – jak uważano jeszcze do lat 50. XX wieku i jak na
                   powrót przekonywał J.M. Rymkiewicz w książce
@@ -2107,17 +2474,7 @@
                </div>
             </div>
 
-            <!-- <div class="metrics-warning">
-               <span class="metrics-warning-icon" aria-hidden="true">!</span>
-               <div>
-                  <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie
-                  przypadków, w których wypowiedzi postaci współdzielą między
-                  sobą jeden wers metryczny (czyli sytuacji, gdy na jeden wers
-                  metryczny przypadają repliki dialogowe różnych postaci). Może
-                  to wpływać na wyniki analizy (średnią długość odcinka
-                  izosylabicznego i zróżnicowanie metryczne dramatu).
-               </div>
-            </div> -->
+      
 
             <div id="metricsDashboardContent" class="metrics-dashboard">
                <div class="metrics-panel">
@@ -2160,6 +2517,148 @@
                      Formaty poniżej 1% są grupowane (i sumowane) jako „Inne”.
                   </div>
                </div>
+            </div>
+         </section>
+
+
+         <section
+            id="comparison-analysis"
+            class="comparison-section"
+            aria-label="Analiza porównawcza wielu dramatów"
+         >
+            <div class="comparison-header">
+               <div>
+                  <div class="comparison-kicker">Analiza porównawcza</div>
+                  <h2>Porównaj wybrane dramaty na jednym wykresie</h2>
+                  <p>
+                     Wybierz dowolną liczbę tekstów z biblioteki i/lub dodaj własne
+                     pliki .txt. Następnie ustaw kolejność pozycji na wykresie i
+                     wskaż jeden parametr do porównania.
+                  </p>
+               </div>
+            </div>
+
+            <div class="comparison-source-grid">
+               <div class="comparison-panel">
+                  <h3>1. Wybierz teksty z biblioteki</h3>
+                  <p class="comparison-panel-intro">
+                     Utwory Juliusza Słowackiego widoczne na wykresach z opisanego wyżej studium
+                     przypadku są zaznaczone domyślnie.
+                  </p>
+                  <input
+                     id="comparisonLibrarySearch"
+                     class="comparison-search"
+                     type="search"
+                     placeholder="Szukaj po autorze lub tytule..."
+                     aria-label="Szukaj tekstu do porównania"
+                  />
+                  <div
+                     id="comparisonLibraryList"
+                     class="comparison-library-list"
+                     aria-label="Lista tekstów z biblioteki do porównania"
+                  ></div>
+                  <div class="comparison-mini-actions">
+                     <button id="comparisonSelectSlowacki" type="button">
+                        Zaznacz dramaty Słowackiego
+                     </button>
+                     <button
+                        id="comparisonClearSelection"
+                        type="button"
+                        class="comparison-secondary-button"
+                     >
+                        Wyczyść wybór
+                     </button>
+                  </div>
+               </div>
+
+               <div class="comparison-panel">
+                  <h3>2. Dodaj własne pliki .txt</h3>
+                  <p class="comparison-panel-intro">
+                     Możesz dodać wiele plików jednocześnie. Każdy z nich pojawi się
+                     na wspólnej liście kolejności poniżej.
+                  </p>
+                  <label
+                     id="comparisonUploadZone"
+                     class="comparison-upload-zone"
+                     for="comparisonFileInput"
+                  >
+                     <span>
+                        <strong>Wybierz pliki .txt lub przeciągnij je tutaj</strong>
+                        <small>Możesz zaznaczyć kilka plików naraz.</small>
+                     </span>
+                     <input
+                        id="comparisonFileInput"
+                        type="file"
+                        accept=".txt,text/plain"
+                        multiple
+                     />
+                  </label>
+                  <div
+                     id="comparisonUploadedSummary"
+                     class="comparison-uploaded-summary"
+                  >
+                     Nie dodano jeszcze własnych plików.
+                  </div>
+               </div>
+            </div>
+
+            <div class="comparison-panel">
+               <h3>3. Ustal kolejność na wykresie</h3>
+               <p class="comparison-panel-intro">
+                  Przeciągaj pozycje za uchwyt ⋮⋮ albo użyj strzałek. Kolejność tej
+                  listy jest dokładnie kolejnością słupków na wykresie. Nazwę, która będzie widoczna na wykresie możesz
+                  edytować.
+               </p>
+               <ol id="comparisonOrderList" class="comparison-order-list"></ol>
+            </div>
+
+            <div class="comparison-panel">
+               <div class="comparison-metric-row">
+                  <div>
+                     <label for="comparisonMetricSelect">4. Wybierz wskaźnik</label>
+                     <select id="comparisonMetricSelect" class="comparison-select">
+                        <option value="isosyllabicAverage">
+                           Średnia długość odcinka izosylabicznego
+                        </option>
+                        <option value="interactionAverage" selected>
+                           Średnia długość wypowiedzi jednej postaci
+                        </option>
+                        <option value="lineBreaking">
+                           Współczynnik łamania wiersza
+                        </option>
+                        <option value="exclamationDensity">
+                           Gęstość wykrzyknień
+                        </option>
+                        <option value="questionDensity">Gęstość pytań</option>
+                        <option value="selfReference">
+                           Wskaźnik referencji pierwszoosobowej
+                        </option>
+                        <option value="metacommentaryDensity">
+                           Indeks gęstości metakomentarza (didaskaliów)
+                        </option>
+                        <option value="asideStageFunction">
+                           Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”
+                        </option>
+                     </select>
+                  </div>
+                  <button
+                     id="comparisonGenerateButton"
+                     class="comparison-generate-button"
+                     type="button"
+                  >
+                     Generuj wykres porównawczy
+                  </button>
+               </div>
+               <div id="comparisonStatus" class="comparison-status" role="status"></div>
+            </div>
+
+            <div id="comparisonResults" class="comparison-results" hidden>
+               <h3 id="comparisonChartTitle">Wynik porównania</h3>
+               <p id="comparisonChartSubtitle" class="comparison-chart-subtitle"></p>
+               <div id="comparisonChartWrap" class="comparison-chart-wrap">
+                  <canvas id="comparisonChart"></canvas>
+               </div>
+              
             </div>
          </section>
       </main>
@@ -3399,7 +3898,775 @@
                visibleCardsCount === 0 ? "block" : "none";
          }
 
+
+
+         /* ===== Analiza porównawcza ===== */
+         const COMPARISON_METRICS = {
+            isosyllabicAverage: {
+               label: "Średnia długość odcinka izosylabicznego",
+               unit: "",
+            },
+            interactionAverage: {
+               label: "Średnia długość wypowiedzi jednej postaci",
+               unit: "",
+            },
+            lineBreaking: {
+               label: "Współczynnik łamania wiersza",
+               unit: "%",
+            },
+            exclamationDensity: {
+               label: "Gęstość wykrzyknień",
+               unit: "",
+            },
+            questionDensity: {
+               label: "Gęstość pytań",
+               unit: "",
+            },
+            selfReference: {
+               label: "Wskaźnik referencji pierwszoosobowej",
+               unit: "‰",
+            },
+            metacommentaryDensity: {
+               label: "Indeks gęstości metakomentarza (didaskaliów)",
+               unit: "%",
+            },
+            asideStageFunction: {
+               label: "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”",
+               unit: "%",
+            },
+         };
+
+         const COMPARISON_SLOWACKI_DEFAULTS = [
+            {
+               path: "assets/biblioteka/slowacki-mindowe.txt",
+               label: "Mindowe (1829)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-maria-stuart.txt",
+               label: "Maria Stuart (1830)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-kordian.txt",
+               label: "Kordian (1833)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-balladyna.txt",
+               label: "Balladyna (1834)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-lilla-weneda.txt",
+               label: "Lilla Weneda (1839)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-mazepa.txt",
+               label: "Mazepa (1839)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-fantazy.txt",
+               label: "Fantazy (?)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-ksiadz-marek.txt",
+               label: "Ksiądz Marek (1843)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-sen-srebrny-salomei.txt",
+               label: "Sen srebrny Salomei (1843)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-ksiaze-niezlomny.txt",
+               label: "Książę niezłomny (1843)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-samuel-zborowski.txt",
+               label: "Samuel Zborowski (ok. 1844/1845)",
+            },
+         ];
+
+         const comparisonState = {
+            catalog: [],
+            selected: [],
+            chart: null,
+            libraryTextCache: new Map(),
+            uploadCounter: 0,
+            draggedId: null,
+         };
+
+         const comparisonValueLabelsPlugin = {
+            id: "comparisonValueLabels",
+            afterDatasetsDraw(chart) {
+               const { ctx, chartArea } = chart;
+               const dataset = chart.data.datasets[0];
+               const meta = chart.getDatasetMeta(0);
+               const unit = chart.options.plugins.comparisonValueLabels?.unit || "";
+
+               ctx.save();
+               ctx.font = "700 13px Arial, sans-serif";
+               ctx.textAlign = "right";
+               ctx.textBaseline = "middle";
+
+               meta.data.forEach((bar, index) => {
+                  const rawValue = Number(dataset.data[index]) || 0;
+                  const valueText = `${formatComparisonValue(rawValue)}${unit}`;
+                  const width = ctx.measureText(valueText).width;
+                  let x = bar.x - 9;
+                  let fill = "#ffffff";
+
+                  // Przy bardzo krótkim słupku etykietę przenosimy za słupek,
+                  // aby nie wypadała poza obszar rysowania.
+                  if (bar.x - bar.base < width + 22) {
+                     x = Math.min(bar.x + width + 9, chartArea.right - 4);
+                     fill = "#163f8f";
+                  }
+
+                  ctx.fillStyle = fill;
+                  ctx.fillText(valueText, x, bar.y);
+               });
+
+               ctx.restore();
+            },
+         };
+
+         function initComparisonAnalysis() {
+            const section = document.getElementById("comparison-analysis");
+            if (!section) return;
+
+            comparisonState.catalog = getComparisonLibraryCatalog();
+            renderComparisonLibraryList();
+            selectDefaultSlowackiComparisonSet();
+            bindComparisonEvents();
+            renderComparisonOrderList();
+            renderComparisonUploadedSummary();
+         }
+
+         function getComparisonLibraryCatalog() {
+            return [...document.querySelectorAll(".library-card")]
+               .map((card) => {
+                  const button = card.querySelector(".library-select-button");
+                  const path = button?.dataset.textPath;
+                  if (!path) return null;
+
+                  const author =
+                     card.querySelector(".library-author")?.textContent.trim() || "";
+                  const title =
+                     card.querySelector(".library-title")?.textContent.trim() || path;
+                  const defaultItem = COMPARISON_SLOWACKI_DEFAULTS.find(
+                     (item) => item.path === path,
+                  );
+
+                  return {
+                     id: `library:${path}`,
+                     source: "library",
+                     path,
+                     author,
+                     title,
+                     label: defaultItem?.label || title,
+                  };
+               })
+               .filter(Boolean);
+         }
+
+         function renderComparisonLibraryList() {
+            const container = document.getElementById("comparisonLibraryList");
+            if (!container) return;
+
+            container.innerHTML = comparisonState.catalog
+               .map(
+                  (item) => `
+                     <label class="comparison-library-option" data-comparison-search="${escapeHtml(`${item.author} ${item.title}`.toLowerCase())}">
+                        <input
+                           type="checkbox"
+                           class="comparison-library-checkbox"
+                           data-comparison-id="${escapeHtml(item.id)}"
+                        />
+                        <span class="comparison-library-text">
+                           <span class="comparison-library-title">${escapeHtml(item.title)}</span>
+                           <span class="comparison-library-author">${escapeHtml(item.author)}</span>
+                        </span>
+                     </label>`,
+               )
+               .join("");
+         }
+
+         function bindComparisonEvents() {
+            const libraryList = document.getElementById("comparisonLibraryList");
+            const librarySearch = document.getElementById("comparisonLibrarySearch");
+            const fileInput = document.getElementById("comparisonFileInput");
+            const uploadZone = document.getElementById("comparisonUploadZone");
+            const orderList = document.getElementById("comparisonOrderList");
+            const selectSlowackiButton = document.getElementById(
+               "comparisonSelectSlowacki",
+            );
+            const clearSelectionButton = document.getElementById(
+               "comparisonClearSelection",
+            );
+            const generateButton = document.getElementById(
+               "comparisonGenerateButton",
+            );
+
+            libraryList?.addEventListener("change", (event) => {
+               const checkbox = event.target.closest(".comparison-library-checkbox");
+               if (!checkbox) return;
+               toggleComparisonLibraryItem(checkbox.dataset.comparisonId, checkbox.checked);
+            });
+
+            librarySearch?.addEventListener("input", filterComparisonLibrary);
+            fileInput?.addEventListener("change", (event) => {
+               addComparisonUploadedFiles(event.target.files);
+               event.target.value = "";
+            });
+
+            uploadZone?.addEventListener("dragover", (event) => {
+               event.preventDefault();
+               uploadZone.classList.add("drag-over");
+            });
+            uploadZone?.addEventListener("dragleave", (event) => {
+               event.preventDefault();
+               uploadZone.classList.remove("drag-over");
+            });
+            uploadZone?.addEventListener("drop", (event) => {
+               event.preventDefault();
+               uploadZone.classList.remove("drag-over");
+               addComparisonUploadedFiles(event.dataTransfer.files);
+            });
+
+            selectSlowackiButton?.addEventListener("click", () => {
+               selectDefaultSlowackiComparisonSet();
+               renderComparisonOrderList();
+            });
+
+            clearSelectionButton?.addEventListener("click", () => {
+               comparisonState.selected = [];
+               syncComparisonLibraryCheckboxes();
+               renderComparisonOrderList();
+               renderComparisonUploadedSummary();
+               clearComparisonChart();
+               setComparisonStatus("");
+            });
+
+            generateButton?.addEventListener("click", generateComparisonChart);
+
+            orderList?.addEventListener("click", (event) => {
+               const button = event.target.closest("button[data-comparison-action]");
+               if (!button) return;
+               const item = button.closest(".comparison-order-item");
+               if (!item) return;
+
+               const id = item.dataset.comparisonId;
+               const action = button.dataset.comparisonAction;
+               if (action === "up") moveComparisonItem(id, -1);
+               if (action === "down") moveComparisonItem(id, 1);
+               if (action === "remove") removeComparisonItem(id);
+            });
+
+            orderList?.addEventListener("input", (event) => {
+               const input = event.target.closest(".comparison-name-input");
+               if (!input) return;
+               const item = comparisonState.selected.find(
+                  (entry) => entry.id === input.dataset.comparisonId,
+               );
+               if (item) item.label = input.value;
+            });
+
+            orderList?.addEventListener("dragstart", (event) => {
+               const item = event.target.closest(".comparison-order-item");
+               if (!item) return;
+               comparisonState.draggedId = item.dataset.comparisonId;
+               item.classList.add("dragging");
+               event.dataTransfer.effectAllowed = "move";
+            });
+
+            orderList?.addEventListener("dragend", (event) => {
+               const item = event.target.closest(".comparison-order-item");
+               item?.classList.remove("dragging");
+               comparisonState.draggedId = null;
+            });
+
+            orderList?.addEventListener("dragover", (event) => {
+               event.preventDefault();
+               if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+            });
+
+            orderList?.addEventListener("drop", (event) => {
+               event.preventDefault();
+               const draggedId = comparisonState.draggedId;
+               const target = event.target.closest(".comparison-order-item");
+               if (!draggedId || !target || target.dataset.comparisonId === draggedId)
+                  return;
+
+               const fromIndex = comparisonState.selected.findIndex(
+                  (entry) => entry.id === draggedId,
+               );
+               const targetIndex = comparisonState.selected.findIndex(
+                  (entry) => entry.id === target.dataset.comparisonId,
+               );
+               if (fromIndex < 0 || targetIndex < 0) return;
+
+               const rect = target.getBoundingClientRect();
+               const insertAfter = event.clientY > rect.top + rect.height / 2;
+               const nextIndex = targetIndex + (insertAfter ? 1 : 0);
+               const [moved] = comparisonState.selected.splice(fromIndex, 1);
+               let adjustedIndex = nextIndex;
+               if (fromIndex < nextIndex) adjustedIndex -= 1;
+               comparisonState.selected.splice(adjustedIndex, 0, moved);
+               renderComparisonOrderList();
+            });
+         }
+
+         function selectDefaultSlowackiComparisonSet() {
+            const existingUploads = comparisonState.selected.filter(
+               (item) => item.source === "upload",
+            );
+            const defaults = COMPARISON_SLOWACKI_DEFAULTS.map((defaultItem) => {
+               const catalogItem = comparisonState.catalog.find(
+                  (item) => item.path === defaultItem.path,
+               );
+               if (!catalogItem) return null;
+               return { ...catalogItem, label: defaultItem.label };
+            }).filter(Boolean);
+
+            comparisonState.selected = [...defaults, ...existingUploads];
+            syncComparisonLibraryCheckboxes();
+         }
+
+         function toggleComparisonLibraryItem(id, checked) {
+            const catalogItem = comparisonState.catalog.find((item) => item.id === id);
+            if (!catalogItem) return;
+
+            const selectedIndex = comparisonState.selected.findIndex(
+               (item) => item.id === id,
+            );
+
+            if (checked && selectedIndex === -1) {
+               comparisonState.selected.push({ ...catalogItem });
+            } else if (!checked && selectedIndex !== -1) {
+               comparisonState.selected.splice(selectedIndex, 1);
+            }
+
+            renderComparisonOrderList();
+         }
+
+         function syncComparisonLibraryCheckboxes() {
+            const selectedIds = new Set(
+               comparisonState.selected
+                  .filter((item) => item.source === "library")
+                  .map((item) => item.id),
+            );
+
+            document
+               .querySelectorAll(".comparison-library-checkbox")
+               .forEach((checkbox) => {
+                  checkbox.checked = selectedIds.has(checkbox.dataset.comparisonId);
+               });
+         }
+
+         function filterComparisonLibrary() {
+            const query = document
+               .getElementById("comparisonLibrarySearch")
+               ?.value.trim()
+               .toLowerCase();
+
+            document
+               .querySelectorAll(".comparison-library-option")
+               .forEach((option) => {
+                  option.style.display =
+                     !query || option.dataset.comparisonSearch.includes(query)
+                        ? "grid"
+                        : "none";
+               });
+         }
+
+         async function addComparisonUploadedFiles(fileList) {
+            const files = [...(fileList || [])].filter((file) =>
+               file.name.toLowerCase().endsWith(".txt"),
+            );
+
+            if (!files.length) {
+               setComparisonStatus("Wybierz co najmniej jeden plik .txt.", true);
+               return;
+            }
+
+            setComparisonStatus("Wczytywanie plików...");
+
+            for (const file of files) {
+               try {
+                  const text = await file.text();
+                  const id = `upload:${Date.now()}:${comparisonState.uploadCounter++}:${file.name}`;
+                  comparisonState.selected.push({
+                     id,
+                     source: "upload",
+                     fileName: file.name,
+                     title: file.name.replace(/\.txt$/i, ""),
+                     label: file.name.replace(/\.txt$/i, ""),
+                     text,
+                  });
+               } catch (error) {
+                  console.error(error);
+               }
+            }
+
+            renderComparisonOrderList();
+            renderComparisonUploadedSummary();
+            setComparisonStatus("");
+         }
+
+         function renderComparisonUploadedSummary() {
+            const element = document.getElementById("comparisonUploadedSummary");
+            if (!element) return;
+
+            const uploads = comparisonState.selected.filter(
+               (item) => item.source === "upload",
+            );
+            element.textContent = uploads.length
+               ? `Dodane pliki własne: ${uploads.length}. Możesz zmienić ich nazwy i kolejność poniżej.`
+               : "Nie dodano jeszcze własnych plików.";
+         }
+
+         function renderComparisonOrderList() {
+            const list = document.getElementById("comparisonOrderList");
+            if (!list) return;
+
+            if (!comparisonState.selected.length) {
+               list.innerHTML = `
+                  <li class="comparison-empty-order">
+                     Nie wybrano żadnego tekstu. Zaznacz utwory z biblioteki lub dodaj pliki .txt.
+                  </li>`;
+               return;
+            }
+
+            list.innerHTML = comparisonState.selected
+               .map(
+                  (item, index) => `
+                     <li
+                        class="comparison-order-item"
+                        data-comparison-id="${escapeHtml(item.id)}"
+                     >
+                        <span class="comparison-drag-handle" draggable="true" title="Przeciągnij, aby zmienić kolejność">⋮⋮</span>
+                        <input
+                           class="comparison-name-input"
+                           data-comparison-id="${escapeHtml(item.id)}"
+                           value="${escapeHtml(item.label)}"
+                           aria-label="Nazwa pozycji ${index + 1} na wykresie"
+                        />
+                        <span class="comparison-item-actions">
+                           <button
+                              type="button"
+                              data-comparison-action="up"
+                              title="Przesuń wyżej"
+                              aria-label="Przesuń wyżej"
+                           >↑</button>
+                           <button
+                              type="button"
+                              data-comparison-action="down"
+                              title="Przesuń niżej"
+                              aria-label="Przesuń niżej"
+                           >↓</button>
+                           <button
+                              type="button"
+                              data-comparison-action="remove"
+                              title="Usuń z porównania"
+                              aria-label="Usuń z porównania"
+                           >×</button>
+                        </span>
+                     </li>`,
+               )
+               .join("");
+         }
+
+         function moveComparisonItem(id, direction) {
+            const index = comparisonState.selected.findIndex((item) => item.id === id);
+            const nextIndex = index + direction;
+            if (
+               index < 0 ||
+               nextIndex < 0 ||
+               nextIndex >= comparisonState.selected.length
+            )
+               return;
+
+            const [item] = comparisonState.selected.splice(index, 1);
+            comparisonState.selected.splice(nextIndex, 0, item);
+            renderComparisonOrderList();
+         }
+
+         function removeComparisonItem(id) {
+            const index = comparisonState.selected.findIndex((item) => item.id === id);
+            if (index < 0) return;
+            comparisonState.selected.splice(index, 1);
+            syncComparisonLibraryCheckboxes();
+            renderComparisonOrderList();
+            renderComparisonUploadedSummary();
+         }
+
+         async function generateComparisonChart() {
+            if (!comparisonState.selected.length) {
+               setComparisonStatus(
+                  "Wybierz co najmniej jeden tekst do porównania.",
+                  true,
+               );
+               return;
+            }
+
+            const metricKey = document.getElementById("comparisonMetricSelect")?.value;
+            const metricConfig = COMPARISON_METRICS[metricKey];
+            if (!metricConfig) return;
+
+            const button = document.getElementById("comparisonGenerateButton");
+            if (button) button.disabled = true;
+            setComparisonStatus("Obliczanie wartości dla wybranych tekstów...");
+
+            try {
+               const results = [];
+               for (const item of comparisonState.selected) {
+                  const text = await getComparisonItemText(item);
+                  results.push({
+                     label: item.label.trim() || item.title || "Bez tytułu",
+                     value: calculateComparisonMetric(text, metricKey),
+                  });
+               }
+
+               renderComparisonChart(results, metricKey);
+               setComparisonStatus(`Porównano ${results.length} tekstów.`);
+            } catch (error) {
+               console.error(error);
+               setComparisonStatus(
+                  "Nie udało się wczytać jednego z tekstów bibliotecznych. Sprawdź ścieżki do plików w assets/biblioteka i uruchom stronę przez serwer HTTP/HTTPS.",
+                  true,
+               );
+            } finally {
+               if (button) button.disabled = false;
+            }
+         }
+
+         async function getComparisonItemText(item) {
+            if (item.source === "upload") return item.text || "";
+
+            if (comparisonState.libraryTextCache.has(item.path)) {
+               return comparisonState.libraryTextCache.get(item.path);
+            }
+
+            const response = await fetch(item.path);
+            if (!response.ok) {
+               throw new Error(`Nie udało się wczytać pliku: ${item.path}`);
+            }
+            const text = await response.text();
+            comparisonState.libraryTextCache.set(item.path, text);
+            return text;
+         }
+
+         function calculateComparisonMetric(text, metricKey) {
+            const data = parseDramaText(text);
+            const speechFragments = data.filter(({ actor }) => actor !== "DIDASKALIA");
+            const metricLines = buildMetricLines(data);
+            const stageDirections = data.filter(({ actor }) => actor === "DIDASKALIA");
+            const metricLineCount = metricLines.length;
+            const allSpeechText = metricLines.map(({ line }) => line).join(" ");
+            const words = getWords(allSpeechText);
+            const asideStageDirectionCount = stageDirections.filter(({ line }) =>
+               line.toLowerCase().includes("na stronie"),
+            ).length;
+
+            switch (metricKey) {
+               case "isosyllabicAverage":
+                  return metricLineCount
+                     ? average(getIsosyllabicSegments(metricLines))
+                     : 0;
+
+               case "interactionAverage": {
+                  const speechBlocks = [];
+                  let previousActor = null;
+                  let currentBlockLength = 0;
+
+                  speechFragments.forEach(({ actor }) => {
+                     if (actor !== previousActor) {
+                        if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
+                        previousActor = actor;
+                        currentBlockLength = 1;
+                     } else {
+                        currentBlockLength++;
+                     }
+                  });
+                  if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
+                  return average(speechBlocks);
+               }
+
+               case "lineBreaking": {
+                  const brokenLines = metricLines.filter(
+                     ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
+                  ).length;
+                  return metricLineCount ? (brokenLines / metricLineCount) * 100 : 0;
+               }
+
+               case "exclamationDensity":
+                  return metricLineCount
+                     ? (countRegexMatches(allSpeechText, /!/g) / metricLineCount) * 100
+                     : 0;
+
+               case "questionDensity":
+                  return metricLineCount
+                     ? (countRegexMatches(allSpeechText, /\?/g) / metricLineCount) * 100
+                     : 0;
+
+               case "selfReference": {
+                  const selfReferenceCount = words.filter((word) =>
+                     APP_CONFIG.selfReferencePronouns.has(word),
+                  ).length;
+                  return words.length ? (selfReferenceCount / words.length) * 1000 : 0;
+               }
+
+               case "metacommentaryDensity":
+                  return metricLineCount
+                     ? (stageDirections.length / metricLineCount) * 100
+                     : 0;
+
+               case "asideStageFunction":
+                  return stageDirections.length
+                     ? (asideStageDirectionCount / stageDirections.length) * 100
+                     : 0;
+
+               default:
+                  return 0;
+            }
+         }
+
+         function renderComparisonChart(results, metricKey) {
+            const canvas = document.getElementById("comparisonChart");
+            const resultsSection = document.getElementById("comparisonResults");
+            const chartWrap = document.getElementById("comparisonChartWrap");
+            const title = document.getElementById("comparisonChartTitle");
+            const subtitle = document.getElementById("comparisonChartSubtitle");
+            const metricConfig = COMPARISON_METRICS[metricKey];
+            if (!canvas || !resultsSection || !metricConfig) return;
+
+            clearComparisonChart();
+            resultsSection.hidden = false;
+            if (title) title.textContent = metricConfig.label;
+            if (subtitle) {
+               subtitle.textContent =
+                  "Kolejność słupków odpowiada kolejności ustawionej na liście powyżej.";
+            }
+
+            if (chartWrap) {
+               chartWrap.style.height = `${Math.max(430, results.length * 52 + 115)}px`;
+            }
+
+            const rawMax = Math.max(...results.map(({ value }) => value), 0);
+            const suggestedMax = rawMax > 0 ? rawMax * 1.13 : 1;
+
+            comparisonState.chart = new Chart(canvas, {
+               type: "bar",
+               plugins: [comparisonValueLabelsPlugin],
+               data: {
+                  labels: results.map(({ label }) => label),
+                  datasets: [
+                     {
+                        data: results.map(({ value }) => value),
+                        backgroundColor: "#0878d1",
+                        borderColor: "#0878d1",
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderSkipped: false,
+                        barThickness: 28,
+                     },
+                  ],
+               },
+               options: {
+                  indexAxis: "y",
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  layout: {
+                     padding: { right: 18, top: 6, bottom: 4 },
+                  },
+                  plugins: {
+                     legend: { display: false },
+                     title: { display: false },
+                     comparisonValueLabels: {
+                        unit: metricConfig.unit,
+                     },
+                     tooltip: {
+                        callbacks: {
+                           label: (context) =>
+                              `${formatComparisonValue(Number(context.raw) || 0)}${metricConfig.unit}`,
+                        },
+                     },
+                  },
+                  scales: {
+                     x: {
+                        beginAtZero: true,
+                        suggestedMax,
+                        grid: {
+                           color: "rgba(16, 43, 74, 0.16)",
+                        },
+                        border: {
+                           color: "#111111",
+                           width: 1.4,
+                        },
+                        ticks: {
+                           color: "#111111",
+                           callback: (value) =>
+                              String(value).replace(".", ","),
+                        },
+                        title: {
+                           display: true,
+                           text: metricConfig.label,
+                           color: "#111111",
+                           font: { size: 15, weight: "500" },
+                           padding: { top: 12 },
+                        },
+                     },
+                     y: {
+                        grid: { display: false },
+                        border: {
+                           color: "#111111",
+                           width: 1.4,
+                        },
+                        ticks: {
+                           autoSkip: false,
+                           color: "#111111",
+                           font: { size: 13, weight: "500" },
+                           padding: 10,
+                        },
+                     },
+                  },
+               },
+            });
+
+            resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+         }
+
+         function clearComparisonChart() {
+            if (comparisonState.chart) {
+               comparisonState.chart.destroy();
+               comparisonState.chart = null;
+            }
+            const resultsSection = document.getElementById("comparisonResults");
+            if (resultsSection) resultsSection.hidden = true;
+         }
+
+         function setComparisonStatus(message, isError = false) {
+            const element = document.getElementById("comparisonStatus");
+            if (!element) return;
+            element.textContent = message;
+            element.classList.toggle("error", Boolean(isError));
+         }
+
+         function formatComparisonValue(value) {
+            return new Intl.NumberFormat("pl-PL", {
+               minimumFractionDigits: 2,
+               maximumFractionDigits: 2,
+            }).format(value);
+         }
+
+         function escapeHtml(value) {
+            return String(value)
+               .replace(/&/g, "&amp;")
+               .replace(/</g, "&lt;")
+               .replace(/>/g, "&gt;")
+               .replace(/\"/g, "&quot;")
+               .replace(/'/g, "&#039;");
+         }
+
          init();
+         initComparisonAnalysis();
       </script>
    </body>
 </html>
