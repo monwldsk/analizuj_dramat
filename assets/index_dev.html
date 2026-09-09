@@ -1,0 +1,4711 @@
+<!DOCTYPE html>
+<html lang="pl">
+   <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Cyfrowa analiza dramatu</title>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+      <script
+         data-goatcounter="https://monikaisyd.goatcounter.com/count"
+         async
+         src="//gc.zgo.at/count.js"
+      ></script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <link rel="icon" href="assets/theater-2.png" />
+      <meta property="og:title" content="Cyfrowa analiza dramatu" />
+      <meta property="og:image" content="assets/banner_mob.png" />
+      <meta
+         property="og:url"
+         content="https://monwldsk.github.io/analizuj_dramat/"
+      />
+      <meta property="og:type" content="website" />
+      <style>
+         :root {
+            --color-primary: #002e52;
+            --color-accent: #0073ce;
+            --color-bg: #eeeeee;
+            --color-surface: #ffffff;
+            --color-border: #dddddd;
+            --color-muted: #f4f4f4;
+            --color-tip: #0073ce;
+            --shadow-card: 0 2px 14px rgba(0, 0, 0, 0.1);
+            --radius-card: 24px;
+            --radius-control: 6px;
+            --max-width: 1200px;
+            --border: #d9e8f8;
+         }
+         * {
+            box-sizing: border-box;
+         }
+         body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #201e1e;
+            background: var(--color-bg);
+            line-height: 1.4;
+         }
+         a {
+            color: var(--color-accent);
+         }
+         h2 {
+            text-align: left;
+            color: var(--color-primary);
+         }
+         h1 {
+            text-align: center;
+            color: var(--color-primary);
+         }
+         button {
+            padding: 6px 20px;
+            border: 2px solid var(--color-primary);
+            border-radius: var(--radius-control);
+            color: #fff;
+            background: var(--color-primary);
+            cursor: pointer;
+         }
+         button:hover {
+            border-color: #cccccc;
+            background: #cccccc;
+         }
+         textarea {
+            width: 100%;
+            height: 120px;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            font-size: 10px;
+            resize: none;
+         }
+         table {
+            width: 100%;
+            max-height: 220px;
+            overflow: auto;
+            border-collapse: collapse;
+            border: 1px solid var(--color-border);
+            background: var(--color-surface);
+         }
+         th,
+         td {
+            padding: 2px;
+            border: 1px solid var(--color-border);
+            text-align: left;
+            font-size: 10px;
+         }
+         th {
+            background: var(--color-muted);
+         }
+         .container {
+            max-width: var(--max-width);
+            margin: auto;
+            padding: 30px 40px;
+            border-radius: var(--radius-card);
+            background: var(--color-surface);
+            box-shadow: var(--shadow-card);
+         }
+         .title-container-desktop,
+         .title-container-mobile {
+            text-align: center;
+         }
+         .title-container-mobile {
+            display: none;
+         }
+         .title-container-desktop img {
+            width: 570px;
+            height: auto;
+         }
+         .title-container-mobile img {
+            width: 320px;
+            height: auto;
+         }
+         .info-note {
+            padding: 20px;
+            border-radius: 4px;
+            text-align: justify;
+         }
+         .header-container {
+            font-weight: 400;
+         }
+         .banner-separator,
+         .banner-separator-mobile {
+            justify-content: center;
+         }
+         .banner-separator {
+            display: flex;
+            margin: 20px auto;
+         }
+         .banner-separator-mobile {
+            display: none;
+         }
+         .banner-separator img {
+            width: 500px;
+         }
+         .banner-separator-mobile img {
+            width: 300px;
+         }
+
+         .tips-container {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+         }
+         .tips-container img {
+            width: 260px;
+            margin-right: 0;
+         }
+
+         .info-algo {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            color: gray;
+            font-size: 0.9em;
+         }
+         .infotip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+            cursor: pointer;
+         }
+         .infotip-img,
+         .metric-info-icon {
+            width: 14px;
+         }
+         .infotip .infotip-content {
+            position: absolute;
+            bottom: 125%;
+            left: -400%;
+            z-index: 1;
+            display: none;
+            width: 300px;
+            padding: 20px;
+            border-radius: 4px;
+            color: #fff;
+            background: var(--color-tip);
+            opacity: 0;
+            font-size: 10px;
+            font-weight: 200;
+            transform: translateX(-50%);
+            transition: opacity 0.3s;
+         }
+         .infotip:hover .infotip-content {
+            display: block;
+            opacity: 1;
+         }
+         .file-drop-zone {
+            margin: 10px 0;
+            padding: 16px;
+            border: 2px dashed var(--color-accent);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--color-primary);
+            background: #f7fbff;
+         }
+         .file-drop-zone.drag-over {
+            background: #e6f3ff;
+         }
+         .button-row,
+         .action-buttons {
+            display: flex;
+            gap: 15px;
+         }
+         .action-buttons {
+            display: none;
+            margin-top: 20px;
+            justify-content: flex-start;
+         }
+         .clear-button {
+            border-color: var(--color-accent);
+            background: var(--color-accent);
+         }
+         .table-container {
+            max-height: 260px;
+            margin-top: 20px;
+            overflow: auto;
+         }
+         .chart-container {
+            width: 100%;
+            margin-top: 20px;
+         }
+         .chart-box {
+            width: 400px;
+            height: 400px;
+            max-width: 100%;
+         }
+         .chart-box--wide {
+            width: 600px;
+         }
+         .additional-metrics {
+            display: none;
+            margin-top: 32px;
+            padding: 28px;
+            border: 1px solid #dce7f8;
+            border-radius: 20px;
+            background: #fbfdff;
+            box-shadow: 0 14px 40px rgba(29, 58, 108, 0.07);
+         }
+
+         .additional-metrics h3 {
+            margin: 0;
+            color: var(--color-primary);
+         }
+
+         .additional-metrics p {
+            margin: 0;
+            line-height: 1.45;
+         }
+
+         .metrics-results-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 18px;
+         }
+
+         .metrics-results-header h2 {
+            margin: 0 0 6px;
+            font-size: 30px;
+         }
+
+         .metrics-results-header p {
+            color: #65758b;
+         }
+
+         .additional-index-img img {
+            display: block;
+            width: 220px;
+            max-width: 100%;
+         }
+
+         .metrics-warning {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 18px;
+            padding: 12px 14px;
+            border: 1px solid #f2c7c2;
+            border-radius: 10px;
+            color: #c83c31;
+            background: #fff8f7;
+            font-size: 0.8em;
+            line-height: 1.5;
+         }
+
+         .metrics-warning-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 22px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #ffe9e5;
+            font-weight: 800;
+         }
+
+         .metrics-dashboard {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(400px, 1fr);
+            gap: 18px;
+            align-items: stretch;
+         }
+
+         .metrics-panel {
+            min-width: 0;
+            padding: 18px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .metrics-panel-title {
+            margin-bottom: 14px !important;
+            font-size: 16px;
+         }
+
+         .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 10px;
+         }
+
+         .metric-card {
+            min-width: 0;
+            min-height: 130px;
+            padding: 14px;
+            border: 1px solid #e5edf8;
+            border-radius: 11px;
+            background: linear-gradient(180deg, #fff, #fbfdff);
+            box-shadow: 0 4px 14px rgba(29, 58, 108, 0.04);
+         }
+
+         .metric-card-top {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+         }
+
+         .metric-card-icon {
+            display: grid;
+            place-items: center;
+            flex: 0 0 30px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            color: #2f69d9;
+            background: #edf4ff;
+            font-weight: 800;
+         }
+
+         .metric-card-label {
+            color: #10233f;
+            font-size: 12px;
+            font-weight: 700;
+            line-height: 1.35;
+         }
+
+         .metric-card-value {
+            margin: 8px 0 0 0px;
+            color: #2f69d9;
+            font-size: 21px;
+            font-weight: 800;
+            line-height: 1.15;
+         }
+
+         .metric-card-secondary {
+            margin: 7px 0 0 0px;
+            color: #65758b;
+            font-size: 11px;
+            line-height: 1.45;
+         }
+
+         .metric-chart-panel {
+            display: flex;
+            flex-direction: column;
+         }
+
+         .metric-chart-panel .chart-box {
+            position: relative;
+            width: 100%;
+            height: 430px;
+            max-width: none;
+            margin-top: 4px;
+         }
+
+         .metric-chart-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 9px;
+            color: #65758b;
+            background: #f5f9ff;
+            font-size: 11px;
+            line-height: 1.45;
+         }
+
+         .speaker-share-section {
+            margin-bottom: 18px;
+            padding: 18px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .speaker-share-section .chart-box {
+            position: relative;
+            width: 100%;
+            min-height: 360px;
+            max-width: none;
+            margin-top: 4px;
+         }
+
+         .metrics-empty-state {
+            display: none;
+            padding: 24px;
+            border: 1px dashed #dce7f8;
+            border-radius: 12px;
+            color: #65758b;
+            text-align: center;
+            background: #fff;
+         }
+
+         @media screen and (max-width: 1000px) {
+            .metrics-dashboard {
+               grid-template-columns: 1fr;
+            }
+         }
+
+         @media screen and (max-width: 600px) {
+            .additional-metrics {
+               padding: 16px 12px;
+            }
+
+            .metrics-results-header {
+               align-items: flex-start;
+               flex-direction: column;
+            }
+
+            .additional-index-img img {
+               width: 180px;
+            }
+
+            .metrics-grid {
+               grid-template-columns: 1fr;
+            }
+
+            .metric-chart-panel .chart-box {
+               height: 360px;
+            }
+         }
+
+         .hidden {
+            display: none !important;
+         }
+         .chart {
+            display: flex;
+            justify-content: center;
+         }
+         .chart img {
+            width: 550px;
+         }
+         .slowacki {
+            display: flex;
+            justify-content: center;
+         }
+         .slowacki img {
+            width: 420px;
+         }
+         .slowacki-mobile {
+            display: none;
+         }
+         .quote {
+            /* max-width: 800px; */
+            margin: 2em auto;
+            padding: 1.5em 2em;
+            background: #f9f9fb;
+            border-left: 5px solid var(--color-primary);
+            border-radius: 8px;
+            font-family: Georgia, "Times New Roman", serif;
+            color: #333;
+         }
+         .quote blockquote {
+            margin: 0;
+            font-size: 1.2em;
+            line-height: 1.6;
+            position: relative;
+         }
+         .quote blockquote::before {
+            content: "”";
+            font-size: 3em;
+            position: absolute;
+            left: -0.4em;
+            top: -0.2em;
+            color: var(--color-primary);
+         }
+         .quote figcaption {
+            margin-top: 1em;
+            text-align: right;
+            font-size: 0.9em;
+            color: #666;
+         }
+         .library-section {
+            margin: 22px 0;
+            padding: 20px;
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            background: #fafafa;
+         }
+         .library-section p {
+            line-height: 1.5;
+         }
+         .library-search {
+            width: 100%;
+            margin-top: 12px;
+            padding: 10px 12px;
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-control);
+            font-size: 14px;
+         }
+         .library-no-results {
+            display: none;
+            margin-top: 12px;
+            color: #666;
+            font-size: 0.9em;
+         }
+         .library-grid {
+            overflow-y: auto;
+            display: flex;
+            gap: 16px;
+            padding: 12px;
+         }
+         .library-card {
+            max-width: 188px;
+            min-width: 188px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 10px;
+            padding: 14px;
+            border: 1px solid var(--color-border);
+            border-radius: 14px;
+            background: var(--color-surface);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.14);
+         }
+         .library-card img {
+            width: 100%;
+            /* aspect-ratio: 1 / 1; */
+            object-fit: cover;
+            border-radius: 10px;
+            padding: 0px 30px;
+            /* background: var(--color-muted); */
+         }
+         .library-author {
+            font-size: 0.9em;
+            color: #666;
+         }
+         .library-title {
+            font-weight: 700;
+            color: var(--color-primary);
+         }
+         .library-card button {
+            align-self: flex-start;
+            margin-top: auto;
+            width: 100%;
+         }
+         @media screen and (min-width: 601px) {
+            .header-container {
+               margin-bottom: 16px;
+            }
+         }
+         @media screen and (min-width: 1100px) {
+            .title-container-desktop img {
+               width: 730px;
+            }
+            .banner-separator img {
+               width: 700px;
+            }
+         }
+         @media screen and (max-width: 700px) {
+            #section-title {
+               font-size: 30px;
+            }
+            .banner-separator {
+               display: none;
+            }
+            .banner-separator-mobile {
+               display: flex;
+               margin: 20px auto;
+            }
+            .title-container-desktop {
+               display: none;
+            }
+            .title-container-mobile {
+               display: block;
+            }
+            .info-note {
+               padding: 0 20px;
+            }
+         }
+         @media screen and (max-width: 600px) {
+            body {
+               padding: 8px;
+            }
+            .container {
+               padding: 32px 12px;
+            }
+            .info-note {
+               text-align: left;
+            }
+            .button-row,
+            .action-buttons {
+               flex-direction: column;
+            }
+            .chart-container > div {
+               max-width: 100%;
+            }
+            .infotip .infotip-content {
+               width: 190px;
+            }
+
+            .chart img {
+               width: 300px;
+            }
+            .slowacki {
+               display: none;
+            }
+            .slowacki-mobile {
+               display: flex;
+               justify-content: center;
+            }
+            .slowacki-mobile img {
+               width: 300px;
+            }
+         }
+         .rymkiewicz-image-container {
+            max-width: 500px;
+            margin: auto;
+         }
+         .rymkiewicz-image-container img {
+            width: 100%;
+         }
+         :root {
+            --bg: #f7f9fc;
+            --surface: rgba(255, 255, 255, 0.94);
+            --text: #0b1d37;
+            --muted: #5b6678;
+            --blue: #2f69d9;
+            --blue-dark: #163f8f;
+            --blue-soft: #edf4ff;
+            --line: #dce7f8;
+            --shadow: 0 18px 50px rgba(29, 58, 108, 0.08);
+            --radius: 22px;
+            --max: 1440px;
+         }
+
+         * {
+            box-sizing: border-box;
+         }
+
+         html {
+            scroll-behavior: smooth;
+         }
+
+         body {
+            margin: 0;
+            font-family:
+               Inter,
+               ui-sans-serif,
+               system-ui,
+               -apple-system,
+               BlinkMacSystemFont,
+               "Segoe UI",
+               sans-serif;
+            background: radial-gradient(
+                  circle at 15% 20%,
+                  rgba(47, 105, 217, 0.09),
+                  transparent 28%
+               ),
+               radial-gradient(
+                  circle at 85% 15%,
+                  rgba(47, 105, 217, 0.07),
+                  transparent 26%
+               ),
+               linear-gradient(180deg, #fbfdff, var(--bg));
+            color: var(--text);
+         }
+
+         button,
+         input,
+         textarea,
+         select {
+            font: inherit;
+         }
+
+         .metrics-section {
+            position: relative;
+            overflow: hidden;
+            padding: clamp(72px, 9vw, 128px) 24px;
+         }
+
+         .metrics-section::before,
+         .metrics-section::after {
+            content: "";
+            position: absolute;
+            width: 340px;
+            height: 340px;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0.25;
+         }
+
+         .metrics-section::before {
+            background: #a8c8ff;
+            left: -160px;
+            top: 10%;
+         }
+
+         .metrics-section::after {
+            background: #dbe9ff;
+            right: -180px;
+            bottom: 8%;
+         }
+
+         .container {
+            position: relative;
+            z-index: 1;
+            width: min(100%, var(--max));
+            margin: 0 auto;
+         }
+
+         .intro {
+            max-width: 880px;
+            margin: 0 auto 48px;
+            text-align: center;
+         }
+
+         .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 16px;
+            color: var(--blue);
+            font-size: 14px;
+            font-weight: 800;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+         }
+
+         .eyebrow::after {
+            content: "";
+            width: 154px;
+            height: 2px;
+            background: currentColor;
+            border-radius: 999px;
+            opacity: 0.85;
+         }
+
+         h1 {
+            margin: 0;
+            font-size: 32px;
+            line-height: 0.98;
+            letter-spacing: -0.045em;
+         }
+         .lead > span {
+            /* display: block; */
+            color: var(--blue);
+            letter-spacing: 1.3px;
+            text-transform: uppercase;
+         }
+
+         h1 span {
+            color: var(--blue);
+         }
+
+         .lead {
+            margin: 24px auto 0;
+            font-size: 16px;
+            line-height: 1.5;
+            color: var(--muted);
+         }
+
+         .toolbar {
+            display: flex;
+            justify-content: center;
+            margin: 26px 0 34px;
+         }
+
+         .filter {
+            display: inline-flex;
+            gap: 6px;
+            padding: 6px;
+            border: 1px solid rgba(47, 105, 217, 0.13);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.72);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 8px 28px rgba(29, 58, 108, 0.06);
+         }
+
+         .filter button {
+            border: 0;
+            border-radius: 999px;
+            padding: 10px 16px;
+            background: transparent;
+            color: var(--muted);
+            font-weight: 750;
+            cursor: pointer;
+            transition: 0.2s ease;
+         }
+
+         .filter button:hover,
+         .filter button:focus-visible {
+            color: var(--blue-dark);
+            outline: none;
+         }
+
+         .filter button.active {
+            color: #fff;
+            background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+            box-shadow: 0 8px 18px rgba(47, 105, 217, 0.24);
+         }
+
+         .cards {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 22px;
+         }
+
+         .card {
+            position: relative;
+            text-align: left;
+            min-height: 300px;
+            padding: 26px;
+            border: 1px solid rgba(27, 66, 127, 0.09);
+            border-radius: var(--radius);
+            background: linear-gradient(
+                  180deg,
+                  rgba(255, 255, 255, 0.98),
+                  rgba(255, 255, 255, 0.88)
+               ),
+               var(--surface);
+            box-shadow: var(--shadow);
+            transition:
+               transform 0.25s ease,
+               box-shadow 0.25s ease,
+               border-color 0.25s ease;
+            transform-style: preserve-3d;
+            overflow: hidden;
+         }
+
+         .card::after {
+            content: "";
+            position: absolute;
+            inset: auto -45px -65px auto;
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            background: radial-gradient(
+               circle,
+               rgba(47, 105, 217, 0.12),
+               transparent 65%
+            );
+            opacity: 0;
+            transition: opacity 0.25s ease;
+         }
+
+         .card:hover {
+            transform: translateY(-7px);
+            border-color: rgba(47, 105, 217, 0.24);
+            box-shadow: 0 26px 70px rgba(29, 58, 108, 0.15);
+         }
+
+         .card:hover::after {
+            opacity: 1;
+         }
+
+         .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+         }
+
+         .icon-wrap {
+            display: grid;
+            place-items: center;
+            flex: 0 0 auto;
+         }
+         .icon-wrap > img {
+            border-radius: 50%;
+            width: 54px;
+            height: 54px;
+         }
+
+         .icon {
+            width: 34px;
+            height: 34px;
+            stroke: currentColor;
+            stroke-width: 1.8;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+         }
+
+         .num {
+            width: 34px;
+            height: 34px;
+            display: grid;
+            place-items: center;
+            border-radius: 50%;
+            color: var(--blue);
+            background: var(--blue-soft);
+            font-size: 13px;
+            font-weight: 850;
+         }
+
+         .card-title {
+            margin: 22px 0 13px;
+            font-size: 16px;
+            line-height: 1.22;
+            letter-spacing: -0.02em;
+            font-weight: 600;
+         }
+
+         .rule {
+            width: 38px;
+            height: 3px;
+            margin: 0 0 16px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, var(--blue), #80a9f3);
+         }
+
+         .card p {
+            margin: 0;
+            color: var(--muted);
+            /* line-height: 1.62; */
+            font-size: 14px;
+         }
+
+         .summary {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            margin: 30px auto 0;
+            padding: 18px 22px;
+            max-width: 1080px;
+            border: 1px solid rgba(47, 105, 217, 0.18);
+            border-radius: 16px;
+            background: rgba(238, 245, 255, 0.82);
+            color: var(--muted);
+            text-align: center;
+            backdrop-filter: blur(12px);
+         }
+
+         .summary strong {
+            color: var(--blue-dark);
+         }
+
+         .spark {
+            width: 32px;
+            height: 32px;
+            color: var(--blue);
+            flex: 0 0 auto;
+         }
+
+         [hidden] {
+            display: none !important;
+         }
+
+         .reveal {
+            opacity: 0;
+            transform: translateY(18px);
+         }
+
+         .reveal.visible {
+            opacity: 1;
+            transform: none;
+            transition:
+               opacity 0.6s ease,
+               transform 0.6s ease;
+         }
+         .tips-card-container {
+            display: flex;
+            gap: 16px;
+         }
+         .tips-card {
+            flex: 1;
+            border-radius: var(--radius-card);
+            padding: 16px;
+            border: 1px solid var(--border);
+            background: linear-gradient(
+               135deg,
+               rgba(238, 247, 255, 0.88),
+               rgba(249, 252, 255, 0.96)
+            );
+            box-shadow: 0 7px 18px rgba(35, 84, 133, 0.035);
+         }
+         .tips-card-header {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1.1em;
+         }
+         .tips-card-header img {
+            width: 40px;
+            /* border-radius:50%; */
+         }
+         @media (max-width: 1100px) {
+            .cards {
+               grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .card {
+               min-height: 280px;
+            }
+            .tips-container {
+               flex-direction: column;
+            }
+            .tips-card-container {
+               flex-direction: column;
+            }
+         }
+
+         @media (max-width: 680px) {
+            .metrics-section {
+               padding-inline: 16px;
+            }
+            .intro {
+               margin-bottom: 34px;
+            }
+            .toolbar {
+               justify-content: flex-start;
+               overflow-x: auto;
+               padding-bottom: 4px;
+            }
+            .filter {
+               min-width: max-content;
+            }
+            .cards {
+               grid-template-columns: 1fr;
+            }
+            .card {
+               min-height: 0;
+               padding: 24px;
+            }
+            .summary {
+               align-items: flex-start;
+               text-align: left;
+            }
+            h1 {
+               font-size: clamp(38px, 14vw, 58px);
+            }
+         }
+
+         @media (prefers-reduced-motion: reduce) {
+            html {
+               scroll-behavior: auto;
+            }
+            *,
+            *::before,
+            *::after {
+               animation-duration: 0.01ms !important;
+               transition-duration: 0.01ms !important;
+            }
+            .reveal {
+               opacity: 1;
+               transform: none;
+            }
+         }
+         .drama-option {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+         }
+
+         .drama-input-section {
+            --navy: #07345b;
+            --blue: #0b72d9;
+            --blue-dark: #064f98;
+            --blue-light: #eaf4ff;
+            --blue-lighter: #f6fbff;
+            --text: #102b4a;
+            --muted: #62748a;
+            --border: #d7e5f4;
+            --border-strong: #bdd4ec;
+            color: var(--text);
+         }
+
+         .drama-input-header {
+            margin-bottom: 26px;
+         }
+
+         .drama-input-header p {
+            margin: 0;
+            color: var(--muted);
+
+            font-size: 16px;
+            line-height: 1.5;
+         }
+
+         .drama-methods-overview {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+
+            margin-bottom: 34px;
+         }
+
+         .drama-method-card {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+
+            padding: 18px 19px;
+
+            border: 1px solid var(--border);
+            border-radius: 15px;
+
+            background: linear-gradient(
+               135deg,
+               rgba(245, 250, 255, 0.95),
+               rgba(255, 255, 255, 1)
+            );
+
+            box-shadow: 0 5px 16px rgba(29, 74, 119, 0.035);
+         }
+
+         .drama-method-card-link {
+            color: inherit;
+            text-decoration: none;
+            cursor: pointer;
+            transition:
+               transform 0.2s ease,
+               border-color 0.2s ease,
+               box-shadow 0.2s ease;
+         }
+
+         .drama-method-card-link:hover {
+            transform: translateY(-3px);
+            border-color: var(--border-strong);
+            box-shadow: 0 10px 24px rgba(29, 74, 119, 0.09);
+         }
+
+         .drama-method-card-link:focus-visible {
+            outline: 2px solid var(--blue);
+            outline-offset: 3px;
+         }
+
+         .drama-method-card h3 {
+            margin: 1px 0 5px;
+
+            color: var(--navy);
+            font-size: 17px;
+            font-weight: 800;
+         }
+
+         .drama-method-card p {
+            margin: 0;
+
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.45;
+         }
+
+         .drama-method-number {
+            flex: 0 0 auto;
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #edf5ff;
+            border: 1px solid #d7e7fa;
+
+            color: #1269c9;
+            font-size: 13px;
+            font-weight: 800;
+         }
+
+         .drama-method-section,
+         .drama-library-section {
+            margin-top: 8px;
+         }
+
+         .drama-method-title {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+
+            margin-bottom: 15px;
+         }
+
+         .drama-method-title h3 {
+            margin: 0;
+
+            color: var(--navy);
+            font-size: 21px;
+            line-height: 1.2;
+            font-weight: 800;
+         }
+
+         .drama-method-title p {
+            margin: 4px 0 0;
+
+            color: var(--muted);
+            font-size: 14px;
+         }
+
+         .drama-or-divider {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+
+            margin: 26px 0;
+         }
+
+         .drama-or-divider span {
+            flex: 1;
+            height: 1px;
+            background: var(--color-border);
+         }
+
+         .drama-or-divider strong {
+            color: #92a0ad;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+         }
+
+         @media (max-width: 900px) {
+            .drama-methods-overview {
+               grid-template-columns: 1fr;
+            }
+         }
+
+         @media (max-width: 600px) {
+            .drama-input-section {
+               padding: 26px 18px 32px;
+            }
+            .drama-method-card {
+               padding: 15px;
+            }
+
+            .drama-method-title {
+               align-items: flex-start;
+            }
+
+            .drama-method-title h3 {
+               font-size: 19px;
+            }
+         }
+         .instruction strong {
+            color:var(--blue);
+         }
+         .note {
+            color: #65758b;
+            font-size: 11px;
+            line-height: 1.45;
+         }
+
+
+         /* ===== Analiza porównawcza ===== */
+         .comparison-section {
+            margin-top: 38px;
+            padding: 30px;
+            border: 1px solid #dce7f8;
+            border-radius: 24px;
+            background: linear-gradient(180deg, #ffffff, #fbfdff);
+            box-shadow: 0 14px 40px rgba(29, 58, 108, 0.08);
+         }
+
+         .comparison-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 24px;
+            margin-bottom: 24px;
+         }
+
+         .comparison-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 7px;
+            color: var(--color-accent);
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+         }
+
+         .comparison-header h2 {
+            margin: 0 0 8px;
+            font-size: 30px;
+         }
+
+         .comparison-header p {
+            max-width: 840px;
+            margin: 0;
+            color: #65758b;
+            line-height: 1.55;
+         }
+
+         .comparison-source-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 18px;
+         }
+
+         .comparison-panel {
+            min-width: 0;
+            margin-top: 18px;
+            padding: 18px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .comparison-panel:first-child,
+         .comparison-source-grid .comparison-panel {
+            margin-top: 0;
+         }
+
+         .comparison-panel h3 {
+            margin: 0 0 7px;
+            color: var(--color-primary);
+            font-size: 17px;
+         }
+
+         .comparison-panel-intro {
+            margin: 0 0 13px;
+            color: #65758b;
+            font-size: 12px;
+            line-height: 1.5;
+         }
+
+         .comparison-search,
+         .comparison-select,
+         .comparison-name-input {
+            width: 100%;
+            border: 1px solid #cbdced;
+            border-radius: 8px;
+            background: #fff;
+            color: #10233f;
+         }
+
+         .comparison-search,
+         .comparison-select {
+            min-height: 42px;
+            padding: 9px 11px;
+            font-size: 14px;
+         }
+
+         .comparison-library-list {
+            max-height: 315px;
+            margin-top: 10px;
+            overflow: auto;
+            border: 1px solid #e5edf8;
+            border-radius: 10px;
+            background: #fbfdff;
+         }
+
+         .comparison-library-option {
+            display: grid;
+            grid-template-columns: 22px minmax(0, 1fr);
+            gap: 10px;
+            align-items: center;
+            padding: 10px 12px;
+            border-bottom: 1px solid #edf2f8;
+            cursor: pointer;
+         }
+
+         .comparison-library-option:last-child {
+            border-bottom: 0;
+         }
+
+         .comparison-library-option:hover {
+            background: #f1f7ff;
+         }
+
+         .comparison-library-option input {
+            width: 17px;
+            height: 17px;
+            margin: 0;
+            accent-color: #0b72d9;
+         }
+
+         .comparison-library-text {
+            min-width: 0;
+         }
+
+         .comparison-library-title {
+            display: block;
+            color: #10233f;
+            font-weight: 750;
+         }
+
+         .comparison-library-author {
+            display: block;
+            margin-top: 2px;
+            color: #74849a;
+            font-size: 11px;
+         }
+
+         .comparison-mini-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 11px;
+         }
+
+         .comparison-mini-actions button {
+            padding: 7px 12px;
+            font-size: 12px;
+         }
+
+         .comparison-secondary-button {
+            border-color: #bfd2e7;
+            color: #163f8f;
+            background: #f4f8fd;
+         }
+
+         .comparison-secondary-button:hover {
+            border-color: #d6e2ef;
+            color: #163f8f;
+            background: #eaf2fb;
+         }
+
+         .comparison-upload-zone {
+            display: grid;
+            place-items: center;
+            min-height: 142px;
+            padding: 20px;
+            border: 2px dashed #8fb9e7;
+            border-radius: 12px;
+            text-align: center;
+            color: #163f8f;
+            background: #f7fbff;
+            cursor: pointer;
+            transition: 0.2s ease;
+         }
+
+         .comparison-upload-zone:hover,
+         .comparison-upload-zone.drag-over {
+            border-color: #0b72d9;
+            background: #edf6ff;
+         }
+
+         .comparison-upload-zone strong {
+            display: block;
+            margin-bottom: 4px;
+         }
+
+         .comparison-upload-zone small {
+            color: #6e8096;
+         }
+
+         .comparison-upload-zone input {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0;
+            pointer-events: none;
+         }
+
+         .comparison-uploaded-summary {
+            margin-top: 10px;
+            color: #65758b;
+            font-size: 12px;
+            line-height: 1.5;
+         }
+
+         .comparison-order-list {
+            display: grid;
+            gap: 8px;
+            margin: 12px 0 0;
+            padding: 0;
+            list-style: none;
+         }
+
+         .comparison-order-item {
+            display: grid;
+            grid-template-columns: 28px minmax(0, 1fr) auto;
+            gap: 9px;
+            align-items: center;
+            padding: 9px;
+            border: 1px solid #dfeaf6;
+            border-radius: 10px;
+            background: #fbfdff;
+         }
+
+         .comparison-order-item.dragging {
+            opacity: 0.48;
+         }
+
+         .comparison-drag-handle {
+            display: grid;
+            place-items: center;
+            width: 28px;
+            height: 34px;
+            border-radius: 7px;
+            color: #6b7e95;
+            background: #eef4fb;
+            cursor: grab;
+            font-size: 17px;
+            user-select: none;
+         }
+
+         .comparison-name-input {
+            min-height: 34px;
+            padding: 6px 9px;
+            font-size: 13px;
+            font-weight: 650;
+         }
+
+         .comparison-item-actions {
+            display: flex;
+            gap: 5px;
+         }
+
+         .comparison-item-actions button {
+            display: grid;
+            place-items: center;
+            width: 31px;
+            height: 31px;
+            padding: 0;
+            border-width: 1px;
+            border-color: #c9d9ea;
+            color: #274c78;
+            background: #fff;
+            font-size: 13px;
+         }
+
+         .comparison-item-actions button:hover {
+            color: #163f8f;
+            background: #edf4ff;
+         }
+
+         .comparison-empty-order {
+            padding: 18px;
+            border: 1px dashed #cbdced;
+            border-radius: 10px;
+            color: #6a7d94;
+            text-align: center;
+            background: #fbfdff;
+         }
+
+         .comparison-metric-row {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 12px;
+            align-items: end;
+         }
+
+         .comparison-metric-row label {
+            display: block;
+            margin-bottom: 6px;
+            color: #344c68;
+            font-size: 12px;
+            font-weight: 750;
+         }
+
+         .comparison-generate-button {
+            min-height: 42px;
+            white-space: nowrap;
+         }
+
+         .comparison-status {
+            min-height: 20px;
+            margin-top: 10px;
+            color: #65758b;
+            font-size: 12px;
+         }
+
+         .comparison-status.error {
+            color: #b33128;
+         }
+
+         .comparison-results {
+            margin-top: 18px;
+            padding: 20px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .comparison-results[hidden] {
+            display: none !important;
+         }
+
+         .comparison-results h3 {
+            margin: 0 0 4px;
+            color: var(--color-primary);
+         }
+
+         .comparison-chart-subtitle {
+            margin: 0 0 10px;
+            color: #65758b;
+            font-size: 12px;
+         }
+
+         .comparison-chart-wrap {
+            position: relative;
+            width: 100%;
+            min-height: 430px;
+         }
+
+         .comparison-chart-note {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 9px;
+            color: #65758b;
+            background: #f5f9ff;
+            font-size: 11px;
+            line-height: 1.45;
+         }
+
+         @media (max-width: 850px) {
+            .comparison-source-grid,
+            .comparison-metric-row {
+               grid-template-columns: 1fr;
+            }
+
+            .comparison-generate-button {
+               width: 100%;
+            }
+         }
+
+         @media (max-width: 600px) {
+            .comparison-section {
+               padding: 18px 12px;
+            }
+
+            .comparison-header {
+               flex-direction: column;
+            }
+
+            .comparison-header h2 {
+               font-size: 25px;
+            }
+
+            .comparison-order-item {
+               grid-template-columns: 26px minmax(0, 1fr);
+            }
+
+            .comparison-item-actions {
+               grid-column: 2;
+               justify-content: flex-end;
+            }
+         }
+      </style>
+   </head>
+   <body>
+      <main class="container">
+         <div class="title-container-desktop">
+            <img
+               src="assets/baner_main_op.png"
+               alt="Baner główny - cyfrowa analiza dramatu"
+            />
+         </div>
+         <div class="title-container-mobile">
+            <img
+               src="assets/baner_mobile.png"
+               alt="Baner - Cyfrowa analiza dramatu"
+            />
+         </div>
+         <section class="info-note">
+            <div>
+               <div class="banner-separator">
+                  <img src="assets/separator_long.png" alt="baner" />
+               </div>
+               <div class="banner-separator-mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
+               </div>
+
+               <header class="intro reveal">
+                  <p class="lead">
+                     Strona umożliwia przeanalizowanie tekstu dowolnego wierszowanego dramatu (napisanego w języku polskim) pod kątem
+                     jego
+                     <span
+                        ><strong>zróżnicowania wersyfikacyjnego</strong></span
+                     >
+                     oraz innych parametrów analizy cyfrowej, takich jak:
+                  </p>
+               </header>
+
+               <div class="cards" id="cards">
+                  <article class="card reveal" data-category="all">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/dramatis_personae.png" />
+                        </div>
+                        <div class="num">01</div>
+                     </div>
+                     <div class="card-title">Rozkład metryczny wypowiedzi wybranych postaci</div>
+                     <div class="rule"></div>
+                     <p>
+                        Umożliwia porównanie dominujących metrów w wypowiedziach
+                        różnych bohaterów.
+                     </p>
+                  </article>
+                  <article class="card reveal" data-category="rytm">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/izosyl.png" />
+                        </div>
+                        <div class="num">02</div>
+                     </div>
+                     <div class="card-title">Średnia długość odcinka izosylabicznego</div>
+                     <div class="rule"></div>
+                     <p>
+                        Pozwala określić m.in. stopień stabilności rytmicznej
+                        analizowanego tekstu.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="dialog">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/interakcje.png" />
+                        </div>
+                        <div class="num">03</div>
+                     </div>
+                     <div class="card-title">Średnia długość wypowiedzi jednej postaci</div>
+                     <div class="rule"></div>
+                     <p>
+                        Ilustruje gęstość interakcji między postaciami i pomaga
+                        porównywać dynamikę dialogu.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="dialog">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/interp.png" />
+                        </div>
+                        <div class="num">04</div>
+                     </div>
+                     <div class="card-title">Wektory ekspresji interpunkcyjnej</div>
+                     <div class="rule"></div>
+                     <p>Odzwierciedlają gęstość wykrzyknień i pytań.</p>
+                  </article>
+
+                  <article class="card reveal" data-category="rytm">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/lamanie.png" />
+                        </div>
+                        <div class="num">05</div>
+                     </div>
+                     <div class="card-title">Wskaźnik łamania wiersza</div>
+                     <div class="rule"></div>
+                     <p>
+                        % linijek wypowiedzi, które nie kończą się znakiem
+                        interpunkcyjnym sygnalizującym zamknięcie struktury
+                        składniowej.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="narracja">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/didaskalia.png" />
+                        </div>
+                        <div class="num">06</div>
+                     </div>
+                     <div class="card-title">Wskaźnik gęstości tekstu pobocznego</div>
+                     <div class="rule"></div>
+                     <p>
+                        Liczba wystąpień didaskaliów względem długości tekstu
+                        głównego.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="narracja">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/apart.png" />
+                        </div>
+                        <div class="num">07</div>
+                     </div>
+                     <div class="card-title">
+                        Wskaźnik nasycenia didaskaliów wypowiedziami „na
+                        stronie”
+                     </div>
+                     <div class="rule"></div>
+                     <p>Pokazuje gęstość apartu.</p>
+                  </article>
+
+                  <article class="card reveal" data-category="narracja">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/me.png" />
+                        </div>
+                        <div class="num">08</div>
+                     </div>
+                     <div class="card-title">Wskaźnik referencji pierwszoosobowej</div>
+                     <div class="rule"></div>
+                     <p>
+                        Mierzy gęstość zaimków osobowych i dzierżawczych
+                        związanych z 1. osobą liczby pojedynczej.
+                     </p>
+                  </article>
+               </div>
+
+               <div class="summary reveal">
+                  <svg
+                     class="spark"
+                     viewBox="0 0 24 24"
+                     fill="none"
+                     stroke="currentColor"
+                     stroke-width="1.8"
+                     aria-hidden="true"
+                  >
+                     <path
+                        d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5L12 2Z"
+                     />
+                     <path
+                        d="m19 15 .7 2.3L22 18l-2.3.7L19 21l-.7-2.3L16 18l2.3-.7L19 15Z"
+                     />
+                     <path
+                        d="m5 15 .7 1.8L7.5 17.5l-1.8.7L5 20l-.7-1.8-1.8-.7 1.8-.7L5 15Z"
+                     />
+                  </svg>
+                  <div style="text-align: left">
+                     Niniejsza strona – uwzględniająca cechy związane z
+                     wierszową organizacją tekstu – stanowi uzupełnienie
+                     możliwości analitycznych oferowanych przez narzędzie
+                     <a href="https://dracor.org/pol" target="_blank"
+                        >DraCor | Polish Drama Corpus</a
+                     >, które obejmuje dramaty niewierszowane.
+                  </div>
+               </div>
+
+               <!-- <div class="header-container">
+                  <h2>Do czego służy ta strona?</h2>
+                  Strona umożliwia przeanalizowanie tekstu dowolnego dramatu (w języku polskim) pod kątem:           
+                  <ul>
+                     <li><strong>jego zróżnicowania
+                        wersyfikacyjnego</strong>
+                     </li>
+                  </ul>
+                  oraz innych wskaźników analizy cyfrowej, takich jak np.: 
+                  <ul>
+                     <li><strong>średnia długość odcinka izosylabicznego</strong> (pozwala określić m.in. stopień stabilności rytmicznej tekstu),
+                     </li>
+                     <li><strong>średnia długość wypowiedzi jednej postaci</strong> (ilustruje gęstość interakcji między postaciami),
+                     </li>
+                     <li><strong> wektory ekspresji interpunkcyjnej</strong> (odzwierciedlają gęstość wykrzyknień i pytań),
+                     </li>
+                     <li><strong> wskaźnik łamania wiersza</strong> (czyli procentowy udział linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym sygnalizującym zamknięcie struktury składniowej, w stosunku do wszystkich linijek z wyłączeniem didaskaliów),
+                     </li>
+                     <li><strong> wskaźnik gęstości tekstu pobocznego</strong> (liczba wystąpień didaskaliów względem długości tekstu głównego),
+                     </li>
+                     <li><strong> wskaźnik nasycenia tekstu pobocznego wypowiedziami „na stronie”</strong> (gęstość apartu),
+                     </li>
+                     <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierżawczych związanych z 1. os. l. poj.).
+                     </li>
+                  </ul>
+               </div> -->
+               <div class="banner-separator">
+                  <img src="assets/separator_long.png" alt="baner" />
+               </div>
+               <div class="banner-separator-mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
+               </div>
+               <h2>Po co cyfrowo badać literaturę?</h2>
+               <div>
+                  Cyfrowe badania literatury pozwalają w szybki i systematyczny
+                  sposób ujawnić cechy tekstu, które wcześniej pozostawały
+                  trudno dostępne, ponieważ ich identyfikacja wymagała żmudnych,
+                  ręcznych obliczeń. Dzięki narzędziom analizy ilościowej
+                  możliwe staje się nie tylko przetwarzanie dużych korpusów
+                  tekstów, lecz także precyzyjne uchwycenie zjawisk
+                  strukturalnych i funkcjonalnych, takich jak częstotliwość
+                  określonych form wypowiedzi, rozkład elementów dramatycznych
+                  czy natężenie konkretnych funkcji (np. wypowiedzi „na
+                  stronie”). Metody cyfrowe nie zastępują interpretacji, mogą ją
+                  jednak wspierać poprzez dostarczenie danych odsłaniających
+                  wzorce niewidoczne podczas tradycyjnej lektury.
+               </div>
+               <h2>
+                  Studium przypadku: Twórczość dramatyczna Juliusza Słowackiego
+               </h2>
+               <div>
+                  Poniżej podano konkretny przykład zastosowania badań cyfrowych
+                  do analizy twórczości Juliusza Słowackiego. W analizie wzięto
+                  pod uwagę wierszowane dramaty poety, które zostały
+                  zdigitalizowane w sposób umożliwiający ich właściwe
+                  przetworzenie przez skrypt.
+               </div>
+               <div class="slowacki">
+                  <img src="assets/Slowacki_min2.png" alt="slowacki" />
+               </div>
+               <div class="slowacki-mobile">
+                  <img src="assets/slowacki_mobile.png" alt="slowacki" />
+               </div>
+               <h3>
+                  | Transformacja tekstów Słowackiego po przełomie mistycznym
+               </h3>
+               <div>
+                  <p>
+                     Wielu badaczy zauważa znaczącą zmianę w sposobie pisania
+                     Słowackiego w okresie mistyczno-genezyjskim. Jej formalnym
+                     wykładnikiem jest na przykład ograniczenie przez poetę
+                     „romantycznych tendencji do rozbudowywania wszelkich
+                     metawypowiedzi (didaskaliów, prologów, wstępów)”<span
+                        style="color: #0073ce; cursor: pointer"
+                        onclick="alert('A. Ziołowicz, Dramat i romantyczne „Ja”. Studium podmiotowości w dramaturgii polskiej doby romantyzmu, Kraków 2022, s. 114.')"
+                        >[1]</span
+                     >. O tej specyficznej na tle poetyki dramatu romantycznego
+                     właściwości późnych utworów Słowackiego wspominała (za
+                     Ireną Sławińską<span
+                        style="color: #0073ce; cursor: pointer"
+                        onclick="alert('Zob. I. Sławińska, Przywołanie przestrzeni w dramacie Słowackiego „Zawisza Czarny”, [w:] tejże, Sceniczny gest poety. Zbiór studiów o dramacie, Kraków 1960.')"
+                        >[2]</span
+                     >) Ewa Nawrocka:
+                     <figure class="quote">
+                        <blockquote>
+                           <p>
+                              zwrócono uwagę na nikłość i lakoniczność uwag
+                              inscenizacyjnych w mistycznych dramatach
+                              Słowackiego i&nbsp;tendencję do ich ograniczania,
+                              a zarazem poszerzenie tekstu głównego o informacje
+                              dotyczące przestrzeni i&nbsp;czasu
+                           </p>
+                        </blockquote>
+                        <figcaption>
+                           — E. Nawrocka,
+                           <cite>Dramaty mistyczne Juliusza Słowackiego </cite>,
+                           [w:] <cite>Dramat i teatr romantyczny</cite>, red. D.
+                           Ratajczak, Wrocław 1992, s. 87
+                        </figcaption>
+                     </figure>
+                     Przytoczone spostrzeżenia potwierdza analiza cyfrowa. Skalę
+                     redukcji tekstu pobocznego w utworach
+                     mistyczno-genezyjskich widać na poniższym wykresie:
+                  </p>
+
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_gestosc_didaskaliow.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  <p>
+                     Innym formalnym wykładnikiem transformacji tekstów późnego
+                     Słowackiego jest m.in. zmiana średniej długości odcinka
+                     izosylabicznego (obrazująca zwiększenie stabilności
+                     rytmicznej tekstów mistyczno-genezyjskich):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_izosylabizm.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  <p>
+                     zmiana średniej długości wypowiedzi jednej postaci
+                     (ilustrująca zmianę dynamiki interakcji między postaciami):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_srednia_dlugosc_monologu.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  <p>
+                     a także zmiana współczynnika łamania wiersza (związana ze
+                     znacznym zanikiem sygnalizowania końca struktury
+                     składniowej w wygłosie):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_wspolczynnik_lamania_wiersza.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  <p>
+                     oraz wyraźne wyciszenie pytań i wykrzyknień (świadczące być
+                     może o przejściu od emocji i epistemologicznej niepewności
+                     do pewności – ton staje się bardziej profetyczny i płynny):
+                  </p>
+                  <div class="chart">
+                     <img src="assets/charts/wykres_pytania.png" alt="wykres" />
+                  </div>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_wykrzyknienia.png"
+                        alt="wykres"
+                     />
+                  </div>
+                  Na marginesie – warto zwrócić uwagę, jak na powyższych
+                  wykresach wypada <i>Fantazy</i>. Choć nie znamy dokładnej daty
+                  powstania dramatu, większość badaczy zalicza go do twórczości
+                  mistyczno-genezyjskiej. Niektóre zbadane parametry sugerują
+                  jednak, że bliżej mu do tekstów sprzed przełomu mistycznego.
+                  Oczywiście przy interpretacji wykresów należy pamiętać, że
+                  <i>Fantazy</i> nie został ostatecznie zredagowany przez
+                  Słowackiego (poeta pozostawił utwór w rękopisie; pierwodruk
+                  ukazał się w tomie <i>Pism pośmiertnych</i> wydanym w 1866
+                  roku), więc np. didaskalia czy rozkład partii dialogowych
+                  (rozczłonkowanie wypowiedzi dramatycznej na kwestie
+                  poszczególnych postaci) są w dużym stopniu dziełem edytorów.
+                  Zakres ingerencji edytorskich (wpływających niewątpliwie na
+                  przeanalizowane wskaźniki) szerzej omawia Maria Prussak<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. M. Prussak, Fantazy – w poszukiwaniu nowej formuły dramatu, w: Piękno Juliusza Słowackiego, t. 2: Universum, red. J. Ławski, G. Kowalski i Ł. Zabielski, Białystok 2013.')"
+                     >[3]</span
+                  >. Jednocześnie pewne parametry pozostają w znikomej mierze
+                  zależne od decyzji kolejnych edytorów (patrz: średnia długość
+                  odcinka izosylabicznego, znacznie odstająca w przypadku
+                  <i>Fantazego</i> od innych późnych utworów). Szerzej zakrojone
+                  badania cyfrowe być może ujawniłyby zatem więcej argumentów,
+                  że dramat – jak uważano jeszcze do lat 50. XX wieku i jak na
+                  powrót przekonywał J.M. Rymkiewicz w książce
+                  <i>Juliusz Słowacki pyta o godzinę</i
+                  ><span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. J.M. Rymkiewicz, Juliusz Słowacki pyta o godzinę, Warszawa 1982, s. 37–51.')"
+                     >[4]</span
+                  >
+                  – nie należy do fazy mistycznej i powstał około roku 1841.
+               </div>
+               <div class="rymkiewicz-image-container">
+                  <img
+                     src="assets/slowacki_i_rymkiewicz_biale.png"
+                     alt="Slowacki i Rymkiewicz"
+                  />
+               </div>
+               <div class="banner-separator">
+                  <img src="assets/separator_long.png" alt="baner" />
+               </div>
+               <div class="banner-separator-mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
+               </div>
+               <h2>Jak korzystać ze strony?</h2>
+               <div class="instruction">
+              Wybierz dramat z mojej biblioteki, wczytaj plik .txt lub wklej własny tekst w pole poniżej.
+               Otrzymasz zestaw wskaźników i wykresów opisujących strukturę dramatu oraz tabelę z rozpoznanym formatem każdego wersu i mówiącą postacią. Możesz też porównać wypowiedzi wybranych bohaterów na dodatkowych wykresach lub wyeksportować wyniki do pliku XLSX.
+               </div>
+               <div class="tips-container">
+                  <div class="tips-img">
+                     <img src="assets/computer-3.png" alt="image" />
+                  </div>
+                  <div class="tips-card-container">
+                    
+                     <div class="tips-card">
+                        <div class="tips-card-header">
+                           <div><img src="assets/zarowka.png" /></div>
+                           <div>Skorzystaj z Wolnych Lektur!</div>
+                        </div>
+                        Skrypt uwzględnia konwencje zastosowane w serwisie
+                        <a href="https://wolnelektury.pl" target="_blank"
+                           >Wolne Lektury</a
+                        >
+                        (jeśli wybierzemy opcję: <i>Pobierz książkę</i> >
+                        <i>Inne formaty</i> > <i>Plik tekstowy.txt</i>).
+                        Wklejenie tekstu skopiowanego z tego źródła nie wymaga
+                        zatem ingerencji w treść w celu dostosowania jej do
+                        algorytmu (należy jednak pamiętać, żeby z początku i
+                        końca zawartości pliku usunąć tytuł, spis osób dramatu,
+                        wszelkie noty edytorskie, numer ISBN itd.) Strona
+                        zostanie rozbudowana o obsługę
+                        <strong>standardu TEI/XML</strong> – z uwzględnieniem
+                        istniejących praktyk kodowania tekstów dramatycznych,
+                        stosowanych m.in. w
+                        <a href="https://dracor.org/pol" target="_blank"
+                           >DraCor | Polish Drama Corpus</a
+                        >.
+                     </div>
+                      <div class="tips-card">
+                        <div class="tips-card-header">
+                           <div><img src="assets/text.png" /></div>
+                           <div>Chcesz przeanalizować własny tekst?</div>
+                        </div>
+                        Możesz przeanalizować utwór spoza biblioteki dostępnej na niniejszej stronie lub w zasobach Wolnych Lektur. Wystarczy odpowiednio przygotować tekst, aby algorytm mógł poprawnie przypisać
+                        wszystkie partie do mówiących postaci i wykryć
+                        didaskalia. W tym celu:<br />
+                        <ul>
+                           <li>
+                              postaci dramatu powinny zostać zapisane wielkimi
+                              literami, np. PUSTELNIK,
+                           </li>
+                           <li>
+                              didaskalia powinny zostać wydzielone za pomocą
+                              znaku slash (ukośnik), np. / na stronie /.
+                           </li>
+                        </ul>
+                        Tak przygotowany materiał wklej do pola tekstowego lub załaduj w
+                        formacie .txt.
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="info-algo">
+               <p>Jak działa ten algorytm?</p>
+               <p>
+                  <span class="infotip">
+                     <img
+                        class="infotip-img"
+                        src="https://img.icons8.com/material-outlined/48/808080/info.png"
+                        alt="info"
+                     />
+                     <span class="infotip-content" id="infotip-content">
+                        Skrypt przelicza liczbę sylab dla każdego wersu na
+                        podstawie identyfikacji samogłosek, które w danej
+                        pozycji pełnią funkcję sylabotwórczą. Nie robi tego w
+                        100% bezbłędnie — nie wykryje np., że kombinacja [ia]
+                        występująca na granicy morfemów (jak w wyrazie
+                        <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo
+                        będzie 7-sylabowe), ponieważ [i] — dość wyjątkowo jak na
+                        język polski (bo pomimo sąsiedztwa innej samogłoski z
+                        prawej strony) — będzie ośrodkiem osobnej sylaby. Nie
+                        wykryje także dyftongów takich jak [au] (por.
+                        <i>t<u>au</u>-to-lo-gia</i>, ale
+                        <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por.
+                        <i>si-nu-s<u>oi</u>-da</i>, ale
+                        <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z
+                        takich (m.in.) wyjątków nie wpłyną znacząco na
+                        statystyki dla długich tekstów. Narzędzie nie wskazuje
+                        przypadków, w których na jeden wers metryczny przypadają
+                        repliki dialogowe różnych postaci; umożliwia natomiast
+                        wykluczenie ich z analizy ręcznie poprzez wprowadzenie
+                        znaku ++ przed konkretnymi linijkami tekstu.</span
+                     >
+                  </span>
+               </p>
+            </div>
+         </section>
+         <section class="drama-input-section">
+            <div class="drama-input-header">
+               <h2>Wprowadź tekst dramatu</h2>
+               <p>Dostępne są 3 sposoby wprowadzenia tekstu:</p>
+            </div>
+            <div class="drama-methods-overview">
+               <a href="#drama-paste" class="drama-method-card drama-method-card-link">
+                  <span class="drama-method-number">01</span>
+                  <div>
+                     <h3>Wklej tekst</h3>
+                     <p>
+                        Wprowadź treść dramatu bezpośrednio w polu tekstowym.
+                     </p>
+                  </div>
+               </a>
+
+               <a href="#drama-file" class="drama-method-card drama-method-card-link">
+                  <span class="drama-method-number">02</span>
+                  <div>
+                     <h3>Wczytaj plik .txt</h3>
+                     <p>Przeciągnij plik lub wybierz go z dysku.</p>
+                  </div>
+               </a>
+
+               <a href="#drama-library" class="drama-method-card drama-method-card-link">
+                  <span class="drama-method-number">03</span>
+                  <div>
+                     <h3>Wybierz z biblioteki</h3>
+                     <p>Skorzystaj z przygotowanego tekstu.</p>
+                  </div>
+               </a>
+            </div>
+         </section>
+         <section id="drama-paste">
+            <div class="drama-option">
+               <span class="drama-method-number">01</span>
+               <h3>Wklej tekst</h3>
+            </div>
+            <textarea
+               id="inputText"
+               placeholder="Wklej tutaj tekst dramatu..."
+            ></textarea>
+             <div class="button-row">
+            <button id="analyzeButton" type="button">Analizuj</button>
+            <button id="clearButton" class="clear-button" type="button">
+               Wyczyść
+            </button>
+         </div>
+         </section>
+         <div class="drama-or-divider">
+            <span></span>
+            <strong>LUB</strong>
+            <span></span>
+         </div>
+         <div class="drama-option">
+            <span class="drama-method-number">02</span>
+            <h3>Wczytaj plik .txt</h3>
+         </div>
+         <section
+            id="drama-file"
+            class="file-drop-zone"
+            aria-label="Wczytywanie pliku tekstowego"
+         >
+            <strong>Wybierz plik .txt albo przeciągnij go tutaj</strong>
+            <br /><br />
+            <input type="file" id="txtFileInput" accept=".txt,text/plain" />
+         </section>
+         <div class="drama-or-divider">
+            <span></span>
+            <strong>LUB</strong>
+            <span></span>
+         </div>
+         <section id="drama-library" class="library-section" aria-label="Moja biblioteka">
+             <div class="drama-option">
+            <span class="drama-method-number">03</span>
+            <h3>Wybierz z biblioteki</h3>
+         </div>
+            <p>
+               Poniżej znajduje się biblioteka dramatów przygotowanych pod
+               wymagania skryptu (docelowo teksty zostaną dostosowane także do
+               standardu TEI/XML). Dorzucono tu m.in. te utwory, które nie
+               zostały opracowane przez serwis Wolne Lektury (jak np.
+               <i>Samuel Zborowski</i> J. Słowackiego).
+            </p>
+            <input
+               type="search"
+               id="librarySearch"
+               class="library-search"
+               placeholder="Wyszukaj dramat po autorze lub tytule..."
+               aria-label="Wyszukaj dramat po autorze lub tytule"
+            />
+            <p id="libraryNoResults" class="library-no-results">
+               Nie znaleziono dramatów pasujących do wpisanej frazy.
+            </p>
+            <p style="font-size: 0.85em; color: #666">
+               ⇄ Przewijaj w poziomie, aby zobaczyć więcej pozycji
+            </p>
+            <div class="library-grid">
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Samuel Zborowski</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-samuel-zborowski.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Cyprian Norwid</div>
+                  <div class="library-title">Pierścień Wielkiej Damy</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/norwid-pierscien-wielkiej-damy.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Balladyna</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-balladyna.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Ksiądz Marek</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-ksiadz-marek.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Fantazy</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-fantazy.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Kordian</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-kordian.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Książę niezłomny</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-ksiaze-niezlomny.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Lilla Weneda</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-lilla-weneda.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Maria Stuart</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-maria-stuart.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Mazepa</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-mazepa.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Mindowe</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-mindowe.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Juliusz Słowacki</div>
+                  <div class="library-title">Sen srebrny Salomei</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/slowacki-sen-srebrny-salomei.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Adam Mickiewicz</div>
+                  <div class="library-title">II cz. Dziadów</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-dziady-ii.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Adam Mickiewicz</div>
+                  <div class="library-title">IV cz. Dziadów</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-dziady-iv.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Adam Mickiewicz</div>
+                  <div class="library-title">III cz. Dziadów</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-dziady-iii.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+               <article class="library-card">
+                  <img src="assets/folder2.png" alt="folder icon" />
+                  <div class="library-author">Adam Mickiewicz</div>
+                  <div class="library-title">I cz. Dziadów</div>
+                  <button
+                     type="button"
+                     class="library-select-button"
+                     data-text-path="assets/biblioteka/mickiewicz-widowisko-czesc-i.txt"
+                  >
+                     Wybierz
+                  </button>
+               </article>
+            </div>
+         </section>
+         <section
+            id="additionalMetrics"
+            class="additional-metrics"
+            aria-label="Wskaźniki analizy"
+         >
+            <div class="metrics-results-header">
+               <div>
+                  <h2>Wynik analizy</h2>
+                  <p>Przegląd wskaźników analizy cyfrowej dramatu.</p>
+               </div>
+            </div>
+
+            <div id="metricsEmptyState" class="metrics-empty-state">
+               Brak linijek wypowiedzi po wyłączeniu didaskaliów.
+            </div>
+            <div>
+               <div class="table-container">
+                  <table id="resultTable" class="hidden">
+                     <thead>
+                        <tr>
+                           <th>Nr wersu</th>
+                           <th>Treść wersu</th>
+                           <th>Lb. sylab</th>
+                           <th>Bohater</th>
+                           <th>Wers współdziel.</th>
+                        </tr>
+                     </thead>
+                     <tbody></tbody>
+                  </table>
+               </div>
+               <div class="action-buttons" id="actionButtons">
+                  <button id="pieChartsButton" type="button">
+                     Generuj wykresy kołowe dla wybranych bohaterów
+                  </button>
+                  <button id="barChartsButton" type="button">
+                     Generuj wykresy słupkowe
+                  </button>
+                  <button id="exportButton" type="button">
+                     Eksportuj tabelę do pliku XLSX
+                  </button>
+               </div>
+               <div id="charts" class="chart-container"></div>
+            </div>
+
+            <div
+               id="speakerShareSection"
+               class="speaker-share-section"
+               aria-label="Udział wypowiedzi bohaterów"
+            >
+               <h3 class="metrics-panel-title">
+                  Kto ma najwięcej do powiedzenia?*  
+               </h3>
+               <p class="note">*Czyli procentowy udział wersów przypadających na poszczególnych bohaterów w całym tekście dramatu.</p>
+               <div class="chart-box">
+                  <canvas id="speakerShareChart"></canvas>
+               </div>
+               <div class="metric-chart-note">
+                  Wykres pokazuje, jaki procent wszystkich wersów przypada na każdego bohatera. Wspólny wers P_1 + P_2 jest liczony tylko raz; jeśli tworzą go różni bohaterowie, jego udział jest dzielony między nich proporcjonalnie do liczby sylab poszczególnych fragmentów. Udziały poniżej 1% zsumowano i zgrupowano pod etykietą „Inni bohaterowie (poniżej 1%) – razem”.
+               </div>
+            </div>
+
+            <!-- <div class="metrics-warning">
+               <span class="metrics-warning-icon" aria-hidden="true">!</span>
+               <div>
+                  <strong>Uwaga:</strong> Narzędzie nie wykrywa na razie
+                  przypadków, w których wypowiedzi postaci współdzielą między
+                  sobą jeden wers metryczny (czyli sytuacji, gdy na jeden wers
+                  metryczny przypadają repliki dialogowe różnych postaci). Może
+                  to wpływać na wyniki analizy (średnią długość odcinka
+                  izosylabicznego i zróżnicowanie metryczne dramatu).
+               </div>
+            </div> -->
+
+            <div id="metricsDashboardContent" class="metrics-dashboard">
+               <div class="metrics-panel">
+                  <h3 class="metrics-panel-title">Główne wskaźniki</h3>
+                  <div class="metrics-grid">
+                     <div id="isosyllabicMetric" class="metric-card"></div>
+                     <div
+                        id="interactionDensityMetric"
+                        class="metric-card"
+                     ></div>
+                     <div id="lineBreakingMetric" class="metric-card"></div>
+                     <div
+                        id="punctuationExpressionMetric"
+                        class="metric-card"
+                     ></div>
+                     <div id="selfReferenceMetric" class="metric-card"></div>
+                     <div
+                        id="metacommentaryDensityMetric"
+                        class="metric-card"
+                     ></div>
+                     <div
+                        id="asideStageFunctionMetric"
+                        class="metric-card"
+                     ></div>
+                     <div id="asideDramaLengthMetric" class="metric-card"></div>
+                  </div>
+               </div>
+
+               <div
+                  id="metricDistributionMetric"
+                  class="metrics-panel metric-chart-panel"
+               >
+                  <h3 class="metrics-panel-title">
+                     Rozkład metryczny (dominujące metra) całego dramatu
+                  </h3>
+                  <div class="chart-box">
+                     <canvas id="metricDistributionChart"></canvas>
+                  </div>
+                  <div class="metric-chart-note">
+                     Formaty poniżej 1% są grupowane (i sumowane) jako „Inne”.
+                  </div>
+               </div>
+            </div>
+         </section>
+
+
+         <section
+            id="comparison-analysis"
+            class="comparison-section"
+            aria-label="Analiza porównawcza wielu dramatów"
+         >
+            <div class="comparison-header">
+               <div>
+                  <div class="comparison-kicker">Analiza porównawcza</div>
+                  <h2>Porównaj wybrane dramaty na jednym wykresie</h2>
+                  <p>
+                     Wybierz dowolną liczbę tekstów z biblioteki i/lub dodaj własne
+                     pliki .txt. Następnie ustaw kolejność pozycji na wykresie i
+                     wskaż jeden parametr do porównania.
+                  </p>
+               </div>
+            </div>
+
+            <div class="comparison-source-grid">
+               <div class="comparison-panel">
+                  <h3>1. Wybierz teksty z biblioteki</h3>
+                  <p class="comparison-panel-intro">
+                     Utwory Juliusza Słowackiego widoczne na wykresie ze studium
+                     przypadku są zaznaczone domyślnie.
+                  </p>
+                  <input
+                     id="comparisonLibrarySearch"
+                     class="comparison-search"
+                     type="search"
+                     placeholder="Szukaj po autorze lub tytule..."
+                     aria-label="Szukaj tekstu do porównania"
+                  />
+                  <div
+                     id="comparisonLibraryList"
+                     class="comparison-library-list"
+                     aria-label="Lista tekstów z biblioteki do porównania"
+                  ></div>
+                  <div class="comparison-mini-actions">
+                     <button id="comparisonSelectSlowacki" type="button">
+                        Zaznacz zestaw Słowackiego
+                     </button>
+                     <button
+                        id="comparisonClearSelection"
+                        type="button"
+                        class="comparison-secondary-button"
+                     >
+                        Wyczyść wybór
+                     </button>
+                  </div>
+               </div>
+
+               <div class="comparison-panel">
+                  <h3>2. Dodaj własne pliki .txt</h3>
+                  <p class="comparison-panel-intro">
+                     Możesz dodać wiele plików jednocześnie. Każdy z nich pojawi się
+                     na wspólnej liście kolejności poniżej.
+                  </p>
+                  <label
+                     id="comparisonUploadZone"
+                     class="comparison-upload-zone"
+                     for="comparisonFileInput"
+                  >
+                     <span>
+                        <strong>Wybierz pliki .txt lub przeciągnij je tutaj</strong>
+                        <small>Możesz zaznaczyć kilka plików naraz.</small>
+                     </span>
+                     <input
+                        id="comparisonFileInput"
+                        type="file"
+                        accept=".txt,text/plain"
+                        multiple
+                     />
+                  </label>
+                  <div
+                     id="comparisonUploadedSummary"
+                     class="comparison-uploaded-summary"
+                  >
+                     Nie dodano jeszcze własnych plików.
+                  </div>
+               </div>
+            </div>
+
+            <div class="comparison-panel">
+               <h3>3. Ustal kolejność na wykresie</h3>
+               <p class="comparison-panel-intro">
+                  Przeciągaj pozycje za uchwyt ⋮⋮ albo użyj strzałek. Kolejność tej
+                  listy jest dokładnie kolejnością słupków na wykresie. Nazwę możesz
+                  edytować — szczególnie przydaje się to dla własnych plików.
+               </p>
+               <ol id="comparisonOrderList" class="comparison-order-list"></ol>
+            </div>
+
+            <div class="comparison-panel">
+               <div class="comparison-metric-row">
+                  <div>
+                     <label for="comparisonMetricSelect">4. Wybierz wskaźnik</label>
+                     <select id="comparisonMetricSelect" class="comparison-select">
+                        <option value="isosyllabicAverage">
+                           Średnia długość odcinka izosylabicznego
+                        </option>
+                        <option value="interactionAverage" selected>
+                           Średnia długość wypowiedzi jednej postaci
+                        </option>
+                        <option value="lineBreaking">
+                           Współczynnik łamania wiersza
+                        </option>
+                        <option value="exclamationDensity">
+                           Gęstość wykrzyknień
+                        </option>
+                        <option value="questionDensity">Gęstość pytań</option>
+                        <option value="selfReference">
+                           Wskaźnik referencji pierwszoosobowej
+                        </option>
+                        <option value="metacommentaryDensity">
+                           Indeks gęstości metakomentarza (didaskaliów)
+                        </option>
+                        <option value="asideStageFunction">
+                           Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”
+                        </option>
+                     </select>
+                  </div>
+                  <button
+                     id="comparisonGenerateButton"
+                     class="comparison-generate-button"
+                     type="button"
+                  >
+                     Generuj wykres porównawczy
+                  </button>
+               </div>
+               <div id="comparisonStatus" class="comparison-status" role="status"></div>
+            </div>
+
+            <div id="comparisonResults" class="comparison-results" hidden>
+               <h3 id="comparisonChartTitle">Wynik porównania</h3>
+               <p id="comparisonChartSubtitle" class="comparison-chart-subtitle"></p>
+               <div id="comparisonChartWrap" class="comparison-chart-wrap">
+                  <canvas id="comparisonChart"></canvas>
+               </div>
+               <div class="comparison-chart-note">
+                  Wartości są liczone przez te same funkcje analityczne co w sekcji
+                  „Wynik analizy”. Szara nakładka okresu mistyczno-genezyjskiego nie
+                  jest dodawana; wykres pokazuje wyłącznie wybrane teksty i wartości.
+               </div>
+            </div>
+         </section>
+      </main>
+      <script>
+         const buttons = document.querySelectorAll("[data-filter]");
+         const cards = document.querySelectorAll(".card");
+
+         buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+               const filter = button.dataset.filter;
+
+               buttons.forEach((btn) =>
+                  btn.classList.toggle("active", btn === button),
+               );
+
+               cards.forEach((card) => {
+                  const category = card.dataset.category;
+                  const shouldShow =
+                     filter === "all" ||
+                     category === filter ||
+                     category === "all";
+
+                  card.hidden = !shouldShow;
+                  if (shouldShow) {
+                     card.animate(
+                        [
+                           {
+                              opacity: 0,
+                              transform: "translateY(12px) scale(.985)",
+                           },
+                           { opacity: 1, transform: "translateY(0) scale(1)" },
+                        ],
+                        { duration: 280, easing: "ease-out" },
+                     );
+                  }
+               });
+            });
+         });
+
+         const observer = new IntersectionObserver(
+            (entries) => {
+               entries.forEach((entry) => {
+                  if (entry.isIntersecting) {
+                     entry.target.classList.add("visible");
+                     observer.unobserve(entry.target);
+                  }
+               });
+            },
+            { threshold: 0.12 },
+         );
+
+         document.querySelectorAll(".reveal").forEach((el, index) => {
+            el.style.transitionDelay = `${Math.min(index * 45, 280)}ms`;
+            observer.observe(el);
+         });
+
+         document.querySelectorAll(".card").forEach((card) => {
+            card.addEventListener("pointermove", (e) => {
+               if (
+                  window.matchMedia("(prefers-reduced-motion: reduce)").matches
+               )
+                  return;
+               const rect = card.getBoundingClientRect();
+               const x = (e.clientX - rect.left) / rect.width - 0.5;
+               const y = (e.clientY - rect.top) / rect.height - 0.5;
+               card.style.transform = `translateY(-7px) rotateX(${(-y * 2.3).toFixed(2)}deg) rotateY(${(x * 2.3).toFixed(2)}deg)`;
+            });
+
+            card.addEventListener("pointerleave", () => {
+               card.style.transform = "";
+            });
+         });
+         const APP_CONFIG = {
+            defaultTextPath: "assets/biblioteka/mickiewicz-dziady-iv.txt",
+            syllableReplacementRegex: /ie|ia|iu|ię|ią|io|ii|iy|ió/g,
+            vowelRegex: /[aeiouąęóy]/gi,
+            lineEndingRegex: /(\.|,|!|\?|;|…|:|-|—|–)$/,
+            selfReferencePronouns: new Set([
+               "ja",
+               "mnie",
+               "mi",
+               "mną",
+               "mój",
+               "mojego",
+               "mojemu",
+               "moim",
+               "moja",
+               "mojej",
+               "moją",
+               "moje",
+               "moi",
+               "moich",
+               "moimi",
+            ]),
+            meterColors: {
+               1: "hsl(55, 50%, 70%)",
+               2: "hsl(30, 70%, 70%)",
+               3: "hsl(60, 70%, 70%)",
+               4: "hsl(90, 70%, 70%)",
+               5: "hsl(120, 70%, 70%)",
+               6: "hsl(150, 70%, 70%)",
+               7: "hsl(180, 70%, 70%)",
+               8: "hsl(210, 70%, 70%)",
+               9: "hsl(240, 70%, 70%)",
+               10: "hsl(270, 70%, 70%)",
+               11: "hsl(300, 70%, 70%)",
+               12: "hsl(330, 70%, 70%)",
+               13: "hsl(360, 70%, 70%)",
+               14: "hsl(18, 70%, 50%)",
+               15: "hsl(420, 70%, 70%)",
+               16: "hsl(450, 70%, 70%)",
+               17: "hsl(480, 70%, 70%)",
+               18: "hsl(510, 70%, 70%)",
+               19: "hsl(540, 70%, 70%)",
+               20: "hsl(570, 70%, 70%)",
+               21: "hsl(600, 70%, 70%)",
+               22: "hsl(630, 70%, 70%)",
+               23: "hsl(660, 70%, 70%)",
+               24: "hsl(690, 70%, 70%)",
+               25: "hsl(720, 70%, 70%)",
+               26: "hsl(750, 70%, 70%)",
+            },
+         };
+
+         const DOM = {
+            inputText: document.getElementById("inputText"),
+            resultTable: document.getElementById("resultTable"),
+            resultTableBody: document.querySelector("#resultTable tbody"),
+            actionButtons: document.getElementById("actionButtons"),
+            charts: document.getElementById("charts"),
+            additionalMetrics: document.getElementById("additionalMetrics"),
+            fileDropZone: document.getElementById("drama-file"),
+            txtFileInput: document.getElementById("txtFileInput"),
+            librarySearch: document.getElementById("librarySearch"),
+            libraryNoResults: document.getElementById("libraryNoResults"),
+            buttons: {
+               analyze: document.getElementById("analyzeButton"),
+               clear: document.getElementById("clearButton"),
+               pieCharts: document.getElementById("pieChartsButton"),
+               barCharts: document.getElementById("barChartsButton"),
+               export: document.getElementById("exportButton"),
+            },
+            metrics: {
+               punctuationExpression: document.getElementById(
+                  "punctuationExpressionMetric",
+               ),
+               isosyllabic: document.getElementById("isosyllabicMetric"),
+               interactionDensity: document.getElementById(
+                  "interactionDensityMetric",
+               ),
+               lineBreaking: document.getElementById("lineBreakingMetric"),
+               selfReference: document.getElementById("selfReferenceMetric"),
+               metacommentaryDensity: document.getElementById(
+                  "metacommentaryDensityMetric",
+               ),
+               asideStageFunction: document.getElementById(
+                  "asideStageFunctionMetric",
+               ),
+               asideDramaLength: document.getElementById(
+                  "asideDramaLengthMetric",
+               ),
+            },
+         };
+
+         const state = {
+            analyzedData: [],
+            metricDistributionChart: null,
+            speakerShareChart: null,
+            renderedCharts: [],
+         };
+
+         function init() {
+            bindEvents();
+            loadDefaultText();
+         }
+
+         function bindEvents() {
+            DOM.buttons.analyze.addEventListener("click", analyzeText);
+            DOM.buttons.clear.addEventListener("click", clearText);
+            DOM.buttons.pieCharts.addEventListener("click", generatePieCharts);
+            DOM.buttons.barCharts.addEventListener("click", generateBarCharts);
+            DOM.buttons.export.addEventListener("click", exportToExcel);
+
+            DOM.txtFileInput.addEventListener("change", (event) => {
+               loadTxtFile(event.target.files[0]);
+            });
+
+            DOM.fileDropZone.addEventListener("dragover", (event) => {
+               event.preventDefault();
+               DOM.fileDropZone.classList.add("drag-over");
+            });
+
+            DOM.fileDropZone.addEventListener("dragleave", (event) => {
+               event.preventDefault();
+               DOM.fileDropZone.classList.remove("drag-over");
+            });
+
+            DOM.fileDropZone.addEventListener("drop", (event) => {
+               event.preventDefault();
+               DOM.fileDropZone.classList.remove("drag-over");
+               loadTxtFile(event.dataTransfer.files[0]);
+            });
+            DOM.librarySearch.addEventListener("input", filterLibraryCards);
+            document
+               .querySelectorAll(".library-select-button")
+               .forEach((button) => {
+                  button.addEventListener("click", () => {
+                     loadLibraryText(button.dataset.textPath);
+                  });
+               });
+         }
+
+         async function loadDefaultText() {
+            try {
+               const response = await fetch(APP_CONFIG.defaultTextPath);
+               if (!response.ok)
+                  throw new Error("Nie udało się załadować pliku dziady.txt");
+               DOM.inputText.value = await response.text();
+            } catch (error) {
+               console.error(error);
+            }
+         }
+         async function loadLibraryText(path) {
+            try {
+               const response = await fetch(path);
+               if (!response.ok)
+                  throw new Error(`Nie udało się załadować pliku: ${path}`);
+
+               const text = await response.text();
+               DOM.inputText.value = text;
+
+               // automatyczna analiza po załadowaniu
+               analyzeText();
+            } catch (error) {
+               console.error(error);
+               alert("Nie udało się załadować wybranego dramatu.");
+            }
+         }
+
+         function clearText() {
+            DOM.inputText.value = "";
+            state.analyzedData = [];
+            clearAllCharts();
+            resetMetrics();
+            DOM.resultTableBody.innerHTML = "";
+            DOM.resultTable.classList.add("hidden");
+            DOM.actionButtons.style.display = "none";
+         }
+
+         function analyzeText() {
+            const inputText = DOM.inputText.value.trim();
+
+            if (!inputText) {
+               alert("Nie wprowadzono wartości.");
+               return;
+            }
+
+            clearAllCharts();
+            state.analyzedData = parseDramaText(inputText);
+            renderResultsTable(state.analyzedData);
+            calculateAdditionalMetrics();
+
+            DOM.resultTable.classList.remove("hidden");
+            DOM.actionButtons.style.display = "flex";
+            scrollToBottom();
+         }
+
+         function parseDramaText(text) {
+            let currentActor = "";
+            let verseNumber = 0;
+            let sharedLineCandidateIndex = null;
+            const rows = [];
+
+            text.split("\n").forEach((rawLine) => {
+               const line = rawLine.trim();
+
+               if (!line || line.startsWith("++")) return;
+
+               if (isActorLine(line)) {
+                  currentActor = line;
+                  return;
+               }
+
+               const stageDirection = isStageDirection(line);
+
+               if (stageDirection) {
+                  rows.push({
+                     verseNumber: "",
+                     line,
+                     vowelsNumber: countSyllables(line),
+                     actor: "DIDASKALIA",
+                     sharedLine: "",
+                  });
+                  // Didaskalia nie przerywają potencjalnego wspólnego wersu:
+                  // P_1 i P_2 mogą być rozdzielone tekstem pobocznym.
+                  return;
+               }
+
+               const leadingWhitespace = rawLine.match(/^[\t ]*/)?.[0] || "";
+               const indentWidth = [...leadingWhitespace].reduce(
+                  (width, char) => width + (char === "\t" ? 24 : 1),
+                  0,
+               );
+               // W materiałach wejściowych drugie części wspólnego wersu mają
+               // wyraźne wcięcie (zwykle 24 spacje). Małe wcięcia 2–4 spacje,
+               // używane np. w partiach śpiewanych, nie są traktowane jako shared lines.
+               const isSharedLineIndent = indentWidth >= 20;
+               const previousSpeechRow =
+                  sharedLineCandidateIndex !== null
+                     ? rows[sharedLineCandidateIndex]
+                     : null;
+               const isSharedLineSecondPart =
+                  isSharedLineIndent && previousSpeechRow;
+
+               if (isSharedLineSecondPart) {
+                  previousSpeechRow.sharedLine = "P_1";
+
+                  rows.push({
+                     verseNumber: previousSpeechRow.verseNumber,
+                     line,
+                     vowelsNumber: countSyllables(line),
+                     actor: currentActor,
+                     sharedLine: "P_2",
+                  });
+
+                  // Parę P_1 + P_2 traktujemy jako jeden wers metryczny.
+                  sharedLineCandidateIndex = null;
+                  return;
+               }
+
+               verseNumber++;
+               rows.push({
+                  verseNumber,
+                  line,
+                  vowelsNumber: countSyllables(line),
+                  actor: currentActor,
+                  sharedLine: "",
+               });
+               sharedLineCandidateIndex = rows.length - 1;
+            });
+
+            return rows;
+         }
+
+         function buildMetricLines(data) {
+            const metricLines = [];
+            const metricLinesByVerse = new Map();
+
+            data.forEach((row) => {
+               if (row.actor === "DIDASKALIA" || row.verseNumber === "") return;
+
+               const key = String(row.verseNumber);
+               const existingMetricLine = metricLinesByVerse.get(key);
+
+               if (!existingMetricLine) {
+                  const actorContributions = {};
+                  if (row.actor) actorContributions[row.actor] = row.vowelsNumber;
+
+                  const metricLine = {
+                     verseNumber: row.verseNumber,
+                     line: row.line,
+                     vowelsNumber: row.vowelsNumber,
+                     actors: row.actor ? [row.actor] : [],
+                     actorContributions,
+                     sharedLine: row.sharedLine === "P_1" || row.sharedLine === "P_2",
+                  };
+
+                  metricLinesByVerse.set(key, metricLine);
+                  metricLines.push(metricLine);
+                  return;
+               }
+
+               // P_1 + P_2 (także rozdzielone didaskaliami) stanowią jeden
+               // wers metryczny: łączymy zatem tekst i sumujemy liczbę sylab.
+               existingMetricLine.line = `${existingMetricLine.line} ${row.line}`.trim();
+               existingMetricLine.vowelsNumber += row.vowelsNumber;
+               existingMetricLine.sharedLine = true;
+
+               if (row.actor) {
+                  if (!existingMetricLine.actors.includes(row.actor)) {
+                     existingMetricLine.actors.push(row.actor);
+                  }
+                  existingMetricLine.actorContributions[row.actor] =
+                     (existingMetricLine.actorContributions[row.actor] || 0) +
+                     row.vowelsNumber;
+               }
+            });
+
+            return metricLines;
+         }
+
+         function isActorLine(line) {
+            return line === line.toUpperCase() && /[A-ZĄĆĘŁŃÓŚŹŻ]/.test(line);
+         }
+
+         function isStageDirection(line) {
+            return line.includes("/");
+         }
+
+         function countSyllables(line) {
+            const normalizedLine = line.replace(
+               APP_CONFIG.syllableReplacementRegex,
+               "e",
+            );
+            return (normalizedLine.match(APP_CONFIG.vowelRegex) || []).length;
+         }
+
+         function renderResultsTable(data) {
+            DOM.resultTableBody.innerHTML = "";
+
+            data.forEach(
+               ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => {
+                  const row = DOM.resultTableBody.insertRow();
+                  row.insertCell(0).textContent = verseNumber;
+                  row.insertCell(1).textContent = line;
+                  row.insertCell(2).textContent = vowelsNumber;
+                  row.insertCell(3).textContent = actor;
+                  row.insertCell(4).textContent = sharedLine;
+               },
+            );
+         }
+
+         function exportToExcel() {
+            const workbook = XLSX.utils.book_new();
+            const rows = [
+               ["Nr wersu", "Treść wersu", "Liczba sylab", "Bohater", "SL"],
+               ...state.analyzedData.map(
+                  ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => [
+                     verseNumber,
+                     line,
+                     vowelsNumber,
+                     actor,
+                     sharedLine,
+                  ],
+               ),
+            ];
+            const worksheet = XLSX.utils.aoa_to_sheet(rows);
+
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Wyniki");
+            XLSX.writeFile(workbook, "wyniki.xlsx");
+         }
+
+         function generatePieCharts() {
+            const actors = getActors();
+            let selectedActors = prompt(
+               `Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', jeśli chcesz, by skrypt potraktował ich w analizie łącznie (dostępni: ${actors.join(", ")}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`,
+            );
+
+            if (!selectedActors) return;
+
+            selectedActors = selectedActors.toUpperCase();
+            const selectedGroups = parseActorGroups(selectedActors);
+
+            if (!areActorGroupsValid(selectedGroups, actors)) {
+               alert("Wprowadzono niepoprawne wartości.");
+               return;
+            }
+
+            const actorsData = getGroupedActorMeterCounts(selectedGroups);
+            clearActorCharts();
+
+            Object.entries(actorsData).forEach(([groupName, meterCounts]) => {
+               const totalLines = sumValues(meterCounts);
+               const labels = Object.keys(meterCounts);
+               const values = Object.values(meterCounts).map(
+                  (count) => (count / totalLines) * 100,
+               );
+
+               renderChart({
+                  type: "pie",
+                  className: "chart-box",
+                  data: {
+                     labels,
+                     datasets: [
+                        {
+                           data: values,
+                           backgroundColor: labels.map(getMeterColor),
+                        },
+                     ],
+                  },
+                  options: getPieChartOptions(
+                     `Wykres kołowy dla: ${groupName}`,
+                  ),
+               });
+            });
+
+            scrollToCharts();
+         }
+
+         function generateBarCharts() {
+            const actors = getActors();
+            let selectedActors = prompt(
+               `Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(", ")}). Przykład: KSIĄDZ, GUSTAW, PUSTELNIK`,
+            );
+
+            if (!selectedActors) return;
+
+            selectedActors = selectedActors.toUpperCase();
+            const selectedActorsArray = selectedActors
+               .split(",")
+               .map((actor) => actor.trim())
+               .filter(Boolean);
+
+            if (!selectedActorsArray.every((actor) => actors.includes(actor))) {
+               alert("Wprowadzono niepoprawne wartości.");
+               return;
+            }
+
+            const actorsData = getActorMeterCounts(selectedActorsArray);
+            const labels = [
+               ...new Set(
+                  buildMetricLines(state.analyzedData).map(
+                     ({ vowelsNumber }) => vowelsNumber,
+                  ),
+               ),
+            ].sort((a, b) => a - b);
+            const datasets = selectedActorsArray.map((actor) => {
+               const totalLines = sumValues(actorsData[actor]);
+
+               return {
+                  label: actor,
+                  data: labels.map(
+                     (label) =>
+                        ((actorsData[actor][label] || 0) / totalLines) * 100,
+                  ),
+                  backgroundColor: getRandomColor(),
+               };
+            });
+
+            clearActorCharts();
+
+            renderChart({
+               type: "bar",
+               className: "chart-box chart-box--wide",
+               data: { labels, datasets },
+               options: getBarChartOptions(),
+            });
+
+            scrollToCharts();
+         }
+
+         function getActors() {
+            return [
+               ...new Set(
+                  state.analyzedData
+                     .map(({ actor }) => (actor || "").trim())
+                     .filter(
+                        (actor) =>
+                           actor &&
+                           actor !== "DIDASKALIA" &&
+                           !/^AKT(?:\s|$)/i.test(actor),
+                     ),
+               ),
+            ];
+         }
+
+         function parseActorGroups(value) {
+            return value.split(",").map((group) =>
+               group
+                  .split("+")
+                  .map((actor) => actor.trim())
+                  .filter(Boolean),
+            );
+         }
+
+         function areActorGroupsValid(groups, actors) {
+            return groups.flat().every((actor) => actors.includes(actor));
+         }
+
+         function getGroupedActorMeterCounts(groups) {
+            const groupedCounts = {};
+            const metricLines = buildMetricLines(state.analyzedData);
+
+            groups.forEach((group) => {
+               groupedCounts[group.join(" + ")] = {};
+            });
+
+            metricLines.forEach(({ actors, vowelsNumber }) => {
+               groups.forEach((group) => {
+                  // Jeden współdzielony wers liczymy dla grupy tylko raz,
+                  // nawet jeśli należą do niej obaj jego uczestnicy.
+                  if (!actors.some((actor) => group.includes(actor))) return;
+                  const groupName = group.join(" + ");
+                  groupedCounts[groupName][vowelsNumber] =
+                     (groupedCounts[groupName][vowelsNumber] || 0) + 1;
+               });
+            });
+
+            return groupedCounts;
+         }
+
+         function getActorMeterCounts(actors) {
+            const counts = Object.fromEntries(
+               actors.map((actor) => [actor, {}]),
+            );
+            const metricLines = buildMetricLines(state.analyzedData);
+
+            metricLines.forEach(({ actors: lineActors, vowelsNumber }) => {
+               actors.forEach((actor) => {
+                  if (!lineActors.includes(actor)) return;
+                  // Jeśli bohater uczestniczy w P_1/P_2, przypisujemy mu
+                  // metrum całego zrekonstruowanego wersu, nie fragmentu.
+                  counts[actor][vowelsNumber] =
+                     (counts[actor][vowelsNumber] || 0) + 1;
+               });
+            });
+
+            return counts;
+         }
+
+         function renderChart({ type, data, options, className }) {
+            const chartContainer = document.createElement("div");
+            chartContainer.className = className;
+
+            const canvas = document.createElement("canvas");
+            chartContainer.appendChild(canvas);
+            DOM.charts.appendChild(chartContainer);
+
+            const chart = new Chart(canvas, { type, data, options });
+            state.renderedCharts.push(chart);
+            return chart;
+         }
+
+         function getPieChartOptions(title) {
+            return {
+               responsive: true,
+               plugins: {
+                  legend: {
+                     position: "left",
+                     fullSize: true,
+                     title: {
+                        display: true,
+                        text: "Format wiersza",
+                        font: { size: 8, weight: 600 },
+                     },
+                  },
+                  title: {
+                     display: true,
+                     text: title,
+                  },
+               },
+            };
+         }
+
+         function getBarChartOptions() {
+            return {
+               responsive: true,
+               plugins: {
+                  legend: { position: "top" },
+                  title: {
+                     display: true,
+                     text: "Wykres słupkowy procentowego udziału formatu danego wiersza (wersu o danej liczbie sylab) we wszystkich linijkach danego bohatera",
+                  },
+               },
+               scales: {
+                  x: {
+                     title: {
+                        display: true,
+                        text: "Format wiersza (liczba sylab)",
+                     },
+                  },
+                  y: {
+                     title: {
+                        display: true,
+                        text: "Procentowy udział (%)",
+                     },
+                  },
+               },
+            };
+         }
+
+         function getMeterColor(meter) {
+            return APP_CONFIG.meterColors[meter] || getRandomColor();
+         }
+
+         function getRandomColor() {
+            return `hsl(${Math.random() * 360}, 70%, 70%)`;
+         }
+
+         function clearActorCharts() {
+            state.renderedCharts.forEach((chart) => chart.destroy());
+            state.renderedCharts = [];
+            DOM.charts.innerHTML = "";
+         }
+
+         function clearMetricDistributionChart() {
+            if (state.metricDistributionChart) {
+               state.metricDistributionChart.destroy();
+               state.metricDistributionChart = null;
+            }
+         }
+
+         function clearAllCharts() {
+            clearActorCharts();
+            clearMetricDistributionChart();
+         }
+
+         function loadTxtFile(file) {
+            if (!file) return;
+
+            if (!file.name.toLowerCase().endsWith(".txt")) {
+               alert("Wybierz plik TXT.");
+               return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (event) => {
+               DOM.inputText.value = event.target.result;
+               // automatyczna analiza po wczytaniu pliku
+               analyzeText();
+            };
+            reader.readAsText(file, "UTF-8");
+         }
+
+         function calculateAdditionalMetrics() {
+            if (!state.analyzedData.length) return;
+
+            resetMetrics(false);
+
+            // Dwie reprezentacje są celowo utrzymywane równolegle:
+            // 1) speechFragments — surowe fragmenty przypisane bohaterom;
+            //    na nich liczymy dynamikę wypowiedzi i udział mówców.
+            // 2) metricLines — rzeczywiste wersy metryczne; P_1 + P_2 są
+            //    scalane w jeden wers, także gdy rozdziela je didaskalium.
+            const speechFragments = state.analyzedData.filter(
+               ({ actor }) => actor !== "DIDASKALIA",
+            );
+            const metricLines = buildMetricLines(state.analyzedData);
+            const stageDirections = state.analyzedData.filter(
+               ({ actor }) => actor === "DIDASKALIA",
+            );
+
+            const metricLineCount = metricLines.length;
+            const stageDirectionCount = stageDirections.length;
+            const asideStageDirectionCount = stageDirections.filter(
+               ({ line }) => line.toLowerCase().includes("na stronie"),
+            ).length;
+
+            renderStageDirectionMetrics({
+               metricLineCount,
+               stageDirectionCount,
+               asideStageDirectionCount,
+            });
+
+            const dashboard = document.getElementById(
+               "metricsDashboardContent",
+            );
+            const emptyState = document.getElementById("metricsEmptyState");
+
+            if (metricLineCount === 0) {
+               if (dashboard) dashboard.style.display = "none";
+               if (emptyState) emptyState.style.display = "block";
+               DOM.additionalMetrics.style.display = "block";
+               return;
+            }
+
+            if (dashboard) dashboard.style.display = "grid";
+            if (emptyState) emptyState.style.display = "none";
+            DOM.additionalMetrics.style.display = "block";
+
+            const allSpeechText = metricLines.map(({ line }) => line).join(" ");
+            const words = getWords(allSpeechText);
+
+            renderPunctuationMetric(allSpeechText, metricLineCount);
+            renderIsosyllabicMetric(metricLines, metricLineCount);
+
+            // Tego wskaźnika NIE liczymy na scalonych wersach metrycznych.
+            // P_1/P_2 pozostają odrębnymi fragmentami przypisanymi bohaterom,
+            // żeby nie zniekształcać struktury dialogowej.
+            renderInteractionDensityMetric(speechFragments);
+
+            renderLineBreakingMetric(metricLines, metricLineCount);
+            renderSelfReferenceMetric(words);
+            renderMetricDistributionChart(metricLines, metricLineCount);
+
+            // Udział bohaterów nadal dotyczy ich rzeczywistych fragmentów mowy,
+            // a nie sztucznie scalonych wersów wieloosobowych.
+            renderSpeakerShareChart(state.analyzedData);
+         }
+
+         function resetMetrics(hide = true) {
+            Object.values(DOM.metrics).forEach((element) => {
+               element.innerHTML = "";
+            });
+
+            clearMetricDistributionChart();
+            clearSpeakerShareChart();
+
+            if (hide) DOM.additionalMetrics.style.display = "none";
+         }
+
+         function renderStageDirectionMetrics({
+            metricLineCount,
+            stageDirectionCount,
+            asideStageDirectionCount,
+         }) {
+            const metacommentaryDensity = percent(
+               stageDirectionCount,
+               metricLineCount,
+            );
+            const asideStageFunctionDensity = percent(
+               asideStageDirectionCount,
+               stageDirectionCount,
+            );
+            const asideDramaLengthDensity = percent(
+               asideStageDirectionCount,
+               metricLineCount,
+            );
+
+            DOM.metrics.metacommentaryDensity.innerHTML = metricHtml(
+               "Indeks gęstości metakomentarza (didaskaliów):",
+               `${metacommentaryDensity}%`,
+               "Wskaźnik = liczba wykrytych didaskaliów / liczba rzeczywistych wersów metrycznych dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
+            );
+
+            DOM.metrics.asideStageFunction.innerHTML = metricHtml(
+               "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”:",
+               `${asideStageFunctionDensity}%`,
+               "Wskaźnik = liczba didaskaliów zawierających tekst „na stronie” / liczba wszystkich wykrytych didaskaliów × 100.",
+            );
+
+            DOM.metrics.asideDramaLength.innerHTML = metricHtml(
+               "Wskaźnik gęstości apartu względem długości dramatu:",
+               `${asideDramaLengthDensity}%`,
+               "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba rzeczywistych wersów metrycznych dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
+            );
+         }
+
+         function renderPunctuationMetric(text, metricLineCount) {
+            const exclamationDensity = percent(
+               countRegexMatches(text, /!/g),
+               metricLineCount,
+            );
+            const questionDensity = percent(
+               countRegexMatches(text, /\?/g),
+               metricLineCount,
+            );
+
+            DOM.metrics.punctuationExpression.innerHTML = `
+             <div class="metric-card-top">
+               <div class="metric-card-label">Wektory ekspresji interpunkcyjnej</div>
+             </div>
+             <div class="metric-card-secondary">
+               <strong>Gęstość wykrzyknień:</strong> ${exclamationDensity}
+               ${infoTip("Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}<br>
+               <strong>Gęstość pytań:</strong> ${questionDensity}
+               ${infoTip("Gęstość pytań = liczba znaków „?” podzielona przez liczbę rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}
+             </div>`;
+         }
+
+         function renderIsosyllabicMetric(metricLines, metricLineCount) {
+            const segments = getIsosyllabicSegments(metricLines);
+            const averageSegmentLength = average(segments).toFixed(2);
+            const syllableChangeRate = (
+               ((segments.length - 1) / Math.max(metricLineCount - 1, 1)) *
+               100
+            ).toFixed(2);
+
+            DOM.metrics.isosyllabic.innerHTML = `
+             <div class="metric-card-top">
+              
+               <div class="metric-card-label">Średnia długość odcinka izosylabicznego</div>
+             </div>
+             <div class="metric-card-value">
+               ${averageSegmentLength}
+               ${infoTip("Odcinek izosylabiczny to ciąg kolejnych rzeczywistych wersów metrycznych mających tę samą liczbę sylab. Fragmenty P_1 + P_2 są wcześniej scalane, a ich liczby sylab sumowane. Średnia długość = suma długości takich odcinków / liczba odcinków. Wskaźnik zmienności = liczba zmian liczby sylab między sąsiednimi wersami / liczba możliwych przejść między wersami × 100.")}
+             </div>
+             <div class="metric-card-secondary">
+               Wskaźnik częstości zmiany liczby sylab: <strong>${syllableChangeRate}%</strong>
+             </div>`;
+         }
+
+         function getIsosyllabicSegments(metricLines) {
+            const segments = [];
+            let currentSegmentLength = 1;
+
+            for (let i = 1; i < metricLines.length; i++) {
+               if (
+                  metricLines[i].vowelsNumber ===
+                  metricLines[i - 1].vowelsNumber
+               ) {
+                  currentSegmentLength++;
+               } else {
+                  segments.push(currentSegmentLength);
+                  currentSegmentLength = 1;
+               }
+            }
+
+            segments.push(currentSegmentLength);
+            return segments;
+         }
+
+         function renderInteractionDensityMetric(speechLines) {
+            const speechBlocks = [];
+            let previousActor = null;
+            let currentBlockLength = 0;
+
+            speechLines.forEach(({ actor }) => {
+               if (actor !== previousActor) {
+                  if (currentBlockLength > 0)
+                     speechBlocks.push(currentBlockLength);
+                  previousActor = actor;
+                  currentBlockLength = 1;
+               } else {
+                  currentBlockLength++;
+               }
+            });
+
+            if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
+
+            DOM.metrics.interactionDensity.innerHTML = metricHtml(
+               "Średnia długość wypowiedzi jednej postaci (pokazuje gęstość interakcji):",
+               average(speechBlocks).toFixed(2),
+               "Wypowiedź jednej postaci jest liczona jako ciąg kolejnych linijek przypisanych temu samemu bohaterowi. Wskaźnik = liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów / liczba bloków wypowiedzi.",
+            );
+         }
+
+         function renderLineBreakingMetric(metricLines, metricLineCount) {
+            const brokenLines = metricLines.filter(
+               ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
+            ).length;
+
+            DOM.metrics.lineBreaking.innerHTML = metricHtml(
+               "Współczynnik łamania wiersza:",
+               `${percent(brokenLines, metricLineCount)}%`,
+               "Wskaźnik = liczba rzeczywistych wersów metrycznych, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Dla wersów współdzielonych lub przełamanych didaskaliami (P_1 + P_2) badane jest zakończenie całego scalonego wersu, czyli końcówka P_2.",
+            );
+         }
+
+         function renderSelfReferenceMetric(words) {
+            const selfReferenceCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePronouns.has(word),
+            ).length;
+            const selfReferenceRate =
+               words.length > 0
+                  ? ((selfReferenceCount / words.length) * 1000).toFixed(2)
+                  : "0.00";
+
+            DOM.metrics.selfReference.innerHTML = metricHtml(
+               "Wskaźnik referencji pierwszoosobowej:",
+               `${selfReferenceRate}‰`,
+               "Wskaźnik = liczba wystąpień form: ja, mnie, mi, mną, mój, mojego, mojemu, moim, moja, mojej, moją, moje, moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.",
+            );
+         }
+
+         function clearSpeakerShareChart() {
+            if (state.speakerShareChart) {
+               state.speakerShareChart.destroy();
+               state.speakerShareChart = null;
+            }
+         }
+
+         function renderSpeakerShareChart(data) {
+            const metricLines = buildMetricLines(data);
+            const speakerCounts = {};
+            let totalEligibleLines = 0;
+
+            metricLines.forEach(({ actors, actorContributions }) => {
+               const eligibleActors = actors.filter((actor) => {
+                  const normalizedActor = (actor || "").trim();
+                  return (
+                     normalizedActor &&
+                     normalizedActor !== "DIDASKALIA" &&
+                     !/^AKT(?:\s|$)/i.test(normalizedActor)
+                  );
+               });
+
+               if (!eligibleActors.length) return;
+               totalEligibleLines += 1;
+
+               if (eligibleActors.length === 1) {
+                  const actor = eligibleActors[0];
+                  speakerCounts[actor] = (speakerCounts[actor] || 0) + 1;
+                  return;
+               }
+
+               // Wspólny wers liczymy jako jeden wers w mianowniku.
+               // Jego udział rozdzielamy między bohaterów proporcjonalnie
+               // do liczby sylab wypowiedzianych przez każdego z nich.
+               const contributionTotal = eligibleActors.reduce(
+                  (sum, actor) => sum + (actorContributions?.[actor] || 0),
+                  0,
+               );
+
+               eligibleActors.forEach((actor) => {
+                  const share =
+                     contributionTotal > 0
+                        ? (actorContributions?.[actor] || 0) /
+                          contributionTotal
+                        : 1 / eligibleActors.length;
+                  speakerCounts[actor] = (speakerCounts[actor] || 0) + share;
+               });
+            });
+
+            const speakerDataRaw = Object.entries(speakerCounts)
+               .map(([actor, count]) => ({
+                  actor,
+                  percentage:
+                     totalEligibleLines > 0
+                        ? (count / totalEligibleLines) * 100
+                        : 0,
+               }));
+
+            const minorSpeakersPercentage = speakerDataRaw
+               .filter(({ percentage }) => percentage < 1)
+               .reduce((sum, { percentage }) => sum + percentage, 0);
+
+            const speakerData = speakerDataRaw
+               .filter(({ percentage }) => percentage >= 1)
+               .sort((a, b) => b.percentage - a.percentage);
+
+            if (minorSpeakersPercentage > 0) {
+               speakerData.push({
+                  actor: "Inni bohaterowie (poniżej 1%) – razem",
+                  percentage: minorSpeakersPercentage,
+               });
+            }
+
+            const canvas = document.getElementById("speakerShareChart");
+            const section = document.getElementById("speakerShareSection");
+            if (!canvas || !section) return;
+
+            clearSpeakerShareChart();
+
+            if (!speakerData.length) {
+               section.style.display = "none";
+               return;
+            }
+
+            section.style.display = "block";
+            canvas.parentElement.style.height = `${Math.max(
+               360,
+               speakerData.length * 32,
+            )}px`;
+
+            state.speakerShareChart = new Chart(canvas, {
+               type: "bar",
+               data: {
+                  labels: speakerData.map(({ actor }) => actor),
+                  datasets: [
+                     {
+                        data: speakerData.map(({ percentage }) => percentage),
+                        backgroundColor: "#2f69d9",
+                        borderColor: "#2f69d9",
+                        borderWidth: 1,
+                     },
+                  ],
+               },
+               options: {
+                  indexAxis: "y",
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                     legend: { display: false },
+                     tooltip: {
+                        callbacks: {
+                           label: (context) =>
+                              `${context.raw.toFixed(2)}%`,
+                        },
+                     },
+                  },
+                  scales: {
+                     x: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: {
+                           display: true,
+                           text: "Procent wszystkich wersów wypowiedzi (%)",
+                        },
+                     },
+                     y: {
+                        ticks: {
+                           autoSkip: false,
+                        },
+                     },
+                  },
+               },
+            });
+         }
+
+         function renderMetricDistributionChart(metricLines, metricLineCount) {
+            const meterCounts = metricLines.reduce(
+               (counts, { vowelsNumber }) => {
+                  counts[vowelsNumber] = (counts[vowelsNumber] || 0) + 1;
+                  return counts;
+               },
+               {},
+            );
+
+            const metricLabels = [];
+            const metricPercentages = [];
+            let otherPercentage = 0;
+
+            Object.keys(meterCounts)
+               .sort((a, b) => Number(a) - Number(b))
+               .forEach((meter) => {
+                  const percentage =
+                     (meterCounts[meter] / metricLineCount) * 100;
+                  if (percentage < 1) {
+                     otherPercentage += percentage;
+                  } else {
+                     metricLabels.push(`${meter}-zgłoskowiec`);
+                     metricPercentages.push(percentage);
+                  }
+               });
+
+            if (otherPercentage > 0) {
+               metricLabels.push("Inne (<1%)");
+               metricPercentages.push(otherPercentage);
+            }
+
+            const canvas = document.getElementById("metricDistributionChart");
+            if (!canvas) return;
+
+            state.metricDistributionChart = new Chart(canvas, {
+               type: "pie",
+               data: {
+                  labels: metricLabels,
+                  datasets: [
+                     {
+                        data: metricPercentages,
+                        backgroundColor: metricLabels.map((label) => {
+                           const meter = label.match(/^\d+/)?.[0];
+                           return getMeterColor(meter);
+                        }),
+                        borderColor: "#ffffff",
+                        borderWidth: 2,
+                     },
+                  ],
+               },
+               options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                     legend: {
+                        position: "left",
+                        fullSize: true,
+                        labels: {
+                           boxWidth: 18,
+                           padding: 10,
+                           color: "#56677d",
+                           font: { size: 11 },
+                        },
+                        title: {
+                           display: true,
+                           text: "Format wiersza",
+                           font: { size: 8, weight: 600 },
+                        },
+                     },
+                     title: { display: false },
+                     tooltip: {
+                        callbacks: {
+                           label: (context) =>
+                              `${context.label}: ${context.raw.toFixed(2)}%`,
+                        },
+                     },
+                  },
+               },
+            });
+         }
+
+         function metricHtml(label, value, tip) {
+            return `
+             <div class="metric-card-top">
+               <div class="metric-card-label">${label.replace(/:$/, "")}</div>
+             </div>
+             <div class="metric-card-value">
+               ${value} ${infoTip(tip)}
+             </div>`;
+         }
+
+         function infoTip(content) {
+            return `
+             <span class="infotip">
+               <img class="metric-info-icon" src="https://img.icons8.com/material-outlined/48/808080/info.png" alt="Informacja">
+               <span class="infotip-content">${content}</span>
+             </span>`;
+         }
+
+         function countRegexMatches(text, regex) {
+            return (text.match(regex) || []).length;
+         }
+
+         function getWords(text) {
+            return text
+               .toLowerCase()
+               .replace(/[^\p{L}\s]/gu, " ")
+               .split(/\s+/)
+               .filter(Boolean);
+         }
+
+         function percent(numerator, denominator) {
+            return denominator > 0
+               ? ((numerator / denominator) * 100).toFixed(2)
+               : "0.00";
+         }
+
+         function average(numbers) {
+            return numbers.length ? sumValues(numbers) / numbers.length : 0;
+         }
+
+         function sumValues(values) {
+            return Object.values(values).reduce((sum, value) => sum + value, 0);
+         }
+
+         function scrollToBottom() {
+            window.scrollTo({
+               top: document.body.scrollHeight,
+               behavior: "smooth",
+            });
+         }
+
+         function scrollToCharts() {
+            DOM.charts.scrollIntoView({ behavior: "smooth" });
+         }
+         function filterLibraryCards() {
+            const query = DOM.librarySearch.value.trim().toLowerCase();
+            let visibleCardsCount = 0;
+
+            document.querySelectorAll(".library-card").forEach((card) => {
+               const author =
+                  card
+                     .querySelector(".library-author")
+                     ?.textContent.toLowerCase() || "";
+               const title =
+                  card
+                     .querySelector(".library-title")
+                     ?.textContent.toLowerCase() || "";
+               const isVisible =
+                  author.includes(query) || title.includes(query);
+
+               card.style.display = isVisible ? "" : "none";
+               if (isVisible) visibleCardsCount++;
+            });
+
+            DOM.libraryNoResults.style.display =
+               visibleCardsCount === 0 ? "block" : "none";
+         }
+
+
+
+         /* ===== Analiza porównawcza ===== */
+         const COMPARISON_METRICS = {
+            isosyllabicAverage: {
+               label: "Średnia długość odcinka izosylabicznego",
+               unit: "",
+            },
+            interactionAverage: {
+               label: "Średnia długość wypowiedzi jednej postaci",
+               unit: "",
+            },
+            lineBreaking: {
+               label: "Współczynnik łamania wiersza",
+               unit: "%",
+            },
+            exclamationDensity: {
+               label: "Gęstość wykrzyknień",
+               unit: "",
+            },
+            questionDensity: {
+               label: "Gęstość pytań",
+               unit: "",
+            },
+            selfReference: {
+               label: "Wskaźnik referencji pierwszoosobowej",
+               unit: "‰",
+            },
+            metacommentaryDensity: {
+               label: "Indeks gęstości metakomentarza (didaskaliów)",
+               unit: "%",
+            },
+            asideStageFunction: {
+               label: "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”",
+               unit: "%",
+            },
+         };
+
+         const COMPARISON_SLOWACKI_DEFAULTS = [
+            {
+               path: "assets/biblioteka/slowacki-mindowe.txt",
+               label: "Mindowe (1829)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-maria-stuart.txt",
+               label: "Maria Stuart (1830)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-kordian.txt",
+               label: "Kordian (1833)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-balladyna.txt",
+               label: "Balladyna (1834)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-lilla-weneda.txt",
+               label: "Lilla Weneda (1839)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-mazepa.txt",
+               label: "Mazepa (1839)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-fantazy.txt",
+               label: "Fantazy (?)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-ksiadz-marek.txt",
+               label: "Ksiądz Marek (1843)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-sen-srebrny-salomei.txt",
+               label: "Sen srebrny Salomei (1843)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-ksiaze-niezlomny.txt",
+               label: "Książę niezłomny (1843)",
+            },
+            {
+               path: "assets/biblioteka/slowacki-samuel-zborowski.txt",
+               label: "Samuel Zborowski (ok. 1844/1845)",
+            },
+         ];
+
+         const comparisonState = {
+            catalog: [],
+            selected: [],
+            chart: null,
+            libraryTextCache: new Map(),
+            uploadCounter: 0,
+            draggedId: null,
+         };
+
+         const comparisonValueLabelsPlugin = {
+            id: "comparisonValueLabels",
+            afterDatasetsDraw(chart) {
+               const { ctx, chartArea } = chart;
+               const dataset = chart.data.datasets[0];
+               const meta = chart.getDatasetMeta(0);
+               const unit = chart.options.plugins.comparisonValueLabels?.unit || "";
+
+               ctx.save();
+               ctx.font = "700 13px Arial, sans-serif";
+               ctx.textAlign = "right";
+               ctx.textBaseline = "middle";
+
+               meta.data.forEach((bar, index) => {
+                  const rawValue = Number(dataset.data[index]) || 0;
+                  const valueText = `${formatComparisonValue(rawValue)}${unit}`;
+                  const width = ctx.measureText(valueText).width;
+                  let x = bar.x - 9;
+                  let fill = "#ffffff";
+
+                  // Przy bardzo krótkim słupku etykietę przenosimy za słupek,
+                  // aby nie wypadała poza obszar rysowania.
+                  if (bar.x - bar.base < width + 22) {
+                     x = Math.min(bar.x + width + 9, chartArea.right - 4);
+                     fill = "#163f8f";
+                  }
+
+                  ctx.fillStyle = fill;
+                  ctx.fillText(valueText, x, bar.y);
+               });
+
+               ctx.restore();
+            },
+         };
+
+         function initComparisonAnalysis() {
+            const section = document.getElementById("comparison-analysis");
+            if (!section) return;
+
+            comparisonState.catalog = getComparisonLibraryCatalog();
+            renderComparisonLibraryList();
+            selectDefaultSlowackiComparisonSet();
+            bindComparisonEvents();
+            renderComparisonOrderList();
+            renderComparisonUploadedSummary();
+         }
+
+         function getComparisonLibraryCatalog() {
+            return [...document.querySelectorAll(".library-card")]
+               .map((card) => {
+                  const button = card.querySelector(".library-select-button");
+                  const path = button?.dataset.textPath;
+                  if (!path) return null;
+
+                  const author =
+                     card.querySelector(".library-author")?.textContent.trim() || "";
+                  const title =
+                     card.querySelector(".library-title")?.textContent.trim() || path;
+                  const defaultItem = COMPARISON_SLOWACKI_DEFAULTS.find(
+                     (item) => item.path === path,
+                  );
+
+                  return {
+                     id: `library:${path}`,
+                     source: "library",
+                     path,
+                     author,
+                     title,
+                     label: defaultItem?.label || title,
+                  };
+               })
+               .filter(Boolean);
+         }
+
+         function renderComparisonLibraryList() {
+            const container = document.getElementById("comparisonLibraryList");
+            if (!container) return;
+
+            container.innerHTML = comparisonState.catalog
+               .map(
+                  (item) => `
+                     <label class="comparison-library-option" data-comparison-search="${escapeHtml(`${item.author} ${item.title}`.toLowerCase())}">
+                        <input
+                           type="checkbox"
+                           class="comparison-library-checkbox"
+                           data-comparison-id="${escapeHtml(item.id)}"
+                        />
+                        <span class="comparison-library-text">
+                           <span class="comparison-library-title">${escapeHtml(item.title)}</span>
+                           <span class="comparison-library-author">${escapeHtml(item.author)}</span>
+                        </span>
+                     </label>`,
+               )
+               .join("");
+         }
+
+         function bindComparisonEvents() {
+            const libraryList = document.getElementById("comparisonLibraryList");
+            const librarySearch = document.getElementById("comparisonLibrarySearch");
+            const fileInput = document.getElementById("comparisonFileInput");
+            const uploadZone = document.getElementById("comparisonUploadZone");
+            const orderList = document.getElementById("comparisonOrderList");
+            const selectSlowackiButton = document.getElementById(
+               "comparisonSelectSlowacki",
+            );
+            const clearSelectionButton = document.getElementById(
+               "comparisonClearSelection",
+            );
+            const generateButton = document.getElementById(
+               "comparisonGenerateButton",
+            );
+
+            libraryList?.addEventListener("change", (event) => {
+               const checkbox = event.target.closest(".comparison-library-checkbox");
+               if (!checkbox) return;
+               toggleComparisonLibraryItem(checkbox.dataset.comparisonId, checkbox.checked);
+            });
+
+            librarySearch?.addEventListener("input", filterComparisonLibrary);
+            fileInput?.addEventListener("change", (event) => {
+               addComparisonUploadedFiles(event.target.files);
+               event.target.value = "";
+            });
+
+            uploadZone?.addEventListener("dragover", (event) => {
+               event.preventDefault();
+               uploadZone.classList.add("drag-over");
+            });
+            uploadZone?.addEventListener("dragleave", (event) => {
+               event.preventDefault();
+               uploadZone.classList.remove("drag-over");
+            });
+            uploadZone?.addEventListener("drop", (event) => {
+               event.preventDefault();
+               uploadZone.classList.remove("drag-over");
+               addComparisonUploadedFiles(event.dataTransfer.files);
+            });
+
+            selectSlowackiButton?.addEventListener("click", () => {
+               selectDefaultSlowackiComparisonSet();
+               renderComparisonOrderList();
+            });
+
+            clearSelectionButton?.addEventListener("click", () => {
+               comparisonState.selected = [];
+               syncComparisonLibraryCheckboxes();
+               renderComparisonOrderList();
+               renderComparisonUploadedSummary();
+               clearComparisonChart();
+               setComparisonStatus("");
+            });
+
+            generateButton?.addEventListener("click", generateComparisonChart);
+
+            orderList?.addEventListener("click", (event) => {
+               const button = event.target.closest("button[data-comparison-action]");
+               if (!button) return;
+               const item = button.closest(".comparison-order-item");
+               if (!item) return;
+
+               const id = item.dataset.comparisonId;
+               const action = button.dataset.comparisonAction;
+               if (action === "up") moveComparisonItem(id, -1);
+               if (action === "down") moveComparisonItem(id, 1);
+               if (action === "remove") removeComparisonItem(id);
+            });
+
+            orderList?.addEventListener("input", (event) => {
+               const input = event.target.closest(".comparison-name-input");
+               if (!input) return;
+               const item = comparisonState.selected.find(
+                  (entry) => entry.id === input.dataset.comparisonId,
+               );
+               if (item) item.label = input.value;
+            });
+
+            orderList?.addEventListener("dragstart", (event) => {
+               const item = event.target.closest(".comparison-order-item");
+               if (!item) return;
+               comparisonState.draggedId = item.dataset.comparisonId;
+               item.classList.add("dragging");
+               event.dataTransfer.effectAllowed = "move";
+            });
+
+            orderList?.addEventListener("dragend", (event) => {
+               const item = event.target.closest(".comparison-order-item");
+               item?.classList.remove("dragging");
+               comparisonState.draggedId = null;
+            });
+
+            orderList?.addEventListener("dragover", (event) => {
+               event.preventDefault();
+               if (event.dataTransfer) event.dataTransfer.dropEffect = "move";
+            });
+
+            orderList?.addEventListener("drop", (event) => {
+               event.preventDefault();
+               const draggedId = comparisonState.draggedId;
+               const target = event.target.closest(".comparison-order-item");
+               if (!draggedId || !target || target.dataset.comparisonId === draggedId)
+                  return;
+
+               const fromIndex = comparisonState.selected.findIndex(
+                  (entry) => entry.id === draggedId,
+               );
+               const targetIndex = comparisonState.selected.findIndex(
+                  (entry) => entry.id === target.dataset.comparisonId,
+               );
+               if (fromIndex < 0 || targetIndex < 0) return;
+
+               const rect = target.getBoundingClientRect();
+               const insertAfter = event.clientY > rect.top + rect.height / 2;
+               const nextIndex = targetIndex + (insertAfter ? 1 : 0);
+               const [moved] = comparisonState.selected.splice(fromIndex, 1);
+               let adjustedIndex = nextIndex;
+               if (fromIndex < nextIndex) adjustedIndex -= 1;
+               comparisonState.selected.splice(adjustedIndex, 0, moved);
+               renderComparisonOrderList();
+            });
+         }
+
+         function selectDefaultSlowackiComparisonSet() {
+            const existingUploads = comparisonState.selected.filter(
+               (item) => item.source === "upload",
+            );
+            const defaults = COMPARISON_SLOWACKI_DEFAULTS.map((defaultItem) => {
+               const catalogItem = comparisonState.catalog.find(
+                  (item) => item.path === defaultItem.path,
+               );
+               if (!catalogItem) return null;
+               return { ...catalogItem, label: defaultItem.label };
+            }).filter(Boolean);
+
+            comparisonState.selected = [...defaults, ...existingUploads];
+            syncComparisonLibraryCheckboxes();
+         }
+
+         function toggleComparisonLibraryItem(id, checked) {
+            const catalogItem = comparisonState.catalog.find((item) => item.id === id);
+            if (!catalogItem) return;
+
+            const selectedIndex = comparisonState.selected.findIndex(
+               (item) => item.id === id,
+            );
+
+            if (checked && selectedIndex === -1) {
+               comparisonState.selected.push({ ...catalogItem });
+            } else if (!checked && selectedIndex !== -1) {
+               comparisonState.selected.splice(selectedIndex, 1);
+            }
+
+            renderComparisonOrderList();
+         }
+
+         function syncComparisonLibraryCheckboxes() {
+            const selectedIds = new Set(
+               comparisonState.selected
+                  .filter((item) => item.source === "library")
+                  .map((item) => item.id),
+            );
+
+            document
+               .querySelectorAll(".comparison-library-checkbox")
+               .forEach((checkbox) => {
+                  checkbox.checked = selectedIds.has(checkbox.dataset.comparisonId);
+               });
+         }
+
+         function filterComparisonLibrary() {
+            const query = document
+               .getElementById("comparisonLibrarySearch")
+               ?.value.trim()
+               .toLowerCase();
+
+            document
+               .querySelectorAll(".comparison-library-option")
+               .forEach((option) => {
+                  option.style.display =
+                     !query || option.dataset.comparisonSearch.includes(query)
+                        ? "grid"
+                        : "none";
+               });
+         }
+
+         async function addComparisonUploadedFiles(fileList) {
+            const files = [...(fileList || [])].filter((file) =>
+               file.name.toLowerCase().endsWith(".txt"),
+            );
+
+            if (!files.length) {
+               setComparisonStatus("Wybierz co najmniej jeden plik .txt.", true);
+               return;
+            }
+
+            setComparisonStatus("Wczytywanie plików...");
+
+            for (const file of files) {
+               try {
+                  const text = await file.text();
+                  const id = `upload:${Date.now()}:${comparisonState.uploadCounter++}:${file.name}`;
+                  comparisonState.selected.push({
+                     id,
+                     source: "upload",
+                     fileName: file.name,
+                     title: file.name.replace(/\.txt$/i, ""),
+                     label: file.name.replace(/\.txt$/i, ""),
+                     text,
+                  });
+               } catch (error) {
+                  console.error(error);
+               }
+            }
+
+            renderComparisonOrderList();
+            renderComparisonUploadedSummary();
+            setComparisonStatus("");
+         }
+
+         function renderComparisonUploadedSummary() {
+            const element = document.getElementById("comparisonUploadedSummary");
+            if (!element) return;
+
+            const uploads = comparisonState.selected.filter(
+               (item) => item.source === "upload",
+            );
+            element.textContent = uploads.length
+               ? `Dodane pliki własne: ${uploads.length}. Możesz zmienić ich nazwy i kolejność poniżej.`
+               : "Nie dodano jeszcze własnych plików.";
+         }
+
+         function renderComparisonOrderList() {
+            const list = document.getElementById("comparisonOrderList");
+            if (!list) return;
+
+            if (!comparisonState.selected.length) {
+               list.innerHTML = `
+                  <li class="comparison-empty-order">
+                     Nie wybrano żadnego tekstu. Zaznacz utwory z biblioteki lub dodaj pliki .txt.
+                  </li>`;
+               return;
+            }
+
+            list.innerHTML = comparisonState.selected
+               .map(
+                  (item, index) => `
+                     <li
+                        class="comparison-order-item"
+                        data-comparison-id="${escapeHtml(item.id)}"
+                     >
+                        <span class="comparison-drag-handle" draggable="true" title="Przeciągnij, aby zmienić kolejność">⋮⋮</span>
+                        <input
+                           class="comparison-name-input"
+                           data-comparison-id="${escapeHtml(item.id)}"
+                           value="${escapeHtml(item.label)}"
+                           aria-label="Nazwa pozycji ${index + 1} na wykresie"
+                        />
+                        <span class="comparison-item-actions">
+                           <button
+                              type="button"
+                              data-comparison-action="up"
+                              title="Przesuń wyżej"
+                              aria-label="Przesuń wyżej"
+                           >↑</button>
+                           <button
+                              type="button"
+                              data-comparison-action="down"
+                              title="Przesuń niżej"
+                              aria-label="Przesuń niżej"
+                           >↓</button>
+                           <button
+                              type="button"
+                              data-comparison-action="remove"
+                              title="Usuń z porównania"
+                              aria-label="Usuń z porównania"
+                           >×</button>
+                        </span>
+                     </li>`,
+               )
+               .join("");
+         }
+
+         function moveComparisonItem(id, direction) {
+            const index = comparisonState.selected.findIndex((item) => item.id === id);
+            const nextIndex = index + direction;
+            if (
+               index < 0 ||
+               nextIndex < 0 ||
+               nextIndex >= comparisonState.selected.length
+            )
+               return;
+
+            const [item] = comparisonState.selected.splice(index, 1);
+            comparisonState.selected.splice(nextIndex, 0, item);
+            renderComparisonOrderList();
+         }
+
+         function removeComparisonItem(id) {
+            const index = comparisonState.selected.findIndex((item) => item.id === id);
+            if (index < 0) return;
+            comparisonState.selected.splice(index, 1);
+            syncComparisonLibraryCheckboxes();
+            renderComparisonOrderList();
+            renderComparisonUploadedSummary();
+         }
+
+         async function generateComparisonChart() {
+            if (!comparisonState.selected.length) {
+               setComparisonStatus(
+                  "Wybierz co najmniej jeden tekst do porównania.",
+                  true,
+               );
+               return;
+            }
+
+            const metricKey = document.getElementById("comparisonMetricSelect")?.value;
+            const metricConfig = COMPARISON_METRICS[metricKey];
+            if (!metricConfig) return;
+
+            const button = document.getElementById("comparisonGenerateButton");
+            if (button) button.disabled = true;
+            setComparisonStatus("Obliczanie wartości dla wybranych tekstów...");
+
+            try {
+               const results = [];
+               for (const item of comparisonState.selected) {
+                  const text = await getComparisonItemText(item);
+                  results.push({
+                     label: item.label.trim() || item.title || "Bez tytułu",
+                     value: calculateComparisonMetric(text, metricKey),
+                  });
+               }
+
+               renderComparisonChart(results, metricKey);
+               setComparisonStatus(`Porównano ${results.length} tekstów.`);
+            } catch (error) {
+               console.error(error);
+               setComparisonStatus(
+                  "Nie udało się wczytać jednego z tekstów bibliotecznych. Sprawdź ścieżki do plików w assets/biblioteka i uruchom stronę przez serwer HTTP/HTTPS.",
+                  true,
+               );
+            } finally {
+               if (button) button.disabled = false;
+            }
+         }
+
+         async function getComparisonItemText(item) {
+            if (item.source === "upload") return item.text || "";
+
+            if (comparisonState.libraryTextCache.has(item.path)) {
+               return comparisonState.libraryTextCache.get(item.path);
+            }
+
+            const response = await fetch(item.path);
+            if (!response.ok) {
+               throw new Error(`Nie udało się wczytać pliku: ${item.path}`);
+            }
+            const text = await response.text();
+            comparisonState.libraryTextCache.set(item.path, text);
+            return text;
+         }
+
+         function calculateComparisonMetric(text, metricKey) {
+            const data = parseDramaText(text);
+            const speechFragments = data.filter(({ actor }) => actor !== "DIDASKALIA");
+            const metricLines = buildMetricLines(data);
+            const stageDirections = data.filter(({ actor }) => actor === "DIDASKALIA");
+            const metricLineCount = metricLines.length;
+            const allSpeechText = metricLines.map(({ line }) => line).join(" ");
+            const words = getWords(allSpeechText);
+            const asideStageDirectionCount = stageDirections.filter(({ line }) =>
+               line.toLowerCase().includes("na stronie"),
+            ).length;
+
+            switch (metricKey) {
+               case "isosyllabicAverage":
+                  return metricLineCount
+                     ? average(getIsosyllabicSegments(metricLines))
+                     : 0;
+
+               case "interactionAverage": {
+                  const speechBlocks = [];
+                  let previousActor = null;
+                  let currentBlockLength = 0;
+
+                  speechFragments.forEach(({ actor }) => {
+                     if (actor !== previousActor) {
+                        if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
+                        previousActor = actor;
+                        currentBlockLength = 1;
+                     } else {
+                        currentBlockLength++;
+                     }
+                  });
+                  if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
+                  return average(speechBlocks);
+               }
+
+               case "lineBreaking": {
+                  const brokenLines = metricLines.filter(
+                     ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
+                  ).length;
+                  return metricLineCount ? (brokenLines / metricLineCount) * 100 : 0;
+               }
+
+               case "exclamationDensity":
+                  return metricLineCount
+                     ? (countRegexMatches(allSpeechText, /!/g) / metricLineCount) * 100
+                     : 0;
+
+               case "questionDensity":
+                  return metricLineCount
+                     ? (countRegexMatches(allSpeechText, /\?/g) / metricLineCount) * 100
+                     : 0;
+
+               case "selfReference": {
+                  const selfReferenceCount = words.filter((word) =>
+                     APP_CONFIG.selfReferencePronouns.has(word),
+                  ).length;
+                  return words.length ? (selfReferenceCount / words.length) * 1000 : 0;
+               }
+
+               case "metacommentaryDensity":
+                  return metricLineCount
+                     ? (stageDirections.length / metricLineCount) * 100
+                     : 0;
+
+               case "asideStageFunction":
+                  return stageDirections.length
+                     ? (asideStageDirectionCount / stageDirections.length) * 100
+                     : 0;
+
+               default:
+                  return 0;
+            }
+         }
+
+         function renderComparisonChart(results, metricKey) {
+            const canvas = document.getElementById("comparisonChart");
+            const resultsSection = document.getElementById("comparisonResults");
+            const chartWrap = document.getElementById("comparisonChartWrap");
+            const title = document.getElementById("comparisonChartTitle");
+            const subtitle = document.getElementById("comparisonChartSubtitle");
+            const metricConfig = COMPARISON_METRICS[metricKey];
+            if (!canvas || !resultsSection || !metricConfig) return;
+
+            clearComparisonChart();
+            resultsSection.hidden = false;
+            if (title) title.textContent = metricConfig.label;
+            if (subtitle) {
+               subtitle.textContent =
+                  "Kolejność słupków odpowiada kolejności ustawionej na liście powyżej.";
+            }
+
+            if (chartWrap) {
+               chartWrap.style.height = `${Math.max(430, results.length * 52 + 115)}px`;
+            }
+
+            const rawMax = Math.max(...results.map(({ value }) => value), 0);
+            const suggestedMax = rawMax > 0 ? rawMax * 1.13 : 1;
+
+            comparisonState.chart = new Chart(canvas, {
+               type: "bar",
+               plugins: [comparisonValueLabelsPlugin],
+               data: {
+                  labels: results.map(({ label }) => label),
+                  datasets: [
+                     {
+                        data: results.map(({ value }) => value),
+                        backgroundColor: "#0878d1",
+                        borderColor: "#0878d1",
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderSkipped: false,
+                        barThickness: 28,
+                     },
+                  ],
+               },
+               options: {
+                  indexAxis: "y",
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  layout: {
+                     padding: { right: 18, top: 6, bottom: 4 },
+                  },
+                  plugins: {
+                     legend: { display: false },
+                     title: { display: false },
+                     comparisonValueLabels: {
+                        unit: metricConfig.unit,
+                     },
+                     tooltip: {
+                        callbacks: {
+                           label: (context) =>
+                              `${formatComparisonValue(Number(context.raw) || 0)}${metricConfig.unit}`,
+                        },
+                     },
+                  },
+                  scales: {
+                     x: {
+                        beginAtZero: true,
+                        suggestedMax,
+                        grid: {
+                           color: "rgba(16, 43, 74, 0.16)",
+                        },
+                        border: {
+                           color: "#111111",
+                           width: 1.4,
+                        },
+                        ticks: {
+                           color: "#111111",
+                           callback: (value) =>
+                              String(value).replace(".", ","),
+                        },
+                        title: {
+                           display: true,
+                           text: metricConfig.label,
+                           color: "#111111",
+                           font: { size: 15, weight: "500" },
+                           padding: { top: 12 },
+                        },
+                     },
+                     y: {
+                        grid: { display: false },
+                        border: {
+                           color: "#111111",
+                           width: 1.4,
+                        },
+                        ticks: {
+                           autoSkip: false,
+                           color: "#111111",
+                           font: { size: 13, weight: "500" },
+                           padding: 10,
+                        },
+                     },
+                  },
+               },
+            });
+
+            resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
+         }
+
+         function clearComparisonChart() {
+            if (comparisonState.chart) {
+               comparisonState.chart.destroy();
+               comparisonState.chart = null;
+            }
+            const resultsSection = document.getElementById("comparisonResults");
+            if (resultsSection) resultsSection.hidden = true;
+         }
+
+         function setComparisonStatus(message, isError = false) {
+            const element = document.getElementById("comparisonStatus");
+            if (!element) return;
+            element.textContent = message;
+            element.classList.toggle("error", Boolean(isError));
+         }
+
+         function formatComparisonValue(value) {
+            return new Intl.NumberFormat("pl-PL", {
+               minimumFractionDigits: 2,
+               maximumFractionDigits: 2,
+            }).format(value);
+         }
+
+         function escapeHtml(value) {
+            return String(value)
+               .replace(/&/g, "&amp;")
+               .replace(/</g, "&lt;")
+               .replace(/>/g, "&gt;")
+               .replace(/\"/g, "&quot;")
+               .replace(/'/g, "&#039;");
+         }
+
+         init();
+         initComparisonAnalysis();
+      </script>
+   </body>
+</html>
