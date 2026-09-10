@@ -467,7 +467,7 @@
             justify-content: center;
          }
          .chart img {
-            width: 550px;
+            width: 700px;
          }
          .slowacki {
             display: flex;
@@ -1666,6 +1666,337 @@
                justify-content: flex-end;
             }
          }
+
+
+         /* ===== Wybór bohaterów do wykresów ===== */
+         .actor-selection-dialog {
+            width: min(760px, calc(100vw - 28px));
+            max-height: min(86vh, 820px);
+            padding: 0;
+            border: 0;
+            border-radius: 20px;
+            color: #10233f;
+            background: #fff;
+            box-shadow: 0 28px 80px rgba(9, 42, 78, 0.28);
+         }
+
+         .actor-selection-dialog::backdrop {
+            background: rgba(6, 31, 55, 0.48);
+            backdrop-filter: blur(3px);
+         }
+
+         .actor-picker {
+            display: flex;
+            flex-direction: column;
+            max-height: min(86vh, 820px);
+         }
+
+         .actor-picker-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 24px 26px 18px;
+            border-bottom: 1px solid #e5edf8;
+         }
+
+         .actor-picker-kicker {
+            margin: 0 0 5px;
+            color: #0b72d9;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+         }
+
+         .actor-picker-header h2 {
+            margin: 0 0 7px;
+            font-size: 23px;
+            line-height: 1.2;
+         }
+
+         .actor-picker-header p:not(.actor-picker-kicker) {
+            margin: 0;
+            color: #65758b;
+            font-size: 13px;
+            line-height: 1.5;
+         }
+
+         .actor-picker-close {
+            display: grid;
+            place-items: center;
+            flex: 0 0 38px;
+            width: 38px;
+            height: 38px;
+            padding: 0;
+            border: 1px solid #d6e3f1;
+            border-radius: 50%;
+            color: #375674;
+            background: #f7faff;
+            font-size: 25px;
+            font-weight: 400;
+            line-height: 1;
+         }
+
+         .actor-picker-close:hover {
+            border-color: #bfd3e8;
+            color: #163f8f;
+            background: #edf5ff;
+         }
+
+         .actor-picker-body {
+            overflow-y: auto;
+            padding: 20px 26px 22px;
+         }
+
+         .actor-picker-section-label {
+            display: block;
+            margin-bottom: 7px;
+            color: #344c68;
+            font-size: 12px;
+            font-weight: 750;
+         }
+
+         .actor-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            max-height: 235px;
+            margin-top: 0;
+            padding: 13px;
+            overflow-y: auto;
+            border: 1px solid #e1ebf6;
+            border-radius: 12px;
+            background: #f8fbff;
+         }
+
+         .actor-chip {
+            min-height: 34px;
+            padding: 7px 11px;
+            border: 1px solid #c8daec;
+            border-radius: 999px;
+            color: #23496f;
+            background: #fff;
+            font-size: 12px;
+            font-weight: 700;
+            transition: 0.15s ease;
+         }
+
+         .actor-chip:hover {
+            border-color: #82b2e4;
+            color: #0b5fae;
+            background: #eef6ff;
+         }
+
+         .actor-chip.is-selected {
+            border-color: #0b72d9;
+            color: #fff;
+            background: #0b72d9;
+            box-shadow: 0 5px 14px rgba(11, 114, 217, 0.2);
+         }
+
+         .actor-picker-workspace {
+            margin-top: 18px;
+            padding: 15px;
+            border: 1px solid #dce7f8;
+            border-radius: 12px;
+            background: #fbfdff;
+         }
+
+         .actor-picker-selection-preview {
+            min-height: 37px;
+            padding: 9px 11px;
+            border: 1px dashed #bdd3ea;
+            border-radius: 9px;
+            color: #45617e;
+            background: #fff;
+            font-size: 12px;
+            line-height: 1.45;
+         }
+
+         .actor-picker-selection-preview.has-selection {
+            border-style: solid;
+            color: #163f8f;
+            background: #f1f7ff;
+            font-weight: 700;
+         }
+
+         .actor-picker-inline-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 10px;
+         }
+
+         .actor-picker-inline-actions button {
+            padding: 7px 12px;
+            border-width: 1px;
+            font-size: 12px;
+         }
+
+         .actor-picker-secondary {
+            border-color: #bfd2e7;
+            color: #163f8f;
+            background: #f4f8fd;
+         }
+
+         .actor-picker-secondary:hover {
+            border-color: #a9c5e1;
+            color: #163f8f;
+            background: #eaf2fb;
+         }
+
+         .actor-picker-inline-actions button:disabled,
+         .actor-picker-footer button:disabled {
+            border-color: #d9e1ea;
+            color: #98a5b4;
+            background: #eef2f6;
+            cursor: not-allowed;
+            box-shadow: none;
+         }
+
+         .actor-picker-groups-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin: 18px 0 8px;
+         }
+
+         .actor-picker-groups-header strong {
+            color: #163f8f;
+            font-size: 13px;
+         }
+
+         .actor-picker-count {
+            color: #73839a;
+            font-size: 11px;
+         }
+
+         .actor-group-list {
+            display: grid;
+            gap: 7px;
+         }
+
+         .actor-group-item {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 10px;
+            align-items: center;
+            padding: 9px 10px 9px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 10px;
+            background: #fff;
+         }
+
+         .actor-group-name {
+            min-width: 0;
+            overflow-wrap: anywhere;
+            color: #183b60;
+            font-size: 12px;
+            font-weight: 750;
+         }
+
+         .actor-group-remove {
+            width: 29px;
+            height: 29px;
+            padding: 0;
+            border: 1px solid #d4e0ed;
+            border-radius: 50%;
+            color: #64788e;
+            background: #fff;
+            font-size: 17px;
+         }
+
+         .actor-group-remove:hover {
+            border-color: #efc3bf;
+            color: #a9342c;
+            background: #fff4f2;
+         }
+
+         .actor-picker-empty-groups {
+            padding: 13px;
+            border: 1px dashed #cbdced;
+            border-radius: 9px;
+            color: #718399;
+            text-align: center;
+            background: #fff;
+            font-size: 12px;
+         }
+
+         .actor-picker-result-preview {
+            margin-top: 10px;
+            padding: 10px 12px;
+            border-radius: 9px;
+            color: #65758b;
+            background: #edf5ff;
+            font-size: 11px;
+            line-height: 1.5;
+         }
+
+         .actor-picker-result-preview strong {
+            color: #163f8f;
+         }
+
+         .actor-picker-status {
+            min-height: 18px;
+            margin: 10px 0 0;
+            color: #53708d;
+            font-size: 11px;
+         }
+
+         .actor-picker-status.error {
+            color: #b33128;
+         }
+
+         .actor-picker-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 16px 26px 20px;
+            border-top: 1px solid #e5edf8;
+            background: #fbfdff;
+         }
+
+         .actor-picker-footer button {
+            min-height: 40px;
+         }
+
+         @media (max-width: 600px) {
+            .actor-selection-dialog {
+               width: calc(100vw - 16px);
+               max-height: 92vh;
+               border-radius: 16px;
+            }
+
+            .actor-picker {
+               max-height: 92vh;
+            }
+
+            .actor-picker-header,
+            .actor-picker-body,
+            .actor-picker-footer {
+               padding-left: 16px;
+               padding-right: 16px;
+            }
+
+            .actor-picker-header h2 {
+               font-size: 20px;
+            }
+
+            .actor-chips {
+               max-height: 220px;
+            }
+
+            .actor-picker-footer {
+               flex-direction: column-reverse;
+            }
+
+            .actor-picker-footer button {
+               width: 100%;
+            }
+         }
+
       </style>
    </head>
    <body>
@@ -2598,7 +2929,7 @@
                      id="comparisonUploadedSummary"
                      class="comparison-uploaded-summary"
                   >
-                     Nie dodano jeszcze własnych plików.
+                     Nie dodano jeszcze żadnych plików.
                   </div>
                </div>
             </div>
@@ -2663,6 +2994,109 @@
             </div>
          </section>
       </main>
+
+      <dialog
+         id="actorSelectionDialog"
+         class="actor-selection-dialog"
+         aria-labelledby="actorPickerTitle"
+         aria-describedby="actorPickerDescription"
+      >
+         <div class="actor-picker">
+            <header class="actor-picker-header">
+               <div>
+                  <p class="actor-picker-kicker">Wybór bohaterów</p>
+                  <h2 id="actorPickerTitle">Wybierz bohaterów</h2>
+                  <p id="actorPickerDescription"></p>
+               </div>
+               <button
+                  id="actorPickerCloseButton"
+                  class="actor-picker-close"
+                  type="button"
+                  aria-label="Zamknij okno wyboru bohaterów"
+               >
+                  ×
+               </button>
+            </header>
+
+            <div class="actor-picker-body">
+               <div
+                  id="actorPickerChips"
+                  class="actor-chips"
+                  role="group"
+                  aria-label="Lista bohaterów"
+               ></div>
+
+               <section id="actorPiePanel" class="actor-picker-workspace">
+                  <span class="actor-picker-section-label">Osobne wykresy z zaznaczenia</span>
+                  <div
+                     id="actorCurrentSelectionPreview"
+                     class="actor-picker-selection-preview"
+                  >
+                     Nie wybrano żadnej postaci.
+                  </div>
+
+                  <div class="actor-picker-inline-actions">
+                     <button id="actorAddGroupButton" type="button">
+                        Połącz zaznaczone w jedną grupę
+                     </button>
+                  </div>
+
+                  <div class="actor-picker-groups-header">
+                     <strong>Połączone grupy</strong>
+                     <span id="actorGroupCount" class="actor-picker-count"></span>
+                  </div>
+                  <div id="actorGroupsList" class="actor-group-list"></div>
+                  <div id="actorGroupsPreview" class="actor-picker-result-preview"></div>
+               </section>
+
+               <section
+                  id="actorBarPanel"
+                  class="actor-picker-workspace"
+                  hidden
+               >
+                  <span class="actor-picker-section-label">Wybrani bohaterowie</span>
+                  <div
+                     id="actorBarSelectionPreview"
+                     class="actor-picker-selection-preview"
+                  >
+                     Nie wybrano żadnej postaci.
+                  </div>
+                  <div class="actor-picker-inline-actions">
+                     <button
+                        id="actorSelectAllButton"
+                        class="actor-picker-secondary"
+                        type="button"
+                     >
+                        Zaznacz wszystkich
+                     </button>
+                     <button
+                        id="actorClearSelectionButton"
+                        class="actor-picker-secondary"
+                        type="button"
+                     >
+                        Wyczyść zaznaczenie
+                     </button>
+                  </div>
+               </section>
+
+               <p id="actorPickerStatus" class="actor-picker-status" role="status"></p>
+            </div>
+
+            <footer class="actor-picker-footer">
+               <button
+                  id="actorPickerCancelButton"
+                  class="actor-picker-secondary"
+                  type="button"
+               >
+                  Anuluj
+               </button>
+               <button id="actorPickerConfirmButton" type="button">
+                  Generuj wykres
+               </button>
+            </footer>
+         </div>
+      </dialog>
+
       <script>
          const buttons = document.querySelectorAll("[data-filter]");
          const cards = document.querySelectorAll(".card");
@@ -2802,6 +3236,30 @@
                barCharts: document.getElementById("barChartsButton"),
                export: document.getElementById("exportButton"),
             },
+            actorPicker: {
+               dialog: document.getElementById("actorSelectionDialog"),
+               title: document.getElementById("actorPickerTitle"),
+               description: document.getElementById("actorPickerDescription"),
+               close: document.getElementById("actorPickerCloseButton"),
+               cancel: document.getElementById("actorPickerCancelButton"),
+               confirm: document.getElementById("actorPickerConfirmButton"),
+               chips: document.getElementById("actorPickerChips"),
+               piePanel: document.getElementById("actorPiePanel"),
+               barPanel: document.getElementById("actorBarPanel"),
+               currentPreview: document.getElementById(
+                  "actorCurrentSelectionPreview",
+               ),
+               addGroup: document.getElementById("actorAddGroupButton"),
+               groupsList: document.getElementById("actorGroupsList"),
+               groupCount: document.getElementById("actorGroupCount"),
+               groupsPreview: document.getElementById("actorGroupsPreview"),
+               barPreview: document.getElementById("actorBarSelectionPreview"),
+               selectAll: document.getElementById("actorSelectAllButton"),
+               clearSelection: document.getElementById(
+                  "actorClearSelectionButton",
+               ),
+               status: document.getElementById("actorPickerStatus"),
+            },
             metrics: {
                punctuationExpression: document.getElementById(
                   "punctuationExpressionMetric",
@@ -2831,6 +3289,13 @@
             renderedCharts: [],
          };
 
+         const actorPickerState = {
+            mode: null,
+            actors: [],
+            selected: new Set(),
+            groups: [],
+         };
+
          function init() {
             bindEvents();
             loadDefaultText();
@@ -2842,6 +3307,32 @@
             DOM.buttons.pieCharts.addEventListener("click", generatePieCharts);
             DOM.buttons.barCharts.addEventListener("click", generateBarCharts);
             DOM.buttons.export.addEventListener("click", exportToExcel);
+
+            DOM.actorPicker.close.addEventListener("click", closeActorPicker);
+            DOM.actorPicker.cancel.addEventListener("click", closeActorPicker);
+            DOM.actorPicker.confirm.addEventListener(
+               "click",
+               confirmActorSelection,
+            );
+            DOM.actorPicker.addGroup.addEventListener(
+               "click",
+               addSelectedActorsAsGroup,
+            );
+            DOM.actorPicker.selectAll.addEventListener(
+               "click",
+               selectAllActors,
+            );
+            DOM.actorPicker.clearSelection.addEventListener(
+               "click",
+               clearActorSelection,
+            );
+            DOM.actorPicker.dialog.addEventListener("cancel", (event) => {
+               event.preventDefault();
+               closeActorPicker();
+            });
+            DOM.actorPicker.dialog.addEventListener("click", (event) => {
+               if (event.target === DOM.actorPicker.dialog) closeActorPicker();
+            });
 
             DOM.txtFileInput.addEventListener("change", (event) => {
                loadTxtFile(event.target.files[0]);
@@ -3103,21 +3594,274 @@
          }
 
          function generatePieCharts() {
-            const actors = getActors();
-            let selectedActors = prompt(
-               `Podaj bohaterów oddzielonych przecinkami lub połączonych znakiem '+', jeśli chcesz, by skrypt potraktował ich w analizie łącznie (dostępni: ${actors.join(", ")}). Przykład: KSIĄDZ, PUSTELNIK + GUSTAW`,
-            );
+            openActorPicker("pie");
+         }
 
-            if (!selectedActors) return;
+         function generateBarCharts() {
+            openActorPicker("bar");
+         }
 
-            selectedActors = selectedActors.toUpperCase();
-            const selectedGroups = parseActorGroups(selectedActors);
+         function openActorPicker(mode) {
+            const actors = getActorsSortedBySpeakerShare(state.analyzedData);
 
-            if (!areActorGroupsValid(selectedGroups, actors)) {
-               alert("Wprowadzono niepoprawne wartości.");
+            if (actors.length === 0) {
+               alert("Nie wykryto bohaterów, których można wybrać.");
                return;
             }
 
+            actorPickerState.mode = mode;
+            actorPickerState.actors = actors;
+            actorPickerState.selected = new Set();
+            actorPickerState.groups = [];
+            setActorPickerStatus("");
+
+            const isPie = mode === "pie";
+            DOM.actorPicker.piePanel.hidden = !isPie;
+            DOM.actorPicker.barPanel.hidden = isPie;
+
+            if (isPie) {
+               DOM.actorPicker.title.textContent =
+                  "Wybierz bohaterów lub utwórz grupy";
+               DOM.actorPicker.description.textContent =
+                  "Każda zaznaczona postać domyślnie otrzyma osobny wykres. Jeśli chcesz analizować kilka postaci łącznie, zaznacz je i użyj przycisku „Połącz zaznaczone w jedną grupę”.";
+               DOM.actorPicker.confirm.textContent = "Generuj wykresy kołowe";
+            } else {
+               DOM.actorPicker.title.textContent =
+                  "Wybierz bohaterów do porównania";
+               DOM.actorPicker.description.textContent =
+                  "Każdy zaznaczony bohater będzie osobną serią na wykresie słupkowym.";
+               DOM.actorPicker.confirm.textContent = "Generuj wykres słupkowy";
+            }
+
+            renderActorPicker();
+            DOM.actorPicker.dialog.showModal();
+            requestAnimationFrame(() =>
+               DOM.actorPicker.chips.querySelector(".actor-chip")?.focus(),
+            );
+         }
+
+         function closeActorPicker() {
+            if (DOM.actorPicker.dialog.open) DOM.actorPicker.dialog.close();
+         }
+
+         function renderActorPicker() {
+            renderActorChips();
+
+            if (actorPickerState.mode === "pie") {
+               renderPiePickerState();
+            } else {
+               renderBarPickerState();
+            }
+
+            updateActorPickerButtons();
+         }
+
+         function renderActorChips() {
+            DOM.actorPicker.chips.innerHTML = "";
+
+            actorPickerState.actors.forEach((actor) => {
+               const button = document.createElement("button");
+               const isSelected = actorPickerState.selected.has(actor);
+               button.type = "button";
+               button.className = `actor-chip${isSelected ? " is-selected" : ""}`;
+               button.textContent = actor;
+               button.setAttribute("aria-pressed", String(isSelected));
+               button.addEventListener("click", () => toggleActorSelection(actor));
+               DOM.actorPicker.chips.appendChild(button);
+            });
+         }
+
+         function toggleActorSelection(actor) {
+            if (actorPickerState.selected.has(actor)) {
+               actorPickerState.selected.delete(actor);
+            } else {
+               actorPickerState.selected.add(actor);
+            }
+
+            setActorPickerStatus("");
+            renderActorPicker();
+         }
+
+         function getSelectedActorsInOrder() {
+            return actorPickerState.actors.filter((actor) =>
+               actorPickerState.selected.has(actor),
+            );
+         }
+
+         function renderPiePickerState() {
+            const selectedActors = getSelectedActorsInOrder();
+            const selectionText = selectedActors.length
+               ? selectedActors.join(", ")
+               : "Nie wybrano żadnej postaci.";
+
+            DOM.actorPicker.currentPreview.textContent = selectionText;
+            DOM.actorPicker.currentPreview.classList.toggle(
+               "has-selection",
+               selectedActors.length > 0,
+            );
+
+            DOM.actorPicker.groupsList.innerHTML = "";
+
+            if (actorPickerState.groups.length === 0) {
+               const empty = document.createElement("div");
+               empty.className = "actor-picker-empty-groups";
+               empty.textContent =
+                  "Nie utworzono żadnej połączonej grupy.";
+               DOM.actorPicker.groupsList.appendChild(empty);
+            } else {
+               actorPickerState.groups.forEach((group, index) => {
+                  const item = document.createElement("div");
+                  item.className = "actor-group-item";
+
+                  const name = document.createElement("div");
+                  name.className = "actor-group-name";
+                  name.textContent = group.join(" + ");
+
+                  const remove = document.createElement("button");
+                  remove.type = "button";
+                  remove.className = "actor-group-remove";
+                  remove.textContent = "×";
+                  remove.setAttribute(
+                     "aria-label",
+                     `Usuń grupę ${group.join(" + ")}`,
+                  );
+                  remove.addEventListener("click", () => removeActorGroup(index));
+
+                  item.append(name, remove);
+                  DOM.actorPicker.groupsList.appendChild(item);
+               });
+            }
+
+            DOM.actorPicker.groupCount.textContent = actorPickerState.groups.length
+               ? `${actorPickerState.groups.length} ${
+                    actorPickerState.groups.length === 1 ? "pozycja" : "pozycje"
+                 }`
+               : "";
+
+            const layoutParts = [
+               ...selectedActors,
+               ...actorPickerState.groups.map((group) => group.join(" + ")),
+            ];
+            const syntaxPreview = layoutParts.length
+               ? layoutParts.join(", ")
+               : "—";
+            DOM.actorPicker.groupsPreview.innerHTML = "";
+            const label = document.createElement("strong");
+            label.textContent = "Aktualnie wyklikany układ do wykresu: ";
+            DOM.actorPicker.groupsPreview.append(label, syntaxPreview);
+         }
+
+         function renderBarPickerState() {
+            const selectedActors = getSelectedActorsInOrder();
+            DOM.actorPicker.barPreview.textContent = selectedActors.length
+               ? selectedActors.join(", ")
+               : "Nie wybrano żadnej postaci.";
+            DOM.actorPicker.barPreview.classList.toggle(
+               "has-selection",
+               selectedActors.length > 0,
+            );
+         }
+
+         function updateActorPickerButtons() {
+            const selectedCount = actorPickerState.selected.size;
+
+            DOM.actorPicker.addGroup.disabled = selectedCount < 2;
+            DOM.actorPicker.clearSelection.disabled = selectedCount === 0;
+            DOM.actorPicker.selectAll.disabled =
+               selectedCount === actorPickerState.actors.length;
+
+            DOM.actorPicker.confirm.disabled =
+               actorPickerState.mode === "pie"
+                  ? actorPickerState.groups.length === 0 && selectedCount === 0
+                  : selectedCount === 0;
+         }
+
+         function addSelectedActorsAsGroup() {
+            const selectedActors = getSelectedActorsInOrder();
+            if (selectedActors.length < 2) {
+               setActorPickerStatus(
+                  "Aby utworzyć grupę, zaznacz co najmniej dwie postacie.",
+                  true,
+               );
+               return;
+            }
+
+            const groupKey = selectedActors.join("\u0000");
+            const exists = actorPickerState.groups.some(
+               (group) => group.join("\u0000") === groupKey,
+            );
+
+            if (exists) {
+               setActorPickerStatus("Taka grupa jest już dodana.", true);
+               return;
+            }
+
+            actorPickerState.groups.push(selectedActors);
+            actorPickerState.selected.clear();
+            setActorPickerStatus("Dodano połączoną grupę bohaterów.");
+            renderActorPicker();
+         }
+
+         function removeActorGroup(index) {
+            actorPickerState.groups.splice(index, 1);
+            setActorPickerStatus("");
+            renderActorPicker();
+         }
+
+         function selectAllActors() {
+            actorPickerState.selected = new Set(actorPickerState.actors);
+            setActorPickerStatus("");
+            renderActorPicker();
+         }
+
+         function clearActorSelection() {
+            actorPickerState.selected.clear();
+            setActorPickerStatus("");
+            renderActorPicker();
+         }
+
+         function setActorPickerStatus(message, isError = false) {
+            DOM.actorPicker.status.textContent = message;
+            DOM.actorPicker.status.classList.toggle("error", Boolean(isError));
+         }
+
+         function confirmActorSelection() {
+            if (actorPickerState.mode === "pie") {
+               // Zwykłe zaznaczenie pills oznacza osobne wykresy.
+               // Tylko grupy utworzone przyciskiem są analizowane łącznie.
+               const selectedActors = getSelectedActorsInOrder();
+               const groups = [
+                  ...selectedActors.map((actor) => [actor]),
+                  ...actorPickerState.groups.map((group) => [...group]),
+               ];
+
+               if (groups.length === 0) {
+                  setActorPickerStatus(
+                     "Wybierz co najmniej jedną postać lub utwórz grupę.",
+                     true,
+                  );
+                  return;
+               }
+
+               closeActorPicker();
+               renderPieChartsForGroups(groups);
+               return;
+            }
+
+            const selectedActors = getSelectedActorsInOrder();
+            if (selectedActors.length === 0) {
+               setActorPickerStatus(
+                  "Wybierz co najmniej jednego bohatera.",
+                  true,
+               );
+               return;
+            }
+
+            closeActorPicker();
+            renderBarChartForActors(selectedActors);
+         }
+
+         function renderPieChartsForGroups(selectedGroups) {
             const actorsData = getGroupedActorMeterCounts(selectedGroups);
             clearActorCharts();
 
@@ -3149,25 +3893,7 @@
             scrollToCharts();
          }
 
-         function generateBarCharts() {
-            const actors = getActors();
-            let selectedActors = prompt(
-               `Podaj bohaterów oddzielonych przecinkami (dostępni: ${actors.join(", ")}). Przykład: KSIĄDZ, GUSTAW, PUSTELNIK`,
-            );
-
-            if (!selectedActors) return;
-
-            selectedActors = selectedActors.toUpperCase();
-            const selectedActorsArray = selectedActors
-               .split(",")
-               .map((actor) => actor.trim())
-               .filter(Boolean);
-
-            if (!selectedActorsArray.every((actor) => actors.includes(actor))) {
-               alert("Wprowadzono niepoprawne wartości.");
-               return;
-            }
-
+         function renderBarChartForActors(selectedActorsArray) {
             const actorsData = getActorMeterCounts(selectedActorsArray);
             const labels = [
                ...new Set(
@@ -3612,7 +4338,7 @@
             }
          }
 
-         function renderSpeakerShareChart(data) {
+         function calculateSpeakerShares(data) {
             const metricLines = buildMetricLines(data);
             const speakerCounts = {};
             let totalEligibleLines = 0;
@@ -3654,14 +4380,41 @@
                });
             });
 
-            const speakerDataRaw = Object.entries(speakerCounts)
-               .map(([actor, count]) => ({
+            return Object.entries(speakerCounts).map(([actor, count]) => ({
+               actor,
+               percentage:
+                  totalEligibleLines > 0
+                     ? (count / totalEligibleLines) * 100
+                     : 0,
+            }));
+         }
+
+         function getActorsSortedBySpeakerShare(data) {
+            const actors = getActors();
+            const originalOrder = new Map(
+               actors.map((actor, index) => [actor, index]),
+            );
+            const shareByActor = new Map(
+               calculateSpeakerShares(data).map(({ actor, percentage }) => [
                   actor,
-                  percentage:
-                     totalEligibleLines > 0
-                        ? (count / totalEligibleLines) * 100
-                        : 0,
-               }));
+                  percentage,
+               ]),
+            );
+
+            return actors.sort((a, b) => {
+               const shareDifference =
+                  (shareByActor.get(b) || 0) - (shareByActor.get(a) || 0);
+
+               if (Math.abs(shareDifference) > Number.EPSILON) {
+                  return shareDifference;
+               }
+
+               return originalOrder.get(a) - originalOrder.get(b);
+            });
+         }
+
+         function renderSpeakerShareChart(data) {
+            const speakerDataRaw = calculateSpeakerShares(data);
 
             const minorSpeakersPercentage = speakerDataRaw
                .filter(({ percentage }) => percentage < 1)
@@ -4327,7 +5080,7 @@
             );
             element.textContent = uploads.length
                ? `Dodane pliki własne: ${uploads.length}. Możesz zmienić ich nazwy i kolejność poniżej.`
-               : "Nie dodano jeszcze własnych plików.";
+               : "Nie dodano jeszcze żadnych plików.";
          }
 
          function renderComparisonOrderList() {
