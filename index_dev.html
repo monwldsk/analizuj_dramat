@@ -2181,11 +2181,11 @@
                         </div>
                         <div class="num">08</div>
                      </div>
-                     <div class="card-title">Wskaźnik referencji pierwszoosobowej</div>
+                     <div class="card-title">Wskaźnik referencji pierwszoosobowej (l. poj. i l. mn.)</div>
                      <div class="rule"></div>
                      <p>
-                        Mierzy gęstość zaimków osobowych i dzierżawczych
-                        związanych z 1. osobą liczby pojedynczej.
+                        Mierzy osobno gęstość zaimków osobowych i dzierżawczych
+                        związanych z 1. osobą liczby pojedynczej i mnogiej.
                      </p>
                   </article>
                </div>
@@ -2860,6 +2860,7 @@
                         class="metric-card"
                      ></div>
                      <div id="selfReferenceMetric" class="metric-card"></div>
+                     <div id="selfReferencePluralMetric" class="metric-card"></div>
                      <div
                         id="metacommentaryDensityMetric"
                         class="metric-card"
@@ -3012,7 +3013,10 @@
                         </option>
                         <option value="questionDensity">Gęstość pytań</option>
                         <option value="selfReference">
-                           Wskaźnik referencji pierwszoosobowej
+                           Wskaźnik referencji pierwszoosobowej (l. poj.)
+                        </option>
+                        <option value="selfReferencePlural">
+                           Wskaźnik referencji pierwszoosobowej (l. mn.)
                         </option>
                         <option value="metacommentaryDensity">
                            Indeks gęstości metakomentarza (didaskaliów)
@@ -3324,6 +3328,23 @@
                "moich",
                "moimi",
             ]),
+            selfReferencePluralPronouns: new Set([
+               "my",
+               "nas",
+               "nam",
+               "nami",
+               "nasz",
+               "naszego",
+               "naszemu",
+               "naszym",
+               "nasza",
+               "naszej",
+               "naszą",
+               "nasze",
+               "nasi",
+               "naszych",
+               "naszymi",
+            ]),
             meterColors: {
                1: "hsl(55, 50%, 70%)",
                2: "hsl(30, 70%, 70%)",
@@ -3409,6 +3430,9 @@
                causalCohesion: document.getElementById("causalCohesionMetric"),
                lineBreaking: document.getElementById("lineBreakingMetric"),
                selfReference: document.getElementById("selfReferenceMetric"),
+               selfReferencePlural: document.getElementById(
+                  "selfReferencePluralMetric",
+               ),
                metacommentaryDensity: document.getElementById(
                   "metacommentaryDensityMetric",
                ),
@@ -4302,6 +4326,7 @@
 
             renderLineBreakingMetric(metricLines, metricLineCount);
             renderSelfReferenceMetric(words);
+            renderSelfReferencePluralMetric(words);
             renderMetricDistributionChart(metricLines, metricLineCount);
 
             // Udział bohaterów nadal dotyczy ich rzeczywistych fragmentów mowy,
@@ -4519,9 +4544,25 @@
                   : "0.00";
 
             DOM.metrics.selfReference.innerHTML = metricHtml(
-               "Wskaźnik referencji pierwszoosobowej:",
+               "Wskaźnik referencji pierwszoosobowej (l. poj.):",
                `${selfReferenceRate}‰`,
                "Wskaźnik = liczba wystąpień form: ja, mnie, mi, mną, mój, mojego, mojemu, moim, moja, mojej, moją, moje, moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.",
+            );
+         }
+
+         function renderSelfReferencePluralMetric(words) {
+            const selfReferencePluralCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePluralPronouns.has(word),
+            ).length;
+            const selfReferencePluralRate =
+               words.length > 0
+                  ? ((selfReferencePluralCount / words.length) * 1000).toFixed(2)
+                  : "0.00";
+
+            DOM.metrics.selfReferencePlural.innerHTML = metricHtml(
+               "Wskaźnik referencji pierwszoosobowej (l. mn.):",
+               `${selfReferencePluralRate}‰`,
+               "Wskaźnik = liczba wystąpień form: my, nas, nam, nami, nasz, naszego, naszemu, naszym, nasza, naszej, naszą, nasze, nasi, naszych, naszymi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.",
             );
          }
 
@@ -5128,7 +5169,11 @@
                unit: "",
             },
             selfReference: {
-               label: "Wskaźnik referencji pierwszoosobowej",
+               label: "Wskaźnik referencji pierwszoosobowej (l. poj.)",
+               unit: "‰",
+            },
+            selfReferencePlural: {
+               label: "Wskaźnik referencji pierwszoosobowej (l. mn.)",
                unit: "‰",
             },
             metacommentaryDensity: {
@@ -5738,6 +5783,15 @@
                      APP_CONFIG.selfReferencePronouns.has(word),
                   ).length;
                   return words.length ? (selfReferenceCount / words.length) * 1000 : 0;
+               }
+
+               case "selfReferencePlural": {
+                  const selfReferencePluralCount = words.filter((word) =>
+                     APP_CONFIG.selfReferencePluralPronouns.has(word),
+                  ).length;
+                  return words.length
+                     ? (selfReferencePluralCount / words.length) * 1000
+                     : 0;
                }
 
                case "metacommentaryDensity":
