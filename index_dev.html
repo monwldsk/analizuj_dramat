@@ -2441,11 +2441,7 @@
                         <i>si-nu-s<u>oi</u>-da</i>, ale
                         <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z
                         takich (m.in.) wyjątków nie wpłyną znacząco na
-                        statystyki dla długich tekstów. Narzędzie nie wskazuje
-                        przypadków, w których na jeden wers metryczny przypadają
-                        repliki dialogowe różnych postaci; umożliwia natomiast
-                        wykluczenie ich z analizy ręcznie poprzez wprowadzenie
-                        znaku ++ przed konkretnymi linijkami tekstu.</span
+                        statystyki dla długich tekstów.</span
                      >
                   </span>
                </p>
@@ -2815,6 +2811,7 @@
                         id="interactionDensityMetric"
                         class="metric-card"
                      ></div>
+                     <div id="sentenceLengthMetric" class="metric-card"></div>
                      <div id="lineBreakingMetric" class="metric-card"></div>
                      <div
                         id="punctuationExpressionMetric"
@@ -2952,6 +2949,12 @@
                         </option>
                         <option value="interactionAverage" selected>
                            Średnia długość wypowiedzi jednej postaci
+                        </option>
+                        <option value="sentenceAverageWords">
+                           Średnia długość zdania — słowa
+                        </option>
+                        <option value="sentenceAverageSyllables">
+                           Średnia długość zdania — sylaby
                         </option>
                         <option value="lineBreaking">
                            Współczynnik łamania wiersza
@@ -3169,6 +3172,12 @@
             syllableReplacementRegex: /ie|ia|iu|ię|ią|io|ii|iy|ió/g,
             vowelRegex: /[aeiouąęóy]/gi,
             lineEndingRegex: /(\.|,|!|\?|;|…|:|-|—|–)$/,
+             sentenceAbbreviations: new Set([
+                "np", "itp", "itd", "tj", "tzn", "tzw", "m.in", "m.inn",
+                "zob", "por", "dr", "prof", "mgr", "inż", "ks", "św",
+                "bp", "abp", "gen", "płk", "ppłk", "mjr", "kpt", "nr",
+                "godz", "ul", "al",
+             ]),
             selfReferencePronouns: new Set([
                "ja",
                "mnie",
@@ -3266,6 +3275,7 @@
                interactionDensity: document.getElementById(
                   "interactionDensityMetric",
                ),
+               sentenceLength: document.getElementById("sentenceLengthMetric"),
                lineBreaking: document.getElementById("lineBreakingMetric"),
                selfReference: document.getElementById("selfReferenceMetric"),
                metacommentaryDensity: document.getElementById(
@@ -4155,6 +4165,8 @@
             // żeby nie zniekształcać struktury dialogowej.
             renderInteractionDensityMetric(speechFragments);
 
+             renderSentenceLengthMetric(allSpeechText);
+
             renderLineBreakingMetric(metricLines, metricLineCount);
             renderSelfReferenceMetric(words);
             renderMetricDistributionChart(metricLines, metricLineCount);
@@ -4300,6 +4312,23 @@
                "Wypowiedź jednej postaci jest liczona jako ciąg kolejnych linijek przypisanych temu samemu bohaterowi. Wskaźnik = liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów / liczba bloków wypowiedzi.",
             );
          }
+
+          function renderSentenceLengthMetric(text) {
+             const stats = getSentenceLengthStats(text);
+
+             DOM.metrics.sentenceLength.innerHTML = `
+              <div class="metric-card-top">
+                <div class="metric-card-label">Średnia długość zdania</div>
+              </div>
+              <div class="metric-card-value">
+                ${stats.averageWords.toFixed(2)} słów
+                ${infoTip("Zdanie jest liczone od początku tekstu lub od poprzedniego znaku kończącego do kropki, wielokropka („...” lub „…”), pytajnika albo wykrzyknika. Serie znaków końcowych, np. „?!”, są traktowane jako jedno zakończenie. Pojedyncza kropka nie zamyka zdania w typowych skrótach, inicjałach ani liczbach dziesiętnych; jeśli nie występuje na końcu dramatu, kolejny właściwy znak musi być wielką literą. Końcowy fragment bez znaku zamykającego nie jest liczony. Didaskalia są wyłączone.")}
+              </div>
+              <div class="metric-card-secondary">
+                Średnia w sylabach: <strong>${stats.averageSyllables.toFixed(2)}</strong><br>
+                Liczba wykrytych zdań: <strong>${stats.sentenceCount}</strong>
+              </div>`;
+          }
 
          function renderLineBreakingMetric(metricLines, metricLineCount) {
             const brokenLines = metricLines.filter(
@@ -4602,6 +4631,91 @@
                .filter(Boolean);
          }
 
+          function getSentenceLengthStats(text) {
+             const sentences = splitIntoSentences(text);
+             const sentenceLengths = sentences
+                .map((sentence) => ({
+                   words: getWords(sentence).length,
+                   syllables: countSyllables(sentence),
+                }))
+                .filter(({ words }) => words > 0);
+
+             return {
+                sentenceCount: sentenceLengths.length,
+                averageWords: average(sentenceLengths.map(({ words }) => words)),
+                averageSyllables: average(sentenceLengths.map(({ syllables }) => syllables)),
+             };
+          }
+
+          function splitIntoSentences(text) {
+             const normalizedText = text.replace(/\s+/g, " ").trim();
+             if (!normalizedText) return [];
+
+             const sentences = [];
+             let sentenceStart = 0;
+             let index = 0;
+
+             while (index < normalizedText.length) {
+                const char = normalizedText[index];
+                let sentenceEnd = -1;
+
+                if (char === "…") {
+                   sentenceEnd = consumeSentenceEndingCluster(normalizedText, index);
+                } else if (char === "." && normalizedText.slice(index, index + 3) === "...") {
+                   sentenceEnd = consumeSentenceEndingCluster(normalizedText, index + 2);
+                } else if (char === "!" || char === "?") {
+                   sentenceEnd = consumeSentenceEndingCluster(normalizedText, index);
+                } else if (char === "." && isSentenceClosingPeriod(normalizedText, index)) {
+                   sentenceEnd = index;
+                }
+
+                if (sentenceEnd >= 0) {
+                   const sentence = normalizedText.slice(sentenceStart, sentenceEnd + 1).trim();
+                   if (getWords(sentence).length) sentences.push(sentence);
+                   sentenceStart = sentenceEnd + 1;
+                   index = sentenceEnd + 1;
+                   continue;
+                }
+                index++;
+             }
+             return sentences;
+          }
+
+          function consumeSentenceEndingCluster(text, startIndex) {
+             let endIndex = startIndex;
+             while (endIndex + 1 < text.length && /[.!?…]/.test(text[endIndex + 1])) {
+                endIndex++;
+             }
+             return endIndex;
+          }
+
+          function isSentenceClosingPeriod(text, periodIndex) {
+             const nextStartChar = getNextSentenceStartChar(text, periodIndex + 1);
+             if (!nextStartChar) return true;
+
+             const previousChar = text[periodIndex - 1] || "";
+             const nextChar = text[periodIndex + 1] || "";
+             if (/\d/.test(previousChar) && /\d/.test(nextChar)) return false;
+
+             const beforePeriod = text.slice(0, periodIndex);
+             const tokenMatch = beforePeriod.match(/([\p{L}]+(?:\.[\p{L}]+)*)$/u);
+             const token = (tokenMatch?.[1] || "").toLowerCase();
+
+             if (token.length === 1) return false;
+             if (APP_CONFIG.sentenceAbbreviations.has(token)) return false;
+             return /\p{Lu}/u.test(nextStartChar);
+          }
+
+          function getNextSentenceStartChar(text, startIndex) {
+             let index = startIndex;
+             while (index < text.length) {
+                const char = text[index];
+                if (!/[\s"'„”«»‚‘’()\[\]{}—–-]/u.test(char)) return char;
+                index++;
+             }
+             return "";
+          }
+
          function percent(numerator, denominator) {
             return denominator > 0
                ? ((numerator / denominator) * 100).toFixed(2)
@@ -4669,6 +4783,14 @@
                label: "Średnia długość wypowiedzi jednej postaci",
                unit: "",
             },
+             sentenceAverageWords: {
+                label: "Średnia długość zdania — słowa",
+                unit: " słów",
+             },
+             sentenceAverageSyllables: {
+                label: "Średnia długość zdania — sylaby",
+                unit: " sylab",
+             },
             lineBreaking: {
                label: "Współczynnik łamania wiersza",
                unit: "%",
@@ -5247,6 +5369,12 @@
                   if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
                   return average(speechBlocks);
                }
+
+                case "sentenceAverageWords":
+                   return getSentenceLengthStats(allSpeechText).averageWords;
+
+                case "sentenceAverageSyllables":
+                   return getSentenceLengthStats(allSpeechText).averageSyllables;
 
                case "lineBreaking": {
                   const brokenLines = metricLines.filter(
