@@ -2852,6 +2852,7 @@
                         class="metric-card"
                      ></div>
                      <div id="sentenceLengthMetric" class="metric-card"></div>
+                     <div id="hypotaxisMetric" class="metric-card"></div>
                      <div id="lineBreakingMetric" class="metric-card"></div>
                      <div
                         id="punctuationExpressionMetric"
@@ -2995,6 +2996,9 @@
                         </option>
                         <option value="sentenceAverageSyllables">
                            Średnia długość zdania — sylaby
+                        </option>
+                        <option value="hypotaxisRate">
+                           Odsetek zdań hipotaktycznych
                         </option>
                         <option value="lineBreaking">
                            Współczynnik łamania wiersza
@@ -3228,6 +3232,57 @@
                 "bp", "abp", "gen", "płk", "ppłk", "mjr", "kpt", "nr",
                 "godz", "ul", "al",
              ]),
+             hypotaxisStrongMarkers: [
+                "mimo że",
+                "pomimo że",
+                "chyba że",
+                "podczas gdy",
+                "dlatego że",
+                "pod warunkiem że",
+                "w razie gdyby",
+                "że",
+                "iż",
+                "żeby",
+                "aby",
+                "ażeby",
+                "ponieważ",
+                "gdyż",
+                "bo",
+                "jeśli",
+                "jeżeli",
+                "gdyby",
+                "choć",
+                "chociaż",
+                "choćby",
+                "skoro",
+                "zanim",
+                "dopóki",
+                "odkąd",
+                "gdy",
+             ],
+             hypotaxisContextualMarkers: [
+                "czy",
+                "kiedy",
+                "gdzie",
+                "dokąd",
+                "skąd",
+                "dlaczego",
+                "kto",
+                "co",
+                "ile",
+                "nim",
+                "który",
+                "która",
+                "które",
+                "którzy",
+                "którego",
+                "której",
+                "któremu",
+                "którą",
+                "którym",
+                "których",
+                "którymi",
+             ],
             selfReferencePronouns: new Set([
                "ja",
                "mnie",
@@ -3326,6 +3381,7 @@
                   "interactionDensityMetric",
                ),
                sentenceLength: document.getElementById("sentenceLengthMetric"),
+               hypotaxis: document.getElementById("hypotaxisMetric"),
                lineBreaking: document.getElementById("lineBreakingMetric"),
                selfReference: document.getElementById("selfReferenceMetric"),
                metacommentaryDensity: document.getElementById(
@@ -4216,6 +4272,7 @@
             renderInteractionDensityMetric(speechFragments);
 
              renderSentenceLengthMetric(allSpeechText);
+             renderHypotaxisMetric(allSpeechText);
 
             renderLineBreakingMetric(metricLines, metricLineCount);
             renderSelfReferenceMetric(words);
@@ -4377,6 +4434,23 @@
               <div class="metric-card-secondary">
                 Średnia w sylabach: <strong>${stats.averageSyllables.toFixed(2)}</strong><br>
                 Liczba wykrytych zdań: <strong>${stats.sentenceCount}</strong>
+              </div>`;
+          }
+
+          function renderHypotaxisMetric(text) {
+             const stats = getHypotaxisStats(text);
+
+             DOM.metrics.hypotaxis.innerHTML = `
+              <div class="metric-card-top">
+                <div class="metric-card-label">Zdania hipotaktyczne</div>
+              </div>
+              <div class="metric-card-value">
+                ${stats.hypotacticCount}
+                ${infoTip("Za zdanie hipotaktyczne uznawane jest wykryte wcześniej zdanie zawierające sygnał podporządkowania składniowego. Jednoznaczne spójniki podrzędne, m.in. „że”, „iż”, „żeby”, „aby”, „ponieważ”, „gdyż”, „jeśli”, „jeżeli”, „gdyby”, „choć”, „skoro”, „zanim”, „dopóki”, „odkąd” i „gdy”, są wykrywane bezpośrednio. Formy wieloznaczne, m.in. „czy”, „kiedy”, „gdzie”, „kto”, „co” oraz formy zaimka „który”, są liczone tylko wtedy, gdy ich pozycja wskazuje na człon podrzędny (np. po przecinku lub innej granicy wewnątrzzdaniowej); na początku zdania wymagają późniejszej granicy oddzielającej człon nadrzędny. Didaskalia są wyłączone. Jest to oczywiście uproszczone rozwiązanie, a nie pełny parser składniowy.")}
+              </div>
+              <div class="metric-card-secondary">
+                Udział wśród wszystkich zdań: <strong>${stats.hypotacticRate.toFixed(2)}%</strong><br>
+                Wszystkich wykrytych zdań: <strong>${stats.sentenceCount}</strong>
               </div>`;
           }
 
@@ -4697,6 +4771,93 @@
              };
           }
 
+          function getHypotaxisStats(text) {
+             const sentences = splitIntoSentences(text);
+             const hypotacticCount = sentences.filter(isHypotacticSentence).length;
+
+             return {
+                sentenceCount: sentences.length,
+                hypotacticCount,
+                hypotacticRate: sentences.length
+                   ? (hypotacticCount / sentences.length) * 100
+                   : 0,
+             };
+          }
+
+          function isHypotacticSentence(sentence) {
+             const normalizedSentence = sentence.replace(/\s+/g, " ").trim();
+             if (!normalizedSentence) return false;
+
+             if (
+                APP_CONFIG.hypotaxisStrongMarkers.some((marker) =>
+                   hasHypotaxisMarker(normalizedSentence, marker, false),
+                )
+             ) {
+                return true;
+             }
+
+             return APP_CONFIG.hypotaxisContextualMarkers.some((marker) =>
+                hasHypotaxisMarker(normalizedSentence, marker, true),
+             );
+          }
+
+          function hasHypotaxisMarker(sentence, marker, requireClauseBoundary) {
+             const markerPattern = marker
+                .split(/\s+/)
+                .map(escapeRegex)
+                .join("\\s+");
+             const regex = new RegExp(
+                `(^|[^\\p{L}])(${markerPattern})(?=$|[^\\p{L}])`,
+                "giu",
+             );
+             let match;
+
+             while ((match = regex.exec(sentence)) !== null) {
+                const markerStart = match.index + match[1].length;
+                const markerEnd = markerStart + match[2].length;
+                const before = sentence.slice(0, markerStart).trimEnd();
+                const after = sentence.slice(markerEnd).trimStart();
+                const beforeWordCount = getWords(before).length;
+                const afterWordCount = getWords(after).length;
+
+                if (!afterWordCount) continue;
+
+                // Spójnik na początku zdania może rozpoczynać człon podrzędny
+                // tylko wtedy, gdy później występuje granica oddzielająca drugi człon.
+                if (beforeWordCount === 0) {
+                   if (hasFollowingClauseBoundary(after)) return true;
+                   continue;
+                }
+
+                if (!requireClauseBoundary) return true;
+
+                // Wyrazy wieloznaczne (np. „czy”, „kiedy”, „który”) uznajemy
+                // za sygnał hipotaksy tylko po granicy wewnątrzzdaniowej.
+                // Dopuszczamy także krótki przyimek między przecinkiem a zaimkiem:
+                // „człowiek, z którym...”, „sprawa, o której...”.
+                if (hasPrecedingClauseBoundary(before)) return true;
+             }
+
+             return false;
+          }
+
+          function hasPrecedingClauseBoundary(text) {
+             if (/[,;:—–-]\s*$/u.test(text)) return true;
+             return /[,;:—–-]\s+(?:z|ze|o|do|dla|od|po|przy|przed|za|nad|pod|między|przez|bez|w|we|na|ku|według|wobec|dzięki)\s*$/iu.test(
+                text,
+             );
+          }
+
+          function hasFollowingClauseBoundary(text) {
+             const boundaryIndex = text.search(/[,;:—–-]/u);
+             if (boundaryIndex < 0) return false;
+             return getWords(text.slice(boundaryIndex + 1)).length > 0;
+          }
+
+          function escapeRegex(value) {
+             return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          }
+
           function splitIntoSentences(text) {
              const normalizedText = text.replace(/\s+/g, " ").trim();
              if (!normalizedText) return [];
@@ -4840,6 +5001,10 @@
              sentenceAverageSyllables: {
                 label: "Średnia długość zdania — sylaby",
                 unit: " sylab",
+             },
+             hypotaxisRate: {
+                label: "Odsetek zdań hipotaktycznych",
+                unit: "%",
              },
             lineBreaking: {
                label: "Współczynnik łamania wiersza",
@@ -5435,6 +5600,9 @@
 
                 case "sentenceAverageSyllables":
                    return getSentenceLengthStats(allSpeechText).averageSyllables;
+
+                case "hypotaxisRate":
+                   return getHypotaxisStats(allSpeechText).hypotacticRate;
 
                case "lineBreaking": {
                   const brokenLines = metricLines.filter(
