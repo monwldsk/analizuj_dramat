@@ -2138,7 +2138,7 @@
                      <div class="card-title">Wskaźnik łamania wiersza</div>
                      <div class="rule"></div>
                      <p>
-                        % linijek wypowiedzi, które nie kończą się znakiem
+                        Oblicza % wersów, które nie kończą się znakiem
                         interpunkcyjnym sygnalizującym zamknięcie struktury
                         składniowej.
                      </p>
@@ -2154,7 +2154,7 @@
                      <div class="card-title">Wskaźnik gęstości tekstu pobocznego</div>
                      <div class="rule"></div>
                      <p>
-                        Liczba wystąpień didaskaliów względem długości tekstu
+                        Liczy wystąpienia didaskaliów względem długości tekstu
                         głównego.
                      </p>
                   </article>
@@ -2181,11 +2181,11 @@
                         </div>
                         <div class="num">08</div>
                      </div>
-                     <div class="card-title">Wskaźnik referencji pierwszoosobowej (l. poj. i l. mn.)</div>
+                     <div class="card-title">Wskaźnik referencji 1. os. (l. poj. i l. mn.)</div>
                      <div class="rule"></div>
                      <p>
                         Mierzy osobno gęstość zaimków osobowych i dzierżawczych
-                        związanych z 1. osobą liczby pojedynczej i mnogiej.
+                        związanych z 1. os. l. poj. i mn.
                      </p>
                   </article>
                </div>
@@ -3003,7 +3003,7 @@
                            Odsetek zdań hipotaktycznych
                         </option>
                         <option value="causalCohesionRate">
-                           Kohezja tekstowa: odsetek zdań z relacją kauzalną
+                           Kohezja tekstowa: odsetek zdań z jawną relacją kauzalną
                         </option>
                         <option value="lineBreaking">
                            Współczynnik łamania wiersza
@@ -4513,7 +4513,7 @@
 
              DOM.metrics.causalCohesion.innerHTML = `
               <div class="metric-card-top">
-                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z relacją kauzalną</div>
+                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z jawną relacją kauzalną</div>
               </div>
               <div class="metric-card-value">
                 ${stats.causalRate.toFixed(2)}%
@@ -5155,7 +5155,7 @@
                 unit: "%",
              },
              causalCohesionRate: {
-                label: "Kohezja tekstowa: odsetek zdań z relacją kauzalną",
+                label: "Kohezja tekstowa: odsetek zdań z jawną relacją kauzalną",
                 unit: "%",
                 note: "Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie.",
              },
