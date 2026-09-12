@@ -1591,6 +1591,46 @@
             color: #b33128;
          }
 
+         .comparison-loader {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 42px;
+            margin-top: 10px;
+            padding: 9px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 10px;
+            color: #163f8f;
+            background: #f5f9ff;
+            font-size: 12px;
+            font-weight: 700;
+         }
+
+         .comparison-loader[hidden] {
+            display: none !important;
+         }
+
+         .comparison-loader-spinner {
+            flex: 0 0 18px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #cfe0f4;
+            border-top-color: #0b72d9;
+            border-radius: 50%;
+            animation: comparison-loader-spin 0.75s linear infinite;
+         }
+
+         @keyframes comparison-loader-spin {
+            to {
+               transform: rotate(360deg);
+            }
+         }
+
+         .comparison-results.is-loading {
+            opacity: 0.48;
+            pointer-events: none;
+         }
+
          .comparison-results {
             margin-top: 18px;
             padding: 20px;
@@ -2983,6 +3023,16 @@
                   </button>
                </div>
                <div id="comparisonStatus" class="comparison-status" role="status"></div>
+               <div
+                  id="comparisonLoader"
+                  class="comparison-loader"
+                  role="status"
+                  aria-live="polite"
+                  hidden
+               >
+                  <span class="comparison-loader-spinner" aria-hidden="true"></span>
+                  <span>Obliczanie nowego wyniku…</span>
+               </div>
             </div>
 
             <div id="comparisonResults" class="comparison-results" hidden>
@@ -5294,6 +5344,11 @@
             const button = document.getElementById("comparisonGenerateButton");
             if (button) button.disabled = true;
             setComparisonStatus("Obliczanie wartości dla wybranych tekstów...");
+            setComparisonLoading(true);
+
+            // Pozwól przeglądarce wyświetlić loader przed rozpoczęciem
+            // potencjalnie kosztownych obliczeń synchronicznych.
+            await new Promise((resolve) => requestAnimationFrame(resolve));
 
             try {
                const results = [];
@@ -5303,6 +5358,10 @@
                      label: item.label.trim() || item.title || "Bez tytułu",
                      value: calculateComparisonMetric(text, metricKey),
                   });
+
+                  // Oddaj na moment sterowanie przeglądarce, aby loader pozostawał
+                  // widoczny i animowany także przy wielu analizowanych tekstach.
+                  await new Promise((resolve) => requestAnimationFrame(resolve));
                }
 
                renderComparisonChart(results, metricKey);
@@ -5314,6 +5373,7 @@
                   true,
                );
             } finally {
+               setComparisonLoading(false);
                if (button) button.disabled = false;
             }
          }
@@ -5534,6 +5594,16 @@
             if (!element) return;
             element.textContent = message;
             element.classList.toggle("error", Boolean(isError));
+         }
+
+         function setComparisonLoading(isLoading) {
+            const loader = document.getElementById("comparisonLoader");
+            const resultsSection = document.getElementById("comparisonResults");
+
+            if (loader) loader.hidden = !isLoading;
+            if (resultsSection) {
+               resultsSection.classList.toggle("is-loading", Boolean(isLoading));
+            }
          }
 
          function formatComparisonValue(value) {
