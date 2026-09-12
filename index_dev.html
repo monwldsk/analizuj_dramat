@@ -2853,6 +2853,7 @@
                      ></div>
                      <div id="sentenceLengthMetric" class="metric-card"></div>
                      <div id="hypotaxisMetric" class="metric-card"></div>
+                     <div id="causalCohesionMetric" class="metric-card"></div>
                      <div id="lineBreakingMetric" class="metric-card"></div>
                      <div
                         id="punctuationExpressionMetric"
@@ -3000,6 +3001,9 @@
                         <option value="hypotaxisRate">
                            Odsetek zdań hipotaktycznych
                         </option>
+                        <option value="causalCohesionRate">
+                           Kohezja tekstowa: odsetek zdań z relacją kauzalną
+                        </option>
                         <option value="lineBreaking">
                            Współczynnik łamania wiersza
                         </option>
@@ -3045,7 +3049,7 @@
                <div id="comparisonChartWrap" class="comparison-chart-wrap">
                   <canvas id="comparisonChart"></canvas>
                </div>
-              
+               <div id="comparisonChartNote" class="comparison-chart-note" hidden></div>
             </div>
          </section>
       </main>
@@ -3283,6 +3287,26 @@
                 "których",
                 "którymi",
              ],
+             causalStrongMarkers: [
+                "z tego powodu",
+                "w takim razie",
+                "w rezultacie",
+                "w konsekwencji",
+                "dlatego że",
+                "jako że",
+                "tak że",
+                "ponieważ",
+                "gdyż",
+                "bowiem",
+                "albowiem",
+                "bo",
+                "więc",
+                "zatem",
+                "toteż",
+                "przeto",
+                "dlatego",
+                "tedy",
+             ],
             selfReferencePronouns: new Set([
                "ja",
                "mnie",
@@ -3382,6 +3406,7 @@
                ),
                sentenceLength: document.getElementById("sentenceLengthMetric"),
                hypotaxis: document.getElementById("hypotaxisMetric"),
+               causalCohesion: document.getElementById("causalCohesionMetric"),
                lineBreaking: document.getElementById("lineBreakingMetric"),
                selfReference: document.getElementById("selfReferenceMetric"),
                metacommentaryDensity: document.getElementById(
@@ -4273,6 +4298,7 @@
 
              renderSentenceLengthMetric(allSpeechText);
              renderHypotaxisMetric(allSpeechText);
+             renderCausalCohesionMetric(allSpeechText);
 
             renderLineBreakingMetric(metricLines, metricLineCount);
             renderSelfReferenceMetric(words);
@@ -4450,6 +4476,23 @@
               </div>
               <div class="metric-card-secondary">
                 Udział wśród wszystkich zdań: <strong>${stats.hypotacticRate.toFixed(2)}%</strong><br>
+                Wszystkich wykrytych zdań: <strong>${stats.sentenceCount}</strong>
+              </div>`;
+          }
+
+          function renderCausalCohesionMetric(text) {
+             const stats = getCausalCohesionStats(text);
+
+             DOM.metrics.causalCohesion.innerHTML = `
+              <div class="metric-card-top">
+                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z relacją kauzalną</div>
+              </div>
+              <div class="metric-card-value">
+                ${stats.causalRate.toFixed(2)}%
+                ${infoTip("Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Jedno zdanie jest liczone najwyżej raz, niezależnie od liczby wykładników. Uwzględniane są m.in. „bo”, „bowiem”, „albowiem”, „ponieważ”, „gdyż”, „jako że”, „dlatego że”, „więc”, „zatem”, „toteż”, „przeto”, „dlatego”, „tedy”, „w rezultacie”, „w konsekwencji”, „z tego powodu”, „w takim razie” i „tak że”. „Skoro” jest liczone z wyjątkiem konstrukcji „skoro tylko”; „to” nie jest liczone samodzielnie; „stąd” jest liczone jako marker mimo możliwego znaczenia przestrzennego. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie. Didaskalia są wyłączone.")}
+              </div>
+              <div class="metric-card-secondary">
+                Zdania z relacją kauzalną: <strong>${stats.causalCount}</strong><br>
                 Wszystkich wykrytych zdań: <strong>${stats.sentenceCount}</strong>
               </div>`;
           }
@@ -4784,6 +4827,67 @@
              };
           }
 
+          function getCausalCohesionStats(text) {
+             const sentences = splitIntoSentences(text);
+             const causalCount = sentences.filter(isCausalSentence).length;
+
+             return {
+                sentenceCount: sentences.length,
+                causalCount,
+                causalRate: sentences.length
+                   ? (causalCount / sentences.length) * 100
+                   : 0,
+             };
+          }
+
+          function isCausalSentence(sentence) {
+             const normalizedSentence = sentence.replace(/\s+/g, " ").trim();
+             if (!normalizedSentence) return false;
+
+             if (
+                APP_CONFIG.causalStrongMarkers.some((marker) =>
+                   hasLexicalMarker(normalizedSentence, marker),
+                )
+             ) {
+                return true;
+             }
+
+             // „Skoro” zwykle sygnalizuje przesłankę lub uzasadnienie,
+             // ale konstrukcję „skoro tylko” traktujemy jako temporalną.
+             if (hasCausalSkoro(normalizedSentence)) return true;
+
+             // „Stąd” może być przestrzenne, lecz w tej prostej heurystyce
+             // jest liczone jako jawny wykładnik wyniku/wnioskowania.
+             if (hasLexicalMarker(normalizedSentence, "stąd")) return true;
+
+             return false;
+          }
+
+          function hasLexicalMarker(sentence, marker) {
+             const markerPattern = marker
+                .split(/\s+/)
+                .map(escapeRegex)
+                .join("\\s+");
+             const regex = new RegExp(
+                `(^|[^\\p{L}])(${markerPattern})(?=$|[^\\p{L}])`,
+                "iu",
+             );
+             return regex.test(sentence);
+          }
+
+          function hasCausalSkoro(sentence) {
+             const regex = /(^|[^\p{L}])(skoro)(?=$|[^\p{L}])/giu;
+             let match;
+
+             while ((match = regex.exec(sentence)) !== null) {
+                const markerEnd = match.index + match[1].length + match[2].length;
+                const after = sentence.slice(markerEnd);
+                if (!/^\s+tylko(?=$|[^\p{L}])/iu.test(after)) return true;
+             }
+
+             return false;
+          }
+
           function isHypotacticSentence(sentence) {
              const normalizedSentence = sentence.replace(/\s+/g, " ").trim();
              if (!normalizedSentence) return false;
@@ -5005,6 +5109,11 @@
              hypotaxisRate: {
                 label: "Odsetek zdań hipotaktycznych",
                 unit: "%",
+             },
+             causalCohesionRate: {
+                label: "Kohezja tekstowa: odsetek zdań z relacją kauzalną",
+                unit: "%",
+                note: "Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie.",
              },
             lineBreaking: {
                label: "Współczynnik łamania wiersza",
@@ -5604,6 +5713,9 @@
                 case "hypotaxisRate":
                    return getHypotaxisStats(allSpeechText).hypotacticRate;
 
+                case "causalCohesionRate":
+                   return getCausalCohesionStats(allSpeechText).causalRate;
+
                case "lineBreaking": {
                   const brokenLines = metricLines.filter(
                      ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
@@ -5649,6 +5761,7 @@
             const chartWrap = document.getElementById("comparisonChartWrap");
             const title = document.getElementById("comparisonChartTitle");
             const subtitle = document.getElementById("comparisonChartSubtitle");
+            const note = document.getElementById("comparisonChartNote");
             const metricConfig = COMPARISON_METRICS[metricKey];
             if (!canvas || !resultsSection || !metricConfig) return;
 
@@ -5658,6 +5771,10 @@
             if (subtitle) {
                subtitle.textContent =
                   "Kolejność słupków odpowiada kolejności ustawionej na liście powyżej.";
+            }
+            if (note) {
+               note.textContent = metricConfig.note || "";
+               note.hidden = !metricConfig.note;
             }
 
             if (chartWrap) {
