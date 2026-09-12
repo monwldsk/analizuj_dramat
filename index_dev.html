@@ -3024,6 +3024,9 @@
                         <option value="asideStageFunction">
                            Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”
                         </option>
+                        <option value="asideDramaLength">
+                           Wskaźnik gęstości apartu względem długości dramatu
+                        </option>
                      </select>
                   </div>
                   <button
@@ -5184,6 +5187,11 @@
                label: "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”",
                unit: "%",
             },
+            asideDramaLength: {
+               label: "Wskaźnik gęstości apartu względem długości dramatu",
+               unit: "%",
+               note: "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba rzeczywistych wersów metrycznych dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
+            },
          };
 
          const COMPARISON_SLOWACKI_DEFAULTS = [
@@ -5802,6 +5810,11 @@
                case "asideStageFunction":
                   return stageDirections.length
                      ? (asideStageDirectionCount / stageDirections.length) * 100
+                     : 0;
+
+               case "asideDramaLength":
+                  return metricLineCount
+                     ? (asideStageDirectionCount / metricLineCount) * 100
                      : 0;
 
                default:
