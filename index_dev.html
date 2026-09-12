@@ -2366,6 +2366,30 @@
                         alt="wykres"
                      />
                   </div>
+                     <p>
+                     większa frekwencja zaimków 1. os. l. mnogiej (sugerująca być może zmianę sposobu konstruowania podmiotu dramatycznego – od bardziej indywidualnego „ja” ku podmiotowi ponadindywidualnemu czy wspólnotowemu):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_podmiot_zbiorowy.png"
+                        alt="wykres"
+                     />
+                  </div>
+                     <p>
+                     wzrost występowania składni hipotaktycznej (a w składni hipotaktycznej – jawnych wykładników relacji kauzalnych), co być może dowodzi przesunięcia sposobu organizowania wypowiedzi ku bardziej hierarchicznemu układowi zależności semantycznych (nasilenie dysukrsywności i argumentacyjności):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_zdania_hipotaktyczne.png"
+                        alt="wykres"
+                     />
+                  </div>
+                    <div class="chart">
+                     <img
+                        src="assets/charts/wykres_relacje_kauzalne.png"
+                        alt="wykres"
+                     />
+                  </div>
                   <p>
                      a także wyraźne wyciszenie pytań i wykrzyknień (świadczące być
                      może o przejściu od emocji i epistemologicznej niepewności
@@ -3028,7 +3052,7 @@
                            Odsetek zdań hipotaktycznych
                         </option>
                         <option value="causalCohesionRate">
-                           Kohezja tekstowa: odsetek zdań z jawną relacją kauzalną
+                           Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej
                         </option>
                         <option value="lineBreaking">
                            Współczynnik łamania wiersza
@@ -4538,7 +4562,7 @@
 
              DOM.metrics.causalCohesion.innerHTML = `
               <div class="metric-card-top">
-                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z jawną relacją kauzalną</div>
+                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej</div>
               </div>
               <div class="metric-card-value">
                 ${stats.causalRate.toFixed(2)}%
@@ -5180,7 +5204,7 @@
                 unit: "%",
              },
              causalCohesionRate: {
-                label: "Kohezja tekstowa: odsetek zdań z jawną relacją kauzalną",
+                label: "Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej",
                 unit: "%",
                 note: "Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie.",
              },
