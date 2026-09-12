@@ -1591,6 +1591,46 @@
             color: #b33128;
          }
 
+         .comparison-loader {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 42px;
+            margin-top: 10px;
+            padding: 9px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 10px;
+            color: #163f8f;
+            background: #f5f9ff;
+            font-size: 12px;
+            font-weight: 700;
+         }
+
+         .comparison-loader[hidden] {
+            display: none !important;
+         }
+
+         .comparison-loader-spinner {
+            flex: 0 0 18px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #cfe0f4;
+            border-top-color: #0b72d9;
+            border-radius: 50%;
+            animation: comparison-loader-spin 0.75s linear infinite;
+         }
+
+         @keyframes comparison-loader-spin {
+            to {
+               transform: rotate(360deg);
+            }
+         }
+
+         .comparison-results.is-loading {
+            opacity: 0.48;
+            pointer-events: none;
+         }
+
          .comparison-results {
             margin-top: 18px;
             padding: 20px;
@@ -2027,7 +2067,7 @@
                      <span
                         ><strong>zróżnicowania wersyfikacyjnego</strong></span
                      >
-                     oraz innych parametrów analizy cyfrowej, takich jak:
+                     oraz innych parametrów analizy cyfrowej, takich jak np.:
                   </p>
                </header>
 
@@ -2042,10 +2082,11 @@
                      <div class="card-title">Rozkład metryczny wypowiedzi wybranych postaci</div>
                      <div class="rule"></div>
                      <p>
-                        Umożliwia porównanie dominujących metrów w wypowiedziach
+                        Porównanie dominujących metrów w wypowiedziach
                         różnych bohaterów.
                      </p>
                   </article>
+                                    
                   <article class="card reveal" data-category="rytm">
                      <div class="card-top">
                         <div class="icon-wrap" aria-hidden="true">
@@ -2056,8 +2097,21 @@
                      <div class="card-title">Średnia długość odcinka izosylabicznego</div>
                      <div class="rule"></div>
                      <p>
-                        Pozwala określić m.in. stopień stabilności rytmicznej
-                        analizowanego tekstu.
+                        Wykładnik m.in. stopnia stabilności rytmicznej tekstu.
+                     </p>
+                  </article>
+
+                  <article class="card reveal" data-category="all">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/kto_najwiecej_mowi.png" />
+                        </div>
+                        <div class="num">03</div>
+                     </div>
+                     <div class="card-title">Dystrybucja tekstu dialogowego m. postaciami</div>
+                     <div class="rule"></div>
+                     <p>
+                        Stopień aktywności poszczególnych rozmówców.
                      </p>
                   </article>
 
@@ -2066,13 +2120,12 @@
                         <div class="icon-wrap" aria-hidden="true">
                            <img src="assets/card_icons/interakcje.png" />
                         </div>
-                        <div class="num">03</div>
+                        <div class="num">04</div>
                      </div>
                      <div class="card-title">Średnia długość wypowiedzi jednej postaci</div>
                      <div class="rule"></div>
                      <p>
-                        Ilustruje gęstość interakcji między postaciami i pomaga
-                        porównywać dynamikę dialogu.
+                        Gęstość interakcji między postaciami (dynamika dialogu).
                      </p>
                   </article>
 
@@ -2081,11 +2134,11 @@
                         <div class="icon-wrap" aria-hidden="true">
                            <img src="assets/card_icons/interp.png" />
                         </div>
-                        <div class="num">04</div>
+                        <div class="num">05</div>
                      </div>
                      <div class="card-title">Wektory ekspresji interpunkcyjnej</div>
                      <div class="rule"></div>
-                     <p>Odzwierciedlają gęstość wykrzyknień i pytań.</p>
+                     <p>Gęstość wykrzyknień i pytań.</p>
                   </article>
 
                   <article class="card reveal" data-category="rytm">
@@ -2093,12 +2146,12 @@
                         <div class="icon-wrap" aria-hidden="true">
                            <img src="assets/card_icons/lamanie.png" />
                         </div>
-                        <div class="num">05</div>
+                        <div class="num">06</div>
                      </div>
                      <div class="card-title">Wskaźnik łamania wiersza</div>
                      <div class="rule"></div>
                      <p>
-                        % linijek wypowiedzi, które nie kończą się znakiem
+                        % wersów, które nie kończą się znakiem
                         interpunkcyjnym sygnalizującym zamknięcie struktury
                         składniowej.
                      </p>
@@ -2109,12 +2162,12 @@
                         <div class="icon-wrap" aria-hidden="true">
                            <img src="assets/card_icons/didaskalia.png" />
                         </div>
-                        <div class="num">06</div>
+                        <div class="num">07</div>
                      </div>
                      <div class="card-title">Wskaźnik gęstości tekstu pobocznego</div>
                      <div class="rule"></div>
                      <p>
-                        Liczba wystąpień didaskaliów względem długości tekstu
+                        Wystąpienia didaskaliów względem długości tekstu
                         głównego.
                      </p>
                   </article>
@@ -2124,14 +2177,14 @@
                         <div class="icon-wrap" aria-hidden="true">
                            <img src="assets/card_icons/apart.png" />
                         </div>
-                        <div class="num">07</div>
+                        <div class="num">08</div>
                      </div>
                      <div class="card-title">
                         Wskaźnik nasycenia didaskaliów wypowiedziami „na
                         stronie”
                      </div>
                      <div class="rule"></div>
-                     <p>Pokazuje gęstość apartu.</p>
+                     <p>Gęstość apartu jako funkcji didaskaliów.</p>
                   </article>
 
                   <article class="card reveal" data-category="narracja">
@@ -2139,13 +2192,52 @@
                         <div class="icon-wrap" aria-hidden="true">
                            <img src="assets/card_icons/me.png" />
                         </div>
-                        <div class="num">08</div>
+                        <div class="num">09</div>
                      </div>
-                     <div class="card-title">Wskaźnik referencji pierwszoosobowej</div>
+                     <div class="card-title">Wskaźnik referencji 1. os. (l. poj. i l. mn.)</div>
                      <div class="rule"></div>
                      <p>
-                        Mierzy gęstość zaimków osobowych i dzierżawczych
-                        związanych z 1. osobą liczby pojedynczej.
+                        Gęstość zaimków osobowych i dzierżawczych
+                        związanych z 1. os. l. pojedynczej i mnogiej.
+                     </p>
+                  </article>
+                  <article class="card reveal" data-category="all">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/hipotaksa.png" />
+                        </div>
+                        <div class="num">10</div>
+                     </div>
+                     <div class="card-title">Udział hipotaksy w składni</div>
+                     <div class="rule"></div>
+                     <p>
+                        Odsetek zdań hipotaktycznych (na podstawie jawnych sygnałów składniowego podporządkowania).
+                     </p>
+                  </article>
+                     <article class="card reveal" data-category="all">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/srednia_liczba_slow_w_zdaniu.png" />
+                        </div>
+                        <div class="num">11</div>
+                     </div>
+                     <div class="card-title">Średnia liczba słów w zdaniu</div>
+                     <div class="rule"></div>
+                     <p>
+                        Średnia liczba słów (i osobno sylab) w zdaniach tekstu dialogowego.
+                     </p>
+                  </article>
+                       <article class="card reveal" data-category="all">
+                     <div class="card-top">
+                        <div class="icon-wrap" aria-hidden="true">
+                           <img src="assets/card_icons/logiczne_wynikanie.png" />
+                        </div>
+                        <div class="num">12</div>
+                     </div>
+                     <div class="card-title">Odsetek zdań z jawnym wykładnikiem relacji kauzalnej</div>
+                     <div class="rule"></div>
+                     <p>
+                        % zdań z jawnym wykładnikiem rel. kauzalnej w wykrytych konstrukcjach hipotaktycznych.
                      </p>
                   </article>
                </div>
@@ -2178,33 +2270,6 @@
                      >, które obejmuje dramaty niewierszowane.
                   </div>
                </div>
-
-               <!-- <div class="header-container">
-                  <h2>Do czego służy ta strona?</h2>
-                  Strona umożliwia przeanalizowanie tekstu dowolnego dramatu (w języku polskim) pod kątem:           
-                  <ul>
-                     <li><strong>jego zróżnicowania
-                        wersyfikacyjnego</strong>
-                     </li>
-                  </ul>
-                  oraz innych wskaźników analizy cyfrowej, takich jak np.: 
-                  <ul>
-                     <li><strong>średnia długość odcinka izosylabicznego</strong> (pozwala określić m.in. stopień stabilności rytmicznej tekstu),
-                     </li>
-                     <li><strong>średnia długość wypowiedzi jednej postaci</strong> (ilustruje gęstość interakcji między postaciami),
-                     </li>
-                     <li><strong> wektory ekspresji interpunkcyjnej</strong> (odzwierciedlają gęstość wykrzyknień i pytań),
-                     </li>
-                     <li><strong> wskaźnik łamania wiersza</strong> (czyli procentowy udział linijek wypowiedzi, które nie kończą się znakiem interpunkcyjnym sygnalizującym zamknięcie struktury składniowej, w stosunku do wszystkich linijek z wyłączeniem didaskaliów),
-                     </li>
-                     <li><strong> wskaźnik gęstości tekstu pobocznego</strong> (liczba wystąpień didaskaliów względem długości tekstu głównego),
-                     </li>
-                     <li><strong> wskaźnik nasycenia tekstu pobocznego wypowiedziami „na stronie”</strong> (gęstość apartu),
-                     </li>
-                     <li><strong> wskaźnik referencji pierwoszoosobowej</strong> (gęstość zaimków osobowych i dzierżawczych związanych z 1. os. l. poj.).
-                     </li>
-                  </ul>
-               </div> -->
                <div class="banner-separator">
                   <img src="assets/separator_long.png" alt="baner" />
                </div>
@@ -2298,6 +2363,30 @@
                   <div class="chart">
                      <img
                         src="assets/charts/wykres_srednia_dlugosc_monologu.png"
+                        alt="wykres"
+                     />
+                  </div>
+                     <p>
+                     większa frekwencja zaimków 1. os. l. mnogiej (sugerująca być może zmianę sposobu konstruowania podmiotu dramatycznego – od bardziej indywidualnego „ja” ku podmiotowi ponadindywidualnemu czy wspólnotowemu):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_podmiot_zbiorowy.png"
+                        alt="wykres"
+                     />
+                  </div>
+                     <p>
+                     wzrost występowania składni hipotaktycznej (a w składni hipotaktycznej – jawnych wykładników relacji kauzalnych), co być może dowodzi przesunięcia sposobu organizowania wypowiedzi ku bardziej hierarchicznemu układowi zależności semantycznych (nasilenie dyskursywności i argumentacyjności):
+                  </p>
+                  <div class="chart">
+                     <img
+                        src="assets/charts/wykres_zdania_hipotaktyczne.png"
+                        alt="wykres"
+                     />
+                  </div>
+                    <div class="chart">
+                     <img
+                        src="assets/charts/wykres_relacje_kauzalne.png"
                         alt="wykres"
                      />
                   </div>
@@ -2811,12 +2900,16 @@
                         id="interactionDensityMetric"
                         class="metric-card"
                      ></div>
+                     <div id="sentenceLengthMetric" class="metric-card"></div>
+                     <div id="hypotaxisMetric" class="metric-card"></div>
+                     <div id="causalCohesionMetric" class="metric-card"></div>
                      <div id="lineBreakingMetric" class="metric-card"></div>
                      <div
                         id="punctuationExpressionMetric"
                         class="metric-card"
                      ></div>
                      <div id="selfReferenceMetric" class="metric-card"></div>
+                     <div id="selfReferencePluralMetric" class="metric-card"></div>
                      <div
                         id="metacommentaryDensityMetric"
                         class="metric-card"
@@ -2949,6 +3042,18 @@
                         <option value="interactionAverage" selected>
                            Średnia długość wypowiedzi jednej postaci
                         </option>
+                        <option value="sentenceAverageWords">
+                           Średnia długość zdania — słowa
+                        </option>
+                        <option value="sentenceAverageSyllables">
+                           Średnia długość zdania — sylaby
+                        </option>
+                        <option value="hypotaxisRate">
+                           Odsetek zdań hipotaktycznych
+                        </option>
+                        <option value="causalCohesionRate">
+                           Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej
+                        </option>
                         <option value="lineBreaking">
                            Współczynnik łamania wiersza
                         </option>
@@ -2957,13 +3062,19 @@
                         </option>
                         <option value="questionDensity">Gęstość pytań</option>
                         <option value="selfReference">
-                           Wskaźnik referencji pierwszoosobowej
+                           Wskaźnik referencji pierwszoosobowej (l. poj.)
+                        </option>
+                        <option value="selfReferencePlural">
+                           Wskaźnik referencji pierwszoosobowej (l. mn.)
                         </option>
                         <option value="metacommentaryDensity">
                            Indeks gęstości metakomentarza (didaskaliów)
                         </option>
                         <option value="asideStageFunction">
                            Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”
+                        </option>
+                        <option value="asideDramaLength">
+                           Wskaźnik gęstości apartu względem długości dramatu
                         </option>
                      </select>
                   </div>
@@ -2976,6 +3087,16 @@
                   </button>
                </div>
                <div id="comparisonStatus" class="comparison-status" role="status"></div>
+               <div
+                  id="comparisonLoader"
+                  class="comparison-loader"
+                  role="status"
+                  aria-live="polite"
+                  hidden
+               >
+                  <span class="comparison-loader-spinner" aria-hidden="true"></span>
+                  <span>Obliczanie wyniku…</span>
+               </div>
             </div>
 
             <div id="comparisonResults" class="comparison-results" hidden>
@@ -2984,7 +3105,7 @@
                <div id="comparisonChartWrap" class="comparison-chart-wrap">
                   <canvas id="comparisonChart"></canvas>
                </div>
-              
+               <div id="comparisonChartNote" class="comparison-chart-note" hidden></div>
             </div>
          </section>
       </main>
@@ -3165,6 +3286,83 @@
             syllableReplacementRegex: /ie|ia|iu|ię|ią|io|ii|iy|ió/g,
             vowelRegex: /[aeiouąęóy]/gi,
             lineEndingRegex: /(\.|,|!|\?|;|…|:|-|—|–)$/,
+             sentenceAbbreviations: new Set([
+                "np", "itp", "itd", "tj", "tzn", "tzw", "m.in", "m.inn",
+                "zob", "por", "dr", "prof", "mgr", "inż", "ks", "św",
+                "bp", "abp", "gen", "płk", "ppłk", "mjr", "kpt", "nr",
+                "godz", "ul", "al",
+             ]),
+             hypotaxisStrongMarkers: [
+                "mimo że",
+                "pomimo że",
+                "chyba że",
+                "podczas gdy",
+                "dlatego że",
+                "pod warunkiem że",
+                "w razie gdyby",
+                "że",
+                "iż",
+                "żeby",
+                "aby",
+                "ażeby",
+                "ponieważ",
+                "gdyż",
+                "bo",
+                "jeśli",
+                "jeżeli",
+                "gdyby",
+                "choć",
+                "chociaż",
+                "choćby",
+                "skoro",
+                "zanim",
+                "dopóki",
+                "odkąd",
+                "gdy",
+             ],
+             hypotaxisContextualMarkers: [
+                "czy",
+                "kiedy",
+                "gdzie",
+                "dokąd",
+                "skąd",
+                "dlaczego",
+                "kto",
+                "co",
+                "ile",
+                "nim",
+                "który",
+                "która",
+                "które",
+                "którzy",
+                "którego",
+                "której",
+                "któremu",
+                "którą",
+                "którym",
+                "których",
+                "którymi",
+             ],
+             causalStrongMarkers: [
+                "z tego powodu",
+                "w takim razie",
+                "w rezultacie",
+                "w konsekwencji",
+                "dlatego że",
+                "jako że",
+                "tak że",
+                "ponieważ",
+                "gdyż",
+                "bowiem",
+                "albowiem",
+                "bo",
+                "więc",
+                "zatem",
+                "toteż",
+                "przeto",
+                "dlatego",
+                "tedy",
+             ],
             selfReferencePronouns: new Set([
                "ja",
                "mnie",
@@ -3181,6 +3379,23 @@
                "moi",
                "moich",
                "moimi",
+            ]),
+            selfReferencePluralPronouns: new Set([
+               "my",
+               "nas",
+               "nam",
+               "nami",
+               "nasz",
+               "naszego",
+               "naszemu",
+               "naszym",
+               "nasza",
+               "naszej",
+               "naszą",
+               "nasze",
+               "nasi",
+               "naszych",
+               "naszymi",
             ]),
             meterColors: {
                1: "hsl(55, 50%, 70%)",
@@ -3262,8 +3477,14 @@
                interactionDensity: document.getElementById(
                   "interactionDensityMetric",
                ),
+               sentenceLength: document.getElementById("sentenceLengthMetric"),
+               hypotaxis: document.getElementById("hypotaxisMetric"),
+               causalCohesion: document.getElementById("causalCohesionMetric"),
                lineBreaking: document.getElementById("lineBreakingMetric"),
                selfReference: document.getElementById("selfReferenceMetric"),
+               selfReferencePlural: document.getElementById(
+                  "selfReferencePluralMetric",
+               ),
                metacommentaryDensity: document.getElementById(
                   "metacommentaryDensityMetric",
                ),
@@ -4151,8 +4372,13 @@
             // żeby nie zniekształcać struktury dialogowej.
             renderInteractionDensityMetric(speechFragments);
 
+             renderSentenceLengthMetric(allSpeechText);
+             renderHypotaxisMetric(allSpeechText);
+             renderCausalCohesionMetric(allSpeechText);
+
             renderLineBreakingMetric(metricLines, metricLineCount);
             renderSelfReferenceMetric(words);
+            renderSelfReferencePluralMetric(words);
             renderMetricDistributionChart(metricLines, metricLineCount);
 
             // Udział bohaterów nadal dotyczy ich rzeczywistych fragmentów mowy,
@@ -4297,6 +4523,57 @@
             );
          }
 
+          function renderSentenceLengthMetric(text) {
+             const stats = getSentenceLengthStats(text);
+
+             DOM.metrics.sentenceLength.innerHTML = `
+              <div class="metric-card-top">
+                <div class="metric-card-label">Średnia długość zdania</div>
+              </div>
+              <div class="metric-card-value">
+                ${stats.averageWords.toFixed(2)} słów
+                ${infoTip("Zdanie jest liczone od początku tekstu lub od poprzedniego znaku kończącego do kropki, wielokropka („...” lub „…”), pytajnika albo wykrzyknika. Serie znaków końcowych, np. „?!”, są traktowane jako jedno zakończenie. Pojedyncza kropka nie zamyka zdania w typowych skrótach, inicjałach ani liczbach dziesiętnych; jeśli nie występuje na końcu dramatu, kolejny właściwy znak musi być wielką literą. Końcowy fragment bez znaku zamykającego nie jest liczony. Didaskalia są wyłączone.")}
+              </div>
+              <div class="metric-card-secondary">
+                Średnia w sylabach: <strong>${stats.averageSyllables.toFixed(2)}</strong><br>
+                Liczba wykrytych zdań: <strong>${stats.sentenceCount}</strong>
+              </div>`;
+          }
+
+          function renderHypotaxisMetric(text) {
+             const stats = getHypotaxisStats(text);
+
+             DOM.metrics.hypotaxis.innerHTML = `
+              <div class="metric-card-top">
+                <div class="metric-card-label">Zdania hipotaktyczne</div>
+              </div>
+              <div class="metric-card-value">
+                ${stats.hypotacticCount}
+                ${infoTip("Za zdanie hipotaktyczne uznawane jest wykryte wcześniej zdanie zawierające sygnał podporządkowania składniowego. Jednoznaczne spójniki podrzędne, m.in. „że”, „iż”, „żeby”, „aby”, „ponieważ”, „gdyż”, „jeśli”, „jeżeli”, „gdyby”, „choć”, „skoro”, „zanim”, „dopóki”, „odkąd” i „gdy”, są wykrywane bezpośrednio. Formy wieloznaczne, m.in. „czy”, „kiedy”, „gdzie”, „kto”, „co” oraz formy zaimka „który”, są liczone tylko wtedy, gdy ich pozycja wskazuje na człon podrzędny (np. po przecinku lub innej granicy wewnątrzzdaniowej); na początku zdania wymagają późniejszej granicy oddzielającej człon nadrzędny. Didaskalia są wyłączone. Jest to oczywiście uproszczone rozwiązanie, a nie pełny parser składniowy.")}
+              </div>
+              <div class="metric-card-secondary">
+                Udział wśród wszystkich zdań: <strong>${stats.hypotacticRate.toFixed(2)}%</strong><br>
+                Wszystkich wykrytych zdań: <strong>${stats.sentenceCount}</strong>
+              </div>`;
+          }
+
+          function renderCausalCohesionMetric(text) {
+             const stats = getCausalCohesionStats(text);
+
+             DOM.metrics.causalCohesion.innerHTML = `
+              <div class="metric-card-top">
+                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej</div>
+              </div>
+              <div class="metric-card-value">
+                ${stats.causalRate.toFixed(2)}%
+                ${infoTip("Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Jedno zdanie jest liczone najwyżej raz, niezależnie od liczby wykładników. Uwzględniane są m.in. „bo”, „bowiem”, „albowiem”, „ponieważ”, „gdyż”, „jako że”, „dlatego że”, „więc”, „zatem”, „toteż”, „przeto”, „dlatego”, „tedy”, „w rezultacie”, „w konsekwencji”, „z tego powodu”, „w takim razie” i „tak że”. „Skoro” jest liczone z wyjątkiem konstrukcji „skoro tylko”; „to” nie jest liczone samodzielnie; „stąd” jest liczone jako marker mimo możliwego znaczenia przestrzennego. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie. Didaskalia są wyłączone.")}
+              </div>
+              <div class="metric-card-secondary">
+                Zdania z relacją kauzalną: <strong>${stats.causalCount}</strong><br>
+                Wszystkich wykrytych zdań: <strong>${stats.sentenceCount}</strong>
+              </div>`;
+          }
+
          function renderLineBreakingMetric(metricLines, metricLineCount) {
             const brokenLines = metricLines.filter(
                ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
@@ -4319,9 +4596,25 @@
                   : "0.00";
 
             DOM.metrics.selfReference.innerHTML = metricHtml(
-               "Wskaźnik referencji pierwszoosobowej:",
+               "Wskaźnik referencji pierwszoosobowej (l. poj.):",
                `${selfReferenceRate}‰`,
                "Wskaźnik = liczba wystąpień form: ja, mnie, mi, mną, mój, mojego, mojemu, moim, moja, mojej, moją, moje, moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.",
+            );
+         }
+
+         function renderSelfReferencePluralMetric(words) {
+            const selfReferencePluralCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePluralPronouns.has(word),
+            ).length;
+            const selfReferencePluralRate =
+               words.length > 0
+                  ? ((selfReferencePluralCount / words.length) * 1000).toFixed(2)
+                  : "0.00";
+
+            DOM.metrics.selfReferencePlural.innerHTML = metricHtml(
+               "Wskaźnik referencji pierwszoosobowej (l. mn.):",
+               `${selfReferencePluralRate}‰`,
+               "Wskaźnik = liczba wystąpień form: my, nas, nam, nami, nasz, naszego, naszemu, naszym, nasza, naszej, naszą, nasze, nasi, naszych, naszymi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.",
             );
          }
 
@@ -4598,6 +4891,239 @@
                .filter(Boolean);
          }
 
+          function getSentenceLengthStats(text) {
+             const sentences = splitIntoSentences(text);
+             const sentenceLengths = sentences
+                .map((sentence) => ({
+                   words: getWords(sentence).length,
+                   syllables: countSyllables(sentence),
+                }))
+                .filter(({ words }) => words > 0);
+
+             return {
+                sentenceCount: sentenceLengths.length,
+                averageWords: average(sentenceLengths.map(({ words }) => words)),
+                averageSyllables: average(sentenceLengths.map(({ syllables }) => syllables)),
+             };
+          }
+
+          function getHypotaxisStats(text) {
+             const sentences = splitIntoSentences(text);
+             const hypotacticCount = sentences.filter(isHypotacticSentence).length;
+
+             return {
+                sentenceCount: sentences.length,
+                hypotacticCount,
+                hypotacticRate: sentences.length
+                   ? (hypotacticCount / sentences.length) * 100
+                   : 0,
+             };
+          }
+
+          function getCausalCohesionStats(text) {
+             const sentences = splitIntoSentences(text);
+             const causalCount = sentences.filter(isCausalSentence).length;
+
+             return {
+                sentenceCount: sentences.length,
+                causalCount,
+                causalRate: sentences.length
+                   ? (causalCount / sentences.length) * 100
+                   : 0,
+             };
+          }
+
+          function isCausalSentence(sentence) {
+             const normalizedSentence = sentence.replace(/\s+/g, " ").trim();
+             if (!normalizedSentence) return false;
+
+             if (
+                APP_CONFIG.causalStrongMarkers.some((marker) =>
+                   hasLexicalMarker(normalizedSentence, marker),
+                )
+             ) {
+                return true;
+             }
+
+             // „Skoro” zwykle sygnalizuje przesłankę lub uzasadnienie,
+             // ale konstrukcję „skoro tylko” traktujemy jako temporalną.
+             if (hasCausalSkoro(normalizedSentence)) return true;
+
+             // „Stąd” może być przestrzenne, lecz w tej prostej heurystyce
+             // jest liczone jako jawny wykładnik wyniku/wnioskowania.
+             if (hasLexicalMarker(normalizedSentence, "stąd")) return true;
+
+             return false;
+          }
+
+          function hasLexicalMarker(sentence, marker) {
+             const markerPattern = marker
+                .split(/\s+/)
+                .map(escapeRegex)
+                .join("\\s+");
+             const regex = new RegExp(
+                `(^|[^\\p{L}])(${markerPattern})(?=$|[^\\p{L}])`,
+                "iu",
+             );
+             return regex.test(sentence);
+          }
+
+          function hasCausalSkoro(sentence) {
+             const regex = /(^|[^\p{L}])(skoro)(?=$|[^\p{L}])/giu;
+             let match;
+
+             while ((match = regex.exec(sentence)) !== null) {
+                const markerEnd = match.index + match[1].length + match[2].length;
+                const after = sentence.slice(markerEnd);
+                if (!/^\s+tylko(?=$|[^\p{L}])/iu.test(after)) return true;
+             }
+
+             return false;
+          }
+
+          function isHypotacticSentence(sentence) {
+             const normalizedSentence = sentence.replace(/\s+/g, " ").trim();
+             if (!normalizedSentence) return false;
+
+             if (
+                APP_CONFIG.hypotaxisStrongMarkers.some((marker) =>
+                   hasHypotaxisMarker(normalizedSentence, marker, false),
+                )
+             ) {
+                return true;
+             }
+
+             return APP_CONFIG.hypotaxisContextualMarkers.some((marker) =>
+                hasHypotaxisMarker(normalizedSentence, marker, true),
+             );
+          }
+
+          function hasHypotaxisMarker(sentence, marker, requireClauseBoundary) {
+             const markerPattern = marker
+                .split(/\s+/)
+                .map(escapeRegex)
+                .join("\\s+");
+             const regex = new RegExp(
+                `(^|[^\\p{L}])(${markerPattern})(?=$|[^\\p{L}])`,
+                "giu",
+             );
+             let match;
+
+             while ((match = regex.exec(sentence)) !== null) {
+                const markerStart = match.index + match[1].length;
+                const markerEnd = markerStart + match[2].length;
+                const before = sentence.slice(0, markerStart).trimEnd();
+                const after = sentence.slice(markerEnd).trimStart();
+                const beforeWordCount = getWords(before).length;
+                const afterWordCount = getWords(after).length;
+
+                if (!afterWordCount) continue;
+
+                // Spójnik na początku zdania może rozpoczynać człon podrzędny
+                // tylko wtedy, gdy później występuje granica oddzielająca drugi człon.
+                if (beforeWordCount === 0) {
+                   if (hasFollowingClauseBoundary(after)) return true;
+                   continue;
+                }
+
+                if (!requireClauseBoundary) return true;
+
+                // Wyrazy wieloznaczne (np. „czy”, „kiedy”, „który”) uznajemy
+                // za sygnał hipotaksy tylko po granicy wewnątrzzdaniowej.
+                // Dopuszczamy także krótki przyimek między przecinkiem a zaimkiem:
+                // „człowiek, z którym...”, „sprawa, o której...”.
+                if (hasPrecedingClauseBoundary(before)) return true;
+             }
+
+             return false;
+          }
+
+          function hasPrecedingClauseBoundary(text) {
+             if (/[,;:—–-]\s*$/u.test(text)) return true;
+             return /[,;:—–-]\s+(?:z|ze|o|do|dla|od|po|przy|przed|za|nad|pod|między|przez|bez|w|we|na|ku|według|wobec|dzięki)\s*$/iu.test(
+                text,
+             );
+          }
+
+          function hasFollowingClauseBoundary(text) {
+             const boundaryIndex = text.search(/[,;:—–-]/u);
+             if (boundaryIndex < 0) return false;
+             return getWords(text.slice(boundaryIndex + 1)).length > 0;
+          }
+
+          function escapeRegex(value) {
+             return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+          }
+
+          function splitIntoSentences(text) {
+             const normalizedText = text.replace(/\s+/g, " ").trim();
+             if (!normalizedText) return [];
+
+             const sentences = [];
+             let sentenceStart = 0;
+             let index = 0;
+
+             while (index < normalizedText.length) {
+                const char = normalizedText[index];
+                let sentenceEnd = -1;
+
+                if (char === "…") {
+                   sentenceEnd = consumeSentenceEndingCluster(normalizedText, index);
+                } else if (char === "." && normalizedText.slice(index, index + 3) === "...") {
+                   sentenceEnd = consumeSentenceEndingCluster(normalizedText, index + 2);
+                } else if (char === "!" || char === "?") {
+                   sentenceEnd = consumeSentenceEndingCluster(normalizedText, index);
+                } else if (char === "." && isSentenceClosingPeriod(normalizedText, index)) {
+                   sentenceEnd = index;
+                }
+
+                if (sentenceEnd >= 0) {
+                   const sentence = normalizedText.slice(sentenceStart, sentenceEnd + 1).trim();
+                   if (getWords(sentence).length) sentences.push(sentence);
+                   sentenceStart = sentenceEnd + 1;
+                   index = sentenceEnd + 1;
+                   continue;
+                }
+                index++;
+             }
+             return sentences;
+          }
+
+          function consumeSentenceEndingCluster(text, startIndex) {
+             let endIndex = startIndex;
+             while (endIndex + 1 < text.length && /[.!?…]/.test(text[endIndex + 1])) {
+                endIndex++;
+             }
+             return endIndex;
+          }
+
+          function isSentenceClosingPeriod(text, periodIndex) {
+             const nextStartChar = getNextSentenceStartChar(text, periodIndex + 1);
+             if (!nextStartChar) return true;
+
+             const previousChar = text[periodIndex - 1] || "";
+             const nextChar = text[periodIndex + 1] || "";
+             if (/\d/.test(previousChar) && /\d/.test(nextChar)) return false;
+
+             const beforePeriod = text.slice(0, periodIndex);
+             const tokenMatch = beforePeriod.match(/([\p{L}]+(?:\.[\p{L}]+)*)$/u);
+             const token = (tokenMatch?.[1] || "").toLowerCase();
+
+             if (token.length === 1) return false;
+             if (APP_CONFIG.sentenceAbbreviations.has(token)) return false;
+             return /\p{Lu}/u.test(nextStartChar);
+          }
+
+          function getNextSentenceStartChar(text, startIndex) {
+             let index = startIndex;
+             while (index < text.length) {
+                const char = text[index];
+                if (!/[\s"'„”«»‚‘’()\[\]{}—–-]/u.test(char)) return char;
+                index++;
+             }
+             return "";
+          }
+
          function percent(numerator, denominator) {
             return denominator > 0
                ? ((numerator / denominator) * 100).toFixed(2)
@@ -4665,6 +5191,23 @@
                label: "Średnia długość wypowiedzi jednej postaci",
                unit: "",
             },
+             sentenceAverageWords: {
+                label: "Średnia długość zdania — słowa",
+                unit: " słów",
+             },
+             sentenceAverageSyllables: {
+                label: "Średnia długość zdania — sylaby",
+                unit: " sylab",
+             },
+             hypotaxisRate: {
+                label: "Odsetek zdań hipotaktycznych",
+                unit: "%",
+             },
+             causalCohesionRate: {
+                label: "Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej",
+                unit: "%",
+                note: "Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie.",
+             },
             lineBreaking: {
                label: "Współczynnik łamania wiersza",
                unit: "%",
@@ -4678,7 +5221,11 @@
                unit: "",
             },
             selfReference: {
-               label: "Wskaźnik referencji pierwszoosobowej",
+               label: "Wskaźnik referencji pierwszoosobowej (l. poj.)",
+               unit: "‰",
+            },
+            selfReferencePlural: {
+               label: "Wskaźnik referencji pierwszoosobowej (l. mn.)",
                unit: "‰",
             },
             metacommentaryDensity: {
@@ -4688,6 +5235,11 @@
             asideStageFunction: {
                label: "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”",
                unit: "%",
+            },
+            asideDramaLength: {
+               label: "Wskaźnik gęstości apartu względem długości dramatu",
+               unit: "%",
+               note: "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba rzeczywistych wersów metrycznych dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
             },
          };
 
@@ -5168,6 +5720,11 @@
             const button = document.getElementById("comparisonGenerateButton");
             if (button) button.disabled = true;
             setComparisonStatus("Obliczanie wartości dla wybranych tekstów...");
+            setComparisonLoading(true);
+
+            // Pozwól przeglądarce wyświetlić loader przed rozpoczęciem
+            // potencjalnie kosztownych obliczeń synchronicznych.
+            await new Promise((resolve) => requestAnimationFrame(resolve));
 
             try {
                const results = [];
@@ -5177,6 +5734,10 @@
                      label: item.label.trim() || item.title || "Bez tytułu",
                      value: calculateComparisonMetric(text, metricKey),
                   });
+
+                  // Oddaj na moment sterowanie przeglądarce, aby loader pozostawał
+                  // widoczny i animowany także przy wielu analizowanych tekstach.
+                  await new Promise((resolve) => requestAnimationFrame(resolve));
                }
 
                renderComparisonChart(results, metricKey);
@@ -5188,6 +5749,7 @@
                   true,
                );
             } finally {
+               setComparisonLoading(false);
                if (button) button.disabled = false;
             }
          }
@@ -5244,6 +5806,18 @@
                   return average(speechBlocks);
                }
 
+                case "sentenceAverageWords":
+                   return getSentenceLengthStats(allSpeechText).averageWords;
+
+                case "sentenceAverageSyllables":
+                   return getSentenceLengthStats(allSpeechText).averageSyllables;
+
+                case "hypotaxisRate":
+                   return getHypotaxisStats(allSpeechText).hypotacticRate;
+
+                case "causalCohesionRate":
+                   return getCausalCohesionStats(allSpeechText).causalRate;
+
                case "lineBreaking": {
                   const brokenLines = metricLines.filter(
                      ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
@@ -5268,6 +5842,15 @@
                   return words.length ? (selfReferenceCount / words.length) * 1000 : 0;
                }
 
+               case "selfReferencePlural": {
+                  const selfReferencePluralCount = words.filter((word) =>
+                     APP_CONFIG.selfReferencePluralPronouns.has(word),
+                  ).length;
+                  return words.length
+                     ? (selfReferencePluralCount / words.length) * 1000
+                     : 0;
+               }
+
                case "metacommentaryDensity":
                   return metricLineCount
                      ? (stageDirections.length / metricLineCount) * 100
@@ -5276,6 +5859,11 @@
                case "asideStageFunction":
                   return stageDirections.length
                      ? (asideStageDirectionCount / stageDirections.length) * 100
+                     : 0;
+
+               case "asideDramaLength":
+                  return metricLineCount
+                     ? (asideStageDirectionCount / metricLineCount) * 100
                      : 0;
 
                default:
@@ -5289,6 +5877,7 @@
             const chartWrap = document.getElementById("comparisonChartWrap");
             const title = document.getElementById("comparisonChartTitle");
             const subtitle = document.getElementById("comparisonChartSubtitle");
+            const note = document.getElementById("comparisonChartNote");
             const metricConfig = COMPARISON_METRICS[metricKey];
             if (!canvas || !resultsSection || !metricConfig) return;
 
@@ -5298,6 +5887,10 @@
             if (subtitle) {
                subtitle.textContent =
                   "Kolejność słupków odpowiada kolejności ustawionej na liście powyżej.";
+            }
+            if (note) {
+               note.textContent = metricConfig.note || "";
+               note.hidden = !metricConfig.note;
             }
 
             if (chartWrap) {
@@ -5402,6 +5995,16 @@
             if (!element) return;
             element.textContent = message;
             element.classList.toggle("error", Boolean(isError));
+         }
+
+         function setComparisonLoading(isLoading) {
+            const loader = document.getElementById("comparisonLoader");
+            const resultsSection = document.getElementById("comparisonResults");
+
+            if (loader) loader.hidden = !isLoading;
+            if (resultsSection) {
+               resultsSection.classList.toggle("is-loading", Boolean(isLoading));
+            }
          }
 
          function formatComparisonValue(value) {
