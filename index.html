@@ -125,6 +125,9 @@
             border-radius: 4px;
             text-align: justify;
          }
+         .info-note h2 {
+            text-align: center;
+         }
          .header-container {
             font-weight: 400;
          }
@@ -194,8 +197,13 @@
             display: block;
             opacity: 1;
          }
+         #drama-paste {
+            margin:auto;
+            max-width: 900px;
+         }
          .file-drop-zone {
-            margin: 10px 0;
+            margin: 10px auto;
+            max-width: 900px;
             padding: 16px;
             border: 2px dashed var(--color-accent);
             border-radius: 8px;
@@ -210,6 +218,8 @@
          .action-buttons {
             display: flex;
             gap: 15px;
+            margin:auto;
+            justify-content: center;
          }
          .action-buttons {
             display: none;
@@ -1081,6 +1091,7 @@
             display: flex;
             gap: 6px;
             align-items: center;
+            justify-content: center;
          }
 
          .drama-input-section {
@@ -1103,17 +1114,21 @@
          .drama-input-header p {
             margin: 0;
             color: var(--muted);
-
+            text-align:center;
             font-size: 16px;
             line-height: 1.5;
          }
+          .drama-input-header h2 {
+            text-align: center;
+          } 
 
          .drama-methods-overview {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
-
-            margin-bottom: 34px;
+            max-width: 900px;
+            margin: auto;
+            padding-bottom: 36px;
          }
 
          .drama-method-card {
@@ -1225,8 +1240,8 @@
             display: flex;
             align-items: center;
             gap: 15px;
-
-            margin: 26px 0;
+            max-width: 600px;
+            margin: 26px auto;
          }
 
          .drama-or-divider span {
@@ -2552,7 +2567,7 @@
          <section class="drama-input-section">
             <div class="drama-input-header">
                <h2>Wprowadź tekst dramatu</h2>
-               <p>Dostępne są 3 sposoby wprowadzenia tekstu:</p>
+               <p>Narzędzie umożliwia wprowadzenie tekstu dramatycznego na trzy różne sposoby:</p>
             </div>
             <div class="drama-methods-overview">
                <a href="#drama-paste" class="drama-method-card drama-method-card-link">
@@ -2621,11 +2636,12 @@
             <strong>LUB</strong>
             <span></span>
          </div>
-         <section id="drama-library" class="library-section" aria-label="Moja biblioteka">
-             <div class="drama-option">
+            <div class="drama-option">
             <span class="drama-method-number">03</span>
             <h3>Wybierz z biblioteki</h3>
          </div>
+         <section id="drama-library" class="library-section" aria-label="Moja biblioteka">
+          <h2>Moja biblioteka</h2>
             <p>
                Poniżej znajduje się biblioteka dramatów przygotowanych pod
                wymagania skryptu. Dorzucono tu m.in. te utwory, które nie
@@ -3064,7 +3080,7 @@
                            Odsetek zdań hipotaktycznych
                         </option>
                         <option value="causalCohesionRate">
-                           Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej
+                           Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej lub wynikowej
                         </option>
                         <option value="lineBreaking">
                            Wskaźnik niezgodności granicy wersowej i syntagmatycznej
@@ -4574,7 +4590,7 @@
 
              DOM.metrics.causalCohesion.innerHTML = `
               <div class="metric-card-top">
-                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej</div>
+                <div class="metric-card-label">Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej lub wynikowej</div>
               </div>
               <div class="metric-card-value">
                 ${stats.causalRate.toFixed(2)}%
@@ -5216,7 +5232,7 @@
                 unit: "%",
              },
              causalCohesionRate: {
-                label: "Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej",
+                label: "Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej lub wynikowej",
                 unit: "%",
                 note: "Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie.",
              },
