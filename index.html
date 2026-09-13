@@ -2147,7 +2147,7 @@
                         </div>
                         <div class="num">06</div>
                      </div>
-                     <div class="card-title">Wskaźnik łamania wiersza</div>
+                     <div class="card-title">Wskaźnik niezgodności granicy wersowej i syntagmatycznej</div>
                      <div class="rule"></div>
                      <p>
                         % wersów, które nie kończą się znakiem
@@ -3067,7 +3067,7 @@
                            Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej
                         </option>
                         <option value="lineBreaking">
-                           Współczynnik łamania wiersza
+                           Wskaźnik niezgodności granicy wersowej i syntagmatycznej
                         </option>
                         <option value="exclamationDensity">
                            Gęstość wykrzyknień
@@ -4592,9 +4592,9 @@
             ).length;
 
             DOM.metrics.lineBreaking.innerHTML = metricHtml(
-               "Współczynnik łamania wiersza:",
+               "Wskaźnik niezgodności granicy wersowej i syntagmatycznej:",
                `${percent(brokenLines, metricLineCount)}%`,
-               "Wskaźnik = liczba rzeczywistych wersów metrycznych, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Dla wersów współdzielonych lub przełamanych didaskaliami (P_1 + P_2) badane jest zakończenie całego scalonego wersu, czyli końcówka P_2.",
+               "Wskaźnik = liczba rzeczywistych wersów metrycznych, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Dla wersów współdzielonych lub przełamanych didaskaliami (P_1 + P_2) badane jest zakończenie całego scalonego wersu, czyli końcówka P_2. Wskaźnik nie jest równoznaczny z wykryciem przerzutni. Rozpoznanie przerzutni jako zjawiska wersologicznego wymaga uwzględnienia relacji składniowych i semantycznych między sąsiadującymi wersami.",
             );
          }
 
@@ -5221,7 +5221,7 @@
                 note: "Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie.",
              },
             lineBreaking: {
-               label: "Współczynnik łamania wiersza",
+               label: "WWskaźnik niezgodności granicy wersowej i syntagmatycznej",
                unit: "%",
             },
             exclamationDensity: {
