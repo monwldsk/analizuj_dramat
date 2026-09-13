@@ -125,6 +125,9 @@
             border-radius: 4px;
             text-align: justify;
          }
+         .info-note h2 {
+            text-align: center;
+         }
          .header-container {
             font-weight: 400;
          }
@@ -194,8 +197,13 @@
             display: block;
             opacity: 1;
          }
+         #drama-paste {
+            margin:auto;
+            max-width: 900px;
+         }
          .file-drop-zone {
-            margin: 10px 0;
+            margin: 10px auto;
+            max-width: 900px;
             padding: 16px;
             border: 2px dashed var(--color-accent);
             border-radius: 8px;
@@ -210,6 +218,8 @@
          .action-buttons {
             display: flex;
             gap: 15px;
+            margin:auto;
+            justify-content: center;
          }
          .action-buttons {
             display: none;
@@ -1081,6 +1091,7 @@
             display: flex;
             gap: 6px;
             align-items: center;
+            justify-content: center;
          }
 
          .drama-input-section {
@@ -1103,17 +1114,21 @@
          .drama-input-header p {
             margin: 0;
             color: var(--muted);
-
+            text-align:center;
             font-size: 16px;
             line-height: 1.5;
          }
+          .drama-input-header h2 {
+            text-align: center;
+          } 
 
          .drama-methods-overview {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 16px;
-
-            margin-bottom: 34px;
+            max-width: 900px;
+            margin: auto;
+            padding-bottom: 36px;
          }
 
          .drama-method-card {
@@ -1225,8 +1240,8 @@
             display: flex;
             align-items: center;
             gap: 15px;
-
-            margin: 26px 0;
+            max-width: 600px;
+            margin: 26px auto;
          }
 
          .drama-or-divider span {
@@ -2079,11 +2094,10 @@
                         </div>
                         <div class="num">01</div>
                      </div>
-                     <div class="card-title">Rozkład metryczny wypowiedzi wybranych postaci</div>
+                     <div class="card-title">Zróżnicowanie metryczne wypowiedzi wybranych postaci</div>
                      <div class="rule"></div>
                      <p>
-                        Porównanie dominujących metrów w wypowiedziach
-                        różnych bohaterów.
+                        Wskaźnik umożliwiający porównanie dominujących formatów sylabicznych w wypowiedziach bohaterów.
                      </p>
                   </article>
                                     
@@ -2111,7 +2125,7 @@
                      <div class="card-title">Dystrybucja tekstu dialogowego m. postaciami</div>
                      <div class="rule"></div>
                      <p>
-                        Stopień aktywności poszczególnych rozmówców.
+                        Stopień aktywności poszczególnych rozmówców (kto mówi najwięcej).
                      </p>
                   </article>
 
@@ -2125,7 +2139,7 @@
                      <div class="card-title">Średnia długość wypowiedzi jednej postaci</div>
                      <div class="rule"></div>
                      <p>
-                        Gęstość interakcji między postaciami (dynamika dialogu).
+                        Parametr mogący pośrednio wskazywać na różnice w organizacji wymiany dialogowej.
                      </p>
                   </article>
 
@@ -2148,7 +2162,7 @@
                         </div>
                         <div class="num">06</div>
                      </div>
-                     <div class="card-title">Wskaźnik łamania wiersza</div>
+                     <div class="card-title">Wskaźnik niezgodności granicy wersowej i syntagmatycznej</div>
                      <div class="rule"></div>
                      <p>
                         % wersów, które nie kończą się znakiem
@@ -2164,11 +2178,10 @@
                         </div>
                         <div class="num">07</div>
                      </div>
-                     <div class="card-title">Wskaźnik gęstości tekstu pobocznego</div>
+                     <div class="card-title">Wskaźnik częstości tekstu pobocznego</div>
                      <div class="rule"></div>
                      <p>
-                        Wystąpienia didaskaliów względem długości tekstu
-                        głównego.
+                        Liczba segmentów didaskaliowych względem liczby wersów tekstu dialogowego.
                      </p>
                   </article>
 
@@ -2234,10 +2247,10 @@
                         </div>
                         <div class="num">12</div>
                      </div>
-                     <div class="card-title">Odsetek zdań z jawnym wykładnikiem relacji kauzalnej</div>
+                     <div class="card-title">Odsetek zdań z jawnym wykładnikiem relacji kauzalnej lub wynikowej</div>
                      <div class="rule"></div>
                      <p>
-                        % zdań z jawnym wykładnikiem rel. kauzalnej w wykrytych konstrukcjach hipotaktycznych.
+                        Odsetek wszystkich zdań zawierających leksykalny wykładnik relacji kauzalnej lub wynikowej (np. „toteż”, „dlatego”, „bo”, „zatem”).
                      </p>
                   </article>
                </div>
@@ -2276,6 +2289,22 @@
                <div class="banner-separator-mobile">
                   <img src="assets/separator_short.png" alt="baner_mobile" />
                </div>
+               <h2>O narzędziu</h2>
+               <div>Narzędzie ma charakter eksploracyjny i służy przede wszystkim do wstępnego rozpoznania ilościowych właściwości tekstu dramatycznego. Prezentowane wskaźniki nie powinny być traktowane jako samodzielne miary złożonych zjawisk poetyckich, stylistycznych czy składniowych, lecz jako ich operacyjne przybliżenia.<br><br>
+
+               Istotnym uwarunkowaniem projektu jest postać dostępnego materiału źródłowego. Analizy zostały dostosowane do publikacji przygotowanych w prostym formacie .txt, który – choć umożliwia objęcie badaniem stosunkowo szerokiego korpusu – zachowuje niewiele informacji o strukturze utworu. W takim zapisie role mówiących, didaskalia, podziały sceniczne czy inne elementy organizacji dramatu muszą być rekonstruowane na podstawie cech typograficznych i konwencji przyjętych w konkretnym wydaniu. Oznacza to, że część zastosowanych procedur ma z konieczności charakter poglądowy, a ich wyniki powinny być interpretowane w kontekście jakości i sposobu przygotowania tekstu wejściowego.<br><br>
+
+               Znaczący rozwój metodologiczny będzie możliwy po przejściu od plików .txt do korpusu oznaczonego strukturalnie, zgodnego ze standardem <a href="https://www.tei-c.org" target="_blank">TEI/XML</a> – z uwzględnieniem
+               istniejących praktyk kodowania tekstów dramatycznych, stosowanych m.in. w
+                        <a href="https://dracor.org/pol" target="_blank"
+                           >DraCor | Polish Drama Corpus</a
+                        >.</div>
+                <div class="banner-separator">
+                  <img src="assets/separator_long.png" alt="baner" />
+               </div>
+               <div class="banner-separator-mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
+               </div>
                <h2>Po co cyfrowo badać literaturę?</h2>
                <div>
                   Cyfrowe badania literatury pozwalają w szybki i systematyczny
@@ -2290,6 +2319,12 @@
                   stronie”). Metody cyfrowe nie zastępują interpretacji, mogą ją
                   jednak wspierać poprzez dostarczenie danych odsłaniających
                   wzorce niewidoczne podczas tradycyjnej lektury.
+               </div>
+                <div class="banner-separator">
+                  <img src="assets/separator_long.png" alt="baner" />
+               </div>
+               <div class="banner-separator-mobile">
+                  <img src="assets/separator_short.png" alt="baner_mobile" />
                </div>
                <h2>
                   Studium przypadku: Twórczość dramatyczna Juliusza Słowackiego
@@ -2472,14 +2507,7 @@
                         zatem ingerencji w treść w celu dostosowania jej do
                         algorytmu (należy jednak pamiętać, żeby z początku i
                         końca zawartości pliku usunąć tytuł, spis osób dramatu,
-                        wszelkie noty edytorskie, numer ISBN itd.) Strona
-                        zostanie rozbudowana o obsługę
-                        <strong>standardu TEI/XML</strong> – z uwzględnieniem
-                        istniejących praktyk kodowania tekstów dramatycznych,
-                        stosowanych m.in. w
-                        <a href="https://dracor.org/pol" target="_blank"
-                           >DraCor | Polish Drama Corpus</a
-                        >.
+                        wszelkie noty edytorskie, numer ISBN itd.).
                      </div>
                       <div class="tips-card">
                         <div class="tips-card-header">
@@ -2530,7 +2558,7 @@
                         <i>si-nu-s<u>oi</u>-da</i>, ale
                         <i>He-l<u>o</u>-<u>i</u>-sa</i>). Błędy wynikające z
                         takich (m.in.) wyjątków nie wpłyną znacząco na
-                        statystyki dla długich tekstów.</span
+                        statystyki dla długich tekstów (zostało to zwalidowane na IV cz. Dziadów, gdzie algorytm pomylił się tylko raz, ale nie wpłynął na wyniki, ponieważ pomyłka dotyczyła didaskalium — a dokładniej zawartego w nim wyrażenia „po p<u>au</u>zie”).</span
                      >
                   </span>
                </p>
@@ -2539,7 +2567,7 @@
          <section class="drama-input-section">
             <div class="drama-input-header">
                <h2>Wprowadź tekst dramatu</h2>
-               <p>Dostępne są 3 sposoby wprowadzenia tekstu:</p>
+               <p>Narzędzie umożliwia wprowadzenie tekstu dramatycznego na trzy różne sposoby:</p>
             </div>
             <div class="drama-methods-overview">
                <a href="#drama-paste" class="drama-method-card drama-method-card-link">
@@ -2608,15 +2636,15 @@
             <strong>LUB</strong>
             <span></span>
          </div>
-         <section id="drama-library" class="library-section" aria-label="Moja biblioteka">
-             <div class="drama-option">
+            <div class="drama-option">
             <span class="drama-method-number">03</span>
             <h3>Wybierz z biblioteki</h3>
          </div>
+         <section id="drama-library" class="library-section" aria-label="Moja biblioteka">
+          <h2>Moja biblioteka</h2>
             <p>
                Poniżej znajduje się biblioteka dramatów przygotowanych pod
-               wymagania skryptu (docelowo teksty zostaną dostosowane także do
-               standardu TEI/XML). Dorzucono tu m.in. te utwory, które nie
+               wymagania skryptu. Dorzucono tu m.in. te utwory, które nie
                zostały opracowane przez serwis Wolne Lektury (jak np.
                <i>Samuel Zborowski</i> J. Słowackiego).
             </p>
@@ -2927,7 +2955,7 @@
                   class="metrics-panel metric-chart-panel"
                >
                   <h3 class="metrics-panel-title">
-                     Rozkład metryczny (dominujące metra) całego dramatu
+                     Dominujące formaty sylabiczne całego dramatu
                   </h3>
                   <div class="chart-box">
                      <canvas id="metricDistributionChart"></canvas>
@@ -3055,7 +3083,7 @@
                            Kohezja tekstowa: odsetek zdań z jawnym wykładnikiem relacji kauzalnej
                         </option>
                         <option value="lineBreaking">
-                           Współczynnik łamania wiersza
+                           Wskaźnik niezgodności granicy wersowej i syntagmatycznej
                         </option>
                         <option value="exclamationDensity">
                            Gęstość wykrzyknień
@@ -4580,9 +4608,9 @@
             ).length;
 
             DOM.metrics.lineBreaking.innerHTML = metricHtml(
-               "Współczynnik łamania wiersza:",
+               "Wskaźnik niezgodności granicy wersowej i syntagmatycznej:",
                `${percent(brokenLines, metricLineCount)}%`,
-               "Wskaźnik = liczba rzeczywistych wersów metrycznych, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Dla wersów współdzielonych lub przełamanych didaskaliami (P_1 + P_2) badane jest zakończenie całego scalonego wersu, czyli końcówka P_2.",
+               "Wskaźnik = liczba rzeczywistych wersów metrycznych, które nie kończą się znakiem interpunkcyjnym zamykającym strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem, myślnikiem, pauzą / liczba wszystkich rzeczywistych wersów metrycznych po wyłączeniu didaskaliów × 100. Dla wersów współdzielonych lub przełamanych didaskaliami (P_1 + P_2) badane jest zakończenie całego scalonego wersu, czyli końcówka P_2. Wskaźnik nie jest równoznaczny z wykryciem przerzutni. Rozpoznanie przerzutni jako zjawiska wersologicznego wymaga uwzględnienia relacji składniowych i semantycznych między sąsiadującymi wersami.",
             );
          }
 
@@ -5209,7 +5237,7 @@
                 note: "Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania. Obliczony na podstawie jawnych wykładników leksykalnych. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako przybliżenie.",
              },
             lineBreaking: {
-               label: "Współczynnik łamania wiersza",
+               label: "WWskaźnik niezgodności granicy wersowej i syntagmatycznej",
                unit: "%",
             },
             exclamationDensity: {
