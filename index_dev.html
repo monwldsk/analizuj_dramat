@@ -4277,10 +4277,27 @@
 
             Object.entries(actorsData).forEach(([groupName, meterCounts]) => {
                const totalLines = sumValues(meterCounts);
-               const labels = Object.keys(meterCounts);
-               const values = Object.values(meterCounts).map(
-                  (count) => (count / totalLines) * 100,
-               );
+               const labels = [];
+               const values = [];
+               let otherPercentage = 0;
+
+               Object.keys(meterCounts)
+                  .sort((a, b) => Number(a) - Number(b))
+                  .forEach((meter) => {
+                     const percentage =
+                        (meterCounts[meter] / totalLines) * 100;
+                     if (percentage < 1) {
+                        otherPercentage += percentage;
+                     } else {
+                        labels.push(meter);
+                        values.push(percentage);
+                     }
+                  });
+
+               if (otherPercentage > 0) {
+                  labels.push("Inne (<1%) razem");
+                  values.push(otherPercentage);
+               }
 
                renderChart({
                   type: "pie",
@@ -4290,7 +4307,10 @@
                      datasets: [
                         {
                            data: values,
-                           backgroundColor: labels.map(getMeterColor),
+                           backgroundColor: labels.map((label) => {
+                              const meter = label.match(/^\d+/)?.[0];
+                              return getMeterColor(meter);
+                           }),
                         },
                      ],
                   },
