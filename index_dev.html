@@ -223,7 +223,7 @@
          }
          .action-buttons {
             display: none;
-            margin-top: 20px;
+            margin: 20px 0px;
             justify-content: flex-start;
          }
          .clear-button {
@@ -238,6 +238,8 @@
          .chart-container {
             width: 100%;
             margin-top: 20px;
+            max-height: 600px;
+            overflow: auto;
          }
          .chart-box {
             width: 400px;
@@ -245,7 +247,7 @@
             max-width: 100%;
          }
          .chart-box--wide {
-            width: 600px;
+            width: 100%;
          }
          .additional-metrics {
             display: none;
@@ -2047,6 +2049,192 @@
                width: 100%;
             }
          }
+         /* ===== Analiza porównawcza bohaterów jednego dramatu ===== */
+         .actor-comparison-section {
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 1px solid #dce7f8;
+         }
+
+         .actor-comparison-header {
+            margin-bottom: 18px;
+         }
+
+         .actor-comparison-header h2 {
+            margin: 0 0 7px;
+            font-size: 26px;
+         }
+
+         .actor-comparison-header p {
+            margin: 0;
+            color: #65758b;
+            line-height: 1.5;
+         }
+
+         .actor-comparison-grid {
+            display: grid;
+            gap: 16px;
+         }
+
+         .actor-comparison-panel {
+            padding: 20px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+         }
+
+         .actor-comparison-panel h3 {
+            margin: 0 0 7px;
+            color: var(--color-primary);
+            font-size: 17px;
+         }
+
+         .actor-comparison-panel p {
+            margin: 0;
+            color: #65758b;
+            font-size: 12px;
+            line-height: 1.5;
+         }
+
+         .actor-comparison-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+         }
+
+         .actor-comparison-actions button {
+            min-height: 42px;
+         }
+
+         .actor-metrics-comparison-loader {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 42px;
+            margin-top: 14px;
+            padding: 9px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 10px;
+            color: #163f8f;
+            background: #f5f9ff;
+            font-size: 12px;
+            font-weight: 700;
+         }
+
+         .actor-metrics-comparison-loader[hidden] {
+            display: none !important;
+         }
+
+         .actor-metrics-comparison-results {
+            margin-top: 16px;
+         }
+
+         .actor-metrics-comparison-results[hidden] {
+            display: none !important;
+         }
+
+         .actor-metrics-comparison-table-wrap {
+            overflow-x: auto;
+            border: 1px solid #dce7f8;
+            border-radius: 12px;
+            background: #fff;
+         }
+
+         .actor-metrics-comparison-table {
+            width: max-content;
+            min-width: 100%;
+            border: 0;
+            table-layout: auto;
+         }
+
+         .actor-metrics-comparison-table th,
+         .actor-metrics-comparison-table td {
+            min-width: 145px;
+            padding: 9px 10px;
+            border-color: #e3ebf4;
+            vertical-align: top;
+            text-align: center;
+            font-size: 11px;
+            line-height: 1.4;
+         }
+
+         .actor-metrics-comparison-table th {
+            color: #173858;
+            background: #f4f8fd;
+            font-weight: 800;
+         }
+
+         .actor-metrics-comparison-table th:first-child,
+         .actor-metrics-comparison-table td:first-child {
+            position: sticky;
+            left: 0;
+            z-index: 1;
+            width: 300px;
+            min-width: 300px;
+            max-width: 300px;
+            color: #10233f;
+            background: #fff;
+            text-align: left;
+            font-weight: 750;
+            box-shadow: 1px 0 0 #dce7f8;
+         }
+
+         .actor-metrics-comparison-table th:first-child {
+            z-index: 2;
+            background: #f4f8fd;
+         }
+
+         .actor-metric-pair {
+            display: grid;
+            gap: 3px;
+            white-space: nowrap;
+         }
+
+         .actor-metrics-comparison-note {
+            margin-top: 10px !important;
+            padding: 10px 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 9px;
+            color: #65758b !important;
+            background: #f5f9ff;
+            font-size: 11px !important;
+         }
+
+         .actor-metrics-comparison-status {
+            min-height: 18px;
+            margin-top: 9px !important;
+            color: #65758b !important;
+            font-size: 11px !important;
+         }
+
+         .actor-metrics-comparison-status.error {
+            color: #b33128 !important;
+         }
+
+         @media (max-width: 600px) {
+            .actor-comparison-section {
+               margin-top: 22px;
+               padding-top: 22px;
+            }
+
+            .actor-comparison-header h2 {
+               font-size: 23px;
+            }
+
+            .actor-comparison-panel {
+               padding: 16px 12px;
+            }
+
+            .actor-comparison-actions {
+               flex-direction: column;
+            }
+
+            .actor-comparison-actions button {
+               width: 100%;
+            }
+         }
+
          .calderon {
             max-width:500px;
             margin:auto;
@@ -3000,42 +3188,9 @@
                   </table>
                </div>
                <div class="action-buttons" id="actionButtons">
-                  <button id="pieChartsButton" type="button">
-                     Generuj wykresy kołowe dla wybranych bohaterów
-                  </button>
-                  <button id="barChartsButton" type="button">
-                     Generuj wykresy słupkowe
-                  </button>
                   <button id="exportButton" type="button">
                      Eksportuj tabelę do pliku XLSX
                   </button>
-               </div>
-               <div id="charts" class="chart-container"></div>
-            </div>
-
-            <div
-               id="speakerShareSection"
-               class="speaker-share-section"
-               aria-label="Udział wypowiedzi bohaterów"
-            >
-               <h3 class="metrics-panel-title">
-                  Kto ma najwięcej do powiedzenia?*
-               </h3>
-               <p class="note">
-                  *Czyli procentowy udział wersów przypadających na
-                  poszczególnych bohaterów w całym tekście dramatu.
-               </p>
-               <div class="chart-box">
-                  <canvas id="speakerShareChart"></canvas>
-               </div>
-               <div class="metric-chart-note">
-                  Wykres pokazuje, jaki procent wszystkich wersów przypada na
-                  każdego bohatera. Wspólny wers P_1 + P_2 jest liczony tylko
-                  raz; jeśli tworzą go różni bohaterowie, jego udział jest
-                  dzielony między nich proporcjonalnie do liczby sylab
-                  poszczególnych fragmentów. Udziały poniżej 1% zsumowano i
-                  zgrupowano pod etykietą „Inni bohaterowie (poniżej 1%) –
-                  razem”.
                </div>
             </div>
 
@@ -3088,6 +3243,139 @@
                   </div>
                </div>
             </div>
+
+            <section
+               id="actorComparisonSection"
+               class="actor-comparison-section"
+               aria-labelledby="actorComparisonTitle"
+            >
+               <div class="actor-comparison-header">
+                  <div class="comparison-kicker">
+                     Analiza porównawcza bohaterów
+                  </div>
+                  <h2 id="actorComparisonTitle">
+                     Porównanie wybranych bohaterów dramatu
+                  </h2>
+                  <p>
+                     Porównaj wybrane postacie tego samego dramatu pod kątem ich udziału w całości tekstu dialogowego,  
+                     formatów wierszowych, którymi mówią, oraz innych wskaźników analizy.
+                  </p>
+               </div>
+
+               <div class="actor-comparison-grid">
+                              <div
+               id="speakerShareSection"
+               class="speaker-share-section"
+               aria-label="Udział wypowiedzi bohaterów"
+            >
+               <h3 class="metrics-panel-title">
+                  Kto ma najwięcej do powiedzenia?*
+               </h3>
+               <p class="note">
+                  *Czyli procentowy udział wersów przypadających na
+                  poszczególnych bohaterów w całym tekście dramatu.
+               </p>
+               <div class="chart-box">
+                  <canvas id="speakerShareChart"></canvas>
+               </div>
+               <div class="metric-chart-note">
+                  Wykres pokazuje, jaki procent wszystkich wersów przypada na
+                  każdego bohatera. Wspólny wers P_1 + P_2 jest liczony tylko
+                  raz; jeśli tworzą go różni bohaterowie, jego udział jest
+                  dzielony między nich proporcjonalnie do liczby sylab
+                  poszczególnych fragmentów. Udziały poniżej 1% zsumowano i
+                  zgrupowano pod etykietą „Inni bohaterowie (poniżej 1%) –
+                  razem”.
+               </div>
+            </div>
+                  <div class="actor-comparison-panel">
+                     <h3>
+                        Porównaj bohaterów pod kątem dominujących formatów wierszowych
+                     </h3>
+                     <p>
+                        Wybierz bohaterów i porównaj zróżnicowanie metryczne ich wypowiedzi na
+                        wykresach kołowych albo na wspólnym wykresie słupkowym.
+                     </p>
+                     <div class="actor-comparison-actions">
+                        <button id="pieChartsButton" type="button">
+                           Wybierz bohaterów i wygeneruj wykresy kołowe
+                        </button>
+                        <button id="barChartsButton" type="button">
+                           Wybierz bohaterów i wygeneruj wykres słupkowy
+                        </button>
+                     </div>
+                     <div id="charts" class="chart-container"></div>
+                  </div>
+
+                  <div class="actor-comparison-panel">
+                     <h3>
+                        Porównaj bohaterów pod kątem innych wskaźników
+                     </h3>
+                     <p>
+                        Wybierz maksymalnie 8 bohaterów.
+                     </p>
+                     <div class="actor-comparison-actions">
+                        <button id="actorMetricsComparisonButton" type="button">
+                           Wybierz bohaterów i porównaj wskaźniki
+                        </button>
+                     </div>
+
+                     <p
+                        id="actorMetricsComparisonStatus"
+                        class="actor-metrics-comparison-status"
+                        role="status"
+                     ></p>
+
+                     <div
+                        id="actorMetricsComparisonLoader"
+                        class="actor-metrics-comparison-loader"
+                        role="status"
+                        aria-live="polite"
+                        hidden
+                     >
+                        <span
+                           class="comparison-loader-spinner"
+                           aria-hidden="true"
+                        ></span>
+                        <span>Obliczanie wskaźników dla wybranych bohaterów…</span>
+                     </div>
+
+                     <div
+                        id="actorMetricsComparisonResults"
+                        class="actor-metrics-comparison-results"
+                        hidden
+                     >
+                        <div class="actor-metrics-comparison-table-wrap">
+                           <table
+                              id="actorMetricsComparisonTable"
+                              class="actor-metrics-comparison-table"
+                           >
+                              <thead>
+                                 <tr>
+                                    <th>Wskaźnik</th>
+                                 </tr>
+                              </thead>
+                              <tbody></tbody>
+                           </table>
+                        </div>
+                        <p class="actor-metrics-comparison-note">
+                           Średnia długość wypowiedzi oznacza średnią liczbę
+                           kolejnych wersów przypisanych danemu bohaterowi w
+                           jednym bloku jego wypowiedzi: liczba wersów bohatera
+                           / liczba jego bloków wypowiedzi. Zmiana mówiącego
+                           kończy blok, natomiast didaskalia są pomijane i nie przerywają
+                           go. Wartości gęstości pytań i wykrzyknień są podawane na 100
+                           wersów danego bohatera. Referencja pierwszoosobowa
+                           jest podawana na 1000 słów (‰). Dla składni,
+                           długości zdań i referencji analizowane są wyłącznie
+                           wypowiedzi danej postaci. W wersach współdzielonych
+                           P_1 + P_2 wskaźnik granicy wersowej odnosi się do
+                           całego zrekonstruowanego wersu.
+                        </p>
+                     </div>
+                  </div>
+               </div>
+            </section>
          </section>
 
          <section
@@ -3219,9 +3507,9 @@
                            syntagmatycznej
                         </option>
                         <option value="exclamationDensity">
-                           Gęstość wykrzyknień
+                           Gęstość wykrzyknień [na 100 wersów]
                         </option>
-                        <option value="questionDensity">Gęstość pytań</option>
+                        <option value="questionDensity">Gęstość pytań [na 100 wersów]</option>
                         <option value="selfReference">
                            Wskaźnik referencji pierwszoosobowej (l. poj.)
                         </option>
@@ -3658,6 +3946,23 @@
                barCharts: document.getElementById("barChartsButton"),
                export: document.getElementById("exportButton"),
             },
+            actorComparison: {
+               metricsButton: document.getElementById(
+                  "actorMetricsComparisonButton",
+               ),
+               status: document.getElementById(
+                  "actorMetricsComparisonStatus",
+               ),
+               loader: document.getElementById(
+                  "actorMetricsComparisonLoader",
+               ),
+               results: document.getElementById(
+                  "actorMetricsComparisonResults",
+               ),
+               tableBody: document.querySelector(
+                  "#actorMetricsComparisonTable tbody",
+               ),
+            },
             actorPicker: {
                dialog: document.getElementById("actorSelectionDialog"),
                title: document.getElementById("actorPickerTitle"),
@@ -3722,6 +4027,7 @@
             actors: [],
             selected: new Set(),
             groups: [],
+            maxSelection: Infinity,
          };
 
          function init() {
@@ -3735,6 +4041,10 @@
             DOM.buttons.pieCharts.addEventListener("click", generatePieCharts);
             DOM.buttons.barCharts.addEventListener("click", generateBarCharts);
             DOM.buttons.export.addEventListener("click", exportToExcel);
+            DOM.actorComparison.metricsButton.addEventListener(
+               "click",
+               openActorMetricsComparison,
+            );
 
             DOM.actorPicker.close.addEventListener("click", closeActorPicker);
             DOM.actorPicker.cancel.addEventListener("click", closeActorPicker);
@@ -3823,6 +4133,7 @@
             state.analyzedData = [];
             clearAllCharts();
             resetMetrics();
+            resetActorMetricsComparison();
             DOM.resultTableBody.innerHTML = "";
             DOM.resultTable.classList.add("hidden");
             DOM.actionButtons.style.display = "none";
@@ -3837,6 +4148,7 @@
             }
 
             clearAllCharts();
+            resetActorMetricsComparison();
             state.analyzedData = parseDramaText(inputText);
             renderResultsTable(state.analyzedData);
             calculateAdditionalMetrics();
@@ -4032,6 +4344,10 @@
             openActorPicker("bar");
          }
 
+         function openActorMetricsComparison() {
+            openActorPicker("metrics");
+         }
+
          function openActorPicker(mode) {
             const actors = getActorsSortedBySpeakerShare(state.analyzedData);
 
@@ -4044,11 +4360,16 @@
             actorPickerState.actors = actors;
             actorPickerState.selected = new Set();
             actorPickerState.groups = [];
+            actorPickerState.maxSelection = mode === "metrics" ? 8 : Infinity;
             setActorPickerStatus("");
 
             const isPie = mode === "pie";
+            const isMetrics = mode === "metrics";
             DOM.actorPicker.piePanel.hidden = !isPie;
             DOM.actorPicker.barPanel.hidden = isPie;
+            DOM.actorPicker.selectAll.textContent = isMetrics
+               ? "Zaznacz maks. 8"
+               : "Zaznacz wszystkich";
 
             if (isPie) {
                DOM.actorPicker.title.textContent =
@@ -4056,6 +4377,12 @@
                DOM.actorPicker.description.textContent =
                   "Każda zaznaczona postać domyślnie otrzyma osobny wykres. Jeśli chcesz analizować kilka postaci łącznie, zaznacz je i użyj przycisku „Połącz zaznaczone w jedną grupę”.";
                DOM.actorPicker.confirm.textContent = "Generuj wykresy kołowe";
+            } else if (isMetrics) {
+               DOM.actorPicker.title.textContent =
+                  "Wybierz bohaterów do analizy porównawczej";
+               DOM.actorPicker.description.textContent =
+                  "Wybierz od 2 do 8 bohaterów. Maksymalnie osiem postaci utrzymuje tabelę czytelną także na mniejszych ekranach.";
+               DOM.actorPicker.confirm.textContent = "Porównaj wskaźniki";
             } else {
                DOM.actorPicker.title.textContent =
                   "Wybierz bohaterów do porównania";
@@ -4108,6 +4435,16 @@
             if (actorPickerState.selected.has(actor)) {
                actorPickerState.selected.delete(actor);
             } else {
+               if (
+                  Number.isFinite(actorPickerState.maxSelection) &&
+                  actorPickerState.selected.size >= actorPickerState.maxSelection
+               ) {
+                  setActorPickerStatus(
+                     `Możesz wybrać maksymalnie ${actorPickerState.maxSelection} bohaterów.`,
+                     true,
+                  );
+                  return;
+               }
                actorPickerState.selected.add(actor);
             }
 
@@ -4188,9 +4525,15 @@
 
          function renderBarPickerState() {
             const selectedActors = getSelectedActorsInOrder();
+            const limitText =
+               actorPickerState.mode === "metrics"
+                  ? ` (${selectedActors.length}/8)`
+                  : "";
             DOM.actorPicker.barPreview.textContent = selectedActors.length
-               ? selectedActors.join(", ")
-               : "Nie wybrano żadnej postaci.";
+               ? `${selectedActors.join(", ")}${limitText}`
+               : actorPickerState.mode === "metrics"
+                 ? "Nie wybrano żadnej postaci (0/8)."
+                 : "Nie wybrano żadnej postaci.";
             DOM.actorPicker.barPreview.classList.toggle(
                "has-selection",
                selectedActors.length > 0,
@@ -4199,16 +4542,26 @@
 
          function updateActorPickerButtons() {
             const selectedCount = actorPickerState.selected.size;
+            const selectableCount = Number.isFinite(
+               actorPickerState.maxSelection,
+            )
+               ? Math.min(
+                    actorPickerState.maxSelection,
+                    actorPickerState.actors.length,
+                 )
+               : actorPickerState.actors.length;
 
             DOM.actorPicker.addGroup.disabled = selectedCount < 2;
             DOM.actorPicker.clearSelection.disabled = selectedCount === 0;
             DOM.actorPicker.selectAll.disabled =
-               selectedCount === actorPickerState.actors.length;
+               selectedCount === selectableCount;
 
             DOM.actorPicker.confirm.disabled =
                actorPickerState.mode === "pie"
                   ? actorPickerState.groups.length === 0 && selectedCount === 0
-                  : selectedCount === 0;
+                  : actorPickerState.mode === "metrics"
+                    ? selectedCount < 2
+                    : selectedCount === 0;
          }
 
          function addSelectedActorsAsGroup() {
@@ -4244,7 +4597,12 @@
          }
 
          function selectAllActors() {
-            actorPickerState.selected = new Set(actorPickerState.actors);
+            const max = Number.isFinite(actorPickerState.maxSelection)
+               ? actorPickerState.maxSelection
+               : actorPickerState.actors.length;
+            actorPickerState.selected = new Set(
+               actorPickerState.actors.slice(0, max),
+            );
             setActorPickerStatus("");
             renderActorPicker();
          }
@@ -4284,6 +4642,28 @@
             }
 
             const selectedActors = getSelectedActorsInOrder();
+
+            if (actorPickerState.mode === "metrics") {
+               if (selectedActors.length < 2) {
+                  setActorPickerStatus(
+                     "Wybierz co najmniej dwóch bohaterów.",
+                     true,
+                  );
+                  return;
+               }
+               if (selectedActors.length > 8) {
+                  setActorPickerStatus(
+                     "Do porównania możesz wybrać maksymalnie 8 bohaterów.",
+                     true,
+                  );
+                  return;
+               }
+
+               closeActorPicker();
+               renderActorMetricsComparison(selectedActors);
+               return;
+            }
+
             if (selectedActors.length === 0) {
                setActorPickerStatus(
                   "Wybierz co najmniej jednego bohatera.",
@@ -4320,7 +4700,7 @@
                   });
 
                if (otherPercentage > 0) {
-                  labels.push("Inne (<1%) razem");
+                  labels.push("Inne (<1%)");
                   values.push(otherPercentage);
                }
 
@@ -4380,6 +4760,267 @@
             });
 
             scrollToCharts();
+         }
+
+         async function renderActorMetricsComparison(selectedActors) {
+            const { loader, results, tableBody, status } = DOM.actorComparison;
+            if (!loader || !results || !tableBody || !status) return;
+
+            setActorMetricsComparisonStatus(
+               `Obliczanie wskaźników dla ${selectedActors.length} bohaterów…`,
+            );
+            setActorMetricsComparisonLoading(true);
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+
+            try {
+               const speechFragments = state.analyzedData.filter(
+                  ({ actor }) => actor !== "DIDASKALIA",
+               );
+               const metricLines = buildMetricLines(state.analyzedData);
+               const rows = [];
+
+               for (const actor of selectedActors) {
+                  rows.push(
+                     calculateActorComparisonMetrics(actor, {
+                        speechFragments,
+                        metricLines,
+                     }),
+                  );
+                  await new Promise((resolve) =>
+                     requestAnimationFrame(resolve),
+                  );
+               }
+
+               renderActorMetricsComparisonTable(rows);
+               setActorMetricsComparisonStatus(
+                  `Porównano ${rows.length} bohaterów.`,
+               );
+            } catch (error) {
+               console.error(error);
+               setActorMetricsComparisonStatus(
+                  "Nie udało się obliczyć analizy porównawczej bohaterów.",
+                  true,
+               );
+            } finally {
+               setActorMetricsComparisonLoading(false);
+            }
+         }
+
+         function calculateActorComparisonMetrics(
+            actor,
+            { speechFragments, metricLines },
+         ) {
+            const actorFragments = speechFragments.filter(
+               ({ actor: fragmentActor }) => fragmentActor === actor,
+            );
+            const actorMetricLines = metricLines.filter(({ actors }) =>
+               actors.includes(actor),
+            );
+            const actorText = actorFragments.map(({ line }) => line).join(" ");
+            const words = getWords(actorText);
+            const metricLineCount = actorMetricLines.length;
+
+            const interactionBlocks = [];
+            let currentBlockLength = 0;
+
+            speechFragments.forEach(({ actor: fragmentActor }) => {
+               if (fragmentActor === actor) {
+                  currentBlockLength++;
+                  return;
+               }
+
+               if (currentBlockLength > 0) {
+                  interactionBlocks.push(currentBlockLength);
+                  currentBlockLength = 0;
+               }
+            });
+
+            if (currentBlockLength > 0) {
+               interactionBlocks.push(currentBlockLength);
+            }
+
+            const questionDensity = metricLineCount
+               ? (countRegexMatches(actorText, /\?/g) / metricLineCount) * 100
+               : 0;
+            const exclamationDensity = metricLineCount
+               ? (countRegexMatches(actorText, /!/g) / metricLineCount) * 100
+               : 0;
+
+            const brokenLines = actorMetricLines.filter(
+               ({ line }) =>
+                  !APP_CONFIG.lineEndingRegex.test((line || "").trim()),
+            ).length;
+            const lineBreakingRate = metricLineCount
+               ? (brokenLines / metricLineCount) * 100
+               : 0;
+
+            const selfReferenceCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePronouns.has(word),
+            ).length;
+            const selfReferencePluralCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePluralPronouns.has(word),
+            ).length;
+
+            const sentenceStats = getSentenceLengthStats(actorText);
+            const hypotaxisStats = getHypotaxisStats(actorText);
+            const causalStats = getCausalCohesionStats(actorText);
+
+            return {
+               actor,
+               interactionAverage: average(interactionBlocks),
+               questionDensity,
+               exclamationDensity,
+               lineBreakingRate,
+               selfReferenceRate: words.length
+                  ? (selfReferenceCount / words.length) * 1000
+                  : 0,
+               selfReferencePluralRate: words.length
+                  ? (selfReferencePluralCount / words.length) * 1000
+                  : 0,
+               hypotaxisRate: hypotaxisStats.hypotacticRate,
+               sentenceAverageWords: sentenceStats.averageWords,
+               sentenceAverageSyllables: sentenceStats.averageSyllables,
+               causalRate: causalStats.causalRate,
+            };
+         }
+
+         function renderActorMetricsComparisonTable(rows) {
+            const { results, tableBody } = DOM.actorComparison;
+            const table = document.getElementById("actorMetricsComparisonTable");
+            const headerRow = table?.querySelector("thead tr");
+            if (!results || !tableBody || !headerRow) return;
+
+            headerRow.innerHTML = "";
+            const metricHeader = document.createElement("th");
+            metricHeader.textContent = "Wskaźnik";
+            headerRow.appendChild(metricHeader);
+
+            rows.forEach(({ actor }) => {
+               const actorHeader = document.createElement("th");
+               actorHeader.textContent = actor;
+               headerRow.appendChild(actorHeader);
+            });
+
+            tableBody.innerHTML = "";
+
+            const metricRows = [
+               {
+                  label: "Średnia długość wypowiedzi",
+                  render: (rowData) =>
+                     formatActorMetricValue(rowData.interactionAverage),
+               },
+               {
+                  label: "Gęstość pytań i wykrzyknień [na 100 wersów]",
+                  render: (rowData) => `
+                     <div class="actor-metric-pair">
+                        <span><strong>?</strong> ${formatActorMetricValue(rowData.questionDensity)}</span>
+                        <span><strong>!</strong> ${formatActorMetricValue(rowData.exclamationDensity)}</span>
+                     </div>`,
+                  html: true,
+               },
+               {
+                  label: "Niezgodność granicy wersowej i syntagmatycznej",
+                  render: (rowData) =>
+                     `${formatActorMetricValue(rowData.lineBreakingRate)}%`,
+               },
+               {
+                  label: "Referencja 1. os. (l. poj. i l. mn.)",
+                  render: (rowData) => `
+                     <div class="actor-metric-pair">
+                        <span><strong>l. poj.</strong> ${formatActorMetricValue(rowData.selfReferenceRate)}‰</span>
+                        <span><strong>l. mn.</strong> ${formatActorMetricValue(rowData.selfReferencePluralRate)}‰</span>
+                     </div>`,
+                  html: true,
+               },
+               {
+                  label: "Udział hipotaksy w składni",
+                  render: (rowData) =>
+                     `${formatActorMetricValue(rowData.hypotaxisRate)}%`,
+               },
+               {
+                  label: "Zdania z relacją kauzalną lub wynikową",
+                  render: (rowData) =>
+                     `${formatActorMetricValue(rowData.causalRate)}%`,
+               },
+               {
+                  label: "Średnia liczba słów w zdaniu",
+                  render: (rowData) =>
+                     formatActorMetricValue(rowData.sentenceAverageWords),
+               },
+               {
+                  label: "Średnia liczba sylab w zdaniu",
+                  render: (rowData) =>
+                     formatActorMetricValue(rowData.sentenceAverageSyllables),
+               },
+            ];
+
+            metricRows.forEach((metric) => {
+               const row = document.createElement("tr");
+               const labelCell = document.createElement("td");
+               labelCell.textContent = metric.label;
+               row.appendChild(labelCell);
+
+               rows.forEach((rowData) => {
+                  const valueCell = document.createElement("td");
+                  const value = metric.render(rowData);
+                  if (metric.html) {
+                     valueCell.innerHTML = value;
+                  } else {
+                     valueCell.textContent = value;
+                  }
+                  row.appendChild(valueCell);
+               });
+
+               tableBody.appendChild(row);
+            });
+
+            results.hidden = false;
+            results.scrollIntoView({
+               behavior: "smooth",
+               block: "nearest",
+            });
+         }
+
+         function formatActorMetricValue(value) {
+            return new Intl.NumberFormat("pl-PL", {
+               minimumFractionDigits: 2,
+               maximumFractionDigits: 2,
+            }).format(Number(value) || 0);
+         }
+
+         function setActorMetricsComparisonStatus(message, isError = false) {
+            const { status } = DOM.actorComparison;
+            if (!status) return;
+            status.textContent = message;
+            status.classList.toggle("error", Boolean(isError));
+         }
+
+         function setActorMetricsComparisonLoading(isLoading) {
+            const { loader, results, metricsButton } = DOM.actorComparison;
+            if (loader) loader.hidden = !isLoading;
+            if (metricsButton) metricsButton.disabled = Boolean(isLoading);
+            if (results) {
+               results.style.opacity = isLoading ? "0.48" : "";
+               results.style.pointerEvents = isLoading ? "none" : "";
+            }
+         }
+
+         function resetActorMetricsComparison() {
+            const { results, tableBody, loader, metricsButton } =
+               DOM.actorComparison;
+
+            if (tableBody) tableBody.innerHTML = "";
+            const table = document.getElementById("actorMetricsComparisonTable");
+            const headerRow = table?.querySelector("thead tr");
+            if (headerRow) headerRow.innerHTML = "<th>Wskaźnik</th>";
+            if (results) {
+               results.hidden = true;
+               results.style.opacity = "";
+               results.style.pointerEvents = "";
+            }
+            if (loader) loader.hidden = true;
+            if (metricsButton) metricsButton.disabled = false;
+            setActorMetricsComparisonStatus("");
          }
 
          function getActors() {
@@ -4686,12 +5327,12 @@
 
             DOM.metrics.punctuationExpression.innerHTML = `
              <div class="metric-card-top">
-               <div class="metric-card-label">Gęstość pytań i wykrzyknień</div>
+               <div class="metric-card-label">Gęstość pytań i wykrzyknień [na 100 wersów]</div>
              </div>
              <div class="metric-card-secondary">
-               <strong>Gęstość wykrzyknień:</strong> ${exclamationDensity}
+               <strong>Gęstość wykrzyknień [na 100 wersów]:</strong> ${exclamationDensity}
                ${infoTip("Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę rzeczywistych wersów po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}<br>
-               <strong>Gęstość pytań:</strong> ${questionDensity}
+               <strong>Gęstość pytań [na 100 wersów]:</strong> ${questionDensity}
                ${infoTip("Gęstość pytań = liczba znaków „?” podzielona przez liczbę rzeczywistych wersów po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}
              </div>`;
          }
@@ -5481,11 +6122,11 @@
                unit: "%",
             },
             exclamationDensity: {
-               label: "Gęstość wykrzyknień",
+               label: "Gęstość wykrzyknień [na 100 wersów]",
                unit: "",
             },
             questionDensity: {
-               label: "Gęstość pytań",
+               label: "Gęstość pytań [na 100 wersów]",
                unit: "",
             },
             selfReference: {
