@@ -2261,6 +2261,265 @@
          .calderon img {
             width:100%;
          }
+
+
+         /* ===== BETA: porównanie starej analizy TXT z TEI/XML ===== */
+         .beta-tei-comparison {
+            margin: 34px 0 0;
+         }
+
+         .beta-tei-comparison details {
+            border: 1px solid #cfe0f4;
+            border-radius: 16px;
+            background: #f8fbff;
+            box-shadow: 0 8px 24px rgba(29, 58, 108, 0.06);
+            overflow: hidden;
+         }
+
+         .beta-tei-comparison summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 20px;
+            color: var(--color-primary);
+            background: #eef6ff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            list-style: none;
+         }
+
+         .beta-tei-comparison summary::-webkit-details-marker {
+            display: none;
+         }
+
+         .beta-tei-comparison summary::after {
+            content: "▾";
+            margin-left: auto;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+         }
+
+         .beta-tei-comparison details[open] summary::after {
+            transform: rotate(180deg);
+         }
+
+         .beta-tei-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px 8px;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--color-accent);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+         }
+
+         .beta-tei-body {
+            padding: 20px;
+         }
+
+         .beta-tei-intro {
+            margin: 0 0 18px;
+            color: #52657c;
+            line-height: 1.55;
+         }
+
+         .beta-tei-source-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin-bottom: 14px;
+         }
+
+         .beta-tei-source-card {
+            padding: 16px;
+            border: 1px solid #dce7f8;
+            border-radius: 12px;
+            background: #fff;
+         }
+
+         .beta-tei-source-card strong {
+            display: block;
+            margin-bottom: 6px;
+            color: #10233f;
+         }
+
+         .beta-tei-source-card small {
+            display: block;
+            margin-bottom: 12px;
+            color: #65758b;
+            line-height: 1.45;
+         }
+
+         .beta-tei-source-card input[type="file"] {
+            width: 100%;
+            font-size: 12px;
+         }
+
+         .beta-tei-preview-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 14px;
+            margin: 14px 0 16px;
+         }
+
+         .beta-tei-preview-card {
+            min-width: 0;
+            overflow: hidden;
+            border: 1px solid #dce7f8;
+            border-radius: 12px;
+            background: #fff;
+         }
+
+         .beta-tei-preview-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 10px 12px;
+            border-bottom: 1px solid #dce7f8;
+            color: #10233f;
+            background: #f5f9ff;
+         }
+
+         .beta-tei-preview-header strong {
+            font-size: 12px;
+         }
+
+         .beta-tei-preview-meta {
+            overflow: hidden;
+            color: #65758b;
+            font-size: 10px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+         }
+
+         .beta-tei-preview {
+            width: 100%;
+            height: 420px;
+            margin: 0;
+            padding: 14px;
+            overflow: auto;
+            border: 0;
+            color: #26364a;
+            background: #fbfdff;
+            font-family: Consolas, "SFMono-Regular", Menlo, Monaco, monospace;
+            font-size: 11px;
+            line-height: 1.5;
+            tab-size: 3;
+            white-space: pre;
+         }
+
+         .beta-tei-preview code {
+            font: inherit;
+         }
+
+         .beta-xml-tag-bracket { color: #6b7280; }
+         .beta-xml-tag-name { color: #005fb8; font-weight: 700; }
+         .beta-xml-attr-name { color: #8a3b00; }
+         .beta-xml-attr-equals { color: #6b7280; }
+         .beta-xml-attr-value { color: #0a7a3d; }
+         .beta-xml-comment { color: #7b8794; font-style: italic; }
+         .beta-xml-pi { color: #7b3fa1; }
+
+         .beta-tei-actions {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 10px;
+         }
+
+         .beta-tei-status {
+            min-height: 22px;
+            margin: 8px 0 0;
+            color: #52657c;
+            font-size: 12px;
+         }
+
+         .beta-tei-status.error {
+            color: #b3261e;
+         }
+
+         .beta-tei-results {
+            margin-top: 22px;
+         }
+
+         .beta-tei-results[hidden] {
+            display: none;
+         }
+
+         .beta-tei-results h3 {
+            margin: 24px 0 8px;
+            color: var(--color-primary);
+         }
+
+         .beta-tei-table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            border: 1px solid #dce7f8;
+            border-radius: 10px;
+            background: #fff;
+         }
+
+         .beta-tei-table-wrap table {
+            min-width: 760px;
+            border: 0;
+         }
+
+         .beta-tei-table-wrap th,
+         .beta-tei-table-wrap td {
+            padding: 7px 9px;
+            vertical-align: top;
+            font-size: 11px;
+            line-height: 1.4;
+         }
+
+         .beta-tei-table-wrap th {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+         }
+
+         .beta-tei-diff-positive {
+            color: #176b36;
+            font-weight: 700;
+         }
+
+         .beta-tei-diff-negative {
+            color: #a6382f;
+            font-weight: 700;
+         }
+
+         .beta-tei-note {
+            margin-top: 12px;
+            padding: 12px 14px;
+            border: 1px solid #dce7f8;
+            border-radius: 10px;
+            color: #52657c;
+            background: #fff;
+            font-size: 11px;
+            line-height: 1.5;
+         }
+
+         @media screen and (max-width: 700px) {
+            .beta-tei-source-grid,
+            .beta-tei-preview-grid {
+               grid-template-columns: 1fr;
+            }
+
+            .beta-tei-preview {
+               height: 320px;
+            }
+
+            .beta-tei-comparison summary {
+               align-items: flex-start;
+            }
+         }
+
       </style>
    </head>
    <body>
@@ -3590,6 +3849,148 @@
                ></div>
             </div>
          </section>
+
+
+         <section
+            id="beta-tei-comparison"
+            class="beta-tei-comparison"
+            aria-label="Porównanie analizy TXT i TEI XML"
+         >
+            <details id="betaTeiComparisonDetails">
+               <summary>
+                  <span class="beta-tei-badge">BETA</span>
+                  <span>Porównanie metod analizy: parser TXT ↔ parser TEI/XML</span>
+               </summary>
+               <div class="beta-tei-body">
+                  <p class="beta-tei-intro">
+                     WERSJA BETA. Sekcja kontrolna porównuje dotychczasową analizę pliku
+                     tekstowego z osobną analizą strukturalną <a href="https://www.tei-c.org" target="_blank">TEI/XML</a>. Parser XML
+                     korzysta z elementów <code>&lt;sp&gt;</code>,
+                     <code>&lt;speaker&gt;</code>, <code>&lt;l&gt;</code> i
+                     <code>&lt;stage&gt;</code>, identyfikatorów
+                     <code>@who</code> oraz opisów osób i grup w
+                     <code>&lt;particDesc&gt;</code>. Nie zmienia to działania
+                     dotychczasowego parsera TXT.
+                  </p>
+
+                  <div class="beta-tei-source-grid">
+                     <label class="beta-tei-source-card">
+                        <strong>Stara metoda: TXT</strong>
+                        <small>
+                           Domyślnie: <code>mickiewicz-dziady-IV.txt</code>.
+                           Wybór pliku poniżej tymczasowo nadpisuje asset w tej sesji.
+                        </small>
+                        <input
+                           id="betaTxtFileInput"
+                           type="file"
+                           accept=".txt,text/plain"
+                        />
+                     </label>
+
+                     <label class="beta-tei-source-card">
+                        <strong>Nowa metoda: TEI/XML</strong>
+                        <small>
+                           Domyślnie: <code>mickiewicz-dziady-IV-tei.xml</code>.
+                           Wybór pliku poniżej tymczasowo nadpisuje asset w tej sesji.
+                        </small>
+                        <input
+                           id="betaXmlFileInput"
+                           type="file"
+                           accept=".xml,text/xml,application/xml"
+                        />
+                     </label>
+                  </div>
+
+                  <div class="beta-tei-preview-grid" aria-label="Podgląd źródeł porównania">
+                     <section class="beta-tei-preview-card">
+                        <div class="beta-tei-preview-header">
+                           <strong>Podgląd TXT</strong>
+                           <span id="betaTxtPreviewMeta" class="beta-tei-preview-meta">Ładowanie…</span>
+                        </div>
+                        <pre class="beta-tei-preview"><code id="betaTxtPreview">Ładowanie pliku TXT…</code></pre>
+                     </section>
+
+                     <section class="beta-tei-preview-card">
+                        <div class="beta-tei-preview-header">
+                           <strong>Podgląd TEI/XML</strong>
+                           <span id="betaXmlPreviewMeta" class="beta-tei-preview-meta">Ładowanie…</span>
+                        </div>
+                        <pre class="beta-tei-preview"><code id="betaXmlPreview">Ładowanie pliku TEI/XML…</code></pre>
+                     </section>
+                  </div>
+
+                  <div class="beta-tei-actions">
+                     <button id="betaRunComparisonButton" type="button">
+                        Porównaj TXT z TEI/XML
+                     </button>
+                  </div>
+                  <div
+                     id="betaTeiComparisonStatus"
+                     class="beta-tei-status"
+                     role="status"
+                     aria-live="polite"
+                  ></div>
+
+                  <div id="betaTeiComparisonResults" class="beta-tei-results" hidden>
+                     <h3>Tabela kontrolna</h3>
+                     <div class="beta-tei-table-wrap">
+                        <table id="betaControlTable">
+                           <thead>
+                              <tr>
+                                 <th>Parametr</th>
+                                 <th>TXT — stara metoda</th>
+                                 <th>TEI/XML — nowa metoda</th>
+                                 <th>Uwagi / różnica</th>
+                              </tr>
+                           </thead>
+                           <tbody></tbody>
+                        </table>
+                     </div>
+
+                     <h3>Kto ma najwięcej do powiedzenia?</h3>
+                     <div class="beta-tei-table-wrap">
+                        <table id="betaSpeakerShareTable">
+                           <thead>
+                              <tr>
+                                 <th>Bohater / encja TEI</th>
+                                 <th>TXT — udział wersów</th>
+                                 <th>TEI/XML — udział wersów</th>
+                                 <th>Różnica XML − TXT</th>
+                              </tr>
+                           </thead>
+                           <tbody></tbody>
+                        </table>
+                     </div>
+
+                     <h3>Porównanie „Głównych wskaźników”</h3>
+                     <div class="beta-tei-table-wrap">
+                        <table id="betaMetricsTable">
+                           <thead>
+                              <tr>
+                                 <th>Karta / wskaźnik</th>
+                                 <th>Miara</th>
+                                 <th>TXT</th>
+                                 <th>TEI/XML</th>
+                                 <th>Różnica XML − TXT</th>
+                              </tr>
+                           </thead>
+                           <tbody></tbody>
+                        </table>
+                     </div>
+
+                     <div class="beta-tei-note">
+                        W tabeli udziałów etykiety wykryte metodą TXT są, o ile to
+                        możliwe, mapowane do encji wskazanych przez TEI
+                        <code>@who</code>. Surowe etykiety obu metod pozostają
+                        widoczne w tabeli kontrolnej. Dzięki temu role będące w TEI
+                        jedną postacią mogą być porównane jako jedna encja, bez
+                        zmiany zachowania głównej analizy TXT.
+                     </div>
+                  </div>
+               </div>
+            </details>
+         </section>
+
       </main>
 
       <dialog
@@ -7006,8 +7407,984 @@
                .replace(/'/g, "&#039;");
          }
 
+
+
+         /* ===== BETA: osobna analiza TEI/XML i porównanie z parserem TXT ===== */
+         const BETA_TEI_NS = "http://www.tei-c.org/ns/1.0";
+         const BETA_XML_NS = "http://www.w3.org/XML/1998/namespace";
+         const BETA_DEFAULT_SOURCES = Object.freeze({
+            txt: {
+               url: "assets/comparison_tei_vs_txt/mickiewicz-dziady-IV.txt",
+               label: "assets/comparison_tei_vs_txt/mickiewicz-dziady-IV.txt",
+            },
+            xml: {
+               url: "assets/comparison_tei_vs_txt/mickiewicz-dziady-IV-tei.xml",
+               label: "assets/comparison_tei_vs_txt/mickiewicz-dziady-IV-tei.xml",
+            },
+         });
+         const betaTeiSourceState = {
+            txtText: "",
+            xmlText: "",
+            txtLabel: BETA_DEFAULT_SOURCES.txt.label,
+            xmlLabel: BETA_DEFAULT_SOURCES.xml.label,
+            defaultsPromise: null,
+         };
+
+         const BETA_METRIC_ROWS = [
+            {
+               group: "Średnia długość odcinka izosylabicznego",
+               label: "Średnia długość odcinka",
+               key: "isosyllabicAverage",
+               unit: "",
+            },
+            {
+               group: "Średnia długość odcinka izosylabicznego",
+               label: "Częstość zmiany liczby sylab",
+               key: "syllableChangeRate",
+               unit: "%",
+            },
+            {
+               group: "Średnia długość wypowiedzi jednej postaci",
+               label: "Średnia długość wypowiedzi",
+               key: "interactionAverage",
+               unit: "",
+            },
+            {
+               group: "Średnia długość zdania",
+               label: "Średnia — słowa",
+               key: "sentenceAverageWords",
+               unit: " słów",
+            },
+            {
+               group: "Średnia długość zdania",
+               label: "Średnia — sylaby",
+               key: "sentenceAverageSyllables",
+               unit: " sylab",
+            },
+            {
+               group: "Średnia długość zdania",
+               label: "Liczba wykrytych zdań",
+               key: "sentenceCount",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Zdania hipotaktyczne",
+               label: "Liczba zdań hipotaktycznych",
+               key: "hypotacticCount",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Zdania hipotaktyczne",
+               label: "Udział wśród wszystkich zdań",
+               key: "hypotaxisRate",
+               unit: "%",
+            },
+            {
+               group: "Zdania hipotaktyczne",
+               label: "Wszystkich wykrytych zdań",
+               key: "hypotaxisSentenceCount",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Relacje kauzalne / wynikowe",
+               label: "Odsetek zdań z jawnym wykładnikiem",
+               key: "causalCohesionRate",
+               unit: "%",
+            },
+            {
+               group: "Relacje kauzalne / wynikowe",
+               label: "Zdania z relacją kauzalną",
+               key: "causalCount",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Relacje kauzalne / wynikowe",
+               label: "Wszystkich wykrytych zdań",
+               key: "causalSentenceCount",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Niezgodność granicy wersowej i syntagmatycznej",
+               label: "Wskaźnik",
+               key: "lineBreaking",
+               unit: "%",
+            },
+            {
+               group: "Gęstość pytań i wykrzyknień",
+               label: "Gęstość wykrzyknień na 100 wersów",
+               key: "exclamationDensity",
+               unit: "",
+            },
+            {
+               group: "Gęstość pytań i wykrzyknień",
+               label: "Gęstość pytań na 100 wersów",
+               key: "questionDensity",
+               unit: "",
+            },
+            {
+               group: "Referencja pierwszoosobowa (l. poj.)",
+               label: "Wskaźnik",
+               key: "selfReference",
+               unit: "‰",
+            },
+            {
+               group: "Referencja pierwszoosobowa (l. mn.)",
+               label: "Wskaźnik",
+               key: "selfReferencePlural",
+               unit: "‰",
+            },
+            {
+               group: "Gęstość metakomentarza (didaskaliów)",
+               label: "Wskaźnik",
+               key: "metacommentaryDensity",
+               unit: "%",
+            },
+            {
+               group: "Didaskalia z wypowiedziami „na stronie”",
+               label: "Nasycenie didaskaliów",
+               key: "asideStageFunction",
+               unit: "%",
+            },
+            {
+               group: "Apart względem długości dramatu",
+               label: "Gęstość apartu",
+               key: "asideDramaLength",
+               unit: "%",
+            },
+         ];
+
+         function initBetaTeiComparison() {
+            const button = document.getElementById("betaRunComparisonButton");
+            const txtInput = document.getElementById("betaTxtFileInput");
+            const xmlInput = document.getElementById("betaXmlFileInput");
+            if (!button) return;
+
+            button.addEventListener("click", runBetaTeiComparison);
+            txtInput?.addEventListener("change", () =>
+               betaHandleSourceFileChange("txt", txtInput.files?.[0]),
+            );
+            xmlInput?.addEventListener("change", () =>
+               betaHandleSourceFileChange("xml", xmlInput.files?.[0]),
+            );
+
+            betaTeiSourceState.defaultsPromise = betaLoadDefaultSources();
+         }
+
+         async function betaFetchDefaultSource(source) {
+            const response = await fetch(source.url, { cache: "no-store" });
+            if (!response.ok) {
+               throw new Error(
+                  `Nie udało się wczytać ${source.label} (HTTP ${response.status}).`,
+               );
+            }
+            return response.text();
+         }
+
+         async function betaLoadDefaultSources() {
+            betaSetStatus("Ładuję domyślne pliki TXT i TEI/XML z katalogu assets…");
+            try {
+               const [txtText, xmlText] = await Promise.all([
+                  betaFetchDefaultSource(BETA_DEFAULT_SOURCES.txt),
+                  betaFetchDefaultSource(BETA_DEFAULT_SOURCES.xml),
+               ]);
+
+               betaTeiSourceState.txtText = txtText;
+               betaTeiSourceState.xmlText = xmlText;
+               betaTeiSourceState.txtLabel = BETA_DEFAULT_SOURCES.txt.label;
+               betaTeiSourceState.xmlLabel = BETA_DEFAULT_SOURCES.xml.label;
+
+               betaRenderSourcePreview("txt", txtText, betaTeiSourceState.txtLabel);
+               betaRenderSourcePreview("xml", xmlText, betaTeiSourceState.xmlLabel);
+               betaSetStatus(
+                  "Możesz od razu uruchomić porównanie na domyślnym przykładzie „Dziadów” cz. IV albo nadpisać pliki.",
+               );
+               return true;
+            } catch (error) {
+               console.error(error);
+               betaSetStatus(
+                  `${error?.message || "Nie udało się załadować domyślnych assetów"} Możesz wskazać pliki ręcznie w polach powyżej.`,
+                  true,
+               );
+               return false;
+            }
+         }
+
+         async function betaHandleSourceFileChange(kind, file) {
+            if (!file) {
+               const source = BETA_DEFAULT_SOURCES[kind];
+               try {
+                  const text = await betaFetchDefaultSource(source);
+                  betaStoreSource(kind, text, source.label);
+                  betaRenderSourcePreview(kind, text, source.label);
+                  betaHideComparisonResults();
+                  betaSetStatus(
+                     `Przywrócono domyślny plik ${source.label}. Uruchom porównanie ponownie.`,
+                  );
+               } catch (error) {
+                  console.error(error);
+                  betaSetStatus(error?.message || "Nie udało się przywrócić assetu.", true);
+               }
+               return;
+            }
+
+            try {
+               const text = await file.text();
+               betaStoreSource(kind, text, file.name);
+               betaRenderSourcePreview(kind, text, file.name);
+               betaHideComparisonResults();
+               betaSetStatus(
+                  `Podmieniono źródło ${kind === "txt" ? "TXT" : "TEI/XML"} na ${file.name}. Uruchom porównanie ponownie.`,
+               );
+            } catch (error) {
+               console.error(error);
+               betaSetStatus("Nie udało się odczytać wybranego pliku.", true);
+            }
+         }
+
+         function betaStoreSource(kind, text, label) {
+            if (kind === "txt") {
+               betaTeiSourceState.txtText = text;
+               betaTeiSourceState.txtLabel = label;
+            } else {
+               betaTeiSourceState.xmlText = text;
+               betaTeiSourceState.xmlLabel = label;
+            }
+         }
+
+         function betaRenderSourcePreview(kind, text, label) {
+            const code = document.getElementById(
+               kind === "txt" ? "betaTxtPreview" : "betaXmlPreview",
+            );
+            const meta = document.getElementById(
+               kind === "txt" ? "betaTxtPreviewMeta" : "betaXmlPreviewMeta",
+            );
+            if (!code) return;
+
+            if (kind === "xml") {
+               code.innerHTML = betaHighlightXml(text);
+            } else {
+               code.textContent = text;
+            }
+
+            if (meta) {
+               const lineCount = text ? text.split(/\r?\n/).length : 0;
+               meta.textContent = `${lineCount} wierszy · ${text.length.toLocaleString("pl-PL")} znaków`;
+               meta.title = label;
+            }
+         }
+
+         function betaHighlightXml(xmlText) {
+            const escaped = escapeHtml(xmlText);
+            const tokenPattern =
+               /(&lt;!--[\s\S]*?--&gt;)|(&lt;\?[\s\S]*?\?&gt;)|(&lt;\/?)([A-Za-z_][\w:.-]*)([\s\S]*?)(&gt;)/g;
+
+            return escaped.replace(
+               tokenPattern,
+               (match, comment, processingInstruction, open, tagName, attrs, close) => {
+                  if (comment) {
+                     return `<span class="beta-xml-comment">${comment}</span>`;
+                  }
+                  if (processingInstruction) {
+                     return `<span class="beta-xml-pi">${processingInstruction}</span>`;
+                  }
+
+                  const highlightedAttrs = attrs.replace(
+                     /(\s+)([A-Za-z_:][\w:.-]*)(\s*=\s*)(&quot;[\s\S]*?&quot;|&#039;[\s\S]*?&#039;)/g,
+                     '$1<span class="beta-xml-attr-name">$2</span><span class="beta-xml-attr-equals">$3</span><span class="beta-xml-attr-value">$4</span>',
+                  );
+
+                  return `<span class="beta-xml-tag-bracket">${open}</span><span class="beta-xml-tag-name">${tagName}</span>${highlightedAttrs}<span class="beta-xml-tag-bracket">${close}</span>`;
+               },
+            );
+         }
+
+         function betaHideComparisonResults() {
+            const results = document.getElementById("betaTeiComparisonResults");
+            if (results) results.hidden = true;
+         }
+
+         async function runBetaTeiComparison() {
+            const txtInput = document.getElementById("betaTxtFileInput");
+            const xmlInput = document.getElementById("betaXmlFileInput");
+            const button = document.getElementById("betaRunComparisonButton");
+
+            if (betaTeiSourceState.defaultsPromise) {
+               await betaTeiSourceState.defaultsPromise;
+            }
+
+            if (button) button.disabled = true;
+            betaSetStatus("Analizuję oba warianty…");
+
+            try {
+               const txtFile = txtInput?.files?.[0];
+               const xmlFile = xmlInput?.files?.[0];
+               const [txtText, xmlText] = await Promise.all([
+                  txtFile ? txtFile.text() : Promise.resolve(betaTeiSourceState.txtText),
+                  xmlFile ? xmlFile.text() : Promise.resolve(betaTeiSourceState.xmlText),
+               ]);
+
+               if (!txtText?.trim()) {
+                  throw new Error(
+                     "Brak tekstu TXT. Sprawdź asset lub wskaż plik ręcznie.",
+                  );
+               }
+               if (!xmlText?.trim()) {
+                  throw new Error(
+                     "Brak tekstu TEI/XML. Sprawdź asset lub wskaż plik ręcznie.",
+                  );
+               }
+
+               const legacy = betaAnalyzeLegacyTxt(txtText);
+               const tei = betaAnalyzeTeiXml(xmlText);
+
+               betaRenderControlTable(legacy, tei);
+               betaRenderSpeakerShareTable(legacy, tei);
+               betaRenderMetricsTable(legacy, tei);
+
+               const results = document.getElementById(
+                  "betaTeiComparisonResults",
+               );
+               if (results) results.hidden = false;
+
+               betaSetStatus(
+                  `Porównanie gotowe. TXT: ${legacy.summary.metricLineCount} wersów do metryk; TEI/XML: ${tei.summary.metricLineCount}.`,
+               );
+            } catch (error) {
+               console.error(error);
+               betaSetStatus(
+                  error?.message || "Nie udało się przeanalizować plików.",
+                  true,
+               );
+            } finally {
+               if (button) button.disabled = false;
+            }
+         }
+
+         function betaAnalyzeLegacyTxt(text) {
+            // Celowo korzystamy z istniejącej, niezmienionej metody TXT.
+            const data = parseDramaText(text);
+            return {
+               data,
+               metrics: betaComputeMetrics(data),
+               summary: betaBuildSummary(data, {
+                  sourceType: "txt",
+               }),
+            };
+         }
+
+         function betaAnalyzeTeiXml(xmlText) {
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, "application/xml");
+            const parserErrors = xmlDoc.getElementsByTagName("parsererror");
+            if (parserErrors.length) {
+               throw new Error("Plik XML nie jest poprawnym dokumentem XML.");
+            }
+
+            const root = xmlDoc.documentElement;
+            if (!root || root.namespaceURI !== BETA_TEI_NS) {
+               throw new Error(
+                  "Plik XML nie używa przestrzeni nazw TEI (http://www.tei-c.org/ns/1.0).",
+               );
+            }
+
+            const personIndex = betaBuildTeiPersonIndex(xmlDoc);
+            const speakerLabels = new Set();
+            const usedCharacters = new Set();
+            const speechRows = [];
+            let verseNumber = 0;
+            let openPartVerse = null;
+            let spCount = 0;
+
+            const speechElements = Array.from(
+               xmlDoc.getElementsByTagNameNS(BETA_TEI_NS, "sp"),
+            );
+
+            speechElements.forEach((sp) => {
+               spCount += 1;
+               const speakerNode = sp.getElementsByTagNameNS(
+                  BETA_TEI_NS,
+                  "speaker",
+               )[0];
+               const speakerLabel = betaNormalizeXmlText(
+                  speakerNode?.textContent || "",
+               );
+               if (speakerLabel) speakerLabels.add(speakerLabel);
+
+               const actor = betaResolveTeiSpeaker(
+                  sp,
+                  speakerLabel,
+                  personIndex,
+               );
+               if (actor) usedCharacters.add(actor);
+
+               if (speakerLabel && actor) {
+                  personIndex.aliasToCanonical.set(
+                     betaNormalizeSpeakerKey(speakerLabel),
+                     actor,
+                  );
+               }
+
+               const lineElements = Array.from(
+                  sp.getElementsByTagNameNS(BETA_TEI_NS, "l"),
+               );
+
+               lineElements.forEach((lineElement) => {
+                  const line = betaNormalizeXmlText(lineElement.textContent);
+                  const part = (lineElement.getAttribute("part") || "")
+                     .trim()
+                     .toUpperCase();
+                  let currentVerseNumber;
+                  let sharedLine = "";
+
+                  if (part === "I") {
+                     verseNumber += 1;
+                     openPartVerse = verseNumber;
+                     currentVerseNumber = verseNumber;
+                     sharedLine = "P_1";
+                  } else if ((part === "M" || part === "F") && openPartVerse) {
+                     currentVerseNumber = openPartVerse;
+                     sharedLine = "P_2";
+                     if (part === "F") openPartVerse = null;
+                  } else {
+                     verseNumber += 1;
+                     currentVerseNumber = verseNumber;
+                     openPartVerse = null;
+                  }
+
+                  speechRows.push({
+                     verseNumber: currentVerseNumber,
+                     line,
+                     vowelsNumber: countSyllables(line),
+                     actor: actor || speakerLabel || "NIEZNANY MÓWCA",
+                     sharedLine,
+                  });
+               });
+            });
+
+            const stageElements = Array.from(
+               xmlDoc.getElementsByTagNameNS(BETA_TEI_NS, "stage"),
+            );
+            const stageTypeCounts = {};
+            const stageRows = stageElements.map((stage) => {
+               const type = (stage.getAttribute("type") || "bez typu").trim();
+               stageTypeCounts[type] = (stageTypeCounts[type] || 0) + 1;
+               const line = betaNormalizeXmlText(stage.textContent);
+               return {
+                  verseNumber: "",
+                  line,
+                  vowelsNumber: countSyllables(line),
+                  actor: "DIDASKALIA",
+                  sharedLine: "",
+               };
+            });
+
+            const dramaticHourCount = Array.from(
+               xmlDoc.getElementsByTagNameNS(BETA_TEI_NS, "milestone"),
+            ).filter(
+               (node) =>
+                  (node.getAttribute("unit") || "").toLowerCase() ===
+                  "dramatic-hour",
+            ).length;
+
+            const data = [...speechRows, ...stageRows];
+            const summary = betaBuildSummary(data, {
+               sourceType: "tei",
+               spCount,
+               speakerLabels: [...speakerLabels],
+               characters: [...usedCharacters],
+               stageTypeCounts,
+               dramaticHourCount,
+            });
+
+            return {
+               data,
+               metrics: betaComputeMetrics(data),
+               summary,
+               aliasToCanonical: personIndex.aliasToCanonical,
+            };
+         }
+
+         function betaBuildTeiPersonIndex(xmlDoc) {
+            const idToCanonical = new Map();
+            const aliasToCanonical = new Map();
+            const personNodes = [
+               ...Array.from(
+                  xmlDoc.getElementsByTagNameNS(BETA_TEI_NS, "person"),
+               ),
+               ...Array.from(
+                  xmlDoc.getElementsByTagNameNS(BETA_TEI_NS, "personGrp"),
+               ),
+            ];
+
+            personNodes.forEach((node) => {
+               const id =
+                  node.getAttributeNS(BETA_XML_NS, "id") ||
+                  node.getAttribute("xml:id") ||
+                  "";
+               if (!id) return;
+
+               const nameNodes = [
+                  ...Array.from(
+                     node.getElementsByTagNameNS(BETA_TEI_NS, "persName"),
+                  ),
+                  ...Array.from(
+                     node.getElementsByTagNameNS(BETA_TEI_NS, "name"),
+                  ),
+               ];
+               const aliases = nameNodes
+                  .map((nameNode) => betaNormalizeXmlText(nameNode.textContent))
+                  .filter(Boolean);
+               const canonical = aliases[0] || id;
+               idToCanonical.set(id, canonical);
+
+               aliases.forEach((alias) => {
+                  betaRegisterTeiAlias(aliasToCanonical, alias, canonical);
+               });
+            });
+
+            return { idToCanonical, aliasToCanonical };
+         }
+
+         function betaRegisterTeiAlias(map, alias, canonical) {
+            const normalized = betaNormalizeSpeakerKey(alias);
+            if (normalized) map.set(normalized, canonical);
+
+            // W pliku TEI grupy mogą mieć nazwę zbiorczą typu
+            // "DZIECI / CHÓR DZIECI". Rozdzielone warianty są przydatne
+            // wyłącznie do mapowania dawnych etykiet TXT na tę samą encję.
+            alias.split(/\s*\/\s*/).forEach((part) => {
+               const key = betaNormalizeSpeakerKey(part);
+               if (key) map.set(key, canonical);
+            });
+         }
+
+         function betaResolveTeiSpeaker(sp, speakerLabel, personIndex) {
+            const who = (sp.getAttribute("who") || "").trim();
+            if (!who) return speakerLabel;
+
+            const resolved = who
+               .split(/\s+/)
+               .filter(Boolean)
+               .map((token) => {
+                  const id = token.includes("#")
+                     ? token.slice(token.lastIndexOf("#") + 1)
+                     : token;
+                  return personIndex.idToCanonical.get(id) || id;
+               })
+               .filter(Boolean);
+
+            return resolved.length ? resolved.join(" + ") : speakerLabel;
+         }
+
+         function betaNormalizeXmlText(value) {
+            return String(value || "").replace(/\s+/g, " ").trim();
+         }
+
+         function betaNormalizeSpeakerKey(value) {
+            return betaNormalizeXmlText(value).toLocaleUpperCase("pl-PL");
+         }
+
+         function betaBuildSummary(data, meta = {}) {
+            const speechFragments = data.filter(
+               ({ actor }) => actor !== "DIDASKALIA",
+            );
+            const metricLines = buildMetricLines(data);
+            const stageDirections = data.filter(
+               ({ actor }) => actor === "DIDASKALIA",
+            );
+            const actorsInOrder = [];
+            const seenActors = new Set();
+
+            speechFragments.forEach(({ actor }) => {
+               if (!actor || seenActors.has(actor)) return;
+               seenActors.add(actor);
+               actorsInOrder.push(actor);
+            });
+
+            const allSpeechText = metricLines.map(({ line }) => line).join(" ");
+            const asideStageDirectionCount = stageDirections.filter(
+               ({ line }) => line.toLowerCase().includes("na stronie"),
+            ).length;
+
+            return {
+               sourceType: meta.sourceType || "",
+               actors:
+                  meta.characters?.length > 0 ? meta.characters : actorsInOrder,
+               actorLabels: actorsInOrder,
+               speakerLabels: meta.speakerLabels || actorsInOrder,
+               actorCount:
+                  meta.characters?.length > 0
+                     ? meta.characters.length
+                     : actorsInOrder.length,
+               metricLineCount: metricLines.length,
+               speechFragmentCount: speechFragments.length,
+               stageDirectionCount: stageDirections.length,
+               asideStageDirectionCount,
+               speechBlockCount: betaCountSpeechBlocks(speechFragments),
+               wordCount: getWords(allSpeechText).length,
+               spCount: meta.spCount ?? null,
+               stageTypeCounts: meta.stageTypeCounts || {},
+               dramaticHourCount: meta.dramaticHourCount ?? null,
+            };
+         }
+
+         function betaCountSpeechBlocks(speechFragments) {
+            let previousActor = null;
+            let blocks = 0;
+            speechFragments.forEach(({ actor }) => {
+               if (actor !== previousActor) {
+                  blocks += 1;
+                  previousActor = actor;
+               }
+            });
+            return blocks;
+         }
+
+         function betaComputeMetrics(data) {
+            const speechFragments = data.filter(
+               ({ actor }) => actor !== "DIDASKALIA",
+            );
+            const metricLines = buildMetricLines(data);
+            const stageDirections = data.filter(
+               ({ actor }) => actor === "DIDASKALIA",
+            );
+            const metricLineCount = metricLines.length;
+            const allSpeechText = metricLines.map(({ line }) => line).join(" ");
+            const words = getWords(allSpeechText);
+            const asideStageDirectionCount = stageDirections.filter(
+               ({ line }) => line.toLowerCase().includes("na stronie"),
+            ).length;
+
+            const isosyllabicSegments = metricLineCount
+               ? getIsosyllabicSegments(metricLines)
+               : [];
+            const sentenceStats = getSentenceLengthStats(allSpeechText);
+            const hypotaxisStats = getHypotaxisStats(allSpeechText);
+            const causalStats = getCausalCohesionStats(allSpeechText);
+            const brokenLines = metricLines.filter(
+               ({ line }) => !APP_CONFIG.lineEndingRegex.test(line.trim()),
+            ).length;
+
+            const speechBlocks = [];
+            let previousActor = null;
+            let currentBlockLength = 0;
+            speechFragments.forEach(({ actor }) => {
+               if (actor !== previousActor) {
+                  if (currentBlockLength > 0)
+                     speechBlocks.push(currentBlockLength);
+                  previousActor = actor;
+                  currentBlockLength = 1;
+               } else {
+                  currentBlockLength += 1;
+               }
+            });
+            if (currentBlockLength > 0) speechBlocks.push(currentBlockLength);
+
+            const selfReferenceCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePronouns.has(word),
+            ).length;
+            const selfReferencePluralCount = words.filter((word) =>
+               APP_CONFIG.selfReferencePluralPronouns.has(word),
+            ).length;
+
+            return {
+               isosyllabicAverage: isosyllabicSegments.length
+                  ? average(isosyllabicSegments)
+                  : 0,
+               syllableChangeRate:
+                  metricLineCount > 1
+                     ? ((isosyllabicSegments.length - 1) /
+                          (metricLineCount - 1)) *
+                       100
+                     : 0,
+               interactionAverage: speechBlocks.length
+                  ? average(speechBlocks)
+                  : 0,
+               sentenceAverageWords: sentenceStats.averageWords,
+               sentenceAverageSyllables: sentenceStats.averageSyllables,
+               sentenceCount: sentenceStats.sentenceCount,
+               hypotacticCount: hypotaxisStats.hypotacticCount,
+               hypotaxisRate: hypotaxisStats.hypotacticRate,
+               hypotaxisSentenceCount: hypotaxisStats.sentenceCount,
+               causalCohesionRate: causalStats.causalRate,
+               causalCount: causalStats.causalCount,
+               causalSentenceCount: causalStats.sentenceCount,
+               lineBreaking: metricLineCount
+                  ? (brokenLines / metricLineCount) * 100
+                  : 0,
+               exclamationDensity: metricLineCount
+                  ? (countRegexMatches(allSpeechText, /!/g) /
+                       metricLineCount) *
+                    100
+                  : 0,
+               questionDensity: metricLineCount
+                  ? (countRegexMatches(allSpeechText, /\?/g) /
+                       metricLineCount) *
+                    100
+                  : 0,
+               selfReference: words.length
+                  ? (selfReferenceCount / words.length) * 1000
+                  : 0,
+               selfReferencePlural: words.length
+                  ? (selfReferencePluralCount / words.length) * 1000
+                  : 0,
+               metacommentaryDensity: metricLineCount
+                  ? (stageDirections.length / metricLineCount) * 100
+                  : 0,
+               asideStageFunction: stageDirections.length
+                  ? (asideStageDirectionCount / stageDirections.length) * 100
+                  : 0,
+               asideDramaLength: metricLineCount
+                  ? (asideStageDirectionCount / metricLineCount) * 100
+                  : 0,
+            };
+         }
+
+         function betaRenderControlTable(legacy, tei) {
+            const body = document.querySelector("#betaControlTable tbody");
+            if (!body) return;
+
+            const legacyActors = legacy.summary.actorLabels.join(", ") || "—";
+            const teiActors = tei.summary.actors.join(", ") || "—";
+            const teiSpeakerLabels =
+               tei.summary.speakerLabels.join(", ") || "—";
+            const stageTypes = Object.entries(tei.summary.stageTypeCounts)
+               .sort((a, b) => b[1] - a[1])
+               .map(([type, count]) => `${type}: ${count}`)
+               .join(", ");
+
+            const rows = [
+               [
+                  "Wykryci bohaterowie / role",
+                  legacyActors,
+                  teiActors,
+                  "TXT odczytuje etykiety typograficzne; TEI rozwiązuje @who do osób/grup.",
+               ],
+               [
+                  "Liczba wykrytych bohaterów / encji",
+                  legacy.summary.actorCount,
+                  tei.summary.actorCount,
+                  betaNumericDiffText(
+                     legacy.summary.actorCount,
+                     tei.summary.actorCount,
+                     "",
+                     0,
+                  ),
+               ],
+               [
+                  "Etykiety mówców",
+                  legacyActors,
+                  teiSpeakerLabels,
+                  "W XML pokazano zawartość <speaker>; identyfikacja postaci opiera się na @who.",
+               ],
+               [
+                  "Wersy używane do metryk",
+                  legacy.summary.metricLineCount,
+                  tei.summary.metricLineCount,
+                  betaNumericDiffText(
+                     legacy.summary.metricLineCount,
+                     tei.summary.metricLineCount,
+                     "",
+                     0,
+                  ),
+               ],
+               [
+                  "Fragmenty tekstu mówionego",
+                  legacy.summary.speechFragmentCount,
+                  tei.summary.speechFragmentCount,
+                  betaNumericDiffText(
+                     legacy.summary.speechFragmentCount,
+                     tei.summary.speechFragmentCount,
+                     "",
+                     0,
+                  ),
+               ],
+               [
+                  "Kwestie / bloki wypowiedzi",
+                  `${legacy.summary.speechBlockCount} bloków`,
+                  tei.summary.spCount === null
+                     ? "—"
+                     : `${tei.summary.spCount} elementów <sp>`,
+                  "W TXT blok wynika ze zmiany etykiety mówcy; w TEI kwestia jest oznaczona jawnie przez <sp>.",
+               ],
+               [
+                  "Didaskalia",
+                  legacy.summary.stageDirectionCount,
+                  tei.summary.stageDirectionCount,
+                  betaNumericDiffText(
+                     legacy.summary.stageDirectionCount,
+                     tei.summary.stageDirectionCount,
+                     "",
+                     0,
+                  ),
+               ],
+               [
+                  "Didaskalia zawierające „na stronie”",
+                  legacy.summary.asideStageDirectionCount,
+                  tei.summary.asideStageDirectionCount,
+                  betaNumericDiffText(
+                     legacy.summary.asideStageDirectionCount,
+                     tei.summary.asideStageDirectionCount,
+                     "",
+                     0,
+                  ),
+               ],
+               [
+                  "Liczba słów w tekście mówionym",
+                  legacy.summary.wordCount,
+                  tei.summary.wordCount,
+                  betaNumericDiffText(
+                     legacy.summary.wordCount,
+                     tei.summary.wordCount,
+                     "",
+                     0,
+                  ),
+               ],
+               [
+                  "Typy didaskaliów",
+                  "brak jawnej typologii w TXT",
+                  stageTypes || "brak @type",
+                  "TEI pozwala wykorzystać @type bez heurystyki tekstowej.",
+               ],
+               [
+                  "Strukturalne oznaczenia godzin dramatu",
+                  "niewykrywane przez obecną metodę TXT",
+                  tei.summary.dramaticHourCount === null
+                     ? "—"
+                     : `${tei.summary.dramaticHourCount} × <milestone unit=\"dramatic-hour\">`,
+                  "Informacja dostępna bezpośrednio w strukturze TEI.",
+               ],
+            ];
+
+            body.innerHTML = rows
+               .map(
+                  ([label, txt, xml, note]) => `
+                     <tr>
+                        <td><strong>${escapeHtml(label)}</strong></td>
+                        <td>${escapeHtml(txt)}</td>
+                        <td>${escapeHtml(xml)}</td>
+                        <td>${escapeHtml(note)}</td>
+                     </tr>`,
+               )
+               .join("");
+         }
+
+         function betaRenderSpeakerShareTable(legacy, tei) {
+            const body = document.querySelector("#betaSpeakerShareTable tbody");
+            if (!body) return;
+
+            const legacyShares = betaCanonicalizeLegacyShares(
+               calculateSpeakerShares(legacy.data),
+               tei.aliasToCanonical,
+            );
+            const teiShares = calculateSpeakerShares(tei.data);
+            const legacyMap = new Map(
+               legacyShares.map(({ actor, percentage }) => [actor, percentage]),
+            );
+            const teiMap = new Map(
+               teiShares.map(({ actor, percentage }) => [actor, percentage]),
+            );
+            const actors = [...new Set([...legacyMap.keys(), ...teiMap.keys()])]
+               .sort(
+                  (a, b) =>
+                     Math.max(teiMap.get(b) || 0, legacyMap.get(b) || 0) -
+                     Math.max(teiMap.get(a) || 0, legacyMap.get(a) || 0),
+               );
+
+            body.innerHTML = actors
+               .map((actor) => {
+                  const txtValue = legacyMap.get(actor) || 0;
+                  const xmlValue = teiMap.get(actor) || 0;
+                  const diff = xmlValue - txtValue;
+                  return `
+                     <tr>
+                        <td><strong>${escapeHtml(actor)}</strong></td>
+                        <td>${betaFormatNumber(txtValue, 2)}%</td>
+                        <td>${betaFormatNumber(xmlValue, 2)}%</td>
+                        <td class="${betaDiffClass(diff)}">${betaFormatSigned(diff, 2)} p.p.</td>
+                     </tr>`;
+               })
+               .join("");
+         }
+
+         function betaCanonicalizeLegacyShares(shares, aliasToCanonical) {
+            const aggregated = new Map();
+            shares.forEach(({ actor, percentage }) => {
+               const canonical =
+                  aliasToCanonical.get(betaNormalizeSpeakerKey(actor)) || actor;
+               aggregated.set(
+                  canonical,
+                  (aggregated.get(canonical) || 0) + percentage,
+               );
+            });
+            return [...aggregated.entries()].map(([actor, percentage]) => ({
+               actor,
+               percentage,
+            }));
+         }
+
+         function betaRenderMetricsTable(legacy, tei) {
+            const body = document.querySelector("#betaMetricsTable tbody");
+            if (!body) return;
+
+            body.innerHTML = BETA_METRIC_ROWS.map((row) => {
+               const txtValue = Number(legacy.metrics[row.key]) || 0;
+               const xmlValue = Number(tei.metrics[row.key]) || 0;
+               const diff = xmlValue - txtValue;
+               const digits = row.digits ?? 2;
+               return `
+                  <tr>
+                     <td><strong>${escapeHtml(row.group)}</strong></td>
+                     <td>${escapeHtml(row.label)}</td>
+                     <td>${betaFormatNumber(txtValue, digits)}${escapeHtml(row.unit)}</td>
+                     <td>${betaFormatNumber(xmlValue, digits)}${escapeHtml(row.unit)}</td>
+                     <td class="${betaDiffClass(diff)}">${betaFormatSigned(diff, digits)}${escapeHtml(row.unit)}</td>
+                  </tr>`;
+            }).join("");
+         }
+
+         function betaNumericDiffText(txtValue, xmlValue, unit = "", digits = 2) {
+            const diff = Number(xmlValue) - Number(txtValue);
+            return `XML − TXT: ${betaFormatSigned(diff, digits)}${unit}`;
+         }
+
+         function betaFormatNumber(value, digits = 2) {
+            return new Intl.NumberFormat("pl-PL", {
+               minimumFractionDigits: digits,
+               maximumFractionDigits: digits,
+            }).format(Number(value) || 0);
+         }
+
+         function betaFormatSigned(value, digits = 2) {
+            const numeric = Number(value) || 0;
+            if (Math.abs(numeric) < 10 ** (-(digits + 1))) {
+               return betaFormatNumber(0, digits);
+            }
+            const sign = numeric > 0 ? "+" : "−";
+            return `${sign}${betaFormatNumber(Math.abs(numeric), digits)}`;
+         }
+
+         function betaDiffClass(value) {
+            const numeric = Number(value) || 0;
+            if (numeric > 0) return "beta-tei-diff-positive";
+            if (numeric < 0) return "beta-tei-diff-negative";
+            return "";
+         }
+
+         function betaSetStatus(message, isError = false) {
+            const status = document.getElementById("betaTeiComparisonStatus");
+            if (!status) return;
+            status.textContent = message;
+            status.classList.toggle("error", Boolean(isError));
+         }
          init();
          initComparisonAnalysis();
+         initBetaTeiComparison();
       </script>
    </body>
 </html>

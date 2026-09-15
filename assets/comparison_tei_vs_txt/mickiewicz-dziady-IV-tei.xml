@@ -1,0 +1,2109 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<?xml-model href="https://www.tei-c.org/release/xml/tei/custom/schema/relaxng/tei_all.rng" type="application/xml" schematypens="http://relaxng.org/ns/structure/1.0"?>
+<TEI xmlns="http://www.tei-c.org/ns/1.0" xml:lang="pl">
+  <teiHeader>
+    <fileDesc>
+      <titleStmt>
+        <title>Dziady. Część IV</title>
+        <author>Adam Mickiewicz</author>
+        <respStmt>
+          <resp>Konwersja i strukturalne kodowanie TEI P5 na podstawie dostarczonego pliku tekstowego</resp>
+          <name xml:id="encoder">ChatGPT</name>
+        </respStmt>
+      </titleStmt>
+      <publicationStmt>
+        <p>Elektroniczna reprezentacja TEI przygotowana na potrzeby użytkownika; plik źródłowy nie zawiera metadanych konkretnego wydania.</p>
+      </publicationStmt>
+      <sourceDesc>
+        <p>Źródło transkrypcji: plik „mickiewicz-dziady-IV.txt” dostarczony przez użytkownika. Zachowano pisownię, interpunkcję i podział wierszowy źródła; typograficzne ukośniki wyznaczające didaskalia zastąpiono elementami TEI.</p>
+      </sourceDesc>
+    </fileDesc>
+    <encodingDesc>
+      <projectDesc>
+        <p>Kodowanie dramatu: kwestie zapisano jako sp z speaker i who, wersy jako l, didaskalia jako stage z typem, a mówców opisano w particDesc. Wersy współdzielone lub przerwane granicą kwestii albo didaskaliami oznaczono na elementach l atrybutem part="I" (początek) i part="F" (koniec), zgodnie z TEI P5. Przejścia między trzema godzinami dramatu oznaczono elementami milestone, aby nie rozcinać kwestii przebiegających przez granice godzin.</p>
+      </projectDesc>
+      <editorialDecl>
+        <p>Nie modernizowano ortografii ani leksyki. Początkowe wcięcia wersów zachowano za pomocą @rend="indent" i @style; jeżeli wcięcie w źródle sygnalizuje drugą część wspólnego wersu, relację tę zakodowano dodatkowo przez @part na obu fragmentach. Oznaczenie [cię] zachowano semantycznie jako supplied. Identyfikację PUSTELNIKA z GUSTAWEM zakodowano wspólnym @who.</p>
+      </editorialDecl>
+      <classDecl>
+        <taxonomy xml:id="dramatic-hours">
+          <desc>Nazwy trzech godzin dramatu wynikają z wypowiedzi Gustawa i sygnałów zegara; milestones mają charakter strukturalnego oznaczenia redakcyjnego.</desc>
+          <category xml:id="hour-love">
+            <catDesc>godzina miłości</catDesc>
+          </category>
+          <category xml:id="hour-despair">
+            <catDesc>godzina rozpaczy</catDesc>
+          </category>
+          <category xml:id="hour-warning">
+            <catDesc>godzina przestrogi</catDesc>
+          </category>
+        </taxonomy>
+      </classDecl>
+    </encodingDesc>
+    <profileDesc>
+      <particDesc>
+        <listPerson type="dramatis-personae-derived">
+          <head>Mówcy wyprowadzeni z etykiet kwestii w pliku źródłowym</head>
+          <person xml:id="ksiadz">
+            <persName>KSIĄDZ</persName>
+          </person>
+          <person xml:id="gustaw">
+            <persName>GUSTAW</persName>
+            <persName type="roleName">PUSTELNIK</persName>
+            <note>Ta sama postać występuje początkowo pod etykietą PUSTELNIK, a po rozpoznaniu jako GUSTAW.</note>
+          </person>
+          <personGrp xml:id="dzieci">
+            <name>DZIECI / CHÓR DZIECI</name>
+          </personGrp>
+          <person xml:id="dziecko">
+            <persName>DZIECKO / DZIECIĘ</persName>
+          </person>
+          <person xml:id="glos-z-kantorka">
+            <persName>GŁOS Z KANTORKA</persName>
+          </person>
+          <personGrp xml:id="chor">
+            <name>CHÓR</name>
+          </personGrp>
+        </listPerson>
+      </particDesc>
+    </profileDesc>
+    <revisionDesc>
+      <change when="2026-09-15" who="#encoder">Konwersja pełnego pliku wejściowego do TEI XML oraz kontrola kompletności, odwołań i poprawności składni XML.</change>
+      <change when="2026-09-15" who="#encoder">Dodano TEI @part="I"/"F" dla 57 wersów zapisanych w źródle tekstowym jako dwa fragmenty P_1/P_2.</change>
+    </revisionDesc>
+  </teiHeader>
+  <text>
+    <body>
+      <div type="part" n="IV" xml:id="dziady-iv">
+        <head>
+          <supplied reason="editorial">Dziady. Część IV</supplied>
+        </head>
+        <milestone unit="dramatic-hour" n="1" ana="#hour-love" resp="#encoder" corresp="#hour-love"/>
+        <stage n="1" type="setting">Mieszkanie Księdza — stół nakryty, tylko co po wieczerzy — Ksiądz — Pustelnik — Dzieci — dwie świece na stole — lampa przed obrazem Najświętszej Panny Marii — na scienie zegar bijący.</stage>
+        <sp who="#ksiadz" xml:id="sp-0001">
+          <speaker n="3">KSIĄDZ</speaker>
+          <l n="5">Dzieci, wstawajmy od stoła!</l>
+          <l n="6">Teraz, po powszednim chlebie,</l>
+          <l n="7">Klęknijcie przy mnie dokoła,</l>
+          <l n="8">Podziękujmy Ojcu w niebie.</l>
+          <l n="9">Dzień dzisiejszy Kościół święci</l>
+          <l n="10">Za tych spółchrześcijan dusze,</l>
+          <l n="11">Którzy spomiędzy nas wzięci</l>
+          <l n="12">Czyscowe cierpią katusze.</l>
+          <l n="13">Za nich ofiarujmy Bogu.</l>
+          <stage n="15" type="business">rozkłada książkę</stage>
+          <l n="17">Oto stosowna nauka.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0002">
+          <speaker n="20">DZIECI</speaker>
+          <stage n="22" type="delivery">czytają</stage>
+          <l n="24" part="I">„Onego czasu…”</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0003">
+          <speaker n="27">KSIĄDZ</speaker>
+          <l n="29" part="F" rend="indent" style="margin-left: 24ch">Kto tam? kto tam stuka?</l>
+          <stage n="31" type="entrance">Pustelnik wchodzi ubrany dziwacznie.</stage>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0004">
+          <speaker n="34">DZIECI</speaker>
+          <l n="36" part="I">Jezus, Maryja!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0005">
+          <speaker n="39">KSIĄDZ</speaker>
+          <l n="41" part="F" rend="indent" style="margin-left: 24ch">Któż to jest na progu?</l>
+          <stage n="43" type="business">zmieszany</stage>
+          <l n="45">Ktoś ty taki?… po co?… na co?</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0006">
+          <speaker n="48">DZIECI</speaker>
+          <l n="50">Ach, trup, trup! upiór, ladaco!</l>
+          <l n="51">W imię Ojca!… zgiń, przepadaj!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0007">
+          <speaker n="54">KSIĄDZ</speaker>
+          <l n="56">Ktoś ty, bracie? odpowiadaj.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0008">
+          <speaker n="59">PUSTELNIK</speaker>
+          <stage n="61" type="delivery">powolnie i smutnie</stage>
+          <l n="63">Trup… trup!… tak jest, moje dziecię.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0009">
+          <speaker n="66">DZIECI</speaker>
+          <l n="68">Trup… trup… ach! ach! nie bierz tata!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0010">
+          <speaker n="71">PUSTELNIK</speaker>
+          <l n="73">Umarły!… o nie! tylko umarły dla świata!</l>
+          <l n="74">Jestem pustelnik, czy mnie rozumiecie?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0011">
+          <speaker n="77">KSIĄDZ</speaker>
+          <l n="79">Skąd przychodzisz tak nierano?</l>
+          <l n="80">Kto jesteś? jakie twe miano?</l>
+          <l n="81">Kiedy się tobie przypatruję z bliska,</l>
+          <l n="82">Zdaje się, że cię kiedyś widziałem w tej stronie.</l>
+          <l n="83">Powiedz, mój bracie, jakiegoś ty rodu?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0012">
+          <speaker n="86">PUSTELNIK</speaker>
+          <l n="88">O tak! tak, byłem tutaj… o, dawno! za młodu!</l>
+          <l n="89">Przed śmiercią!… będzie trzy lata!</l>
+          <l n="90">Lecz co tobie do mego rodu i nazwiska?</l>
+          <l n="91">Gdy dzwonią po umarłym, dziad stoi przy dzwonie,</l>
+          <l n="92">Pytają ludzie, kto zeszedł ze świata?</l>
+          <stage n="94" type="business">udając dziada</stage>
+          <l n="96">„A na co ta ciekawość? zmów tylko pacierze”.</l>
+          <l n="97">Otóż ja także umarły dla świata.</l>
+          <l n="98">Na co tobie ciekawość, zmów tylko pacierze.</l>
+          <l n="99" part="I">Nazwiska.</l>
+          <stage n="101" type="business">patrzy na zegar</stage>
+          <l n="103" part="F" rend="indent" style="margin-left: 24ch">jeszcze rano… powiedzieć nie mogę;</l>
+          <l n="104">Idę z daleka, nie wiem, z piekła czyli z raju,</l>
+          <l n="105">I dążę do tegoż kraju.</l>
+          <l n="106">Mój Księże, pokaż, jeśli wiesz, drogę!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0013">
+          <speaker n="109">KSIĄDZ</speaker>
+          <stage n="111" type="delivery">łagodnie, z uśmiechem</stage>
+          <l n="113">Dróg śmierci pokazywać nie chciałbym nikomu.</l>
+          <stage n="115" type="delivery">poufale</stage>
+          <l n="117">My, księża, tylko błędne prostujemy ścieżki.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0014">
+          <speaker n="120">PUSTELNIK</speaker>
+          <stage n="122" type="delivery">z żalem</stage>
+          <l n="124">Inni błądzą, Ksiądz w małym, ale własnym domu,</l>
+          <l n="125">Czy to na wielkim świecie pokój lub zamieszki,</l>
+          <l n="126">Czy gdzie naród upada, czy kochanek ginie,</l>
+          <l n="127">O nic nie dbasz usiadłszy z dziećmi przy kominie.</l>
+          <l n="128">A ja się męczę w słotnej, ciemnej porze!</l>
+          <l n="129">Słyszysz, jaki szturm na dworze?</l>
+          <l n="130">Czy widzisz łyskanie gromu?</l>
+          <stage n="132" type="business">ogląda się</stage>
+          <l n="134">Błogosławione życie w małym, własnym domu!</l>
+          <stage n="136" type="delivery">śpiewa</stage>
+          <l n="138" rend="indent" style="margin-left: 2ch">Kto miłości nie zna, ten żyje szczęśliwy,</l>
+          <l n="139" rend="indent" style="margin-left: 2ch">I noc ma spokojną, i dzień nietęskliwy.</l>
+          <l n="140" rend="indent" style="margin-left: 4ch">W cichym, własnym domu!</l>
+          <stage n="142" type="delivery">śpiewa</stage>
+          <l n="144" rend="indent" style="margin-left: 4ch">Z pałaców sterczących dumnie</l>
+          <l n="145" rend="indent" style="margin-left: 4ch">Znijdź, piękna, do mojej chatki;</l>
+          <l n="146" rend="indent" style="margin-left: 4ch">Znajdziesz u mnie świeże kwiatki,</l>
+          <l n="147" rend="indent" style="margin-left: 4ch">Czułe serce znajdziesz u mnie.</l>
+          <l n="148" rend="indent" style="margin-left: 4ch">Widzisz ptasząt zalecanki,</l>
+          <l n="149" rend="indent" style="margin-left: 4ch">Słyszysz srebrny szmer strumyka;</l>
+          <l n="150" rend="indent" style="margin-left: 4ch">Dla kochanka i kochanki</l>
+          <l n="151" rend="indent" style="margin-left: 4ch">Dosyć domku pustelnika.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0015">
+          <speaker n="154">KSIĄDZ</speaker>
+          <l n="156">Kiedy tak chwalisz mój dom i kominek,</l>
+          <l n="157">Patrz, oto ogień służąca nakłada,</l>
+          <l n="158">Siądź i pogrzej się; tobie potrzebny spoczynek.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0016">
+          <speaker n="161">PUSTELNIK</speaker>
+          <l n="163">Pogrzej się! dobra, Księże, arcyprzednia rada!</l>
+          <stage n="165" type="business">śpiewa pokazując na piersi</stage>
+          <l n="167" rend="indent" style="margin-left: 4ch">Nie wiesz, jaki tu żar płonie,</l>
+          <l n="168" rend="indent" style="margin-left: 4ch">Mimo deszczu, mimo chłodu,</l>
+          <l n="169" rend="indent" style="margin-left: 4ch">Zawsze płonie!</l>
+          <l n="170" rend="indent" style="margin-left: 4ch">Nieraz chwytam śniegu, lodu,</l>
+          <l n="171" rend="indent" style="margin-left: 4ch">Na gorącym cisnę łonie;</l>
+          <l n="172" rend="indent" style="margin-left: 4ch">I śnieg tonie, i lód tonie,</l>
+          <l n="173" rend="indent" style="margin-left: 4ch">Z piersi moich para bucha,</l>
+          <l n="174" rend="indent" style="margin-left: 4ch">Ogień płonie!</l>
+          <l n="175" rend="indent" style="margin-left: 4ch">Stopiłby kruszce i głazy,</l>
+          <l n="176" rend="indent" style="margin-left: 4ch">Gorszy niż ten tysiąc razy,</l>
+          <stage n="178" type="business">pokazując kominek</stage>
+          <l n="180" rend="indent" style="margin-left: 4ch">Milion razy!</l>
+          <l n="181" rend="indent" style="margin-left: 4ch">I śnieg tonie, i lód tonie,</l>
+          <l n="182" rend="indent" style="margin-left: 4ch">Z piersi moich para bucha,</l>
+          <l n="183" rend="indent" style="margin-left: 4ch">Ogień płonie!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0017">
+          <speaker n="186">KSIĄDZ</speaker>
+          <stage n="188" type="delivery">na stronie</stage>
+          <l n="190">Ja swoje, a on swoje; — nie widzi, nie słucha.</l>
+          <stage n="192" type="delivery">do Pustelnika</stage>
+          <l n="194">Jednak do nitki przemoczony wszystek,</l>
+          <l n="195">Zbladłeś, przeziąbłeś strasznie, drżysz jak listek.</l>
+          <l n="196">Ktokolwiek jesteś, długą przejść musiałeś drogę.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0018">
+          <speaker n="199">PUSTELNIK</speaker>
+          <l n="201">Kto jestem?… jeszcze rano… powiedzieć nie mogę.</l>
+          <l n="202">Idę z daleka, nie wiem, z piekła czyli z raju,</l>
+          <l n="203">A dążę do tegoż kraju.</l>
+          <l n="204">Tymczasem małą dam tobie przestrogę.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0019">
+          <speaker n="207">KSIĄDZ</speaker>
+          <stage n="209" type="delivery">na stronie</stage>
+          <l n="211">Trzeba z nim, widzę, innego sposobu.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0020">
+          <speaker n="214">PUSTELNIK</speaker>
+          <l n="216">Pokaż… wszak dobrze wiesz do śmierci drogę?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0021">
+          <speaker n="219">KSIĄDZ</speaker>
+          <l n="221">Dobrze, gotówem na wszelkie usługi,</l>
+          <l n="222">Lecz od twojego wieku aż do grobu</l>
+          <l n="223">Gościniec jest arcydługi.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0022">
+          <speaker n="226">PUSTELNIK</speaker>
+          <stage n="228" type="delivery">z pomieszaniem i smutnie sam do siebie</stage>
+          <l n="230">Ach, tak prędko przebiegłem gościniec tak długi!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0023">
+          <speaker n="233">KSIĄDZ</speaker>
+          <l n="235">Dlatego jesteś znużony i chory.</l>
+          <l n="236">Posil się; wraz przyniosę jadło i napoje.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0024">
+          <speaker n="239">PUSTELNIK</speaker>
+          <stage n="241" type="delivery">z obłąkaniem</stage>
+          <l n="243" part="I">A potem pójdziem?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0025">
+          <speaker n="246">KSIĄDZ</speaker>
+          <stage n="248" type="delivery">z uśmiechem</stage>
+          <l n="250" part="F" rend="indent" style="margin-left: 24ch">Zróbmy na drogę przybory.</l>
+          <l n="251" part="I">Czy dobrze?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0026">
+          <speaker n="254">PUSTELNIK</speaker>
+          <stage n="256" type="delivery">z roztargnieniem i nieuwagą</stage>
+          <l n="258" part="F" rend="indent" style="margin-left: 24ch">Dobrze.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0027">
+          <speaker n="261">KSIĄDZ</speaker>
+          <l n="263" rend="indent" style="margin-left: 24ch">Chodźcie, dzieci moje!</l>
+          <l n="264">Oto mamy w domu gościa;</l>
+          <l n="265">Nim ja powrócę, bawcie jegomościa.</l>
+          <stage n="267" type="exit">odchodzi</stage>
+        </sp>
+        <sp who="#dziecko" xml:id="sp-0028">
+          <speaker n="270">DZIECKO</speaker>
+          <stage n="272" type="business">oglądając</stage>
+          <l n="274">Czemu waspan tak jesteś dziwacznie ubrany?</l>
+          <l n="275">Jak strach albo rozbójnik, co to mówią w bajce,</l>
+          <l n="276">Z różnych kawałków sukmany,</l>
+          <l n="277">Na skroniach trawa i liście,</l>
+          <l n="278">Wytarte płótno, przy pięknej kitajce?</l>
+          <stage n="280" type="business">postrzega sztylet, Pustelnik chowa</stage>
+          <l n="282">Jaka to na sznurku blacha?</l>
+          <l n="283">Różne paciorki, wstążek okrajce?</l>
+          <l n="284" rend="indent" style="margin-left: 4ch">Cha cha cha cha!</l>
+          <l n="285">Dalibóg, waspan wyglądasz na stracha!</l>
+          <l n="286" rend="indent" style="margin-left: 4ch">Cha cha cha cha!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0029">
+          <speaker n="289">PUSTELNIK</speaker>
+          <stage n="291" type="business">zrywa się i jakby przypomina się</stage>
+          <l n="293">O dziatki, wy się ze mnie śmiać nie powinniście!</l>
+          <l n="294">Słuchajcie, znałem pewną kobietę za młodu,</l>
+          <l n="295">Tak jak ja nieszczęśliwą, z takiego powodu!</l>
+          <l n="296">Miała takąż sukienkę i na głowie liście.</l>
+          <l n="297">Gdy weszła do wsi, cała wieś nawałem,</l>
+          <l n="298">Urągając się z jej biedy,</l>
+          <l n="299">Pędzi, śmieje się, wykrzyka,</l>
+          <l n="300">Podrzyźnia, palcem wytyka:</l>
+          <l n="301">Ja się raz tylko, raz tylko zaśmiałem!</l>
+          <l n="302">Kto wie, jeśli nie za to?… słuszne sądy boże!</l>
+          <l n="303">Lecz któż mógł przewidzieć wtedy,</l>
+          <l n="304">Że ja podobną sukienkę włożę?</l>
+          <l n="305">Ja byłem taki szczęśliwy!</l>
+          <stage n="307" type="delivery">śpiewa</stage>
+          <l n="309" rend="indent" style="margin-left: 2ch">Kto miłości nie zna, ten żyje szczęśliwy,</l>
+          <l n="310" rend="indent" style="margin-left: 2ch">I noc ma spokojną, i dzień nietęskliwy.</l>
+          <stage n="312" type="entrance">Ksiądz przychodzi z winem i talerzem.</stage>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0030">
+          <speaker n="315">PUSTELNIK</speaker>
+          <stage n="317" type="delivery">z wymuszoną wesołością</stage>
+          <l n="319">Księże, a lubisz ty smutne piosenki?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0031">
+          <speaker n="322">KSIĄDZ</speaker>
+          <l n="324">Nasłuchałem się ich w życiu dosyć, Bogu dzięki!</l>
+          <l n="325">Lecz nie traćmy nadziei, po smutkach wesele.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0032">
+          <speaker n="328">PUSTELNIK</speaker>
+          <stage n="330" type="delivery">śpiewa</stage>
+          <l n="332" rend="indent" style="margin-left: 2ch">A odjechać od niej nudno,</l>
+          <l n="333" rend="indent" style="margin-left: 2ch">A przyjechać do niej trudno!</l>
+          <l n="334">Prosta piosenka, ale dobrą myśl zawiera!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0033">
+          <speaker n="337">KSIĄDZ</speaker>
+          <l n="339">No! potem o tym, teraz zajrzyjmy do misy.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0034">
+          <speaker n="342">PUSTELNIK</speaker>
+          <l n="344">Prosta pieśń! o! w romansach znajdziesz lepszych wiele!</l>
+          <stage n="346" type="delivery">z uśmiechem, biorąc książki z szafy</stage>
+          <l n="348">Księże, a znasz ty żywot Heloisy?</l>
+          <l n="349">Znasz ogień i łzy Wertera?</l>
+          <stage n="351" type="delivery">śpiewa</stage>
+          <l n="353" rend="indent" style="margin-left: 2ch">Tylem wytrwał, tyle wycierpiałem,</l>
+          <l n="354" rend="indent" style="margin-left: 4ch">Chyba śmiercią bole się ukoją;</l>
+          <l n="355" rend="indent" style="margin-left: 2ch">Jeślim płochym obraził zapałem;</l>
+          <l n="356" rend="indent" style="margin-left: 4ch">Tę obrazę krwią okupię moją.</l>
+          <stage n="358" type="business">dobywa sztylet</stage>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0035">
+          <speaker n="361">KSIĄDZ</speaker>
+          <stage n="363" type="business">wstrzymuje</stage>
+          <l n="365">Co to ma znaczyć?… szalony! czy można?</l>
+          <l n="366">Odbierzcie mu żelazo, rozdejmijcie pięście.</l>
+          <l n="367">Jesteś ty chrześcijanin? taka myśl bezbożna!</l>
+          <l n="368" part="I">Znasz ty Ewangeliją?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0036">
+          <speaker n="371">PUSTELNIK</speaker>
+          <l n="373" part="F" rend="indent" style="margin-left: 24ch">A znasz ty nieszczęście?</l>
+          <stage n="375" type="business">chowa sztylet</stage>
+          <l n="377">Ale dobrze! nie trzeba chwytać się przed porą,</l>
+          <stage n="379" type="business">patrzy na zegar</stage>
+          <l n="381">Skazówka na dziewiątej i trzy świece gorą!</l>
+          <stage n="383" type="delivery">śpiewa</stage>
+          <l n="385" rend="indent" style="margin-left: 2ch">Tylem wytrwał, tyle wycierpiałem,</l>
+          <l n="386" rend="indent" style="margin-left: 4ch">Chyba śmiercią bole się ukoją;</l>
+          <l n="387" rend="indent" style="margin-left: 2ch">Jeślim płochym obraził zapałem,</l>
+          <l n="388" rend="indent" style="margin-left: 4ch">Tę obrazę krwią okupię moją.</l>
+          <l n="390" rend="indent" style="margin-left: 2ch">Za coś dla mnie tyle ulubiona?</l>
+          <l n="391" rend="indent" style="margin-left: 4ch">Za com z twoim spotkał się wejrzeniem?</l>
+          <l n="392" rend="indent" style="margin-left: 2ch">Jednąm wybrał z tylu dziewcząt grona,</l>
+          <l n="393" rend="indent" style="margin-left: 4ch">I ta cudzym przykuta pierścieniem!</l>
+          <l n="395">Ach, jeśli ty Getego znasz w oryginale,</l>
+          <l n="396">Gdyby przy tym jej głosek i dźwięk fortepianu!</l>
+          <l n="397">Ale cóż? ty o boskiej tylko myślisz chwale,</l>
+          <l n="398">Oddany twego tylko powinnościom stanu.</l>
+          <stage n="400" type="business">przerzucając książkę</stage>
+          <l n="402" rend="indent" style="margin-left: 4ch">Wszakże lubisz książki świeckie?…</l>
+          <l n="403" rend="indent" style="margin-left: 4ch">Ach, te to, książki zbójeckie!</l>
+          <stage n="405" type="business">ciska książką</stage>
+          <l n="407" rend="indent" style="margin-left: 4ch">Młodości mojej niebo i tortury!</l>
+          <l n="408" rend="indent" style="margin-left: 4ch">One zwichnęły osadę mych skrzydeł</l>
+          <l n="409" rend="indent" style="margin-left: 4ch">I wyłamały do góry,</l>
+          <l n="410" rend="indent" style="margin-left: 4ch">Że już nie mogłem na dół skręcić lotu.</l>
+          <l n="412">Kochanek przez sen tylko widzianych mamideł;</l>
+          <l n="413">Nie cierpiąc rzeczy ziemskich nudnego obrotu,</l>
+          <l n="414">Gardzący istotami powszedniej natury,</l>
+          <l n="415">Szukałem, ach! szukałem tej boskiej kochanki,</l>
+          <l n="416">Której na podsłonecznym nie bywało świecie,</l>
+          <l n="417">Którą tylko na falach wyobraźnej pianki</l>
+          <l n="418">Wydęło tchnienie zapału,</l>
+          <l n="419">A żądza w swoje własne przystroiła kwiecie.</l>
+          <l n="420">Lecz gdy w czasach tych zimnych nie ma ideału,</l>
+          <l n="421">Przez teraźniejszość w złote odleciałem wieki,</l>
+          <l n="422">Bujałem po zmyślonym od poetów niebie,</l>
+          <l n="423">Goniąc i błądząc, w błędach nieznużony goniec;</l>
+          <l n="424">Wreszcie, na próżno zbiegłszy kraj daleki,</l>
+          <l n="425">Spadam i już się rzucam w brudne uciech rzeki:</l>
+          <l n="426">Nim rzucę się, raz jeszcze spojrzę koło siebie!</l>
+          <l n="427">I znalazłem ją na koniec!</l>
+          <l n="428">Znalazłem ją blisko siebie,</l>
+          <l n="429">Znalazłem ją!… ażebym utracił na wieki!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0037">
+          <speaker n="432">KSIĄDZ</speaker>
+          <l n="434">Podzielam twoję boleść, nieszczęśliwy bracie!</l>
+          <l n="435">Lecz może jest nadzieja? są różne sposoby…</l>
+          <l n="436">Słuchaj, czy już od dawna doświadczasz choroby?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0038">
+          <speaker n="439">PUSTELNIK</speaker>
+          <l n="441" part="I">Choroby?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0039">
+          <speaker n="444">KSIĄDZ</speaker>
+          <l n="446" part="F" rend="indent" style="margin-left: 24ch">Czy już dawno płaczesz po twej stracie?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0040">
+          <speaker n="449">PUSTELNIK</speaker>
+          <l n="451">Jak dawno? dałem słowo, powiedzieć nie mogę;</l>
+          <l n="452">Kto inny powie tobie. Mam ja towarzysza,</l>
+          <l n="453">Zawżdy z nim razem odbywamy drogę!</l>
+          <stage n="455" type="business">ogląda się</stage>
+          <l n="457">Ach, tu tak ciepło, wygodna zacisza;</l>
+          <l n="458">A na podwórzu wicher, gromy, burza sroga!</l>
+          <l n="459">Mój towarzysz zapewne biedny drży u proga!</l>
+          <l n="460">Gdy nas razem wyroki nielitośne pędzą,</l>
+          <l n="461">Dobry Księże, i jego przyjmij na gospodę.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0041">
+          <speaker n="464">KSIĄDZ</speaker>
+          <l n="466">Nigdy nie zamykałem drzwi moich przed nędzą.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0042">
+          <speaker n="469">PUSTELNIK</speaker>
+          <l n="471">Ale stój, stój, mój bracie, ja sam go przywiodę.</l>
+          <stage n="473" type="exit">odchodzi</stage>
+        </sp>
+        <sp who="#dziecko" xml:id="sp-0043">
+          <speaker n="476">DZIECIĘ</speaker>
+          <l n="478">Cha cha cha! tato, co się jemu dzieje?</l>
+          <l n="479">Biega i gada ani to, ni owo.</l>
+          <l n="480">Jakie dziwaczne ubiory!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0044">
+          <speaker n="483">KSIĄDZ</speaker>
+          <l n="485">Dzieci, będzie ten płakał, kto się z płaczu śmieje!</l>
+          <l n="486">Nie śmiejcie się! to człowiek bardzo biedny, chory.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0045">
+          <speaker n="489">DZIECI</speaker>
+          <l n="491">Chory? a on tak biega, wygląda tak zdrowo!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0046">
+          <speaker n="494">KSIĄDZ</speaker>
+          <l n="496">Zdrów na twarzy, lecz w sercu głębokie ma rany.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0047">
+          <speaker n="499">PUSTELNIK</speaker>
+          <stage n="501" type="business">ciągnąc gałąź jedliny</stage>
+          <l n="503" part="I">Chodź, bracie, chodź tu!…</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0048">
+          <speaker n="506">KSIĄDZ</speaker>
+          <stage n="508" type="delivery">do Dzieci</stage>
+          <l n="510" part="F" rend="indent" style="margin-left: 24ch">On ma rozum pomieszany.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0049">
+          <speaker n="513">PUSTELNIK</speaker>
+          <stage n="515" type="delivery">do jodły</stage>
+          <l n="517">Chodź, bracie, nie lękaj się dobrego księżyny.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0050">
+          <speaker n="520">DZIECI</speaker>
+          <l n="522">Tato! ach, patrzaj, co on w ręku niesie:</l>
+          <l n="523">Jak zbójca z wielką gałęzią jedliny.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0051">
+          <speaker n="526">PUSTELNIK</speaker>
+          <stage n="528" type="delivery">do Księdza, ukazując gałąź</stage>
+          <l n="530">Pustelnik przyjaciela znajdzie chyba w lesie!</l>
+          <l n="531" part="I">Może cię zdziwia jego postać?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0052">
+          <speaker n="534">KSIĄDZ</speaker>
+          <l n="536" part="F" rend="indent" style="margin-left: 24ch">Czyja?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0053">
+          <speaker n="539">PUSTELNIK</speaker>
+          <l n="541" part="I">Mojego przyjaciela.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0054">
+          <speaker n="544">KSIĄDZ</speaker>
+          <l n="546" part="F" rend="indent" style="margin-left: 24ch">Jako? tego kija?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0055">
+          <speaker n="549">PUSTELNIK</speaker>
+          <l n="551">Niezgrabny, jak mówiłem, wychowany w lesie.</l>
+          <l n="552" part="I">Przywitaj się!</l>
+          <stage n="554" type="business">podnosi gałąź</stage>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0056">
+          <speaker n="557">DZIECI</speaker>
+          <l n="559" part="F" rend="indent" style="margin-left: 24ch">Co robisz? co robisz? ach, zbójca!</l>
+          <l n="560">Pójdźże precz, rozbójniku, nie zabij nam ojca!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0057">
+          <speaker n="563">PUSTELNIK</speaker>
+          <l n="565">O, prawda, moje dziatki, jest to wielki zbójca!</l>
+          <l n="566">Ale on tylko sam siebie rozbija!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0058">
+          <speaker n="569">KSIĄDZ</speaker>
+          <l n="571">Upamiętaj się, bracie; do czego ta jodła?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0059">
+          <speaker n="574">PUSTELNIK</speaker>
+          <l n="576">Jodła? a, Ksiądz uczony! o głowo ty, głowo!</l>
+          <l n="577">Przypatrz się lepiej, poznaj gałąź cyprysową;</l>
+          <l n="578">To pamiątki rozstania, mego losu godła.</l>
+          <stage n="580" type="business">bierze książki</stage>
+          <l n="582">Weź księgę, i odczytaj dzieje zeszłych wieków:</l>
+          <l n="583">Dwie były poświęcone krzewiny u Greków.</l>
+          <l n="584">Kto kochał, od swej lubej ukochany wzajem,</l>
+          <l n="585">Błogie włosy mirtowym przyozdabiał majem.</l>
+          <stage n="587" type="pause">po pauzie</stage>
+          <l n="589">Jej ręką ułamana gałąź cyprysowa</l>
+          <l n="590">Zawsze mi przypomina ostatnie „bądź zdrowa!”</l>
+          <l n="591">Przyjąłem ją, schowałem, dotąd wiernie służy!</l>
+          <l n="592">Nieczuła, lepsza od tych niby czułych ludzi.</l>
+          <l n="593">Jej płacz mój nie rozśmiesza i skarga nie nudzi;</l>
+          <l n="594">Jedna mi pozostała, z przyjaciół tak wielu!</l>
+          <l n="595">Wszystkie tajniki serca mojego posiada;</l>
+          <l n="596">Jeśli chcesz o mnie wiedzieć, pytaj, przyjacielu,</l>
+          <l n="597">Zostawię was sam na sam, niech resztę wygada.</l>
+          <stage n="599" type="delivery">do gałęzi</stage>
+          <l n="601">Powiedz, jak dawno płaczę lubej straty.</l>
+          <l n="602">Dawno to być musiało! przed dawnymi laty!</l>
+          <l n="603">Pamiętam, kiedy cyprys przyjąłem z jej ręki</l>
+          <l n="604">Był to listeczek taki, ot taki maleńki;</l>
+          <l n="605">Zaniosłem, posadziłem na piasku, daleko…</l>
+          <l n="606">I gorącą łez moich polewałem rzeką.</l>
+          <l n="607">Patrz, jaka z liścia gałązka urosła,</l>
+          <l n="608">Jaka gęsta i wyniosła!</l>
+          <l n="609">Kiedy mię boleść ostatnia dotłoczy,</l>
+          <l n="610">Nie chcąc na zagniewane poglądać niebiosa,</l>
+          <l n="611">Okryłem mój grobowiec cieniem tych warkoczy.</l>
+          <stage n="613" type="business">z łagodnym uśmiechem</stage>
+          <l n="615">Ach, taki właśnie był kolor jej włosa</l>
+          <l n="616" part="I">Jak te cyprysu gałązki! Chcesz? pokażę.</l>
+          <stage n="618" type="business">szuka i ciągnie od piersi</stage>
+          <l n="620" part="F" rend="indent" style="margin-left: 24ch">Nie mogę odpiąć tej zawiązki.</l>
+          <stage n="622" type="business">coraz z większym sileniem się</stage>
+          <l n="624">Zawiązka miękka… z warkocza dziewicy…</l>
+          <l n="625">Lecz skorom tylko położył na łonie,</l>
+          <l n="626">Opasała mię wkoło na kształt włosiennicy;</l>
+          <l n="627">Pierś przejada… w ciało tonie!…</l>
+          <l n="628">Tonie, tonie, i wkrótce przetnie mi oddechy!</l>
+          <l n="629">Wiele cierpię! ach! bo też wielkie moje grzechy!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0060">
+          <speaker n="632">KSIĄDZ</speaker>
+          <l n="634">Uspokój się, uspokój! Przyjm słowo pociechy!</l>
+          <l n="635">Ach, tak okropne bole, moje dziecię,</l>
+          <l n="636">Za twe na ziemi jakieżkolwiek grzechy</l>
+          <l n="637">Przyjmie w rachunku Bóg na tamtym świecie!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0061">
+          <speaker n="640">PUSTELNIK</speaker>
+          <l n="642">Grzechy? i proszę, jakież moje grzechy?</l>
+          <l n="643">Czyliż niewinna miłość wiecznej godna męki?</l>
+          <l n="644">Ten sam Bóg stworzył miłość, który stworzył wdzięki.</l>
+          <l n="645">On dusze obie łańcuchem uroku</l>
+          <l n="646">Powiązał na wieki z sobą!</l>
+          <l n="647">Wprzód, nim je wyjął ze światłości stoku,</l>
+          <l n="648">Nim je stworzył i okrył cielesną żałobą,</l>
+          <l n="649">Wprzódy je powiązał z sobą!</l>
+          <l n="650">Teraz, kiedy złych ludzi odłącza nas ręka,</l>
+          <l n="651">Rozciąga się ten łańcuch, ale się nie spęka!</l>
+          <l n="652">Czucia nasze dzielącej uległe przeszkodzie,</l>
+          <l n="653">Chociaż nigdy nie mogą napotkać się z bliska,</l>
+          <l n="654">Przecież zawżdy po jednym biegają obwodzie,</l>
+          <l n="655">Łańcuchem od jednego skreślone ogniska.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0062">
+          <speaker n="658">KSIĄDZ</speaker>
+          <l n="660">Jeżeli Pan Bóg złączył, ludzie nie rozłączą!</l>
+          <l n="661">Może się troski wasze pomyślnie zakończą.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0063">
+          <speaker n="664">PUSTELNIK</speaker>
+          <l n="666">Chyba tam! gdy nad podłym wzbijemy się ciałem,</l>
+          <l n="667">Złączy się znowu jedność, dusza z duszą zleje;</l>
+          <l n="668">Bo tutaj wszelkie dla nas umarły nadzieje,</l>
+          <l n="669">Tutaj ja się z mą lubą na wieki rozstałem!</l>
+          <stage n="671" type="pause">po pauzie</stage>
+          <l n="673">Obraz tego rozstania dotąd w myśli stoi.</l>
+          <l n="674">Pamiętam, śród jesieni… przy wieczornym chłodzie;</l>
+          <l n="675">Jutro miałem wyjechać… błądzę po ogrodzie!</l>
+          <l n="676">W rozmyślaniu, w modlitwach szukałem tej zbroi,</l>
+          <l n="677">Którą bym odział serce, miękkie z przyrodzenia,</l>
+          <l n="678">I wytrzymał ostatni pocisk jej spojrzenia!</l>
+          <l n="679">Błądziłem po zaroślach, gdzie mnie oczy niosą.</l>
+          <l n="680">Noc była najpiękniejsza!</l>
+          <l n="681">Pamiętam dziś jeszcze:</l>
+          <l n="682">Na kilka godzin pierwej wylały się deszcze,</l>
+          <l n="683">Cała ziemia kroplistą połyskała rosą.</l>
+          <l n="684">Doliny mgła odziewa jakby morze śniegu,</l>
+          <l n="685">Z tej strony chmura gruba napędzała lawy,</l>
+          <l n="686">A z tamtej strony księżyc przezierał bladawy,</l>
+          <l n="687">Gwiazdy toną w błękicie po nocnym obiegu.</l>
+          <l n="688">Spojrzę… jak raz nade mną świeci gwiazdka wschodnia;</l>
+          <l n="689">O, znam ją odtąd dobrze, witamy się co dnia!</l>
+          <l n="690">Spojrzę na dół… na szpaler… patrz, tam przy altanie,</l>
+          <l n="691">Ujrzałem ją niespodzianie!</l>
+          <l n="692">Suknią między ciemnymi bielejąca drzewy</l>
+          <l n="693">Stała w miejscu, grobowej podobna kolumnie;</l>
+          <l n="694">Potem biegła, jak lekkie zefiru powiewy,</l>
+          <l n="695">Oczy zwrócone w ziemię… nie spojrzała ku mnie!</l>
+          <l n="696">A lica jej bardzo blade.</l>
+          <l n="697">Nachylam się, zajrzę z boku,</l>
+          <l n="698">I dojrzałem łezkę w oku;</l>
+          <l n="699">Jutro, rzekłem, jutro jadę!</l>
+          <l n="700">„Bądź zdrów!” — odpowie z cicha: ledwie posłyszałem,</l>
+          <l n="701">„Zapomnij!”… Ja zapomnę? o! rozkazać snadno!</l>
+          <l n="702">Rozkaż, luba, twym cieniom, niechaj wraz przepadną</l>
+          <l n="703">I niech zapomną biegać za twym ciałem!…</l>
+          <l n="704">Rozkazać snadno!</l>
+          <l n="705">Zapomnij!!</l>
+          <stage n="707" type="delivery">śpiewa</stage>
+          <l n="709" rend="indent" style="margin-left: 4ch">Przestań płakać, przestań szlochać</l>
+          <l n="710" rend="indent" style="margin-left: 4ch">Idźmy każdy w swoją drogę,</l>
+          <l n="711" part="I" rend="indent" style="margin-left: 4ch">Ja cię wiecznie będę…</l>
+          <stage n="713" type="delivery">urywa śpiewanie</stage>
+          <l n="715" part="F" rend="indent" style="margin-left: 24ch">wspominać,</l>
+          <stage n="717" type="business">kiwa głową</stage>
+          <stage n="719" type="delivery">śpiewa</stage>
+          <l n="721" rend="indent" style="margin-left: 4ch">Ale twoją być nie mogę!</l>
+          <l n="722">Wspominać tylko?… jutro, jutro jadę!</l>
+          <l n="723">Chwytam za rączki i na piersi kładę.</l>
+          <stage n="725" type="delivery">śpiewa</stage>
+          <l n="727" rend="indent" style="margin-left: 2ch">Najpiękniejsza, jak aniołek raju,</l>
+          <l n="728" rend="indent" style="margin-left: 4ch">Najpiękniejsza ze wszystkich dziewica,</l>
+          <l n="729" rend="indent" style="margin-left: 2ch">Wzrok niebieski, jako słońce w maju,</l>
+          <l n="730" rend="indent" style="margin-left: 4ch">Odstrzelone od modrych wód lica.</l>
+          <l n="731" rend="indent" style="margin-left: 2ch">Pocałunek jej, ach, nektar boski!</l>
+          <l n="732" rend="indent" style="margin-left: 4ch">Jako płomień chwyta się z płomieniem,</l>
+          <l n="733" rend="indent" style="margin-left: 2ch">Jak dwóch lutni zlewają się głoski</l>
+          <l n="734" rend="indent" style="margin-left: 4ch">Harmonijnym ożenione brzmieniem.</l>
+          <l n="735" rend="indent" style="margin-left: 2ch">Serce z sercem zbiega, zlatuje się, ściska,</l>
+          <l n="736" rend="indent" style="margin-left: 4ch">Lica, usta łączą się, drżą, palą,</l>
+          <l n="737" rend="indent" style="margin-left: 2ch">Dusza wionie w duszę… niebo, ziemia pryska</l>
+          <l n="738" rend="indent" style="margin-left: 4ch">Roztopioną dokoła nas falą!</l>
+          <l n="740">Księże! o nie! ty tego nie czujesz obrazu!</l>
+          <l n="741">Ty cukrowych ust lubej nie tknąłeś ni razu!</l>
+          <l n="742">Niech ludzie świeccy bluźnią, szaleją młokosy,</l>
+          <l n="743">Serce twe skamieniało na natury głosy.</l>
+          <l n="744">O luba, zginąłem w niebie,</l>
+          <l n="745">Kiedym raz pierwszy pocałował ciebie!</l>
+          <stage n="747" type="delivery">śpiewa</stage>
+          <l n="749" rend="indent" style="margin-left: 2ch">Pocałunek jej, ach, nektar boski!</l>
+          <l n="750" rend="indent" style="margin-left: 4ch">Jako płomień chwyta się z płomieniem,</l>
+          <l n="751" rend="indent" style="margin-left: 2ch">Jak dwóch lutni zlewają się głoski</l>
+          <l n="752" rend="indent" style="margin-left: 4ch">Harmonijnym ożenione brzmieniem.</l>
+          <stage n="754" type="exit">chwyta Dziecię i chce pocałować; Dziecię ucieka</stage>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0064">
+          <speaker n="757">KSIĄDZ</speaker>
+          <l n="759">Czegóż boisz się sobie równego człowieka?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0065">
+          <speaker n="762">PUSTELNIK</speaker>
+          <l n="764">Przed nieszczęśliwym, ach, wszystko ucieka,</l>
+          <l n="765">Jakby przed straszydłem z piekła!</l>
+          <l n="766">Ach, tak! i ona przede mną uciekła!</l>
+          <l n="767">„…Bądź zdrów!”… i w długiej ulicy</l>
+          <l n="768">Niknie na kształt błyskawicy.</l>
+          <stage n="770" type="delivery">do Dzieci</stage>
+          <l n="772">I czegóż ona przede mną uciekła?</l>
+          <l n="773">Czylim ją śmiałym przeraził wejrzeniem?</l>
+          <l n="774" part="I">Czyli słówkiem lub skinieniem? Muszę przypomnieć!</l>
+          <stage n="776" type="business">przypomina</stage>
+          <l n="778" part="F" rend="indent" style="margin-left: 24ch">Tak się w głowie kręci!…</l>
+          <l n="779">Nie! nie! ja wszystko widzę jak na dłoni,</l>
+          <l n="780">Nie zgubiłem żadnego wyrazu z pamięci;</l>
+          <l n="781">Dwa tylko słowa powiedziałem do niej.</l>
+          <stage n="783" type="delivery">z żalem</stage>
+          <l n="785">Księże, dwa tylko słowa!</l>
+          <l n="786">„Jutro! bądź zdrowa!”</l>
+          <l n="787">„Bądź zdrów!…” Gałązkę odrywa, podaje…:</l>
+          <l n="788" part="I">„Oto jest, rzekła: co nam tu</l>
+          <stage n="790" type="business">na ziemię pokazuje</stage>
+          <l n="792" part="F" rend="indent" style="margin-left: 24ch">zostaje!</l>
+          <l n="793">Bądź zdrów!” — i w długiej ulicy</l>
+          <l n="794">Niknie na kształt błyskawicy!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0066">
+          <speaker n="797">KSIĄDZ</speaker>
+          <l n="799">Młodzieńcze, ja głęboko czuję, co cię boli!</l>
+          <l n="800">Lecz słuchaj, są tysiące biedniejszych od ciebie.</l>
+          <l n="801">Ja sam już nie na jednym płakałem pogrzebie.</l>
+          <l n="802">Po ojcu i po matce już mówię pacierze,</l>
+          <l n="803">Dwoje małych dziateczek aniołkami w niebie;</l>
+          <l n="804">Ach, i moja wspólniczka szczęścia i niedoli,</l>
+          <l n="805">Małżonka moja, którą kochałem tak szczerze!…</l>
+          <l n="806">Ale cóż robić? Pan Bóg daje, Pan Bóg bierze!</l>
+          <l n="807">Niechaj się dzieje według Jego świętej woli!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0067">
+          <speaker n="810">PUSTELNIK</speaker>
+          <stage n="812" type="delivery">mocno</stage>
+          <l n="814" part="I">Żona?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0068">
+          <speaker n="817">KSIĄDZ</speaker>
+          <l n="819" part="F" rend="indent" style="margin-left: 24ch">Ach, to wspomnienie serce mi rozdarło!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0069">
+          <speaker n="822">PUSTELNIK</speaker>
+          <l n="824">Jak to? gdzie się obrócę, wszyscy płaczą żony!</l>
+          <l n="825">Lecz ja nie winien, twojej nie widziałem żony!</l>
+          <stage n="827" type="business">spostrzega się</stage>
+          <l n="829">Słuchaj! przyjmij pociechę, małżonku strapiony,</l>
+          <l n="830">Żona twoja przed śmiercią już była umarłą!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0070">
+          <speaker n="833">KSIĄDZ</speaker>
+          <l n="835" part="I">Jak to?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0071">
+          <speaker n="838">PUSTELNIK</speaker>
+          <stage n="840" type="delivery">mocniej</stage>
+          <l n="842" part="F" rend="indent" style="margin-left: 24ch">Gdy na dziewczynę zawołają: żono!</l>
+          <l n="843">Już ją żywcem pogrzebiono!</l>
+          <l n="844">Wyrzeka się przyjaciół, ojca, matki, brata,</l>
+          <l n="845">Nawet… słowem, całego wyrzeka się świata,</l>
+          <l n="846">Skoro stanęła na cudzym progu!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0072">
+          <speaker n="849">KSIĄDZ</speaker>
+          <l n="851">Chociaż wyznania twoje mgła żalu pokrywa,</l>
+          <l n="852">Wszakże ta, której płaczesz, jest podobno żywa?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0073">
+          <speaker n="855">PUSTELNIK</speaker>
+          <stage n="857" type="delivery">z ironią</stage>
+          <l n="859">Żywa? właśnie jest za co podziękować Bogu!</l>
+          <l n="860">Żywa? jako? nie wierzysz! cóż się tobie zdaje?</l>
+          <l n="861">Poprzysięgnę, uklęknę, palce na krzyż złożę,</l>
+          <l n="862">Ona umarła i ożyć nie może!…</l>
+          <stage n="864" type="pause">po pauzie z wolna</stage>
+          <l n="866">Ależ bo różne są śmierci rodzaje:</l>
+          <l n="867">Jedna śmierć jest pospolita.</l>
+          <l n="868">Śmiercią tą starzec, kobieta,</l>
+          <l n="869">Dziecię, mąż, słowem, tysiące</l>
+          <l n="870">Ludzi umiera co chwila;</l>
+          <l n="871">I taką śmiercią Maryla,</l>
+          <l n="872">Którą widziałem na łące.</l>
+          <stage n="874" type="delivery">śpiewa</stage>
+          <l n="876">Tam u Niemnowej odnogi,</l>
+          <l n="877">Tam u zielonej rozłogi,</l>
+          <l n="878">Jaki to sterczy kurhanek?</l>
+          <l n="879">Spodem uwieńczon jak w wianek,</l>
+          <l n="880">W maliny, ciernie i głogi…</l>
+          <stage n="882" type="delivery">przestaje śpiewać</stage>
+          <l n="884">Ach, i to jest widok srogi,</l>
+          <l n="885">Kiedy piękność w życia kwiecie,</l>
+          <l n="886">Ledwie wschodząca na świecie,</l>
+          <l n="887">Żegnać się musi z lubym jeszcze światem!</l>
+          <l n="888">Patrz, patrz, blada na pościeli,</l>
+          <l n="889">Jak na obłoczkach mglisty poranek!</l>
+          <l n="890">Z płaczem dokoła stanęli:</l>
+          <l n="891">I smutny ksiądz u łóżka,</l>
+          <l n="892">I smutniejsza czeladka,</l>
+          <l n="893">I smutniejsza od niej drużka,</l>
+          <l n="894">I smutniejsza od nich matka,</l>
+          <l n="895">I najsmutniejszy kochanek.</l>
+          <l n="896">Patrz, uchodzi z lica krasa,</l>
+          <l n="897">Wzrok zapada i zagasa,</l>
+          <l n="898">Ale jeszcze, jeszcze świeci;</l>
+          <l n="899">Usta, gdzie się róża kwieci,</l>
+          <l n="900">Więdną, gubią blask szkarłatu.</l>
+          <l n="901">I jak z piwoniji kwiatu</l>
+          <l n="902">Wycięty wąski listeczek,</l>
+          <l n="903">Taka siność jej usteczek.</l>
+          <l n="904">Podniosła głowę nad łóżko,</l>
+          <l n="905">Rzuciła na nas oczyma:</l>
+          <l n="906">Głowa opada na łóżko,</l>
+          <l n="907">W twarzyczce bladość opłatka.</l>
+          <l n="908">Ręce stygną, a serduszko</l>
+          <l n="909">Bije z cicha, bije z rzadka,</l>
+          <l n="910">Już stanęło, już jej nié ma;</l>
+          <l n="911">Oko to, niegdyś podobne słonku…</l>
+          <l n="912">Czy widzisz, Księże, pierścienie?</l>
+          <l n="913">Smutna pamiątka została!</l>
+          <l n="914">Jak w pierścionku</l>
+          <l n="915">Brylant pała,</l>
+          <l n="916">Takie jaśniały w oczach płomienie.</l>
+          <l n="917">Lecz iskra duszy już się nie pali!</l>
+          <l n="918">Błyszczą one jak rdzeni spróchniałej światełka,</l>
+          <l n="919">Jak na gałązkach wody perełka,</l>
+          <l n="920">Kiedy ją wicher skrysztali.</l>
+          <l n="921">Podniosła głowę nad łóżko,</l>
+          <l n="922">Rzuciła na nas oczyma,</l>
+          <l n="923">Głowa opada na łóżko,</l>
+          <l n="924">W twarzyczce bladość opłatka,</l>
+          <l n="925">Ręce stygną, a serduszko</l>
+          <l n="926">Bije z cicha, bije z rzadka.</l>
+          <l n="927">Już stanęło… już jej nié ma!</l>
+        </sp>
+        <sp who="#dziecko" xml:id="sp-0074">
+          <speaker n="930">DZIECIĘ</speaker>
+          <l n="932">Umarła! ach, jaka szkoda!</l>
+          <l n="933">Słuchając płakałem szczerze.</l>
+          <l n="934">Czy to znajoma twoja, czy siostrzyczka młoda?</l>
+          <l n="935">Ale nie płacz, niechaj jej wieczny pokój świeci,</l>
+          <l n="936">Będziemy za nię co dzień mówili pacierze.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0075">
+          <speaker n="939">PUSTELNIK</speaker>
+          <l n="941">To jedna śmierć, moje dzieci;</l>
+          <l n="942">Ale jest straszniejsza druga,</l>
+          <l n="943">Bo nie umarza od razu,</l>
+          <l n="944">Powolna, bolesna, długa:</l>
+          <l n="945">Śmierć ta dwie społem osoby ugodzi,</l>
+          <l n="946">Lecz moje tylko zabija nadzieje,</l>
+          <l n="947">Drugiej bynajmniej nie szkodzi.</l>
+          <l n="948">Ona żyje, ona chodzi,</l>
+          <l n="949">Kilka drobnych łez wyleje,</l>
+          <l n="950">Potem w niej czucie rdzawieje,</l>
+          <l n="951">I została na kształt głazu.</l>
+          <l n="952">Ach, dwie osoby uderza od razu!</l>
+          <l n="953">Lecz moje tylko zabiła nadzieje,</l>
+          <l n="954">A jej bynajmniej nie szkodzi!</l>
+          <l n="955">Kwitnie życiem, kwitnie zdrowiem.</l>
+          <l n="956">Taką śmiercią umarła… kto? o nie… nie powiem!</l>
+          <l n="957">Nieprawdaż, dzieci? straszniejsza daleko,</l>
+          <l n="958">Gdy trup z rozwartą, ot tak, powieką.</l>
+          <stage n="960" type="exit">Dzieci uciekają.</stage>
+          <l n="962">Jednak umarła!… Kiedy płaczę, ręce łamię,</l>
+          <l n="963">Zbiegli się ludzie dokoła,</l>
+          <l n="964">Wyciągają długie szyje,</l>
+          <l n="965">Jeden mówi, że ja kłamię,</l>
+          <l n="966">Drugi potrąca i woła:</l>
+          <l n="967">„Patrz, szaleńcze, ona żyje!”</l>
+          <stage n="969" type="delivery">do Księdza</stage>
+          <l n="971">Nie wierz, choćby ci szyderce</l>
+          <l n="972">Po tysiąc razy mówili:</l>
+          <l n="973">Słuchaj, co mówi to serce:</l>
+          <l n="974">Nie masz, nie masz Maryli!</l>
+          <stage n="976" type="pause">po pauzie</stage>
+          <l n="978">Jeszcze rodzaj śmierci trzeci:</l>
+          <l n="979">Śmierć wieczna, jak Pismo mówi.</l>
+          <l n="980">Biada, biada człowiekowi,</l>
+          <l n="981">Którego ta śmierć zabierze!</l>
+          <l n="982">Tą śmiercią może ja umrę, dzieci;</l>
+          <l n="983">Ciężkie, ciężkie moje grzechy!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0076">
+          <speaker n="986">KSIĄDZ</speaker>
+          <l n="988">Przeciwko światu i przeciwko sobie</l>
+          <l n="989">Cięższe twoje, niżeli przeciw Bogu, grzechy.</l>
+          <l n="990">Człowiek nie jest stworzony na łzy i uśmiechy,</l>
+          <l n="991">Ale dla dobra bliźnich swoich, ludzi.</l>
+          <l n="992">Jakkolwiek w twardej Bóg doświadcza próbie,</l>
+          <l n="993">Zapomnij o swym proszku, zważ na ogrom świata.</l>
+          <l n="994">Ta myśl wielka pomniejsze zapały przystudzi.</l>
+          <l n="995">Sługa boży pracuje do późnego lata,</l>
+          <l n="996">Gnuśnik tylko zawczasu zamyka się w grobie,</l>
+          <l n="997">Nim go Pan trąbą straszliwą przebudzi.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0077">
+          <speaker n="1000">PUSTELNIK</speaker>
+          <stage n="1002" type="delivery">zdziwiony</stage>
+          <l n="1004">Księże! a to są czary? sztuka niepojęta!</l>
+          <stage n="1006" type="delivery">na stronie</stage>
+          <l n="1008">Musi posiadać czarodziejskie sztuki,</l>
+          <l n="1009">Albo też nas podsłuchał i wszystko pamięta.</l>
+          <stage n="1011" type="delivery">do Księdza</stage>
+          <l n="1013">Wszak ja od niej słyszałem też same nauki!</l>
+          <l n="1014">Cała rzecz słowo w słowo jak z ust jej wyjęta,</l>
+          <l n="1015">Przy owym pożegnaniu, owego wieczora.</l>
+          <stage n="1017" type="delivery">z ironią</stage>
+          <l n="1019">Właśnie, właśnie to była do kazania pora!</l>
+          <l n="1020">Słyszałem od niej słówek pięknobrzmiących wiele:</l>
+          <l n="1021">„Ojczyzna i nauki, sława, przyjaciele!”</l>
+          <l n="1022">Lecz teraz groch ten całkiem od ściany odpada,</l>
+          <l n="1023">Ja sobie spokojnie drzemię.</l>
+          <l n="1024">Kiedyś duch mój przy wieszczym zapalał się rymie,</l>
+          <l n="1025">Kiedyś budził mię ze snu tryumf Milcyjada.</l>
+          <stage n="1027" type="delivery">śpiewa</stage>
+          <l n="1029" rend="indent" style="margin-left: 4ch">Młodości, ty nad poziomy</l>
+          <l n="1030" rend="indent" style="margin-left: 4ch">Wylatuj, a okiem słońca</l>
+          <l n="1031" rend="indent" style="margin-left: 4ch">Ludzkości całe ogromy</l>
+          <l n="1032" rend="indent" style="margin-left: 4ch">Przeniknij z końca do końca!</l>
+          <l n="1034">Już tchnienie jej rozwiało te kształty olbrzymie!</l>
+          <l n="1035">Został się lekki cienik, mara blada,</l>
+          <l n="1036">Drobniuchne źdźbła odłamki,</l>
+          <l n="1037">Które lada motyl spasa,</l>
+          <l n="1038">Które by ona mogła wciągnąć z odetchnieniem;</l>
+          <l n="1039">A ona chce budować na tym proszku zamki!</l>
+          <l n="1040">Zrobiwszy mnie komarem, chce zmienić w Atlasa</l>
+          <l n="1041">Dźwigającego nieba kamiennym ramieniem.</l>
+          <l n="1042">Na próżno! jedna tylko iskra jest w człowieku,</l>
+          <l n="1043">Raz tylko w młodocianym zapala się wieku.</l>
+          <l n="1044">Czasem ją oddech Minerwy roznieci,</l>
+          <l n="1045">Wtenczas nad ciemne plemiona</l>
+          <l n="1046">Powstaje mędrzec, i gwiazda Platona</l>
+          <l n="1047">W długie wieki wieków świeci.</l>
+          <l n="1048">Iskrę tę jeśli duma rozżarzy w pochodnie,</l>
+          <l n="1049">Wtenczas zagrzmi bohater, pnie się do szkarłatu</l>
+          <l n="1050">Przez wielkie cnoty i przez większe zbrodnie,</l>
+          <l n="1051">I z pastuszego kija robi berło światu</l>
+          <l n="1052">Albo skinieniem oka stare trony wali.</l>
+          <stage n="1054" type="pause">po pauzie, z wolna</stage>
+          <l n="1056">Czasem tę iskrę oko niebianki zapali,</l>
+          <l n="1057">Wtenczas trawi się w sobie, świeci sama sobie</l>
+          <l n="1058">Jako lampa w rzymskim grobie.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0078">
+          <speaker n="1061">KSIĄDZ</speaker>
+          <l n="1063">O nieszczęśliwy zapaleńcze młody!</l>
+          <l n="1064">W żalach, które tak mocno zraniona pierś jąka,</l>
+          <l n="1065">Że nie jesteś zbrodniarzem, odkrywam dowody;</l>
+          <l n="1066">I że piękność, za którą twój się rozum błąka,</l>
+          <l n="1067">Nie z samej tylko powabna urody.</l>
+          <l n="1068">Jak z zapałem kochałeś, tak naśladuj godnie</l>
+          <l n="1069">Myślenia i uczucia niebieskiej istoty.</l>
+          <l n="1070">Zbrodniarz ją kochający wróciłby do cnoty,</l>
+          <l n="1071">A ty niby cnotliwy, puszczasz się na zbrodnie!</l>
+          <l n="1072">Jakakolwiek przeszkoda tutaj was rozdwoi:</l>
+          <l n="1073">Idą ku sobie gwiazdy, choć je mgły zaciemią,</l>
+          <l n="1074">Mgła zniknie, gwiazda z gwiazdą na wieki się spoi,</l>
+          <l n="1075">Łańcuchy tu wiążące prysną razem z ziemią,</l>
+          <l n="1076">A tam nad ziemią znowu poznają się swoi,</l>
+          <l n="1077">I namiętność, choć zbytnią, Pan Bóg wam przebaczy.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0079">
+          <speaker n="1080">PUSTELNIK</speaker>
+          <l n="1082">Jako? ty wiesz o wszystkim? co to wszystko znaczy?</l>
+          <stage n="1084" type="delivery">udaje głos Księdza</stage>
+          <l n="1086">Jej serce równie święte, jak powabne lice!</l>
+          <l n="1087">Łańcuch, który tu wiąże, nad ziemią opadnie!</l>
+          <l n="1089">Ty wiesz o wszystkim, ty nas podsłuchałeś zdradnie,</l>
+          <l n="1090">Wyłudziłeś tajemnicę</l>
+          <l n="1091">Ukrywaną w sercu na dnie,</l>
+          <l n="1092">O której przyjaciele nie wiedzą najszczersi.</l>
+          <l n="1093">Bo jednę rękę na cyprysu drzewie,</l>
+          <l n="1094">A drugą kładąc na piersi,</l>
+          <l n="1095">Zaprzysięgliśmy milczeć, i nikt o tym nie wie.</l>
+          <l n="1097">Ale tak, przypominam… tak, jednego razu,</l>
+          <l n="1098">Kiedy przez czarodziejski pędzla wynalazek</l>
+          <l n="1099">Odkradzione jej wdzięki przeniosłem w obrazek,</l>
+          <l n="1100">Przyjaciołom okazać chciałem cud obrazu.</l>
+          <l n="1101">Lecz to, co mnie unosi, ich nawet nie ruszy,</l>
+          <l n="1102">Czułość dla nich zabawą, która nam potrzebą;</l>
+          <l n="1103">Nie mają oka duszy, nie przejrzą do duszy!</l>
+          <l n="1104">Zimnym cyrklem chcą mierzyć piękności zalety!</l>
+          <l n="1105">Jak wilk lub jak astronom patrzają na niebo.</l>
+          <l n="1106">Inny jest wzrok pasterza, kochanka, poety.</l>
+          <l n="1108">Ach! ja tak ją na martwym ubóstwiam obrazku,</l>
+          <l n="1109">Że nie śmiem licem skazić jej bezbronnych ustek,</l>
+          <l n="1110">I gdy dobranoc daję przy księżyca blasku</l>
+          <l n="1111">Albo jeśli w pokoju lampa jeszcze płonie,</l>
+          <l n="1112">Nie śmiem rozkryć mych piersi, z szyi odpiąć chustek,</l>
+          <l n="1113">Nim jej liskiem cyprysu oczu nie zasłonię.</l>
+          <l n="1114">A moi przyjaciele!… żałuję pośpiechu!…</l>
+          <l n="1115">Jeden, gdy ubóstwienie w oku moim czyta,</l>
+          <l n="1116">Ledwie zgryzioną wargą nie upuścił śmiechu,</l>
+          <l n="1117">I rzekł ziewając: „At sobie kobieta!”</l>
+          <l n="1118">Drugi przydał: „Jesteś dziecko!”…</l>
+          <l n="1119">Ach, ten to starzec z swoim przeklętym rozumem</l>
+          <l n="1120">Pewnie wydał nas zdradziecko!</l>
+          <stage n="1122" type="business">coraz z większym pomieszaniem</stage>
+          <l n="1124">Opowiedział na rynku, przed dziećmi, przed tłumem;</l>
+          <l n="1125">A ktoś z tych dziatek, albo z gawiedzi,</l>
+          <l n="1126">Przyszedł i księdzu wyznał na spowiedzi…</l>
+          <stage n="1128" type="business">z największym obłąkaniem</stage>
+          <l n="1130">Możeś ty mnie podstępnie badał na spowiedzi?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0080">
+          <speaker n="1133">KSIĄDZ</speaker>
+          <l n="1135">I na cóż nam te zdrady, spowiedź i podstępy?</l>
+          <l n="1136">Chociaż się dziwnym kłębkiem twoja żałość gmatwa,</l>
+          <l n="1137">Lecz czyj wzrok na bieg czucia nie jest całkiem tępy,</l>
+          <l n="1138">Temu do wywikłania tajemnica łatwa.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0081">
+          <speaker n="1141">PUSTELNIK</speaker>
+          <l n="1143">Prawda! lecz to są ludzkiej własności narowy,</l>
+          <l n="1144">Że, co dzień cały w sercu tkwi boleśnie,</l>
+          <l n="1145">Na noc przechodzi do głowy:</l>
+          <l n="1146">Wtenczas człowiek sam nie wie, co rozplecie we śnie.</l>
+          <l n="1147">Dawno, dawno!… raz miałem przypadek ten samy.</l>
+          <l n="1148">Po pierwszym z nią widzeniu wróciwszy do domu</l>
+          <l n="1149">Poszedłem spać, ni słówka nie mówiąc nikomu.</l>
+          <l n="1150">Nazajutrz, gdy dzień dobry przyniosłem dla mamy:</l>
+          <l n="1151">„Co to jest, mówi do mnie, żeś taki pobożny?</l>
+          <l n="1152">Modlisz się przez noc całą, wzdychasz nieustannie</l>
+          <l n="1153">I litaniją mówisz o Najświętszej Pannie”.</l>
+          <l n="1154">Zrozumiałem i na noc zamknąłem podwoje,</l>
+          <l n="1155">Ale teraz nie mogę być równie ostrożny.</l>
+          <l n="1156">Nie mam domu; gdzie przyjdę, tam posłanie moje,</l>
+          <l n="1157">A często przez sen gadam… w myślach jak na fali!</l>
+          <l n="1158">Ustawna burza, zawieja,</l>
+          <l n="1159">Błyśnie i zmierzchnie,</l>
+          <l n="1160">Mnóstwo się zarysów skleja,</l>
+          <l n="1161">W jakieś tworzydło ocali,</l>
+          <l n="1162">I znowu pierzchnie.</l>
+          <l n="1163">Jeden tylko obrazek na zawsze wyryty,</l>
+          <l n="1164">Czy rzucam się na piasek i patrzę w głąb ziemną,</l>
+          <l n="1165">Błyszczy jak księżyc w wodzie odbity:</l>
+          <l n="1166">Nie mogę dostać, lecz błyszczy przede mną;</l>
+          <l n="1167">Czyli wzrokiem od ziemi strzelę na błękity,</l>
+          <l n="1168">Za moim wzrokiem dokoła</l>
+          <l n="1169">Płynie i postać anioła</l>
+          <l n="1170">Aż na górne nieba szczyty.</l>
+          <l n="1171">Potem jak orlik na żaglach pierza</l>
+          <stage n="1173" type="business">patrząc w górę</stage>
+          <l n="1175">Stanie w chmurze i z wysoka,</l>
+          <l n="1176">Nim sam upadnie na zwierza,</l>
+          <l n="1177">Już go zabił strzałą oka;</l>
+          <l n="1178">Nie wzrusza się i z lekka w jednym miejscu chwieje,</l>
+          <l n="1179">Jakby uplatany w sidło</l>
+          <l n="1180">Albo do nieba przybity za skrzydło:</l>
+          <l n="1181">Tak właśnie ona nade mną jaśnieje!</l>
+          <stage n="1183" type="delivery">śpiewa</stage>
+          <l n="1185" rend="indent" style="margin-left: 4ch">Czyli słońce światu płonie,</l>
+          <l n="1186" rend="indent" style="margin-left: 4ch">Czy noc wciąga szatę ciemną;</l>
+          <l n="1187" rend="indent" style="margin-left: 4ch">Jej wyglądam, za nią gonię,</l>
+          <l n="1188" rend="indent" style="margin-left: 4ch">Zawsze przy mnie, lecz nie ze mną!</l>
+          <l n="1190">Otóż, gdy ona stanie przed mymi oczyma,</l>
+          <l n="1191">A sam jestem na polu albo w gajów cieniu,</l>
+          <l n="1192">Na próżno każę milczeć, język nie dotrzyma,</l>
+          <l n="1193">Przemówię do niej słówko, nazwę po imieniu,</l>
+          <l n="1194">A zły człowiek podsłucha.</l>
+          <l n="1195">Tak właśnie dziś rano</l>
+          <l n="1196">Zdradliwie mię podsłuchano.</l>
+          <l n="1197">Ranek był… wraz opiszę.</l>
+          <l n="1198">Pamiętam dziś jeszcze,</l>
+          <l n="1199">Na kilka godzin pierwej wylały się deszcze,</l>
+          <l n="1200">W dolinach tuman na kształt prószącego śniegu,</l>
+          <l n="1201">A na łąkach zaranna połyska się rosa,</l>
+          <l n="1202">Gwiazdy w błękit tonęły po nocnym obiegu:</l>
+          <l n="1203">Jedna tylko nade mną świeci gwiazdka wschodnia,</l>
+          <l n="1204">Którą wtenczas widziałem, którą widzę co dnia.</l>
+          <l n="1205" part="I">Tam przy altanie</l>
+          <stage n="1207" type="business">spostrzega się</stage>
+          <l n="1209" part="F" rend="indent" style="margin-left: 24ch">cha! cha! pobiegłem z ukosa…</l>
+          <l n="1210">To nie o tym poranku! ha! szał romansowy!</l>
+          <l n="1211">Przeklęty zawrocie głowy!…</l>
+          <stage n="1213" type="pause">po pauzie przypomina</stage>
+          <l n="1215">Był ranek; kiedy dumam, narzekam i jęczę,</l>
+          <l n="1216">Deszcz lał jak z wiadra, tęgi wicher dmuchał,</l>
+          <l n="1217">Utuliłem głowę w krzaczek…</l>
+          <stage n="1219" type="business">z łagodnym uśmiechem</stage>
+          <l n="1221">Ten ladaco mię podsłuchał…</l>
+          <l n="1222">Lecz nie wiem, czy tylko jęki,</l>
+          <l n="1223">Czy nawet imię podsłuchał;</l>
+          <l n="1224">Bo bardzo blisko był krzaczek.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0082">
+          <speaker n="1227">KSIĄDZ</speaker>
+          <l n="1229">O biedny, biedny młodzieńcze!</l>
+          <l n="1230">Co mówisz? kto cię podsłuchał?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0083">
+          <speaker n="1233">PUSTELNIK</speaker>
+          <stage n="1235" type="delivery">poważnie</stage>
+          <l n="1237">Kto? oto pewny robaczek maleńki,</l>
+          <l n="1238">Który pełzał tuż przy głowie,</l>
+          <l n="1239">Świętojański to robaczek.</l>
+          <l n="1240">Ach, jakie ludzkie stworzenie!</l>
+          <l n="1241">Przypełznął do mnie i powie</l>
+          <l n="1242">(Zapewne mię chciał pocieszyć):</l>
+          <l n="1243">„Biedny człowieku, po co to jęczenie?</l>
+          <l n="1244">Ej, dosyć rozpaczą grzeszyć!</l>
+          <l n="1245">Kto temu winien, że piękna dziewczyna,</l>
+          <l n="1246">Żeś czuły? nie twoja wina.</l>
+          <l n="1247">Patrz, mówił dalej robaczek,</l>
+          <l n="1248">Na iskrę, co ze mnie strzela</l>
+          <l n="1249">I cały objaśnia krzaczek.</l>
+          <l n="1250">Zrazu szukałem w niej chluby,</l>
+          <l n="1251">Teraz widzę, że będzie przyczyną mej zguby</l>
+          <l n="1252">I zbawi nieprzyjaciela.</l>
+          <l n="1253">Iluż to braci moich złe jaszczurki spasły!</l>
+          <l n="1254">Kląłem więc ozdobę własną,</l>
+          <l n="1255">Która na mnie śmierć sprowadza,</l>
+          <l n="1256">Chcę, żeby te iskry zgasły;</l>
+          <l n="1257">Ale cóż robić? nie moja w tym władza,</l>
+          <l n="1258">I póki żyję, te iskry nie zgasną”.</l>
+          <stage n="1260" type="pause">po pauzie, pokazując na serce</stage>
+          <l n="1262">Tak, póki żyję, te iskry nie zgasną!</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0084">
+          <speaker n="1265">DZIECI</speaker>
+          <l n="1267">A posłuchajcie… a jaki cud, jaki!</l>
+          <l n="1268">Tato, słyszałeś o cudzie?</l>
+          <stage n="1270" type="exit">Ksiądz odchodzi, ściskając ramionami.</stage>
+          <l n="1272">Czy można, żeby robaki</l>
+          <l n="1273">Rozmawiały tak jak ludzie?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0085">
+          <speaker n="1276">PUSTELNIK</speaker>
+          <l n="1278">Czemuż nie? chodź tu, malcze, pod kantorek,</l>
+          <l n="1279">Nachyl się i przyłóż uszko;</l>
+          <l n="1280">Tu biedna duszka prosi o troje paciorek.</l>
+          <l n="1281">Aha, słyszysz, jak kołata?</l>
+        </sp>
+        <sp who="#dziecko" xml:id="sp-0086">
+          <speaker n="1284">DZIECKO</speaker>
+          <l n="1286">Tak tak, tak tak, tata, tata.</l>
+          <l n="1287">A dalibógże kołata,</l>
+          <l n="1288">Jak zegarek pod poduszką.</l>
+          <l n="1289">Co to jest? tata, tek, ta tek!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0087">
+          <speaker n="1292">PUSTELNIK</speaker>
+          <l n="1294">Mały robaczek, kołatek,</l>
+          <l n="1295" part="I">A niegdyś wielki lichwiarz!</l>
+          <stage n="1297" type="delivery">do kołatka</stage>
+          <l n="1299" part="F" rend="indent" style="margin-left: 24ch">Czego żądasz duszko?</l>
+          <stage n="1301" type="delivery">udaje głos</stage>
+          <l n="1303">„Proszę o troje paciorek”.</l>
+          <l n="1304">A tuś mi, panie sknero! znałem się z tym dziadem,</l>
+          <l n="1305">Był moim bliskim sąsiadem;</l>
+          <l n="1306">Zakopawszy się do złota,</l>
+          <l n="1307">Zawaliwszy chatę drągiem,</l>
+          <l n="1308">Nie dbał, że w progu jęczy wdowa i sierota,</l>
+          <l n="1309">Nikogo nie obdarzył chlebem ni szelągiem.</l>
+          <l n="1310">Za życia dusza jego przy pieniędzy worku</l>
+          <l n="1311">Leżała na dnie w kantorku.</l>
+          <l n="1312">Za to i teraz po śmierci,</l>
+          <l n="1313">Nim słuszną karę odbierze w piekle,</l>
+          <l n="1314">Słyszycie, jak gryzie wściekle,</l>
+          <l n="1315">Jak świdruje i jak wierci.</l>
+          <l n="1316">Przecież, jeśli łaska czyja,</l>
+          <l n="1317">Mówcie trzy Zdrowaś Maryja.</l>
+          <stage n="1319" type="entrance">Ksiądz wchodzi ze szklanką wody.</stage>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0088">
+          <speaker n="1322">PUSTELNIK</speaker>
+          <stage n="1324" type="delivery">coraz mocniej pomieszany</stage>
+          <l n="1326">A co, słyszałeś pisk złego ducha?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0089">
+          <speaker n="1329">KSIĄDZ</speaker>
+          <l n="1331">Przebóg, co się tobie plecie?</l>
+          <stage n="1333" type="business">ogląda się</stage>
+          <l n="1335">Nic nie ma, wszędzie noc głucha!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0090">
+          <speaker n="1338">PUSTELNIK</speaker>
+          <l n="1340">Nadstaw tylko lepiej ucha.</l>
+          <stage n="1342" type="delivery">do Dziecięcia</stage>
+          <l n="1344">Chodź tu, chodź tu, moje dziecię!</l>
+          <l n="1345" part="I">Czy słyszałeś?</l>
+        </sp>
+        <sp who="#dziecko" xml:id="sp-0091">
+          <speaker n="1348">DZIECIĘ</speaker>
+          <l n="1350" part="F" rend="indent" style="margin-left: 24ch">Prawda, tato,</l>
+          <l n="1351" part="I">Coś tam gada.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0092">
+          <speaker n="1354">PUSTELNIK</speaker>
+          <l n="1356" part="F" rend="indent" style="margin-left: 24ch">Cóż ty na to?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0093">
+          <speaker n="1359">KSIĄDZ</speaker>
+          <l n="1361">Pójdźcie spać, dzieci, co się wam marzy,</l>
+          <l n="1362">Nic ani szaśnie, cicho wokoło.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0094">
+          <speaker n="1365">PUSTELNIK</speaker>
+          <stage n="1367" type="delivery">do Dzieci z uśmiechem</stage>
+          <l n="1369">Nie dziw, głosu natury nie dosłyszą starzy!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0095">
+          <speaker n="1372">KSIĄDZ</speaker>
+          <l n="1374">Mój bracie, weź wody w dłonie</l>
+          <l n="1375">I zmyj trochę twoje czoło,</l>
+          <l n="1376">Może ten zapał gwałtowny ochłonie.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0096">
+          <speaker n="1379">PUSTELNIK</speaker>
+          <stage n="1381" type="sound">bierze i myje, tymczasem zegar zaczyna bić, po kilku uderzeniach Pustelnik upuszcza wodę i patrzy nieporuszony poważnie i ponuro</stage>
+          <l n="1383">Oto dziesiąta wybija</l>
+          <stage n="1385" type="sound">Kur pieje.</stage>
+          <l n="1387">I kur pierwsze daje hasło;</l>
+          <l n="1388">Czas ucieka, życie mija</l>
+          <stage n="1390" type="lighting">Świeca jedna na stoliku gaśnie.</stage>
+          <l n="1392">I pierwsze światło zagasło.</l>
+          <milestone unit="dramatic-hour" n="2" ana="#hour-despair" resp="#encoder" corresp="#hour-despair"/>
+          <l n="1393">Jeszcze, jeszcze dwie godziny,</l>
+          <stage n="1395" type="business">zaczyna drżeć</stage>
+          <l n="1397" part="I">Jak mnie zimno!</l>
+          <stage n="1399" type="business">Ksiądz tymczasem patrzy zdziwiony nieco na świecę.</stage>
+          <l n="1401" part="F" rend="indent" style="margin-left: 24ch">Wiatr zimny świszcze przez szczeliny:</l>
+          <l n="1402" part="I">Jak tu zimno!</l>
+          <stage n="1404" type="business">idzie do pieca</stage>
+          <l n="1406" part="F" rend="indent" style="margin-left: 24ch">Gdzież jestem?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0097">
+          <speaker n="1409">KSIĄDZ</speaker>
+          <l n="1411" rend="indent" style="margin-left: 24ch">W przyjaciela domu.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0098">
+          <speaker n="1414">PUSTELNIK</speaker>
+          <stage n="1416" type="delivery">przytomniej</stage>
+          <l n="1418">Pewnie cię nastraszyłem o niezwykłej porze,</l>
+          <l n="1419">Do nieznanego miejsca, w dziwacznym ubiorze?</l>
+          <l n="1420">Musiałem wiele gadać? ach, nie mów nikomu!</l>
+          <l n="1421">Jestem biedny podróżny, z dalekich stron jadę.</l>
+          <stage n="1423" type="business">ogląda się i przytomniej</stage>
+          <l n="1425">W młodości jeszcze, na środku gościńca,</l>
+          <l n="1426" part="I">Napadł, odarł mię całkiem</l>
+          <stage n="1428" type="delivery">z uśmiechem</stage>
+          <l n="1430" part="F" rend="indent" style="margin-left: 24ch">skrzydlaty złoczyńca.</l>
+          <l n="1431">Nie mam sukien; co znajdę, to na siebie kładę.</l>
+          <stage n="1433" type="business">obrywa liście i szaty poprawia; z żalem</stage>
+          <l n="1435">Ach, odarł mię, odebrał wszystkie skarby świata;</l>
+          <l n="1436">Została przy mnie jedna niewinności szata!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0099">
+          <speaker n="1439">KSIĄDZ</speaker>
+          <stage n="1441" type="delivery">który ciągle patrzał na świecę, do Pustelnika</stage>
+          <l n="1443" part="I">Uspokój się, dla Boga!</l>
+          <stage n="1445" type="delivery">do Dzieci</stage>
+          <l n="1447" part="F" rend="indent" style="margin-left: 24ch">Kto to zgasił świecę?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0100">
+          <speaker n="1450">PUSTELNIK</speaker>
+          <l n="1452">Każdy cud chcesz tłumaczyć; biegaj do rozumu…</l>
+          <l n="1453">Lecz natura, jak człowiek, ma swe tajemnice,</l>
+          <l n="1454">Które nie tylko chowa przed oczyma tłumu,</l>
+          <stage n="1456" type="delivery">z zapałem</stage>
+          <l n="1458">Ale żadnemu księdzu i mędrcom nie wyzna!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0101">
+          <speaker n="1461">KSIĄDZ</speaker>
+          <stage n="1463" type="business">bierze za rękę</stage>
+          <l n="1465" part="I">Synu mój!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0102">
+          <speaker n="1468">PUSTELNIK</speaker>
+          <stage n="1470" type="delivery">poruszony i zdziwiony</stage>
+          <l n="1472" part="F" rend="indent" style="margin-left: 24ch">Synu! Głos ten jakby blaskiem gromu</l>
+          <l n="1473">Rozum mój z mroczącego wydobywa cienia!</l>
+          <stage n="1475" type="business">wpatruje się</stage>
+          <l n="1477">Tak, poznaję, gdzie jestem, w czyim jestem domu.</l>
+          <l n="1478">Tak, tyś mój drugi ojciec, to moja ojczyzna!</l>
+          <l n="1479">Poznaję luby domek! jak się wszystko zmienia!</l>
+          <l n="1480">Dziatki urosły, ciebie przyprósza siwizna!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0103">
+          <speaker n="1483">KSIĄDZ</speaker>
+          <stage n="1485" type="business">pomieszany bierze świecę, wpatruje się</stage>
+          <l n="1487">Jak to? znasz mię? to on!… nie… tak…, nie, być nie może!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0104">
+          <speaker n="1490">PUSTELNIK</speaker>
+          <l n="1492" part="I">Gustaw.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0105">
+          <speaker n="1495">KSIĄDZ</speaker>
+          <l n="1497" part="F" rend="indent" style="margin-left: 24ch">Gustaw! ty Gustaw!</l>
+          <stage n="1499" type="business">ściska</stage>
+          <l n="1501" rend="indent" style="margin-left: 24ch">Gustaw! wielki Boże!</l>
+          <l n="1502" part="I">Uczeń mój! syn mój!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0106">
+          <speaker n="1505">GUSTAW</speaker>
+          <stage n="1507" type="business">ściska, patrząc na zegar</stage>
+          <l n="1509" part="F" rend="indent" style="margin-left: 24ch">Ojcze, jeszcze ściskać mogę!</l>
+          <l n="1510">Bo potem… wkrótce… zaraz pójdę w kraj daleki!</l>
+          <l n="1511">Ach, i ty będziesz musiał wybrać się w tę drogę,</l>
+          <l n="1512">Uściśniemy się wtenczas, ale już na wieki!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0107">
+          <speaker n="1515">KSIĄDZ</speaker>
+          <l n="1517">Gustaw! skąd? kędyś? przebóg! tak długa wędrówka?</l>
+          <l n="1518">Gdzieś ty bywał dotychczas, przyjacielu młody?</l>
+          <l n="1519">Nie wiedzieć kędyś zniknął, jakbyś wpadł do wody,</l>
+          <l n="1520">Litery nie napisać, nie nakazać słówka?</l>
+          <l n="1521">Wszak to lat tyle… Gustaw! cóż się z tobą dzieje?</l>
+          <l n="1522">Ty niegdyś w mojej szkole ozdoba młodzieży,</l>
+          <l n="1523">Na tobie najpiękniejszem zakładał nadzieje;</l>
+          <l n="1524">Czy można tak się zgubić? w jakiejże odzieży?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0108">
+          <speaker n="1527">GUSTAW</speaker>
+          <stage n="1529" type="delivery">z gniewem</stage>
+          <l n="1531">Starcze! a gdy ja zacznę oskarżać nawzajem,</l>
+          <l n="1532">Przeklinać twe nauki, na sam widok zgrzytać?</l>
+          <l n="1533">Ty mnie zabiłeś! — ty mnie nauczyłeś czytać!</l>
+          <l n="1534">W pięknych księgach i pięknym przyrodzeniu czytać!</l>
+          <l n="1535" part="I">Ty dla mnie ziemię piekłem zrobiłeś</l>
+          <stage n="1537" type="delivery">z żalem i uśmiechem</stage>
+          <l n="1539" part="F" rend="indent" style="margin-left: 24ch">i rajem!</l>
+          <stage n="1541" type="delivery">mocniej i ze wzgardą</stage>
+          <l n="1543" part="I">A to jest tylko ziemia!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0109">
+          <speaker n="1546">KSIĄDZ</speaker>
+          <l n="1548" part="F" rend="indent" style="margin-left: 24ch">Co słyszę? o Chryste!</l>
+          <l n="1549">Ja ciebie chciałem zgubić? mam sumnienie czyste!</l>
+          <l n="1550" part="I">Kochałem cię jak syna!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0110">
+          <speaker n="1553">GUSTAW</speaker>
+          <l n="1555" part="F" rend="indent" style="margin-left: 24ch">I dlatego właśnie</l>
+          <l n="1556" part="I">Daruję ci!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0111">
+          <speaker n="1559">KSIĄDZ</speaker>
+          <l n="1561" part="F" rend="indent" style="margin-left: 24ch">Ach! o nic nie prosiłem Boga,</l>
+          <l n="1562">Jak abym cię raz jeszcze na życiu obaczył!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0112">
+          <speaker n="1565">GUSTAW</speaker>
+          <stage n="1567" type="business">uściska</stage>
+          <l n="1569" part="I">Uściśnijmy się jeszcze</l>
+          <stage n="1571" type="business">patrzy na świecę</stage>
+          <l n="1573" part="F" rend="indent" style="margin-left: 24ch">nim druga zagaśnie.</l>
+          <l n="1574">Pan Bóg do twojej prośby przychylić się raczył.</l>
+          <l n="1575" part="I">Lecz już późno,</l>
+          <stage n="1577" type="business">patrzy na zegar</stage>
+          <l n="1579" part="F" rend="indent" style="margin-left: 24ch">a długa do przebycia droga!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0113">
+          <speaker n="1582">KSIĄDZ</speaker>
+          <l n="1584">Chociam mocno ciekawy słyszeć twe przygody,</l>
+          <l n="1585" part="I">Lecz teraz potrzebujesz spoczynku i wczasu. Jutro…</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0114">
+          <speaker n="1588">GUSTAW</speaker>
+          <l n="1590" part="F" rend="indent" style="margin-left: 24ch">Dziękuję, przyjąć nie mogę gospody,</l>
+          <l n="1591">Bo już mi na zapłatę nie staje zapasu.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0115">
+          <speaker n="1594">KSIĄDZ</speaker>
+          <l n="1596" part="I">Jak to?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0116">
+          <speaker n="1599">GUSTAW</speaker>
+          <l n="1601" part="F" rend="indent" style="margin-left: 24ch">O! tak! przeklęci, którzy nic nie płacą!</l>
+          <l n="1602">Za wszystko trzeba płacić: lub wzajemną pracą,</l>
+          <l n="1603">Albo wdzięcznym uczuciem, datkiem jednej łezki,</l>
+          <l n="1604">Za którą znowu Ojciec odpłaci niebieski.</l>
+          <l n="1605">Ale ja, przebłądziwszy te kraje pamiątek,</l>
+          <l n="1606">Gdzie tyle łez zabiera każdy znany kątek,</l>
+          <l n="1607">I resztę uczuć, i łzy wylałem ostatnie,</l>
+          <l n="1608">A nowych długów nie chcę zaciągać bezpłatnie.</l>
+          <stage n="1610" type="pause">po pauzie</stage>
+          <l n="1612">Niedawno odwiedzałem dom nieboszczki matki,</l>
+          <l n="1613">Ledwie go poznać mogłem! już ledwie ostatki!</l>
+          <l n="1614">Kędy spojrzysz, — rudera, pustka i zniszczenie!</l>
+          <l n="1615">Z płotów koły, z posadzek wyjęto kamienie,</l>
+          <l n="1616">Dziedziniec mech zarasta, piołun, ostu zioła,</l>
+          <l n="1617">Jak na smętarzu w północ, milczenie dokoła!</l>
+          <l n="1618">O, inny dawniej bywał przyjazd mój w te bramy;</l>
+          <l n="1619">Po krótkim oddaleniu gdym wracał do mamy,</l>
+          <l n="1620">Już mię dobre życzenia spotkały z daleka,</l>
+          <l n="1621">Życzliwa domu czeladź aż za miastem czeka,</l>
+          <l n="1622">Na rynek siostry, bracia wybiegają mali,</l>
+          <l n="1623">„Gustaw! Gustaw!” wołają, pojazd zatrzymali:</l>
+          <l n="1624">Lecą nazad, gościńca wziąwszy po pierogu;</l>
+          <l n="1625">Mama z błogosławieństwem czeka mię na progu,</l>
+          <l n="1626">Wrzask współuczniów, przyjaciół, ledwo nie zagłuszy!…</l>
+          <l n="1627">Teraz pustka, noc, cichość, ani żywej duszy!</l>
+          <l n="1628">Słychać tylko psa hałas i coś na kształt stuku:</l>
+          <l n="1629">Ach! tyż to, psie nasz wierny, nasz poczciwy Kruku!</l>
+          <l n="1630">Stróżu i niegdyś całej kochanku rodziny,</l>
+          <l n="1631">Z licznych sług i przyjaciół tyś został jedyny!</l>
+          <l n="1632">Choć głodem przemorzony i skurczony laty,</l>
+          <l n="1633">Pilnujesz wrót bez zamka i bez panów chaty.</l>
+          <l n="1634">Kruku mój! pójdź tu, Kruku! Bieży, staje, słucha,</l>
+          <l n="1635">Skacze na piersi, wyje i pada bez ducha!…</l>
+          <l n="1636">Ujrzałem światło w oknach: wchodzę, cóż się dzieje?</l>
+          <l n="1637">Z latarnią, z siekierami plądrują złodzieje,</l>
+          <l n="1638">Burząc do reszty świętej przeszłości ostatki!</l>
+          <l n="1639">W miejscu, gdzie stało niegdyś łoże mojej matki,</l>
+          <l n="1640">Złodziej rąbał podłogę i odrywał cegły,</l>
+          <l n="1641">Chwyciłem, zgniotłem, — oczy na łeb mu wybiegły!</l>
+          <l n="1642">Siadam na ziemi płacząc; w przedporannym mroku</l>
+          <l n="1643">Ktoś nasuwa się, kijem podpierając kroku.</l>
+          <l n="1644">Kobieta w reszcie stroju, schorzała, wybladła,</l>
+          <l n="1645">Bardziej do czyscowego podobna widziadła;</l>
+          <l n="1646">Gdy obaczy straszliwą marę w pustym gmachu,</l>
+          <l n="1647">Żegnając się i krzycząc słania się z przestrachu.</l>
+          <l n="1648">Nie bój się! Pan Bóg z nami! ktoś, moja kochana?</l>
+          <l n="1649">Czego po domu pustym błąkasz się tak z rana?</l>
+          <l n="1650">„Jestem biedna uboga, ze łzami odpowie;</l>
+          <l n="1651">W tym domu niegdyś moi mieszkali panowie;</l>
+          <l n="1652">Dobrzy panowie, niech im wieczny pokój świeci!</l>
+          <l n="1653">Ale Pan Bóg nie szczęścił dla nich i dla dzieci:</l>
+          <l n="1654">Pomarli, dom ich pustką, upada i gnije,</l>
+          <l n="1655">O paniczu nie słychać, pewnie już nie żyje”.</l>
+          <l n="1656">Krwią mnie serce zabiegło, wsparłem się u proga…</l>
+          <l n="1657" part="I">Ach! więc wszystko minęło?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0117">
+          <speaker n="1660">KSIĄDZ</speaker>
+          <l n="1662" part="F" rend="indent" style="margin-left: 24ch">Prócz duszy i Boga!</l>
+          <l n="1663">Wszystko minie na ziemi: szczęście i niedole.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0118">
+          <speaker n="1666">GUSTAW</speaker>
+          <l n="1668">Ileż znowu pamiątek w twoim domku, w szkole!</l>
+          <l n="1669">Tum z dziećmi na dziedzińcu przesypywał piasek,</l>
+          <l n="1670">Po gniazda ptasze w tamten biegaliśmy lasek,</l>
+          <l n="1671">Kąpielą była rzeczka u okien ciekąca,</l>
+          <l n="1672">Po błoniach z studentami graliśmy w zająca.</l>
+          <l n="1673">Tam do gaju chodziłem w wieczór lub przede dniem,</l>
+          <l n="1674">By odwiedzić Homera, rozmówić się z Tassem</l>
+          <l n="1675">Albo oglądać Jana zwycięstwo pod Wiedniem.</l>
+          <l n="1676">Wnet zwoływam spółuczniów, szykuję pod lasem;</l>
+          <l n="1677">Tu krwawe z chmur pohańskich świecą się księżyce,</l>
+          <l n="1678">Tam Niemców potrwożonych następują roty;</l>
+          <l n="1679">Każę wodze ukrócić, w toku złożyć groty,</l>
+          <l n="1680">Wpadam, a za mną szabel polskich błyskawice!</l>
+          <l n="1681">Przerzadzają się chmury, wrzask o gwiazdy bije,</l>
+          <l n="1682">Gradem lecą turbany i obcięte szyje,</l>
+          <l n="1683">Janczarów zgraja pierzchła lub do piasku wbita,</l>
+          <l n="1684">Zrąbaną z koni jazdę rozniosły kopyta.</l>
+          <l n="1685">Aż pod wał trzebim drogę!… ten wzgórek był wałem.</l>
+          <l n="1686">Tam ona wyszła patrzeć na igraszkę dzieci,</l>
+          <l n="1687">Tam, gdy ją przy chorągwi Proroka ujrzałem,</l>
+          <l n="1688">Natychmiast umarł we mnie Godfred i Jan Trzeci.</l>
+          <l n="1689">Odtąd wszystkich spraw moich, chęci, myśli panią,</l>
+          <l n="1690">Ach, odtąd dla niej tylko, o niej, przez nią, za nią!</l>
+          <l n="1691">Jej pełne dotąd jeszcze wszystkie okolice:</l>
+          <l n="1692">Tu po raz pierwszy boskie obaczyłem lice,</l>
+          <l n="1693">Tu mnie pierwszej rozmowy uczciła wyrazem,</l>
+          <l n="1694">Tutaj, na wzgórku, Russa czytaliśmy razem;</l>
+          <l n="1695">Altankę jej pod tymi uwiązałem chłody,</l>
+          <l n="1696">Z tych lasów przynosiłem kwiateczki, jagody,</l>
+          <l n="1697">Z tych zdrojów, stojąc przy mnie, wywabiała wędką</l>
+          <l n="1698">Srebrnopiórego karpia, pstrąga z kraśną cętką;</l>
+          <l n="1699" part="I">A dziś!…</l>
+          <stage n="1701" type="business">płacze</stage>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0119">
+          <speaker n="1704">KSIĄDZ</speaker>
+          <l n="1706" part="F" rend="indent" style="margin-left: 24ch">Płacz; lecz niestety, boleść przypomnienia</l>
+          <l n="1707">Nas samych trawi, a nic wkoło nas nie zmienia!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0120">
+          <speaker n="1710">GUSTAW</speaker>
+          <l n="1712">Dzisiaj po latach tylu, po takiej przemianie,</l>
+          <l n="1713">Na miejscach najszczęśliwszych, w najsmutniejszym stanie!</l>
+          <l n="1714">Gdybyś wziął martwy kamień, z którym igra dziecię,</l>
+          <l n="1715">I gdybyś z tym kamieniem obchodził po świecie,</l>
+          <l n="1716">A potem, do Ojczyzny wróciwszy z daleka,</l>
+          <l n="1717">Ten sam kamień, dla tegoż samego człowieka,</l>
+          <l n="1718">Co nim kiedyś jak dziecko igrał przy piastunie,</l>
+          <l n="1719">Dziś dla starca zmarłego dał pod głowę w trunie;</l>
+          <l n="1720">Gdyby z tego kamienia gorzka łza nie ciekła,</l>
+          <l n="1721">Księże, kamień bez sądu rzuć prosto do piekła!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0121">
+          <speaker n="1724">KSIĄDZ</speaker>
+          <l n="1726">O! łza ta nie jest gorzka, gdy w obecne troski</l>
+          <l n="1727">Przypomnianego szczęścia miesza nektar boski;</l>
+          <l n="1728">Czułość ją u ludzkości wylewa ołtarza.</l>
+          <l n="1729">Gorzką truciznę sączą tylko łzy zbrodniarza.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0122">
+          <speaker n="1732">GUSTAW</speaker>
+          <l n="1734">Słuchaj, powiem coś jeszcze… Byłem i w ogrodzie,</l>
+          <l n="1735">Pod tęż porę, w jesieni, przy wieczornym chłodzie,</l>
+          <l n="1736">Też same cieniowane chmurami niebiosa,</l>
+          <l n="1737">Tenże bladawy księżyc i kroplista rosa,</l>
+          <l n="1738">I tuman na kształt z lekka prószącego śniegu;</l>
+          <l n="1739">I gwiazdy toną w błękit po nocnym obiegu,</l>
+          <l n="1740">I taż sama nade mną świeci gwiazdka wschodnia,</l>
+          <l n="1741">Którą wtenczas widziałem, którą widzę co dnia;</l>
+          <l n="1742">W tychże miejscach toż samo uczucie paliło.</l>
+          <l n="1743">Wszystko było jak dawniej — tylko jej nie było!</l>
+          <l n="1744">Podchodzę ku altance, jakiś szmer u wniścia,</l>
+          <l n="1745">To ona?… Nie! to wietrzyk zżółkłe strząsał liścia.</l>
+          <l n="1746">Altano! mego szczęścia kolebko i grobie,</l>
+          <l n="1747">Tum poznał, tum pożegnał!… ach! com uczuł w tobie!</l>
+          <l n="1748">To miejsce może wczora było jej siedzeniem,</l>
+          <l n="1749">Ona wczora tym samym oddychała tchnieniem!</l>
+          <l n="1750">Słucham, oglądam wkoło, próżno wzrok się błąka,</l>
+          <l n="1751">Małegom tylko ujrzał nad sobą pająka,</l>
+          <l n="1752">Z listka wisząc, u słabej kołysał się nici,</l>
+          <l n="1753">Ja i on równie słabo do świata przybici!</l>
+          <l n="1754">Oparłem się o drzewo, wtem na końcu ławki</l>
+          <l n="1755">Widzę bukiety, trawkę, listek pośród trawki,</l>
+          <l n="1756">Tenże sam listek, listka mojego połowa,</l>
+          <stage n="1758" type="business">dobywa listek</stage>
+          <l n="1760">Który mi przypomina ostatnie: bądź zdrowa!</l>
+          <l n="1761">To mój dawny przyjaciel, czulem go powitał,</l>
+          <l n="1762">Długo z nim rozmawiałem i o wszystkom pytał:</l>
+          <l n="1763">Jak ona rano wstaje? czym się bawi z rana?</l>
+          <l n="1764">Jaką piosnkę najczęściej gra u fortepiana?</l>
+          <l n="1765">Do jakiego wybiega na przechadzkę zdroju?</l>
+          <l n="1766">W jakim najczęściej lubi bawić się pokoju?</l>
+          <l n="1767">Czy na moje wspomnienie rumieni się skromnie?</l>
+          <l n="1768">Czy sama czasem nie chcąc nie wspomina o mnie?…</l>
+          <l n="1769">Lecz co słyszę! o straszna ciekawości karo!</l>
+          <stage n="1771" type="business">ze złością uderza się w czoło</stage>
+          <l n="1773" part="I">Kobieta!…</l>
+          <stage n="1775" type="delivery">śpiewa</stage>
+          <l n="1777" part="F" rend="indent" style="margin-left: 24ch">Naprzód!…</l>
+          <stage n="1779" type="delivery">urywa i do Dzieci</stage>
+          <l n="1781" rend="indent" style="margin-left: 24ch">Dzieci! znacie piosnkę starą?</l>
+          <stage n="1783" type="delivery">śpiewa</stage>
+          <l n="1785" rend="indent" style="margin-left: 4ch">Naprzód ciebie wspomina</l>
+          <l n="1786" rend="indent" style="margin-left: 4ch">Co chwila, co godzina.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0123">
+          <speaker n="1789">CHÓR DZIECI</speaker>
+          <l n="1791" rend="indent" style="margin-left: 4ch">Jakże kocha dziewczyna,</l>
+          <l n="1792" rend="indent" style="margin-left: 4ch">Co chwilę przypomina.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0124">
+          <speaker n="1795">GUSTAW</speaker>
+          <l n="1797" rend="indent" style="margin-left: 4ch">Potem po razu co dnia,</l>
+          <l n="1798" rend="indent" style="margin-left: 4ch">A potem co tygodnia.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0125">
+          <speaker n="1801">CHÓR DZIECI</speaker>
+          <l n="1803" rend="indent" style="margin-left: 4ch">Jakże czuła dziewczyna,</l>
+          <l n="1804" rend="indent" style="margin-left: 4ch">Co tydzień przypomina!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0126">
+          <speaker n="1807">GUSTAW</speaker>
+          <l n="1809" rend="indent" style="margin-left: 4ch">A potem co miesiąca</l>
+          <l n="1810" rend="indent" style="margin-left: 4ch">Z początku albo z końca.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0127">
+          <speaker n="1813">CHÓR DZIECI</speaker>
+          <l n="1815" rend="indent" style="margin-left: 4ch">Jakże dobra dziewczyna,</l>
+          <l n="1816" rend="indent" style="margin-left: 4ch">Co miesiąc przypomina!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0128">
+          <speaker n="1819">GUSTAW</speaker>
+          <l n="1821" rend="indent" style="margin-left: 4ch">Biegną wody potoku,</l>
+          <l n="1822" rend="indent" style="margin-left: 4ch">Pamięć nie w naszej mocy:</l>
+          <l n="1823" rend="indent" style="margin-left: 4ch">Już tylko raz co roku,</l>
+          <l n="1824" rend="indent" style="margin-left: 4ch">Około Wielkiejnocy.</l>
+        </sp>
+        <sp who="#dzieci" xml:id="sp-0129">
+          <speaker n="1827">CHÓR DZIECI</speaker>
+          <l n="1829" rend="indent" style="margin-left: 4ch">Jaka grzeczna dziewczyna,</l>
+          <l n="1830" rend="indent" style="margin-left: 4ch">Jeszcze co rok wspomina!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0130">
+          <speaker n="1833">GUSTAW</speaker>
+          <l n="1835" part="I">Więc</l>
+          <stage n="1837" type="business">pokazując listek</stage>
+          <l n="1839" part="F" rend="indent" style="margin-left: 24ch">ostatni przeszłości odrzuciła szczątek!</l>
+          <l n="1840">Więc już jej moich nosić nie wolno pamiątek!…:</l>
+          <l n="1841">Wychodziłem z ogrodu, krok mię własny zdradza,</l>
+          <l n="1842">Pod pałac niewidoma ciągnęła mię władza.</l>
+          <l n="1843">Tysiąc ogniów północne rozpędza ciemnoty,</l>
+          <l n="1844">Słychać wrzaski pojezdnych i karet tarkoty.</l>
+          <l n="1845">Już jestem blisko ściany, skradam się pomału,</l>
+          <l n="1846">Wciskam oczy ciekawe w podwoje z kryształu,</l>
+          <l n="1847">Wszystkie stoły nakryto, wszystkie drzwi przymknięto;</l>
+          <l n="1848">Muzyka, śpiewy — jakieś obchodzono święto!</l>
+          <l n="1849">Toast!… słyszałem imię… ach, nie powiem czyje!</l>
+          <l n="1850">Jakiś głos nieznajomy wykrzyknął: „Niech żyje!”</l>
+          <l n="1851">„Niech żyje!” z ust tysiąca zabrzmiały te słowa;</l>
+          <l n="1852">Tak, niech żyje!… i z cicha przydałem: bądź zdrowa!</l>
+          <l n="1853">Wtem (o, gdy mię wspomnienia same nie zabiją!) Ksiądz wyrzekł drugie imię i krzyknął: „Niech żyją!”</l>
+          <stage n="1855" type="business">wpatruje się jakby we drzwi</stage>
+          <l n="1857">Ktoś dziękuje z uśmiechem… znam głos… pewnie ona.</l>
+          <l n="1858">Nie wiem pewnie… nie mogę widzieć za zwierciadłem,</l>
+          <l n="1859">Wściekłość mię oślepiła, poparłem ramiona,</l>
+          <l n="1860">Chciałem szyby rozsadzić… i bez duszy padłem…</l>
+          <stage n="1862" type="pause">po pauzie</stage>
+          <l n="1864">Myślałem, że bez duszy… tylko bez rozumu!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0131">
+          <speaker n="1867">KSIĄDZ</speaker>
+          <l n="1869">Nieszczęsny! dobrowolnych szukałeś męczarni.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0132">
+          <speaker n="1872">GUSTAW</speaker>
+          <l n="1874">Jak trup samotny, obok weselnego tłumu,</l>
+          <l n="1875">Leżałem na zroszonej gorzkim płaczem darni:</l>
+          <l n="1876">Sprzeczność ostatnich w świecie pieszczot i męczarni!</l>
+          <l n="1877">Przebudzony, ujrzałem krwawy promyk wschodu.</l>
+          <l n="1878">Czekam chwilę: już nigdzie blasku ani szumu.</l>
+          <l n="1879">Ach, ta chwila jak piorun, a jak wieczność długa!</l>
+          <l n="1880">Na strasznym chyba sądzie taka będzie druga!</l>
+          <stage n="1882" type="pause">po pauzie z wolna</stage>
+          <l n="1884">Wtem anioł śmierci wywiódł z rajskiego ogrodu!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0133">
+          <speaker n="1887">KSIĄDZ</speaker>
+          <l n="1889">I na cóż ból rozdrażniać w przygojonej ranie?</l>
+          <l n="1890">Synu mój, jest to dawna, lecz słuszna przestroga,</l>
+          <l n="1891">Że kiedy co się stało i już nie odstanie,</l>
+          <l n="1892">Potrzeba w tym uznawać wolą Pana Boga.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0134">
+          <speaker n="1895">GUSTAW</speaker>
+          <stage n="1897" type="delivery">z żalem</stage>
+          <l n="1899">O nie! nas Bóg urządził ku wspólnemu życiu,</l>
+          <l n="1900">Jednakowa nam gwiazda świeciła w powiciu,</l>
+          <l n="1901">Równi, choć różnych zdarzeń wykształceni ciekiem,</l>
+          <l n="1902">Postawą sobie bliscy, jednostajni wiekiem,</l>
+          <l n="1903">Ten sam powab we wszystkim, toż samo niechcenie,</l>
+          <l n="1904">Też same w myślach składnie i w czuciach płomienie.</l>
+          <l n="1905">Gdy nas wszędzie tożsamość łączy niedościgła,</l>
+          <l n="1906" part="I">Bóg osnuł przyszłe węzły,</l>
+          <stage n="1908" type="delivery">z żalem największym</stage>
+          <l n="1910" part="F" rend="indent" style="margin-left: 24ch">a tyś je rozstrzygła!</l>
+          <stage n="1912" type="delivery">mocniej, gniewny</stage>
+          <l n="1914">Kobieto! puchu marny! ty wietrzna istoto!</l>
+          <l n="1915">Postaci twojej zazdroszczą anieli,</l>
+          <l n="1916">A duszę gorszą masz, gorszą niżeli!…</l>
+          <l n="1917">Przebóg! tak ciebie oślepiło złoto!</l>
+          <l n="1918">I honorów świecąca bańka, wewnątrz pusta!</l>
+          <l n="1919">Bodaj!… Niech, czego dotkniesz, przeleje się w złoto;</l>
+          <l n="1920">Gdzie tylko zwrócisz serce i usta,</l>
+          <l n="1921">Całuj, ściskaj zimne złoto!</l>
+          <l n="1922">Ja, gdybym równie był panem wyboru,</l>
+          <l n="1923">I najcudniejsza postać dziewicza,</l>
+          <l n="1924">Jakiej Bóg dotąd nie pokazał wzoru,</l>
+          <l n="1925">Piękniejsza niżli aniołów oblicza,</l>
+          <l n="1926">Niżli sny moje, niżli poetów zmyślenia,</l>
+          <l n="1927">Niżli ty nawet… oddam ją za ciebie,</l>
+          <l n="1928">Za słodycz twego jednego spojrzenia!</l>
+          <l n="1929">Ach, i gdyby w posagu</l>
+          <l n="1930">Płynęło za nią wszystkie złoto Tagu,</l>
+          <l n="1931">Gdyby królestwo w niebie,</l>
+          <l n="1932">Oddałbym ją za ciebie!</l>
+          <l n="1933">Najmniejszych względów nie zyska ode mnie,</l>
+          <l n="1934">Gdyby za tyle piękności i złota</l>
+          <l n="1935">Prosiła tylko, ażeby jej luby</l>
+          <l n="1936">Poświęcił małą cząstkę żywota,</l>
+          <l n="1937">Którą dla ciebie całkiem poświęca daremnie!</l>
+          <l n="1938">Gdyby prosiła o rok, o pół roka,</l>
+          <l n="1939">Gdyby jedna z nią pieszczota,</l>
+          <l n="1940">Gdyby jedno mgnienie oka,</l>
+          <l n="1941">Nie chcę! nie! i na takie nie zezwolę śluby.</l>
+          <stage n="1943" type="business">surowo</stage>
+          <l n="1945">A ty sercem oziębłym, obojętną twarzą,</l>
+          <l n="1946">Wyrzekłaś słowo mej zguby</l>
+          <l n="1947">I zapaliłaś niecne ogniska,</l>
+          <l n="1948">Którymi łańcuch wiążący nas pryska,</l>
+          <l n="1949">Które się wiecznym piekłem między nami żarzą,</l>
+          <l n="1950">Na moje wieczne męczarnie!</l>
+          <l n="1951">Zabiłaś mię, zwodnico! Nieba cię ukarzą,</l>
+          <l n="1952">Sam ja… nie puszczę bezkarnie,</l>
+          <l n="1953">Idę, zadrżyjcie, odmieńce!</l>
+          <stage n="1955" type="business">dobywa sztylet i ze wściekłą ironią</stage>
+          <l n="1957">Błyskotkę niosę dla jasnych panów!</l>
+          <l n="1958">Ot, tym wina utoczę na ślubne toasty…</l>
+          <l n="1959">Ha! wyrodku niewiasty!</l>
+          <l n="1960">Śmiertelne ścisnę wokoło szyi twojej wieńce!</l>
+          <l n="1961" part="I">Idę jak moję własność do piekła zagrabić, Idę!…</l>
+          <stage n="1963" type="business">wstrzymuje się i zamyśla</stage>
+          <l n="1965" part="F" rend="indent" style="margin-left: 24ch">O nie! nie… nie… żeby ją zabić,</l>
+          <l n="1966">Trzeba być trochę więcej niż pierwszym z szatanów!</l>
+          <l n="1967" part="I">Precz to żelazo!</l>
+          <stage n="1969" type="business">chowa</stage>
+          <l n="1971" part="F" rend="indent" style="margin-left: 24ch">niech ją własna pamięć goni,</l>
+          <stage n="1973" type="exit">Ksiądz odchodzi.</stage>
+          <l n="1975">Niech ją sumienia sztylety ranią!</l>
+          <l n="1976">Pójdę, lecz pójdę bez broni,</l>
+          <l n="1977">Pójdę tylko spojrzeć na nią.</l>
+          <l n="1978">W salach, gdzie te od złota świecące pijaki</l>
+          <l n="1979">Przy godowym huczą stole!</l>
+          <l n="1980">Ja w tej rozdartej sukni, z tym liściem na czole,</l>
+          <l n="1981">Wnijdę i stanę przy stole…</l>
+          <l n="1982">Zdziwiona zgraja od stołu powstała,</l>
+          <l n="1983">Przepijają do mnie zdrowiem,</l>
+          <l n="1984">Proszą mię siedzieć: ja stoję jak skała,</l>
+          <l n="1985">Ani słowa nie odpowiem.</l>
+          <l n="1986">Plączą się skoczne kręgi przy śpiewach i brzęku,</l>
+          <l n="1987">Prosi mię w taniec drużba godowa,</l>
+          <l n="1988">A ja z ręką na piersiach, z listkiem w drugim ręku,</l>
+          <l n="1989">Nie odpowiem ani słowa! wtem ona z swoim anielskim urokiem,</l>
+          <l n="1990">„Gościu mój, rzecze, pozwól! niech się dowiem,</l>
+          <l n="1991">Skąd przychodzisz, kto jesteś?” — Ja nic nie odpowiem;</l>
+          <l n="1992">Tylko na nią cisnę okiem,</l>
+          <l n="1993">Ha! okiem! okiem jadowitej żmije,</l>
+          <l n="1994">Całe piekło z mych piersi przywołam do oka;</l>
+          <l n="1995">Niech będzie ślepą, martwą jak opoka,</l>
+          <l n="1996">Na wskroś okiem przebiję!</l>
+          <l n="1997">Wgryzę się jak piekielny dym pod jej powieki</l>
+          <l n="1998">I w głowie utkwię na wieki,</l>
+          <l n="1999">Będę jej myśli czyste przez cały dzień brudził</l>
+          <l n="2000">I w nocy ją ze snu budził.</l>
+          <stage n="2002" type="delivery">powolniej, z czułością</stage>
+          <l n="2004">A ona tak jest czuła, tak łacno dotkliwa,</l>
+          <l n="2005">Jako na trawce wiosenne puchy,</l>
+          <l n="2006">Które lada zefiru zwiewają podmuchy</l>
+          <l n="2007">I lada rosa obrywa.</l>
+          <l n="2008">Każde wzruszenie moje natychmiast ją wzruszy,</l>
+          <l n="2009">Każdy przyostry wyraz zadraśnie;</l>
+          <l n="2010">Od cienia smutku mego jej wesołość gaśnie:</l>
+          <l n="2011">Tak znaliśmy nawzajem czucia wspólnej duszy,</l>
+          <l n="2012">Co jedno pomyśliło, już drugie odgadło.</l>
+          <l n="2013">Całą istnością połączeni ścisło,</l>
+          <l n="2014">Spojrzawszy tylko na twarzy zwierciadło,</l>
+          <l n="2015">Serce nasze jak w czystym widzieliśmy stoku.</l>
+          <l n="2016">Jakie tylko uczucie na mych oczach błysło,</l>
+          <l n="2017">Natychmiast lotem promyka</l>
+          <l n="2018">Aż do jej serca przenika,</l>
+          <l n="2019">I na powrót błyszczy w oku.</l>
+          <l n="2020">Ach tak! tak ją kochałem! pójdęż teraz trwożyć</l>
+          <l n="2021">I na kochanka larwę potępieńca włożyć?</l>
+          <l n="2022">Po co? czego chcę od niej? o zazdrości podła!</l>
+          <l n="2023">I jakież są jej grzechy?</l>
+          <l n="2024">Czyli mię słówkiem dwuznacznym podwiodła?</l>
+          <l n="2025">Czy wabiącymi łowiła uśmiechy</l>
+          <l n="2026">Albo kłamliwe układała lice?</l>
+          <l n="2027">I gdzież są jej przysięgi, jakie obietnice?</l>
+          <l n="2028">Miałemże od niej choć przez sen nadzieję?</l>
+          <l n="2029">Nie! nie! sam urojone żywiłem mamidła,</l>
+          <l n="2030">Sam przyprawiłem jady, od których szaleję!</l>
+          <l n="2031">Po cóż ta wściekłość? jakie do niej prawa?</l>
+          <l n="2032">Co za moją wzgardzoną przemawia osobą?</l>
+          <l n="2033">Gdzie wielkie cnoty? świetne czyny? sława?</l>
+          <l n="2034">Nic, nic! ach, jednę miłość mam za sobą!</l>
+          <l n="2035">Znam to; nigdym śmiałymi nie zgrzeszył zapędy,</l>
+          <l n="2036">Nie prosiłem, ażeby była mnie wzajemną:</l>
+          <l n="2037">Prosiłem tylko o maleńkie względy,</l>
+          <l n="2038">Tylko żeby była ze mną,</l>
+          <l n="2039">Choćby jak krewna z krewnym, jak siostrzyczka z bratem,</l>
+          <l n="2040">Bóg świadkiem, przestałbym na tem.</l>
+          <l n="2041">Gdybym mówił: widzę ją, widziałem ją wczora, jutro widzieć będę;</l>
+          <l n="2042">Z nią z rana, w dzień koło niej, koło niej z wieczora,</l>
+          <l n="2043">Oddam pierwszy dzień dobry, u stołu z nią siędę —</l>
+          <l n="2044" part="I">Ach, jak byłbym szczęśliwy!</l>
+          <stage n="2046" type="pause">po pauzie</stage>
+          <l n="2048" part="F" rend="indent" style="margin-left: 24ch">Zapędzam się marnie.</l>
+          <l n="2049">Ty pod zazdrosnych oczu, chytrych żądeł strażą!</l>
+          <l n="2050">Ani obaczyć nie wolno bezkarnie.</l>
+          <l n="2051" part="I">Pożegnać, porzucić każą… Umrzeć!…</l>
+          <stage n="2053" type="delivery">z żalem</stage>
+          <l n="2055" part="F" rend="indent" style="margin-left: 24ch">Kamienni ludzie! wy nie wiecie,</l>
+          <l n="2056">Jak ciężka śmierć pustelnika!</l>
+          <l n="2057">Konając patrzy na świat, sam jeden na świecie!</l>
+          <l n="2058">Dłoń mu przychylna powiek nie zamyka!</l>
+          <l n="2059">Żałobne grono łoża nie otoczy,</l>
+          <l n="2060">Nikt nie pójdzie za trumną do wieczności domu,</l>
+          <l n="2061">Garsteczki piasku nie rzuci na oczy,</l>
+          <l n="2062">Zapłakać nie masz komu!</l>
+          <l n="2063">O, gdybym mógł choć przez sen pokazać się tobie,</l>
+          <l n="2064">Gdybyś na mojej pamiątkę męki</l>
+          <l n="2065">Jeden przynajmniej dzionek chodziła w żałobie,</l>
+          <l n="2066">Przypięła jednę czarną wstążkę do sukienki!…</l>
+          <l n="2067">Może spojrzysz ukradkiem… i łezka boleści…</l>
+          <l n="2068">I pomyślisz westchnąwszy: ach, on mię tak kochał!</l>
+          <stage n="2070" type="business">z dziką ironią</stage>
+          <l n="2072">Stój, stój, żałosne pisklę!.. precz, wrzasku niewieści!</l>
+          <l n="2073">Będęż, jak dziecko szczęścia, umierając szlochał?</l>
+          <l n="2074">Wszystko mi, wszystko niebiosa wydarły,</l>
+          <l n="2075">Lecz reszty dumy nie mogą odebrać!</l>
+          <l n="2076">Żywy, o nic przed nikim nie umiałem żebrać,</l>
+          <l n="2077">Żebrać litości nie będę umarły!</l>
+          <stage n="2079" type="delivery">z determinacją</stage>
+          <l n="2081">Rób, co chcesz, jesteś woli swojej panią,</l>
+          <l n="2082" part="I">Zapomnij… ja zapomnę!</l>
+          <stage n="2084" type="delivery">pomieszany</stage>
+          <l n="2086" part="F" rend="indent" style="margin-left: 24ch">wszak już zapomniałem?</l>
+          <stage n="2088" type="business">zamyślony</stage>
+          <l n="2090">Jej rysy… coraz ciemniej… tak, już się zatarły!</l>
+          <l n="2091">Już ogarniony wieczności otchłanią</l>
+          <l n="2092">Doczesnym pogardzam szałem…</l>
+          <stage n="2094" type="pause">pauza</stage>
+          <l n="2096">Ach, wzdycham! czegóż wzdycham? ha! westchnąłem za nią,</l>
+          <l n="2097">Nie! nie mogę zapomnieć o niej i umarły.</l>
+          <l n="2098">Wszakże ją widzę, wszak tu, o, tu stoi!</l>
+          <l n="2099">Płacze nade mną… jaka łezka szczera!</l>
+          <stage n="2101" type="delivery">z żalem</stage>
+          <l n="2103">Płacz, moja luba, twój Gustaw umiera!</l>
+          <stage n="2105" type="delivery">z determinacją</stage>
+          <l n="2107">No, dalej, śmiało, Gustawie!</l>
+          <stage n="2109" type="business">podnosi sztylet</stage>
+          <stage n="2111" type="delivery">z żalem</stage>
+          <l n="2113">Nie bój się, luba, on się nic nie boi!</l>
+          <l n="2114">Czego żałujesz, on nic z sobą nie zabiera!</l>
+          <l n="2115">Tak! wszystko! wszystko tobie zostawię,</l>
+          <l n="2116">Zostawię życie, i świat, i rozkosze,</l>
+          <stage n="2118" type="delivery">z wściekłością</stage>
+          <l n="2120">I twego!… wszystko… o nic… ani łzy nie proszę!</l>
+          <stage n="2122" type="entrance">do Księdza, który wchodzi ze służącemi</stage>
+          <l n="2124">Słuchaj ty… jeśli <supplied reason="editorial">cię</supplied> kiedy obaczy…</l>
+          <stage n="2126" type="business">z wzmagającą się gwałtownością</stage>
+          <l n="2128">Pewna nadludzka dziewica… kobiéta,</l>
+          <l n="2129">I jeśli ciebie zapyta,</l>
+          <l n="2130">Z czego umarłem? nie mów, że z rozpaczy;</l>
+          <l n="2131">Powiedz, że byłem zawsze rumiany, wesoły,</l>
+          <l n="2132">Żem ani wspomniał nigdy o kochance,</l>
+          <l n="2133">Że sobie grałem w karty, piłem z przyjacioły…</l>
+          <l n="2134" part="I">Że ta pijatyka… tańce mi się w tańcu… ot</l>
+          <stage n="2136" type="business">uderza nogą</stage>
+          <l n="2138" part="F" rend="indent" style="margin-left: 24ch">skręciła noga.</l>
+          <l n="2139" part="I">Z tego umarłem…</l>
+          <stage n="2141" type="business">przebija się</stage>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0135">
+          <speaker n="2144">KSIĄDZ</speaker>
+          <l n="2146" part="F" rend="indent" style="margin-left: 24ch">Jezus, Maria! bój się Boga!</l>
+          <stage n="2148" type="sound">chwyta za rękę, Gustaw stoi; zegar zaczyna bić</stage>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0136">
+          <speaker n="2151">GUSTAW</speaker>
+          <stage n="2153" type="business">pasując się ze śmiercią, patrzy na zegar</stage>
+          <l n="2155">Łańcuch szeleści… Jednasta wybija!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0137">
+          <speaker n="2158">KSIĄDZ</speaker>
+          <l n="2160" part="I">Gustawie!</l>
+          <stage n="2162" type="sound">Kur pieje drugi raz.</stage>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0138">
+          <speaker n="2165">GUSTAW</speaker>
+          <l n="2167" part="F" rend="indent" style="margin-left: 24ch">To drugie hasło!</l>
+          <l n="2168">Czas ucieka, życie mija!</l>
+          <stage n="2170" type="sound">Zegar kończy bić, świeca druga gaśnie.</stage>
+          <l n="2172">I drugie światło zagasło!</l>
+          <milestone unit="dramatic-hour" n="3" ana="#hour-warning" resp="#encoder" corresp="#hour-warning"/>
+          <l n="2173">Koniec boleści!…</l>
+          <stage n="2175" type="business">dobywa sztylet i chowa</stage>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0139">
+          <speaker n="2178">KSIĄDZ</speaker>
+          <l n="2180">Ratujcie, przebóg, może jaka rada!</l>
+          <l n="2181">Ach, już, już kona, wbił do rękojeści,</l>
+          <l n="2182" part="I">Padł ofiarą szaleństwa!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0140">
+          <speaker n="2185">GUSTAW</speaker>
+          <stage n="2187" type="delivery">z zimnym uśmiechem</stage>
+          <l n="2189" part="F" rend="indent" style="margin-left: 24ch">Przecież nie upada!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0141">
+          <speaker n="2192">KSIĄDZ</speaker>
+          <stage n="2194" type="business">chwyta za rękę</stage>
+          <l n="2196">O zbrodnio! Boże, odpuść… Gustawie! Gustawie!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0142">
+          <speaker n="2199">GUSTAW</speaker>
+          <l n="2201">Zbrodnia taka nie może popełniać się co dzień,</l>
+          <l n="2202">Daj pokój próżnej obawie;</l>
+          <l n="2203">Stało się — osądzono — tylko dla nauki</l>
+          <l n="2204">Scenę boleści powtórzył zbrodzień.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0143">
+          <speaker n="2207">KSIĄDZ</speaker>
+          <l n="2209" part="I">Jak to? co to jest?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0144">
+          <speaker n="2212">GUSTAW</speaker>
+          <l n="2214" part="F" rend="indent" style="margin-left: 24ch">Czary, omamienie, sztuki.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0145">
+          <speaker n="2217">KSIĄDZ</speaker>
+          <l n="2219">Ach! włosy mi się jeżą; drżą pode mną nogi,</l>
+          <l n="2220">W imię Ojca i Syna! co to wszystko znaczy?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0146">
+          <speaker n="2223">GUSTAW</speaker>
+          <stage n="2225" type="business">patrząc na zegar</stage>
+          <l n="2227">Wybiło dwie godziny: miłości, rozpaczy,</l>
+          <l n="2228">A teraz następuje godzina przestrogi.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0147">
+          <speaker n="2231">KSIĄDZ</speaker>
+          <stage n="2233" type="business">chce go sadzić</stage>
+          <l n="2235">Usiądź, połóż się, oddaj zabójcze narzędzie,</l>
+          <l n="2236" part="I">Pozwól rany opatrzyć —</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0148">
+          <speaker n="2239">GUSTAW</speaker>
+          <l n="2241" part="F" rend="indent" style="margin-left: 24ch">Daję tobie słowo,</l>
+          <l n="2242">Że aż do dnia sądnego sztylet w pochwach będzie.</l>
+          <l n="2243">O ranach próżna troska, wszak wyglądam zdrowo?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0149">
+          <speaker n="2246">KSIĄDZ</speaker>
+          <l n="2248" part="I">Jak Bóg na niebie, nie wiem, co to…</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0150">
+          <speaker n="2251">GUSTAW</speaker>
+          <l n="2253" part="F" rend="indent" style="margin-left: 24ch">Skutki szału,</l>
+          <l n="2254">Albo może kuglarstwo? — Są kosztowne bronie,</l>
+          <l n="2255">Których ostrze przenika i aż w duszy tonie;</l>
+          <l n="2256">Przecież widomie nie uszkodzą ciału.</l>
+          <l n="2257">Taką bronią po dwakroć zostałem przebity…</l>
+          <stage n="2259" type="pause">po pauzie z uśmiechem</stage>
+          <l n="2261">Taką bronią za życia są oczy kobiéty,</l>
+          <stage n="2263" type="delivery">ponuro</stage>
+          <l n="2265">A po śmierci grzesznika cierpiącego skrucha!</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0151">
+          <speaker n="2268">KSIĄDZ</speaker>
+          <l n="2270">W imię Ojca i Syna i Świętego Ducha!</l>
+          <l n="2271">Czego stoisz jak martwy? zaglądasz na stronę?</l>
+          <l n="2272">Ach, oczy!… przebóg, jakby bielmem powleczone!</l>
+          <l n="2273">Puls ustał… ręce twoje zimne jak żelazo!</l>
+          <l n="2274" part="I">Co to wszystko ma znaczyć?</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0152">
+          <speaker n="2277">GUSTAW</speaker>
+          <l n="2279" part="F" rend="indent" style="margin-left: 24ch">O tym inną razą!</l>
+          <l n="2280">Słuchaj, jakie mię na świat zamiary przywiodły.</l>
+          <l n="2281">Kiedy wchodząc do ciebie stanąłem u progu,</l>
+          <l n="2282">Pamiętam, że z dziatkami odprawiałeś modły,</l>
+          <l n="2283">Któreś za dusze zmarłe ofiarował Bogu.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0153">
+          <speaker n="2286">KSIĄDZ</speaker>
+          <stage n="2288" type="business">chwyta krucyfiks</stage>
+          <l n="2290" part="I">Prawda, zaraz dokończym…</l>
+          <stage n="2292" type="business">ciągnie Dzieci do siebie</stage>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0154">
+          <speaker n="2295">GUSTAW</speaker>
+          <l n="2297" part="F" rend="indent" style="margin-left: 24ch">No, przyznaj się szczerze,</l>
+          <l n="2298" part="I">Czy wierzysz w piekło, w czyściec?…</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0155">
+          <speaker n="2301">KSIĄDZ</speaker>
+          <l n="2303" part="F" rend="indent" style="margin-left: 24ch">Ja we wszystko wierzę,</l>
+          <l n="2304">Cokolwiek w Piśmie Świętym Chrystus nam ogłasza</l>
+          <l n="2305">I w co zaleca wierzyć Kościół, matka nasza.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0156">
+          <speaker n="2308">GUSTAW</speaker>
+          <l n="2310">I w co twoje pobożne wierzyły pradziady?</l>
+          <l n="2311">Ach, najpiękniejsze święto, bo święto pamiątek,</l>
+          <l n="2312">Za cóż zniosłeś dotychczas obchodzone Dziady?</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0157">
+          <speaker n="2315">KSIĄDZ</speaker>
+          <l n="2317">Ta uroczystość ciągnie z pogaństwa początek;</l>
+          <l n="2318">Kościół mnie rozkazuje i nadaje władzę</l>
+          <l n="2319">Oświecać lud, wytępiać reszty zabobonu.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0158">
+          <speaker n="2322">GUSTAW</speaker>
+          <stage n="2324" type="business">pokazując na ziemię</stage>
+          <l n="2326">Jednak proszę przeze mnie, i ja szczerze radzę,</l>
+          <l n="2327">Przywrócić nam Dziady. Tam, u Wszechmocnego tronu,</l>
+          <l n="2328">Kędy nasz żywot ścisłe odważają szale,</l>
+          <l n="2329">Tam większym jest ciężarem łza jednego sługi,</l>
+          <l n="2330">Którą szczerze wyleje nad tobą u zgonu,</l>
+          <l n="2331">Niż kłamliwe po drukach rozgłaszane żale,</l>
+          <l n="2332">Płatny orszak i kirem powleczone cugi.</l>
+          <l n="2333">Jeśli, żałując śmierci dobrego dziedzica,</l>
+          <l n="2334">Lud zakupioną świecę stawia mu na grobie,</l>
+          <l n="2335">W cieniach wieczności jaśniej błyszczy się ta świéca</l>
+          <l n="2336">Niż tysiąc lamp w niechętnej palonych żałobie.</l>
+          <l n="2337">Jeśli przyniesie miodu plastr i skromne mleko</l>
+          <l n="2338">I garścią mąki grobowiec posypie:</l>
+          <l n="2339">Lepiej posili duszę, o! lepiej daleko,</l>
+          <l n="2340">Niż krewni modnym balem wydanym na stypie.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0159">
+          <speaker n="2343">KSIĄDZ</speaker>
+          <l n="2345">Ani słowa. Lecz Dziady, te północne schadzki</l>
+          <l n="2346">Po cerkwiach, pustkach lub zimnych pieczarach,</l>
+          <l n="2347">Pełen guślarstwa obrzęd świętokradzki,</l>
+          <l n="2348">Pospólstwo nasze w grubej utwierdza ciemnocie;</l>
+          <l n="2349">Stąd dziwaczne powieści, zabobonów krocie</l>
+          <l n="2350">O nocnych duchach, upiorach i czarach.</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0160">
+          <speaker n="2353">GUSTAW</speaker>
+          <l n="2355" part="I">Więc żadnych nie ma duchów?</l>
+          <stage n="2357" type="delivery">z ironią</stage>
+          <l n="2359" part="F" rend="indent" style="margin-left: 24ch">Świat ten jest bez duszy?</l>
+          <l n="2360">Żyje, lecz żyje tylko jak kościotrup nagi,</l>
+          <l n="2361">Który lekarz tajemną sprężyną rozruszy;</l>
+          <l n="2362">Albo jest to coś na kształt wielkiego zegaru,</l>
+          <l n="2363">Który obiega popędem ciężaru?</l>
+          <stage n="2365" type="delivery">z uśmiechem</stage>
+          <l n="2367">Tylko nie wiecie, kto zawiesił wagi!</l>
+          <l n="2368">O kołach, o sprężynach rozum was naucza;</l>
+          <l n="2369">Lecz nie widzicie ręki i klucza!</l>
+          <l n="2370">Gdyby z twych oczu ziemskie odpadło nakrycie,</l>
+          <l n="2371">Obaczyłbyś niejedno wkoło siebie życie,</l>
+          <l n="2372">Umarłą bryłę świata pędzące do ruchu.</l>
+          <stage n="2374" type="entrance">do Dzieci, które wchodzą</stage>
+          <l n="2376">Dzieci, chodźcie pod kantorek.</l>
+          <stage n="2378" type="delivery">do kantorka</stage>
+          <l n="2380">Czego potrzebujesz, duchu?</l>
+        </sp>
+        <sp who="#glos-z-kantorka" xml:id="sp-0161">
+          <speaker n="2383">GŁOS Z KANTORKA</speaker>
+          <l n="2385">Proszę o troje paciorek.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0162">
+          <speaker n="2388">KSIĄDZ</speaker>
+          <stage n="2390" type="delivery">przerażony</stage>
+          <l n="2392">W imię Ojca… niech biega… Altarystę zbudzi,</l>
+          <l n="2393">Słowo stało się ciałem!… zawołajcie ludzi!…</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0163">
+          <speaker n="2396">GUSTAW</speaker>
+          <l n="2398">Wstydź się, wstydź się, mój ojcze, gdzie rozum? gdzie wiara?</l>
+          <l n="2399">Krzyż jest mocniejszy niżli wszyscy ludzie twoi,</l>
+          <l n="2400">A kto się Boga boi, ten się nic nie boi.</l>
+        </sp>
+        <sp who="#ksiadz" xml:id="sp-0164">
+          <speaker n="2403">KSIĄDZ</speaker>
+          <l n="2405">Mów, czego potrzebujesz… ach, to upiór! mara!</l>
+        </sp>
+        <sp who="#gustaw" xml:id="sp-0165">
+          <speaker n="2408">GUSTAW</speaker>
+          <l n="2410">Ja! nic nie potrzebuję, jest potrzebnych tylu!</l>
+          <stage n="2412" type="business">łowi koło świecy motyla</stage>
+          <l n="2414">A tuś mi, panie motylu!</l>
+          <stage n="2416" type="business">do Księdza, pokazując motyla</stage>
+          <l n="2418">Ten migający wkoło oćmy rój skrzydlaty</l>
+          <l n="2419">Za życia gasił każdy promyczek oświaty,</l>
+          <l n="2420">Za to po strasznym sądzie ciemność ich zagarnie;</l>
+          <l n="2421">Tymczasem z potępioną błąkając się duszą,</l>
+          <l n="2422">Chociaż nie lubią światła, w światło lecieć muszą,</l>
+          <l n="2423">To są dla ciemnych duchów najsroższe męczarnie!</l>
+          <l n="2424">Patrzaj, ów motyl, strojny barwionymi szaty,</l>
+          <l n="2425">Był jakiś królik albo pan bogaty,</l>
+          <l n="2426">I wielkim skrzydeł roztworem</l>
+          <l n="2427">Zaciemiał miasta, powiaty.</l>
+          <l n="2428">Ten drugi, mniejszy, czarny i pękaty,</l>
+          <l n="2429">Był książek głupim cenzorem</l>
+          <l n="2430">I przelatując sztuk nadobne kwiaty,</l>
+          <l n="2431">Oczerniał każdą piękność, którą tylko zoczył,</l>
+          <l n="2432">Każdą słodkość zatrutym wysysał ozorem</l>
+          <l n="2433">Albo przebijał do ziemi środka,</l>
+          <l n="2434">I nauk ziarno z samego zarodka</l>
+          <l n="2435">Gadziny zębem roztoczył…</l>
+          <l n="2436">Ci znowu, w licznym snujący się gwarze,</l>
+          <l n="2437">Są dumnych pochlebnisie, czernideł pisarze.</l>
+          <l n="2438">Na jakie pan ich gniewał się zagony,</l>
+          <l n="2439">Tam przeklęta chmura leci,</l>
+          <l n="2440">I czy ledwie wschodzące, czy dojrzałe plony</l>
+          <l n="2441">Jako sarańcza wybija.</l>
+          <l n="2442">Za tych wszystkich, moje dzieci,</l>
+          <l n="2443">Nie warto zmówić i Zdrowaś Maryja.</l>
+          <l n="2444">Są inne, słuszniej godne litości istoty,</l>
+          <l n="2445">A między nimi twoi przyjaciele, ucznie,</l>
+          <l n="2446">Których ty wyobraźnią w górne pchnąłeś loty,</l>
+          <l n="2447">Których wrodzony ogień podniecałeś sztucznie.</l>
+          <l n="2448">Jaką, żyjąc, pokutę mieli za swe winy,</l>
+          <l n="2449">Oznajmiłem, wieczności przestąpiwszy progi:</l>
+          <l n="2450">Życie moje ścisnąłem w krótkie trzy godziny</l>
+          <l n="2451">I znowu wycierpiałem dla twojej przestrogi.</l>
+          <l n="2452">Im więc nieś ulgę prośbą i mszalną ofiarą;</l>
+          <l n="2453">Dla mnie oprócz wspomnienia nic więcej nie proszę.</l>
+          <l n="2454">Za grzech mój życie było dostateczną karą,</l>
+          <l n="2455">A dziś, nie wiem, nagrodę czy pokutę znoszę.</l>
+          <l n="2456">Bo kto na ziemi rajskie doznawał pieszczoty,</l>
+          <l n="2457">Kto znalazł drugą swojej połowę istoty,</l>
+          <l n="2458">Kto nad świeckiego życia wylatując krańce,</l>
+          <l n="2459">Duszą i sercem gubi się w kochance,</l>
+          <l n="2460" rend="indent" style="margin-left: 2ch">Jej tylko myślą myśli, jej oddycha tchnieniem,</l>
+          <l n="2461">Ten i po śmierci również własną bytność traci,</l>
+          <l n="2462">I przyczepiony do lubej postaci,</l>
+          <l n="2463">Jej tylko staje się cieniem.</l>
+          <l n="2464">Jeśli, żyjąc, świętemu był uległy panu,</l>
+          <l n="2465">Niebieską z nim chwałę dzieli;</l>
+          <l n="2466">Albo ze złym do wiecznej strącony topieli,</l>
+          <l n="2467">Jest bolesnego wspólnikiem stanu.</l>
+          <l n="2468">Na szczęście Bóg mię zrobił poddanym anioła,</l>
+          <l n="2469">Dla niej i dla mnie przyszłość śmieje się wesoła.</l>
+          <l n="2470">Tymczasem, jak cień błądząc przy kochanych wdziękach,</l>
+          <l n="2471">Bywam albo w niebiosach, albo w piekła mękach.</l>
+          <l n="2472">Gdy ona wspomni, westchnie i łezkę wyleje,</l>
+          <l n="2473">Zbliżam się do usteczek, biały włos rozwieję,</l>
+          <l n="2474">Zmieszam się z odetchnieniem i przeniknę ciebie,</l>
+          <l n="2475">I jestem w niebie!</l>
+          <l n="2476">Lecz kiedy!… oh, czujecie, wy, coście kochali!</l>
+          <l n="2477">Jakim zawiść ogniem pali!…</l>
+          <l n="2478">Długo jeszcze po świecie błąkać się potrzeba,</l>
+          <l n="2479">Aż ją Bóg w swoje objęcie powoła;</l>
+          <l n="2480">Natenczas śladem lubego anioła</l>
+          <l n="2481">I cień mój błędny wkradnie się do nieba.</l>
+          <stage n="2483" type="sound">Zegar zaczyna bić.</stage>
+          <stage n="2485" type="delivery">śpiewa</stage>
+          <l n="2487" rend="indent" style="margin-left: 2ch">Bo słuchajcie i zważcie u siebie,</l>
+          <l n="2488" rend="indent" style="margin-left: 2ch">Że według bożego rozkazu:</l>
+          <l n="2489" rend="indent" style="margin-left: 2ch">Kto za życia choć raz był w niebie,</l>
+          <l n="2490" rend="indent" style="margin-left: 2ch">Ten po śmierci nie trafi od razu.</l>
+          <stage n="2492" type="exit">Zegar kończy bić, kur pieje, lampa przed obrazem gaśnie, Gustaw znika.</stage>
+        </sp>
+        <sp who="#chor" xml:id="sp-0166">
+          <speaker n="2495">CHÓR</speaker>
+          <l n="2497" rend="indent" style="margin-left: 2ch">Bo słuchajmy i zważmy u siebie,</l>
+          <l n="2498" rend="indent" style="margin-left: 2ch">Że według bożego rozkazu:</l>
+          <l n="2499" rend="indent" style="margin-left: 2ch">Kto za życia choć raz był w niebie,</l>
+          <l n="2500" rend="indent" style="margin-left: 2ch">Ten po śmierci nie trafi od razu.</l>
+        </sp>
+      </div>
+    </body>
+  </text>
+</TEI>
