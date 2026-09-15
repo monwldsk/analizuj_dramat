@@ -1301,11 +1301,59 @@
          /* ===== Analiza porównawcza ===== */
          .comparison-section {
             margin-top: 38px;
-            padding: 30px;
+         }
+
+         .comparison-section details {
             border: 1px solid #dce7f8;
-            border-radius: 24px;
+            border-radius: 16px;
             background: linear-gradient(180deg, #ffffff, #fbfdff);
             box-shadow: 0 14px 40px rgba(29, 58, 108, 0.08);
+            overflow: hidden;
+         }
+
+         .comparison-section summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 20px;
+            color: var(--color-primary);
+            background: #eef6ff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            list-style: none;
+         }
+
+         .comparison-section summary::-webkit-details-marker {
+            display: none;
+         }
+
+         .comparison-section summary::after {
+            content: "▾";
+            margin-left: auto;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+         }
+
+         .comparison-section details[open] summary::after {
+            transform: rotate(180deg);
+         }
+
+         .comparison-summary-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3px 8px;
+            border-radius: 999px;
+            color: #fff;
+            background: var(--color-accent);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+         }
+
+         .comparison-body {
+            padding: 30px;
          }
 
          .comparison-header {
@@ -1706,8 +1754,12 @@
          }
 
          @media (max-width: 600px) {
-            .comparison-section {
+            .comparison-body {
                padding: 18px 12px;
+            }
+
+            .comparison-section summary {
+               align-items: flex-start;
             }
 
             .comparison-header {
@@ -3660,19 +3712,21 @@
             class="comparison-section"
             aria-label="Analiza porównawcza wielu dramatów"
          >
-            <div class="comparison-header">
-               <div>
-                  <div class="comparison-kicker">
-                     Analiza porównawcza dramatów
+            <details id="comparisonAnalysisDetails">
+               <summary>
+                  <span>Analiza porównawcza dramatów</span>
+               </summary>
+               <div class="comparison-body">
+                  <div class="comparison-header">
+                     <div>
+                        <h2>Porównaj wybrane dramaty na jednym wykresie</h2>
+                        <p>
+                           Wybierz dowolną liczbę tekstów z biblioteki i/lub dodaj
+                           własne pliki .txt. Następnie ustaw kolejność pozycji na
+                           wykresie i wskaż jeden parametr do porównania.
+                        </p>
+                     </div>
                   </div>
-                  <h2>Porównaj wybrane dramaty na jednym wykresie</h2>
-                  <p>
-                     Wybierz dowolną liczbę tekstów z biblioteki i/lub dodaj
-                     własne pliki .txt. Następnie ustaw kolejność pozycji na
-                     wykresie i wskaż jeden parametr do porównania.
-                  </p>
-               </div>
-            </div>
 
             <div class="comparison-source-grid">
                <div class="comparison-panel">
@@ -3833,21 +3887,23 @@
                </div>
             </div>
 
-            <div id="comparisonResults" class="comparison-results" hidden>
-               <h3 id="comparisonChartTitle">Wynik porównania</h3>
-               <p
-                  id="comparisonChartSubtitle"
-                  class="comparison-chart-subtitle"
-               ></p>
-               <div id="comparisonChartWrap" class="comparison-chart-wrap">
-                  <canvas id="comparisonChart"></canvas>
+                  <div id="comparisonResults" class="comparison-results" hidden>
+                     <h3 id="comparisonChartTitle">Wynik porównania</h3>
+                     <p
+                        id="comparisonChartSubtitle"
+                        class="comparison-chart-subtitle"
+                     ></p>
+                     <div id="comparisonChartWrap" class="comparison-chart-wrap">
+                        <canvas id="comparisonChart"></canvas>
+                     </div>
+                     <div
+                        id="comparisonChartNote"
+                        class="comparison-chart-note"
+                        hidden
+                     ></div>
+                  </div>
                </div>
-               <div
-                  id="comparisonChartNote"
-                  class="comparison-chart-note"
-                  hidden
-               ></div>
-            </div>
+            </details>
          </section>
 
 
