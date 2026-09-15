@@ -8,7 +8,7 @@
         <author>Adam Mickiewicz</author>
         <respStmt>
           <resp>Konwersja i strukturalne kodowanie TEI P5 na podstawie dostarczonego pliku tekstowego</resp>
-          <name xml:id="encoder">ChatGPT</name>
+          <name xml:id="encoder">OpenAI</name>
         </respStmt>
       </titleStmt>
       <publicationStmt>
