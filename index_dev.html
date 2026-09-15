@@ -2194,6 +2194,15 @@
             z-index: 2;
             background: #f4f8fd;
          }
+         @media (max-width: 600px) {
+         .actor-metrics-comparison-table th:first-child,
+         .actor-metrics-comparison-table td:first-child {
+           
+            width: 160px;
+            min-width: 160px;
+            max-width: 160px;
+         }
+      }
 
          .actor-metric-pair {
             display: grid;
@@ -2670,7 +2679,7 @@
                         alt="wykres"
                      />
                   </div>
-                  <p>Również i tę właściwość późnych dramatów poety podkreślano wielokrotnie. Na przykład wspomniana M. Nabiałek, analizująca z perspektywy poetologicznej przemianę formy dramatycznej w twórczości Słowackiego, rozbudowane partie monologowe tych utworów określiła „spektaklami komunikacji”, które należałoby zaliczyć do warstwy kompozycji związanej z porządkiem zdarzeń<span
+                  <p>Również i tę właściwość późnych dramatów poety podkreślano wielokrotnie. Na przykład wspomniana M. Nabiałek, analizująca z perspektywy poetologicznej przemiany formy dramatycznej w twórczości Słowackiego, rozbudowane partie monologowe tych utworów określiła „spektaklami komunikacji”, które należałoby zaliczyć do warstwy kompozycji związanej z porządkiem zdarzeń<span
                         style="color: #0073ce; cursor: pointer"
                         onclick="alert('Zob. M. Nabiałek, Scena – między słowem a obrazem. O kompozycji dramatów Juliusza Słowackiego, Kraków 2018.')"
                         >[4]</span>.
@@ -2693,9 +2702,9 @@
                      Natomiast w kontekście analizowanej przez badaczy „systemowości” filozofii mistyczno-genezyjskiej<span
                         style="color: #0073ce; cursor: pointer"
                         onclick="alert('Zob. np. S. Makowski, Wejść w system – i zrozumieć, [w:] Słowacki mistyczny. Propozycje i dyskusje sympozjum. Warszawa 10–11 grudnia 1979, red. M. Janion i M. Żmigrodzka, Warszawa 1981.')"
-                        >[6]</span> wart skomentowania jest wzrost występowania składni hipotaktycznej oraz jawnych wykładników relacji kauzalnych i wynikowych. Być może dowodzi on przesunięcia sposobu organizowania
+                        >[6]</span> wart skomentowania jest wzrost występowania składni hipotaktycznej oraz jawnych wykładników relacji kauzalnych i wynikowych. Sugeruje on przesunięcie sposobu organizowania
                      wypowiedzi ku bardziej hierarchicznemu układowi zależności
-                     semantycznych (zw. z nasileniem dyskursywności i
+                     semantycznych (zwązanemu z nasileniem dyskursywności i
                      argumentacyjności):
                   </p>
                   <div class="chart">
@@ -2955,7 +2964,7 @@
             <h2>Moja biblioteka</h2>
             <p>
                Poniżej znajduje się biblioteka dramatów przygotowanych pod
-               wymagania skryptu (głównie pliki .txt pobrane z Wolnych Lektur). Dorzucono tu także te utwory, które nie
+               wymagania skryptu – głównie pliki .txt pobrane z Wolnych Lektur. Dorzucono tu także te utwory, które nie
                zostały opracowane przez serwis WL (jak
                <i>Samuel Zborowski</i> J. Słowackiego).
             </p>
@@ -6672,7 +6681,7 @@
 
             const button = document.getElementById("comparisonGenerateButton");
             if (button) button.disabled = true;
-            setComparisonStatus("Obliczanie wartości dla wybranych tekstów...");
+           setComparisonStatus("");
             setComparisonLoading(true);
 
             // Pozwól przeglądarce wyświetlić loader przed rozpoczęciem
