@@ -3214,6 +3214,20 @@
             </div>
 
             <div id="metricsDashboardContent" class="metrics-dashboard">
+                              <div
+                  id="metricDistributionMetric"
+                  class="metrics-panel metric-chart-panel"
+               >
+                  <h3 class="metrics-panel-title">
+                     Dominujące formaty wierszowe całego dramatu
+                  </h3>
+                  <div class="chart-box">
+                     <canvas id="metricDistributionChart"></canvas>
+                  </div>
+                  <div class="metric-chart-note">
+                     Formaty poniżej 1% są grupowane (i sumowane) jako „Inne”.
+                  </div>
+               </div>
                <div class="metrics-panel">
                   <h3 class="metrics-panel-title">Główne wskaźniki</h3>
                   <div class="metrics-grid">
@@ -3244,21 +3258,6 @@
                         class="metric-card"
                      ></div>
                      <div id="asideDramaLengthMetric" class="metric-card"></div>
-                  </div>
-               </div>
-
-               <div
-                  id="metricDistributionMetric"
-                  class="metrics-panel metric-chart-panel"
-               >
-                  <h3 class="metrics-panel-title">
-                     Dominujące formaty wierszowe całego dramatu
-                  </h3>
-                  <div class="chart-box">
-                     <canvas id="metricDistributionChart"></canvas>
-                  </div>
-                  <div class="metric-chart-note">
-                     Formaty poniżej 1% są grupowane (i sumowane) jako „Inne”.
                   </div>
                </div>
             </div>
@@ -5349,9 +5348,9 @@
                <div class="metric-card-label">Gęstość pytań i wykrzyknień [na 100 wersów]</div>
              </div>
              <div class="metric-card-secondary">
-               <strong>Gęstość wykrzyknień [na 100 wersów]:</strong> ${exclamationDensity}
+               <strong>Gęstość wykrzyknień:</strong> ${exclamationDensity}
                ${infoTip("Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę rzeczywistych wersów po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}<br>
-               <strong>Gęstość pytań [na 100 wersów]:</strong> ${questionDensity}
+               <strong>Gęstość pytań:</strong> ${questionDensity}
                ${infoTip("Gęstość pytań = liczba znaków „?” podzielona przez liczbę rzeczywistych wersów po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.")}
              </div>`;
          }
