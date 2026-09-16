@@ -2571,6 +2571,36 @@
                align-items: flex-start;
             }
          }
+         .summary-title {
+            display: flex;
+            gap:10px;
+            align-items: center;
+         }
+         .summary-title img {
+            max-width:60px;
+            border: 1px solid var(--border);
+            background: linear-gradient(
+            135deg,
+            rgba(238, 247, 255, 0.88),
+            rgba(249, 252, 255, 0.96)
+            );
+            border-radius: 16px;
+         }
+         .summary-title--text {
+            display: flex;
+            flex-direction: column;
+            gap:6px;
+         }
+         .summary-subtitle {
+            font-size: 0.75em;
+            color: #666;
+            font-weight: 400;
+         }
+         .summary-main-text {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+         }
 
       </style>
    </head>
@@ -3712,9 +3742,15 @@
             class="comparison-section"
             aria-label="Analiza porównawcza wielu dramatów"
          >
-            <details id="comparisonAnalysisDetails" open>
+            <details id="comparisonAnalysisDetails">
                <summary>
-                  <span>Analiza porównawcza dramatów</span>
+                  <span class="summary-title">
+                     <span><img src="assets/waga.png" alt="icon image"></span>
+                     <span class="summary-title--text">
+                        <span>Analiza porównawcza dramatów</span>
+                        <span class="summary-subtitle">Wybierz i porównaj ze sobą wiele tekstów.</span>
+                     </span>
+                  </span>
                </summary>
                <div class="comparison-body">
                   <div class="comparison-header">
@@ -3914,8 +3950,13 @@
          >
             <details id="betaTeiComparisonDetails">
                <summary>
-                  <span class="beta-tei-badge">BETA</span>
-                  <span>Porównanie metod analizy: parser TXT ↔ parser TEI/XML</span>
+                    <span class="summary-title">
+                     <span><img src="assets/tag.png" alt="icon image"></span>
+                     <span class="summary-title--text">
+                        <span class="summary-main-text">Porównanie plików TXT oraz TEI/XML<span class="beta-tei-badge">BETA</span></span>
+                        <span class="summary-subtitle">Porównaj wyniki parsowania plików TXT i XML (TEI) zawierających ten sam dramat.</span> 
+                     </span>
+                  </span>
                </summary>
                <div class="beta-tei-body">
                   <p class="beta-tei-intro">
@@ -7657,7 +7698,7 @@
                betaRenderSourcePreview("txt", txtText, betaTeiSourceState.txtLabel);
                betaRenderSourcePreview("xml", xmlText, betaTeiSourceState.xmlLabel);
                betaSetStatus(
-                  "Możesz od razu uruchomić porównanie na domyślnym przykładzie „Dziadów” cz. IV albo nadpisać pliki.",
+                  "Możesz od razu uruchomić porównanie na domyślnie wczytanym przykładzie albo nadpisać pliki.",
                );
                return true;
             } catch (error) {
