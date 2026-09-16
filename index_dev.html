@@ -8497,6 +8497,796 @@
             status.textContent = message;
             status.classList.toggle("error", Boolean(isError));
          }
+         /* ===== DODATEK: zmiany wskaźników w toku dramatu ===== */
+         const COMPARISON_TREND_METRIC_KEYS = new Set([
+            "asideOccurrences",
+            "isosyllabicAverage",
+            "interactionAverage",
+            "sentenceAverageWords",
+            "sentenceAverageSyllables",
+            "hypotaxisRate",
+            "causalCohesionRate",
+            "exclamationDensity",
+            "questionDensity",
+            "selfReference",
+            "selfReferencePlural",
+            "metacommentaryDensity",
+         ]);
+
+         const COMPARISON_PROGRESS_LABELS = ["20%", "40%", "60%", "80%", "100%"];
+         const COMPARISON_PROGRESS_RANGES = [
+            "0–20%",
+            "20–40%",
+            "40–60%",
+            "60–80%",
+            "80–100%",
+         ];
+
+         const COMPARISON_SERIES_COLORS = [
+            "#0878d1",
+            "#d95f02",
+            "#1b9e77",
+            "#7570b3",
+            "#e7298a",
+            "#66a61e",
+            "#e6ab02",
+            "#a6761d",
+            "#666666",
+            "#1f78b4",
+            "#b15928",
+            "#6a3d9a",
+         ];
+
+         comparisonState.syllableTrendChart = null;
+         comparisonState.lineTrendChart = null;
+
+         COMPARISON_METRICS.asideOccurrences = {
+            label: "Liczba wystąpień apartu",
+            unit: "",
+            note: "Liczba didaskaliów zawierających tekst „na stronie”. Na wykresach przebiegu wartość jest liczona osobno w każdym 20-procentowym odcinku dramatu.",
+         };
+
+         (function installComparisonTrendUI() {
+            if (!document.getElementById("comparisonTrendStyles")) {
+               const style = document.createElement("style");
+               style.id = "comparisonTrendStyles";
+               style.textContent = `
+                  .comparison-trend-section {
+                     margin-top: 24px;
+                     padding-top: 20px;
+                     border-top: 1px solid #e5edf8;
+                  }
+
+                  .comparison-trend-section[hidden] {
+                     display: none !important;
+                  }
+
+                  .comparison-trend-heading {
+                     margin: 0 0 6px;
+                     color: var(--color-primary);
+                     font-size: 18px;
+                  }
+
+                  .comparison-trend-intro {
+                     margin: 0 0 16px;
+                     color: #65758b;
+                     font-size: 12px;
+                     line-height: 1.55;
+                  }
+
+                  .comparison-trend-grid {
+                     display: grid;
+                     grid-template-columns: repeat(2, minmax(0, 1fr));
+                     gap: 18px;
+                  }
+
+                  .comparison-trend-card {
+                     min-width: 0;
+                     padding: 16px;
+                     border: 1px solid #dce7f8;
+                     border-radius: 12px;
+                     background: linear-gradient(180deg, #ffffff, #fbfdff);
+                  }
+
+                  .comparison-trend-card h4 {
+                     margin: 0 0 5px;
+                     color: var(--color-primary);
+                     font-size: 15px;
+                     line-height: 1.35;
+                  }
+
+                  .comparison-trend-card .comparison-chart-subtitle {
+                     min-height: 34px;
+                     margin-bottom: 10px;
+                  }
+
+                  .comparison-chart-wrap--line {
+                     position: relative;
+                     width: 100%;
+                     height: 390px;
+                     max-height: none;
+                  }
+
+                  @media (max-width: 850px) {
+                     .comparison-trend-grid {
+                        grid-template-columns: 1fr;
+                     }
+                  }
+               `;
+               document.head.appendChild(style);
+            }
+
+            const select = document.getElementById("comparisonMetricSelect");
+            if (select && !select.querySelector('option[value="asideOccurrences"]')) {
+               const option = document.createElement("option");
+               option.value = "asideOccurrences";
+               option.textContent = "Liczba wystąpień apartu";
+
+               const beforeOption = select.querySelector(
+                  'option[value="asideStageFunction"]',
+               );
+               select.insertBefore(option, beforeOption || null);
+            }
+
+            const results = document.getElementById("comparisonResults");
+            if (results && !document.getElementById("comparisonTrendSection")) {
+               const trendSection = document.createElement("div");
+               trendSection.id = "comparisonTrendSection";
+               trendSection.className = "comparison-trend-section";
+               trendSection.hidden = true;
+               trendSection.innerHTML = `
+                  <h3 class="comparison-trend-heading">Zmiany wskaźnika w toku dramatu</h3>
+                  <p class="comparison-trend-intro">
+                     Każdy punkt przedstawia wynik obliczony osobno dla kolejnego 20-procentowego odcinka dramatu.
+                     Punkt 20% oznacza przedział 0–20%, punkt 40% — przedział 20–40% itd.
+                     Wspólny wers P_1 + P_2 nigdy nie jest dzielony między dwa przedziały.
+                  </p>
+
+                  <div class="comparison-trend-grid">
+                     <div class="comparison-trend-card">
+                        <h4>Przebieg według liczby sylab</h4>
+                        <p class="comparison-chart-subtitle">
+                           Położenie w dramacie wyznacza skumulowana liczba sylab w rzeczywistych wersach wypowiedzi.
+                        </p>
+                        <div class="comparison-chart-wrap--line">
+                           <canvas id="comparisonTrendSyllablesChart"></canvas>
+                        </div>
+                     </div>
+
+                     <div class="comparison-trend-card">
+                        <h4>Przebieg według liczby wersów</h4>
+                        <p class="comparison-chart-subtitle">
+                           Położenie w dramacie wyznacza kolejność rzeczywistych wersów; każdy dramat dochodzi do 100% niezależnie od długości.
+                        </p>
+                        <div class="comparison-chart-wrap--line">
+                           <canvas id="comparisonTrendLinesChart"></canvas>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="comparison-chart-note">
+                     Jeden kolor oznacza ten sam dramat na obu wykresach. Kliknij nazwę dramatu w legendzie, aby ukryć lub ponownie pokazać jego linię.
+                  </div>
+               `;
+               results.appendChild(trendSection);
+            }
+         })();
+
+         const comparisonTrendValueLabelsPlugin = {
+            id: "comparisonTrendValueLabels",
+            afterDatasetsDraw(chart) {
+               const { ctx, chartArea } = chart;
+               const dataset = chart.data.datasets[0];
+               const meta = chart.getDatasetMeta(0);
+               const pluginOptions =
+                  chart.options.plugins.comparisonTrendValueLabels || {};
+               const unit = pluginOptions.unit || "";
+               const digits = Number.isInteger(pluginOptions.digits)
+                  ? pluginOptions.digits
+                  : 2;
+
+               ctx.save();
+               ctx.font = "700 13px Arial, sans-serif";
+               ctx.textAlign = "right";
+               ctx.textBaseline = "middle";
+
+               meta.data.forEach((bar, index) => {
+                  const rawValue = Number(dataset.data[index]) || 0;
+                  const valueText = `${formatComparisonTrendValue(rawValue, digits)}${unit}`;
+                  const width = ctx.measureText(valueText).width;
+                  let x = bar.x - 9;
+                  let fill = "#ffffff";
+
+                  if (bar.x - bar.base < width + 22) {
+                     x = Math.min(bar.x + width + 9, chartArea.right - 4);
+                     fill = "#163f8f";
+                  }
+
+                  ctx.fillStyle = fill;
+                  ctx.fillText(valueText, x, bar.y);
+               });
+
+               ctx.restore();
+            },
+         };
+
+         function formatComparisonTrendValue(value, digits = 2) {
+            return new Intl.NumberFormat("pl-PL", {
+               minimumFractionDigits: digits,
+               maximumFractionDigits: digits,
+            }).format(Number(value) || 0);
+         }
+
+         function buildComparisonMetricAnalysis(text, metricKey) {
+            const data = parseDramaText(text);
+            const hasTrend = COMPARISON_TREND_METRIC_KEYS.has(metricKey);
+
+            return {
+               overallValue: calculateComparisonMetricFromData(data, metricKey),
+               progressionBySyllables: hasTrend
+                  ? calculateComparisonMetricProgression(data, metricKey, "syllables")
+                  : [],
+               progressionByLines: hasTrend
+                  ? calculateComparisonMetricProgression(data, metricKey, "lines")
+                  : [],
+            };
+         }
+
+         function calculateComparisonMetricFromData(data, metricKey) {
+            const speechFragments = data.filter(
+               ({ actor }) => actor !== "DIDASKALIA",
+            );
+            const metricLines = buildMetricLines(data);
+            const stageDirections = data.filter(
+               ({ actor }) => actor === "DIDASKALIA",
+            );
+            const metricLineCount = metricLines.length;
+            const allSpeechText = metricLines.map(({ line }) => line).join(" ");
+            const words = getWords(allSpeechText);
+            const asideStageDirectionCount = stageDirections.filter(
+               ({ line }) => line.toLowerCase().includes("na stronie"),
+            ).length;
+
+            switch (metricKey) {
+               case "isosyllabicAverage":
+                  return metricLineCount
+                     ? average(getIsosyllabicSegments(metricLines))
+                     : 0;
+
+               case "interactionAverage": {
+                  const speechBlocks = [];
+                  let previousActor = null;
+                  let currentBlockLength = 0;
+
+                  speechFragments.forEach(({ actor }) => {
+                     if (actor !== previousActor) {
+                        if (currentBlockLength > 0) {
+                           speechBlocks.push(currentBlockLength);
+                        }
+                        previousActor = actor;
+                        currentBlockLength = 1;
+                     } else {
+                        currentBlockLength++;
+                     }
+                  });
+
+                  if (currentBlockLength > 0) {
+                     speechBlocks.push(currentBlockLength);
+                  }
+                  return average(speechBlocks);
+               }
+
+               case "sentenceAverageWords":
+                  return getSentenceLengthStats(allSpeechText).averageWords;
+
+               case "sentenceAverageSyllables":
+                  return getSentenceLengthStats(allSpeechText).averageSyllables;
+
+               case "hypotaxisRate":
+                  return getHypotaxisStats(allSpeechText).hypotacticRate;
+
+               case "causalCohesionRate":
+                  return getCausalCohesionStats(allSpeechText).causalRate;
+
+               case "lineBreaking": {
+                  const brokenLines = metricLines.filter(
+                     ({ line }) =>
+                        !APP_CONFIG.lineEndingRegex.test(line.trim()),
+                  ).length;
+                  return metricLineCount
+                     ? (brokenLines / metricLineCount) * 100
+                     : 0;
+               }
+
+               case "exclamationDensity":
+                  return metricLineCount
+                     ? (countRegexMatches(allSpeechText, /!/g) /
+                          metricLineCount) *
+                          100
+                     : 0;
+
+               case "questionDensity":
+                  return metricLineCount
+                     ? (countRegexMatches(allSpeechText, /\?/g) /
+                          metricLineCount) *
+                          100
+                     : 0;
+
+               case "selfReference": {
+                  const selfReferenceCount = words.filter((word) =>
+                     APP_CONFIG.selfReferencePronouns.has(word),
+                  ).length;
+                  return words.length
+                     ? (selfReferenceCount / words.length) * 1000
+                     : 0;
+               }
+
+               case "selfReferencePlural": {
+                  const selfReferencePluralCount = words.filter((word) =>
+                     APP_CONFIG.selfReferencePluralPronouns.has(word),
+                  ).length;
+                  return words.length
+                     ? (selfReferencePluralCount / words.length) * 1000
+                     : 0;
+               }
+
+               case "metacommentaryDensity":
+                  return metricLineCount
+                     ? (stageDirections.length / metricLineCount) * 100
+                     : 0;
+
+               case "asideOccurrences":
+                  return asideStageDirectionCount;
+
+               case "asideStageFunction":
+                  return stageDirections.length
+                     ? (asideStageDirectionCount / stageDirections.length) * 100
+                     : 0;
+
+               case "asideDramaLength":
+                  return metricLineCount
+                     ? (asideStageDirectionCount / metricLineCount) * 100
+                     : 0;
+
+               default:
+                  return 0;
+            }
+         }
+
+         function calculateComparisonMetricProgression(data, metricKey, mode) {
+            return buildComparisonProgressSegments(data, mode).map((segment) =>
+               calculateComparisonMetricFromData(segment, metricKey),
+            );
+         }
+
+         function buildComparisonProgressSegments(data, mode) {
+            const segmentCount = COMPARISON_PROGRESS_LABELS.length;
+            const segments = Array.from({ length: segmentCount }, () => []);
+            if (!data.length) return segments;
+
+            const metricLines = buildMetricLines(data);
+            if (!metricLines.length) return segments;
+
+            const verseToSegment = new Map();
+
+            if (mode === "syllables") {
+               const totalSyllables = metricLines.reduce(
+                  (sum, line) => sum + (Number(line.vowelsNumber) || 0),
+                  0,
+               );
+
+               if (!totalSyllables) {
+                  return buildComparisonProgressSegments(data, "lines");
+               }
+
+               let cumulativeBefore = 0;
+               metricLines.forEach((line) => {
+                  const lineSyllables = Number(line.vowelsNumber) || 0;
+                  const midpoint = cumulativeBefore + lineSyllables / 2;
+                  const segmentIndex = getComparisonProgressIndexFromPosition(
+                     midpoint,
+                     totalSyllables,
+                     segmentCount,
+                  );
+                  verseToSegment.set(String(line.verseNumber), segmentIndex);
+                  cumulativeBefore += lineSyllables;
+               });
+            } else {
+               metricLines.forEach((line, index) => {
+                  const midpoint = index + 0.5;
+                  const segmentIndex = getComparisonProgressIndexFromPosition(
+                     midpoint,
+                     metricLines.length,
+                     segmentCount,
+                  );
+                  verseToSegment.set(String(line.verseNumber), segmentIndex);
+               });
+            }
+
+            let currentSegmentIndex = 0;
+            data.forEach((row) => {
+               if (row.actor !== "DIDASKALIA" && row.verseNumber !== "") {
+                  const mapped = verseToSegment.get(String(row.verseNumber));
+                  if (Number.isInteger(mapped)) {
+                     currentSegmentIndex = mapped;
+                  }
+               }
+               segments[currentSegmentIndex].push(row);
+            });
+
+            return segments;
+         }
+
+         function getComparisonProgressIndexFromPosition(
+            position,
+            total,
+            segmentCount,
+         ) {
+            if (!total || segmentCount < 1) return 0;
+            const ratio = Math.max(0, Math.min(0.999999999, position / total));
+            return Math.min(
+               segmentCount - 1,
+               Math.floor(ratio * segmentCount),
+            );
+         }
+
+         function getComparisonSeriesColor(index) {
+            return COMPARISON_SERIES_COLORS[
+               index % COMPARISON_SERIES_COLORS.length
+            ];
+         }
+
+         calculateComparisonMetric = function (text, metricKey) {
+            return calculateComparisonMetricFromData(
+               parseDramaText(text),
+               metricKey,
+            );
+         };
+
+         generateComparisonChart = async function () {
+            if (!comparisonState.selected.length) {
+               setComparisonStatus(
+                  "Wybierz co najmniej jeden tekst do porównania.",
+                  true,
+               );
+               return;
+            }
+
+            const metricKey = document.getElementById(
+               "comparisonMetricSelect",
+            )?.value;
+            const metricConfig = COMPARISON_METRICS[metricKey];
+            if (!metricConfig) return;
+
+            const button = document.getElementById("comparisonGenerateButton");
+            if (button) button.disabled = true;
+            setComparisonStatus("");
+            setComparisonLoading(true);
+
+            await new Promise((resolve) => requestAnimationFrame(resolve));
+
+            try {
+               const results = [];
+
+               for (const item of comparisonState.selected) {
+                  const text = await getComparisonItemText(item);
+                  const analysis = buildComparisonMetricAnalysis(text, metricKey);
+
+                  results.push({
+                     label: item.label.trim() || item.title || "Bez tytułu",
+                     value: analysis.overallValue,
+                     progressionBySyllables: analysis.progressionBySyllables,
+                     progressionByLines: analysis.progressionByLines,
+                  });
+
+                  await new Promise((resolve) =>
+                     requestAnimationFrame(resolve),
+                  );
+               }
+
+               renderComparisonChart(results, metricKey);
+               setComparisonStatus(`Porównano ${results.length} tekstów.`);
+            } catch (error) {
+               console.error(error);
+               setComparisonStatus(
+                  "Nie udało się wczytać jednego z tekstów bibliotecznych. Sprawdź ścieżki do plików w assets/biblioteka i uruchom stronę przez serwer HTTP/HTTPS.",
+                  true,
+               );
+            } finally {
+               setComparisonLoading(false);
+               if (button) button.disabled = false;
+            }
+         };
+
+         renderComparisonChart = function (results, metricKey) {
+            const canvas = document.getElementById("comparisonChart");
+            const resultsSection = document.getElementById("comparisonResults");
+            const chartWrap = document.getElementById("comparisonChartWrap");
+            const title = document.getElementById("comparisonChartTitle");
+            const subtitle = document.getElementById("comparisonChartSubtitle");
+            const note = document.getElementById("comparisonChartNote");
+            const trendSection = document.getElementById("comparisonTrendSection");
+            const metricConfig = COMPARISON_METRICS[metricKey];
+            if (!canvas || !resultsSection || !metricConfig) return;
+
+            clearComparisonChart();
+            resultsSection.hidden = false;
+
+            if (title) title.textContent = metricConfig.label;
+            if (subtitle) {
+               subtitle.textContent = COMPARISON_TREND_METRIC_KEYS.has(metricKey)
+                  ? "Wykres słupkowy pokazuje wynik dla całego dramatu; poniżej znajdują się dwa wykresy zmian tego samego wskaźnika w toku dramatu."
+                  : "Kolejność słupków odpowiada kolejności ustawionej na liście powyżej.";
+            }
+            if (note) {
+               note.textContent = metricConfig.note || "";
+               note.hidden = !metricConfig.note;
+            }
+
+            if (chartWrap) {
+               chartWrap.style.height = `${Math.max(430, results.length * 52 + 115)}px`;
+            }
+
+            const rawMax = Math.max(...results.map(({ value }) => value), 0);
+            const suggestedMax = rawMax > 0 ? rawMax * 1.13 : 1;
+            const digits = metricKey === "asideOccurrences" ? 0 : 2;
+
+            comparisonState.chart = new Chart(canvas, {
+               type: "bar",
+               plugins: [comparisonTrendValueLabelsPlugin],
+               data: {
+                  labels: results.map(({ label }) => label),
+                  datasets: [
+                     {
+                        data: results.map(({ value }) => value),
+                        backgroundColor: "#0878d1",
+                        borderColor: "#0878d1",
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        borderSkipped: false,
+                        barThickness: 28,
+                     },
+                  ],
+               },
+               options: {
+                  indexAxis: "y",
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  layout: {
+                     padding: { right: 18, top: 6, bottom: 4 },
+                  },
+                  plugins: {
+                     legend: { display: false },
+                     title: { display: false },
+                     comparisonTrendValueLabels: {
+                        unit: metricConfig.unit,
+                        digits,
+                     },
+                     tooltip: {
+                        callbacks: {
+                           label: (context) =>
+                              `${formatComparisonTrendValue(Number(context.raw) || 0, digits)}${metricConfig.unit}`,
+                        },
+                     },
+                  },
+                  scales: {
+                     x: {
+                        beginAtZero: true,
+                        suggestedMax,
+                        grid: {
+                           color: "rgba(16, 43, 74, 0.16)",
+                        },
+                        border: {
+                           color: "#111111",
+                           width: 1.4,
+                        },
+                        ticks: {
+                           color: "#111111",
+                           callback: (value) => String(value).replace(".", ","),
+                        },
+                        title: {
+                           display: true,
+                           text: metricConfig.label,
+                           color: "#111111",
+                           font: { size: 15, weight: "500" },
+                           padding: { top: 12 },
+                        },
+                     },
+                     y: {
+                        grid: { display: false },
+                        border: {
+                           color: "#111111",
+                           width: 1.4,
+                        },
+                        ticks: {
+                           autoSkip: false,
+                           color: "#111111",
+                           font: { size: 13, weight: "500" },
+                           padding: 10,
+                        },
+                     },
+                  },
+               },
+            });
+
+            if (COMPARISON_TREND_METRIC_KEYS.has(metricKey)) {
+               if (trendSection) trendSection.hidden = false;
+               renderComparisonTrendCharts(results, metricKey);
+            } else if (trendSection) {
+               trendSection.hidden = true;
+            }
+
+            resultsSection.scrollIntoView({
+               behavior: "smooth",
+               block: "start",
+            });
+         };
+
+         function renderComparisonTrendCharts(results, metricKey) {
+            const metricConfig = COMPARISON_METRICS[metricKey];
+            const syllablesCanvas = document.getElementById(
+               "comparisonTrendSyllablesChart",
+            );
+            const linesCanvas = document.getElementById(
+               "comparisonTrendLinesChart",
+            );
+            if (!metricConfig || !syllablesCanvas || !linesCanvas) return;
+
+            const makeDatasets = (progressionKey) =>
+               results.map((result, index) => {
+                  const color = getComparisonSeriesColor(index);
+                  return {
+                     label: result.label,
+                     data: result[progressionKey],
+                     borderColor: color,
+                     backgroundColor: color,
+                     borderWidth: 2,
+                     pointRadius: 4,
+                     pointHoverRadius: 6,
+                     pointHitRadius: 10,
+                     tension: 0.2,
+                     fill: false,
+                  };
+               });
+
+            comparisonState.syllableTrendChart = new Chart(syllablesCanvas, {
+               type: "line",
+               data: {
+                  labels: COMPARISON_PROGRESS_LABELS,
+                  datasets: makeDatasets("progressionBySyllables"),
+               },
+               options: createComparisonTrendChartOptions(metricConfig, metricKey),
+            });
+
+            comparisonState.lineTrendChart = new Chart(linesCanvas, {
+               type: "line",
+               data: {
+                  labels: COMPARISON_PROGRESS_LABELS,
+                  datasets: makeDatasets("progressionByLines"),
+               },
+               options: createComparisonTrendChartOptions(metricConfig, metricKey),
+            });
+         }
+
+         function createComparisonTrendChartOptions(metricConfig, metricKey) {
+            const digits = metricKey === "asideOccurrences" ? 0 : 2;
+
+            return {
+               responsive: true,
+               maintainAspectRatio: false,
+               interaction: {
+                  mode: "nearest",
+                  intersect: false,
+               },
+               plugins: {
+                  legend: {
+                     position: "top",
+                     onClick(event, legendItem, legend) {
+                        const datasetIndex = legendItem.datasetIndex;
+                        const clickedChart = legend.chart;
+                        const nextVisibility = !clickedChart.isDatasetVisible(
+                           datasetIndex,
+                        );
+
+                        [
+                           comparisonState.syllableTrendChart,
+                           comparisonState.lineTrendChart,
+                        ]
+                           .filter(Boolean)
+                           .forEach((linkedChart) => {
+                              linkedChart.setDatasetVisibility(
+                                 datasetIndex,
+                                 nextVisibility,
+                              );
+                              linkedChart.update();
+                           });
+                     },
+                     labels: {
+                        boxWidth: 14,
+                        boxHeight: 14,
+                        usePointStyle: true,
+                        pointStyle: "circle",
+                        padding: 14,
+                     },
+                  },
+                  tooltip: {
+                     callbacks: {
+                        title: (items) => {
+                           const dataIndex = items[0]?.dataIndex ?? 0;
+                           return `Przedział ${COMPARISON_PROGRESS_RANGES[dataIndex]}`;
+                        },
+                        label: (context) =>
+                           `${context.dataset.label}: ${formatComparisonTrendValue(Number(context.raw) || 0, digits)}${metricConfig.unit}`,
+                     },
+                  },
+               },
+               scales: {
+                  x: {
+                     grid: {
+                        color: "rgba(16, 43, 74, 0.12)",
+                     },
+                     border: {
+                        color: "#111111",
+                        width: 1.2,
+                     },
+                     ticks: {
+                        color: "#111111",
+                     },
+                     title: {
+                        display: true,
+                        text: "Przebieg dramatu (%)",
+                        color: "#111111",
+                        font: { size: 14, weight: "500" },
+                        padding: { top: 10 },
+                     },
+                  },
+                  y: {
+                     beginAtZero: true,
+                     grid: {
+                        color: "rgba(16, 43, 74, 0.12)",
+                     },
+                     border: {
+                        color: "#111111",
+                        width: 1.2,
+                     },
+                     ticks: {
+                        color: "#111111",
+                        callback: (value) => String(value).replace(".", ","),
+                     },
+                     title: {
+                        display: true,
+                        text: metricConfig.label,
+                        color: "#111111",
+                        font: { size: 14, weight: "500" },
+                        padding: { bottom: 6 },
+                     },
+                  },
+               },
+            };
+         }
+
+         clearComparisonChart = function () {
+            if (comparisonState.chart) {
+               comparisonState.chart.destroy();
+               comparisonState.chart = null;
+            }
+            if (comparisonState.syllableTrendChart) {
+               comparisonState.syllableTrendChart.destroy();
+               comparisonState.syllableTrendChart = null;
+            }
+            if (comparisonState.lineTrendChart) {
+               comparisonState.lineTrendChart.destroy();
+               comparisonState.lineTrendChart = null;
+            }
+
+            const trendSection = document.getElementById("comparisonTrendSection");
+            if (trendSection) trendSection.hidden = true;
+
+            const resultsSection = document.getElementById("comparisonResults");
+            if (resultsSection) resultsSection.hidden = true;
+         };
+
+
          init();
          initComparisonAnalysis();
          initBetaTeiComparison();
