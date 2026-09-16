@@ -1309,6 +1309,15 @@
             background: linear-gradient(180deg, #ffffff, #fbfdff);
             box-shadow: 0 14px 40px rgba(29, 58, 108, 0.08);
             overflow: hidden;
+            transition:
+               box-shadow 0.2s ease,
+               border-color 0.2s ease;
+         }
+
+         .comparison-section details:hover,
+         .comparison-section details:focus-within {
+            border-color: #c9dcf1;
+            box-shadow: 0 18px 46px rgba(29, 58, 108, 0.13);
          }
 
          .comparison-section summary {
@@ -2326,6 +2335,15 @@
             background: #f8fbff;
             box-shadow: 0 8px 24px rgba(29, 58, 108, 0.06);
             overflow: hidden;
+            transition:
+               box-shadow 0.2s ease,
+               border-color 0.2s ease;
+         }
+
+         .beta-tei-comparison details:hover,
+         .beta-tei-comparison details:focus-within {
+            border-color: #c9dcf1;
+            box-shadow: 0 18px 46px rgba(29, 58, 108, 0.13);
          }
 
          .beta-tei-comparison summary {
