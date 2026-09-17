@@ -424,7 +424,7 @@
          }
 
          .speaker-share-section {
-            margin-bottom: 18px;
+            margin-bottom: 18px 0px;
             padding: 18px;
             border: 1px solid #dce7f8;
             border-radius: 14px;
@@ -3591,10 +3591,16 @@
                   <h3 class="metrics-panel-title">Główne wskaźniki</h3>
                   <div class="metrics-grid">
                      <div id="isosyllabicMetric" class="metric-card"></div>
+                     <div id="metricEntropyMetric" class="metric-card"></div>
+                     <div id="sharedLineIndexMetric" class="metric-card"></div>
                      <div
                         id="interactionDensityMetric"
                         class="metric-card"
                      ></div>
+                     <div id="stichomythiaMetric" class="metric-card"></div>
+                     <div id="distichomythiaMetric" class="metric-card"></div>
+                     <div id="hemistichomythiaMetric" class="metric-card"></div>
+                     <div id="rapidExchangeMetric" class="metric-card"></div>
                      <div id="sentenceLengthMetric" class="metric-card"></div>
                      <div id="hypotaxisMetric" class="metric-card"></div>
                      <div id="causalCohesionMetric" class="metric-card"></div>
@@ -3620,6 +3626,30 @@
                   </div>
                </div>
             </div>
+
+            <section
+               id="stichomythiaProgressSection"
+               class="speaker-share-section"
+               aria-label="Przebieg krótkich wymian dialogowych"
+            >
+               <h3 class="metrics-panel-title">
+                  Stychomytia i formy pokrewne w toku dramatu
+               </h3>
+               <p class="note">
+                  Wykres pokazuje udział tur należących do stychomytii, dystychomytii,
+                 hemistychomytii (antylaby) oraz ich łączny udział w kolejnych
+                  20-procentowych odcinkach dramatu, wyznaczonych według kolejności
+                  rzeczywistych wersów.
+               </p>
+               <div class="chart-box">
+                  <canvas id="stichomythiaProgressChart"></canvas>
+               </div>
+               <div class="metric-chart-note">
+                  Punkt 20% odpowiada przedziałowi 0–20%, punkt 40% — 20–40% itd.
+                  Cała tura jest przypisywana do jednego przedziału według swego
+                  środkowego położenia; wspólny wers P_1 + P_2 nie jest dzielony.
+               </div>
+            </section>
 
             <section
                id="actorComparisonSection"
@@ -3747,7 +3777,13 @@
                            długości zdań i referencji analizowane są wyłącznie
                            wypowiedzi danej postaci. W wersach współdzielonych
                            P_1 + P_2 wskaźnik granicy wersowej odnosi się do
-                           całego zrekonstruowanego wersu.
+                           całego zrekonstruowanego wersu. Entropia metryczna jest
+                           entropią Shannona (log₂) rozkładu formatów wierszowych
+                           według liczby sylab: uwzględnia zarazem liczbę formatów i
+                           równomierność ich użycia. Wartość procentowa pokazuje entropię
+                           bohatera jako odsetek entropii całego dramatu i może
+                           przekraczać 100%, jeśli repertuar metryczny postaci jest
+                           bardziej zróżnicowany niż rozkład w całym utworze.
                         </p>
                      </div>
                   </div>
@@ -3871,8 +3907,26 @@
                         <option value="isosyllabicAverage">
                            Średnia długość odcinka izosylabicznego
                         </option>
+                        <option value="metricEntropy">
+                           Entropia metryczna
+                        </option>
+                        <option value="sharedLineIndex">
+                           Indeks współdzielenia wersu
+                        </option>
                         <option value="interactionAverage" selected>
                            Średnia długość wypowiedzi jednej postaci
+                        </option>
+                        <option value="stichomythiaRate">
+                           Indeks stychomytii
+                        </option>
+                        <option value="distichomythiaRate">
+                           Indeks dystychomytii
+                        </option>
+                        <option value="hemistichomythiaRate">
+                           Indeks hemistychomytii (antylaby)
+                        </option>
+                        <option value="rapidExchangeRate">
+                           Łączny indeks hemi-, dy- i stychomytii
                         </option>
                         <option value="sentenceAverageWords">
                            Średnia długość zdania — słowa
@@ -4526,9 +4580,15 @@
                   "punctuationExpressionMetric",
                ),
                isosyllabic: document.getElementById("isosyllabicMetric"),
+               metricEntropy: document.getElementById("metricEntropyMetric"),
+               sharedLineIndex: document.getElementById("sharedLineIndexMetric"),
                interactionDensity: document.getElementById(
                   "interactionDensityMetric",
                ),
+               stichomythia: document.getElementById("stichomythiaMetric"),
+               distichomythia: document.getElementById("distichomythiaMetric"),
+               hemistichomythia: document.getElementById("hemistichomythiaMetric"),
+               rapidExchange: document.getElementById("rapidExchangeMetric"),
                sentenceLength: document.getElementById("sentenceLengthMetric"),
                hypotaxis: document.getElementById("hypotaxisMetric"),
                causalCohesion: document.getElementById("causalCohesionMetric"),
@@ -4553,6 +4613,7 @@
             analyzedData: [],
             metricDistributionChart: null,
             speakerShareChart: null,
+            stichomythiaProgressChart: null,
             renderedCharts: [],
          };
 
@@ -5311,6 +5372,7 @@
                   ({ actor }) => actor !== "DIDASKALIA",
                );
                const metricLines = buildMetricLines(state.analyzedData);
+               const dramaMetricEntropy = calculateMetricEntropy(metricLines);
                const rows = [];
 
                for (const actor of selectedActors) {
@@ -5318,6 +5380,7 @@
                      calculateActorComparisonMetrics(actor, {
                         speechFragments,
                         metricLines,
+                        dramaMetricEntropy,
                      }),
                   );
                   await new Promise((resolve) =>
@@ -5342,7 +5405,7 @@
 
          function calculateActorComparisonMetrics(
             actor,
-            { speechFragments, metricLines },
+            { speechFragments, metricLines, dramaMetricEntropy },
          ) {
             const actorFragments = speechFragments.filter(
                ({ actor: fragmentActor }) => fragmentActor === actor,
@@ -5398,10 +5461,18 @@
             const sentenceStats = getSentenceLengthStats(actorText);
             const hypotaxisStats = getHypotaxisStats(actorText);
             const causalStats = getCausalCohesionStats(actorText);
+            const metricEntropy = calculateMetricEntropy(actorMetricLines);
+            const metricEntropyRelativeToDrama =
+               dramaMetricEntropy > 0
+                  ? (metricEntropy / dramaMetricEntropy) * 100
+                  : null;
 
             return {
                actor,
                interactionAverage: average(interactionBlocks),
+               metricEntropy,
+               dramaMetricEntropy,
+               metricEntropyRelativeToDrama,
                questionDensity,
                exclamationDensity,
                lineBreakingRate,
@@ -5442,6 +5513,20 @@
                   label: "Średnia długość wypowiedzi",
                   render: (rowData) =>
                      formatActorMetricValue(rowData.interactionAverage),
+               },
+               {
+                  label: "Entropia metryczna",
+                  render: (rowData) => {
+                     const relative =
+                        rowData.metricEntropyRelativeToDrama === null
+                           ? "—"
+                           : `${formatActorMetricValue(rowData.metricEntropyRelativeToDrama)}%`;
+                     return `
+                        <strong>${formatActorMetricValue(rowData.metricEntropy)} bit</strong><br>
+                        <span class="note">${relative} entropii dramatu (H dramatu: ${formatActorMetricValue(rowData.dramaMetricEntropy)} bit)</span>
+                     `;
+                  },
+                  html: true,
                },
                {
                   label: "Gęstość pytań i wykrzyknień [na 100 wersów]",
@@ -5781,6 +5866,10 @@
 
             renderPunctuationMetric(allSpeechText, metricLineCount);
             renderIsosyllabicMetric(metricLines, metricLineCount);
+            renderMetricEntropyMetric(metricLines);
+            renderSharedLineIndexMetric(metricLines);
+            renderRapidExchangeMetrics(state.analyzedData);
+            renderStichomythiaProgressChart(state.analyzedData);
 
             // Tego wskaźnika NIE liczymy na scalonych wersach.
             // P_1/P_2 pozostają odrębnymi fragmentami przypisanymi bohaterom,
@@ -5808,6 +5897,7 @@
 
             clearMetricDistributionChart();
             clearSpeakerShareChart();
+            clearStichomythiaProgressChart();
 
             if (hide) DOM.additionalMetrics.style.display = "none";
          }
@@ -5911,6 +6001,168 @@
 
             segments.push(currentSegmentLength);
             return segments;
+         }
+
+         function renderMetricEntropyMetric(metricLines) {
+            const entropy = calculateMetricEntropy(metricLines);
+            const distinctFormats = new Set(
+               metricLines.map(({ vowelsNumber }) => Number(vowelsNumber) || 0),
+            ).size;
+
+            DOM.metrics.metricEntropy.innerHTML = `
+               <div class="metric-card-top">
+                 <div class="metric-card-label">Entropia metryczna</div>
+               </div>
+               <div class="metric-card-value">
+                 ${entropy.toFixed(2)} bit
+                 ${infoTip("Entropia Shannona mierzy niepewność / zróżnicowanie rozkładu. Tutaj kategoriami są formaty wierszowe według liczby sylab. Uwzględnia zarówno liczbę różnych formatów, jak i równomierność ich użycia: H = 0, gdy wszystkie wersy mają ten sam format; dwa równie częste formaty dają H = 1 bit; cztery równie częste — H = 2 bity. Logarytm ma podstawę 2, stąd jednostka „bit”. Fragmenty P_1 + P_2 są wcześniej scalane i traktowane jako jeden wers.")}
+               </div>
+               <div class="metric-card-secondary">
+                 Liczba wykrytych formatów: <strong>${distinctFormats}</strong>
+               </div>`;
+         }
+
+         function renderSharedLineIndexMetric(metricLines) {
+            const sharedLines = metricLines.filter(({ sharedLine }) =>
+               Boolean(sharedLine),
+            ).length;
+            const rate = calculateSharedLineIndex(metricLines);
+
+            DOM.metrics.sharedLineIndex.innerHTML = `
+               <div class="metric-card-top">
+                 <div class="metric-card-label">Indeks współdzielenia wersu</div>
+               </div>
+               <div class="metric-card-value">
+                 ${rate.toFixed(2)}%
+                 ${infoTip("Wskaźnik = liczba rzeczywistych wersów zrekonstruowanych z fragmentów P_1 + P_2 / liczba wszystkich rzeczywistych wersów po wyłączeniu didaskaliów × 100. Wers współdzielony jest liczony jeden raz, niezależnie od liczby tworzących go fragmentów.")}
+               </div>
+               <div class="metric-card-secondary">
+                 Wersy współdzielone: <strong>${sharedLines}</strong> / <strong>${metricLines.length}</strong>
+               </div>`;
+         }
+
+         function renderRapidExchangeMetrics(data) {
+            const stats = getRapidExchangeStats(data);
+
+            DOM.metrics.stichomythia.innerHTML = `
+               <div class="metric-card-top">
+                 <div class="metric-card-label">Indeks stychomytii</div>
+               </div>
+               <div class="metric-card-value">
+                 ${stats.stichomythiaRate.toFixed(2)}%
+                 ${infoTip("Odsetek wszystkich tur dialogowych należących do co najmniej dwuelementowej serii naprzemiennych, dokładnie jednowersowych replik. Liczone są pełne, niewspółdzielone wersy; izolowana jednowersowa replika nie jest uznawana za stychomytię.")}
+               </div>
+               <div class="metric-card-secondary">
+                 Tury stychomytii: <strong>${stats.stichomythiaTurns}</strong> / <strong>${stats.turnCount}</strong>
+               </div>`;
+
+            DOM.metrics.distichomythia.innerHTML = `
+               <div class="metric-card-top">
+                 <div class="metric-card-label">Indeks dystychomytii</div>
+               </div>
+               <div class="metric-card-value">
+                 ${stats.distichomythiaRate.toFixed(2)}%
+                 ${infoTip("Odsetek wszystkich tur dialogowych należących do co najmniej dwuelementowej serii naprzemiennych replik obejmujących dokładnie dwa pełne wersy. Tury zawierające fragment wersu współdzielonego P_1/P_2 nie są zaliczane do dystychomytii.")}
+               </div>
+               <div class="metric-card-secondary">
+                 Tury dystychomytii: <strong>${stats.distichomythiaTurns}</strong> / <strong>${stats.turnCount}</strong>
+               </div>`;
+
+            DOM.metrics.hemistichomythia.innerHTML = `
+               <div class="metric-card-top">
+                 <div class="metric-card-label">Indeks hemistychomytii (antylaby)</div>
+               </div>
+               <div class="metric-card-value">
+                 ${stats.hemistichomythiaRate.toFixed(2)}%
+                 ${infoTip("Indeks antylaby, czyli wymiany 1-wersowej wykrywanej jako P_1 + P_2: jeden wers metryczny jest podzielony między kolejnych mówców. Wskaźnik oznacza odsetek tur uczestniczących w takich parach wśród wszystkich tur dialogowych.")}
+               </div>
+               <div class="metric-card-secondary">
+                 Tury półwersowe: <strong>${stats.hemistichomythiaTurns}</strong> / <strong>${stats.turnCount}</strong>
+               </div>`;
+
+            DOM.metrics.rapidExchange.innerHTML = `
+               <div class="metric-card-top">
+                 <div class="metric-card-label">Łączny indeks hemi-, dy- i stychomytii</div>
+               </div>
+               <div class="metric-card-value">
+                 ${stats.rapidExchangeRate.toFixed(2)}%
+                 ${infoTip("Odsetek wszystkich tur dialogowych, które należą do wykrytej serii stychomytii, dystychomytii albo hemistychomytii (antylaby). Kategorie są rozłączne, a każda tura jest liczona najwyżej raz.")}
+               </div>
+               <div class="metric-card-secondary">
+                 Tury krótkiej wymiany: <strong>${stats.rapidExchangeTurns}</strong> / <strong>${stats.turnCount}</strong>
+               </div>`;
+         }
+
+         function clearStichomythiaProgressChart() {
+            if (state.stichomythiaProgressChart) {
+               state.stichomythiaProgressChart.destroy();
+               state.stichomythiaProgressChart = null;
+            }
+         }
+
+         function renderStichomythiaProgressChart(data) {
+            const canvas = document.getElementById("stichomythiaProgressChart");
+            if (!canvas) return;
+
+            clearStichomythiaProgressChart();
+            const keys = [
+               ["stichomythiaRate", "Stychomytia"],
+               ["distichomythiaRate", "Dystychomytia"],
+               ["hemistichomythiaRate", "Hemistychomytia"],
+               ["rapidExchangeRate", "Łącznie"],
+            ];
+            const colors = ["#0878d1", "#d95f02", "#1b9e77", "#7570b3"];
+
+            state.stichomythiaProgressChart = new Chart(canvas, {
+               type: "line",
+               data: {
+                  labels: ["20%", "40%", "60%", "80%", "100%"],
+                  datasets: keys.map(([key, label], index) => ({
+                     label,
+                     data: buildRapidExchangeProgression(data, key, 5, "lines"),
+                     borderColor: colors[index],
+                     backgroundColor: colors[index],
+                     borderWidth: key === "rapidExchangeRate" ? 3 : 2,
+                     pointRadius: 4,
+                     pointHoverRadius: 6,
+                     tension: 0.2,
+                     fill: false,
+                  })),
+               },
+               options: {
+                  responsive: true,
+                  maintainAspectRatio: false,
+                  plugins: {
+                     legend: { display: true, position: "bottom" },
+                     tooltip: {
+                        callbacks: {
+                           title: (items) => {
+                              const ranges = [
+                                 "0–20%",
+                                 "20–40%",
+                                 "40–60%",
+                                 "60–80%",
+                                 "80–100%",
+                              ];
+                              return `Przedział ${ranges[items[0]?.dataIndex ?? 0]}`;
+                           },
+                           label: (context) =>
+                              `${context.dataset.label}: ${formatActorMetricValue(context.raw)}%`,
+                        },
+                     },
+                  },
+                  scales: {
+                     x: {
+                        title: { display: true, text: "Przebieg dramatu (%)" },
+                     },
+                     y: {
+                        beginAtZero: true,
+                        max: 100,
+                        title: { display: true, text: "Udział tur (%)" },
+                     },
+                  },
+               },
+            });
          }
 
          function renderInteractionDensityMetric(speechLines) {
@@ -6582,6 +6834,271 @@
             return Object.values(values).reduce((sum, value) => sum + value, 0);
          }
 
+         function calculateMetricEntropy(metricLines) {
+            if (!metricLines.length) return 0;
+
+            const counts = new Map();
+            metricLines.forEach(({ vowelsNumber }) => {
+               const key = Number(vowelsNumber) || 0;
+               counts.set(key, (counts.get(key) || 0) + 1);
+            });
+
+            return [...counts.values()].reduce((entropy, count) => {
+               const probability = count / metricLines.length;
+               return entropy - probability * Math.log2(probability);
+            }, 0);
+         }
+
+         function calculateSharedLineIndex(metricLines) {
+            if (!metricLines.length) return 0;
+            const sharedLines = metricLines.filter(({ sharedLine }) =>
+               Boolean(sharedLine),
+            ).length;
+            return (sharedLines / metricLines.length) * 100;
+         }
+
+         function getSpeechTurns(data) {
+            const speechRows = data.filter(
+               ({ actor, verseNumber }) =>
+                  actor !== "DIDASKALIA" && verseNumber !== "",
+            );
+            const turns = [];
+            let currentActor = null;
+            let currentRows = [];
+
+            const closeTurn = () => {
+               if (!currentRows.length) return;
+               const verseNumbers = [
+                  ...new Set(currentRows.map(({ verseNumber }) => String(verseNumber))),
+               ];
+               const sharedVerseNumbers = [
+                  ...new Set(
+                     currentRows
+                        .filter(
+                           ({ sharedLine }) =>
+                              sharedLine === "P_1" || sharedLine === "P_2",
+                        )
+                        .map(({ verseNumber }) => String(verseNumber)),
+                  ),
+               ];
+               const hasSharedLine = sharedVerseNumbers.length > 0;
+
+               turns.push({
+                  actor: currentActor,
+                  rows: [...currentRows],
+                  verseNumbers,
+                  sharedVerseNumbers,
+                  length: verseNumbers.length,
+                  hasSharedLine,
+               });
+               currentRows = [];
+            };
+
+            speechRows.forEach((row) => {
+               const normalizedActor = String(row.actor || "");
+
+               if (currentActor !== null && normalizedActor !== currentActor) {
+                  closeTurn();
+               }
+
+               currentActor = normalizedActor;
+               currentRows.push(row);
+            });
+
+            closeTurn();
+            return turns;
+         }
+
+         function getSpeechTurnLengths(data) {
+            return getSpeechTurns(data).map(({ length }) => length);
+         }
+
+         function getRapidExchangeBaseType(turn) {
+            if (turn.hasSharedLine) return "hemi";
+            if (turn.length === 1) return "sticho";
+            if (turn.length === 2) return "dysticho";
+            return null;
+         }
+
+         function areRapidExchangeNeighbors(left, right, type) {
+            if (!left || !right || left.actor === right.actor) return false;
+            if (getRapidExchangeBaseType(left) !== type) return false;
+            if (getRapidExchangeBaseType(right) !== type) return false;
+
+            if (type === "hemi") {
+               return left.sharedVerseNumbers.some((verseNumber) =>
+                  right.sharedVerseNumbers.includes(verseNumber),
+               );
+            }
+
+            return true;
+         }
+
+         function analyzeRapidExchangeTurns(data) {
+            const turns = getSpeechTurns(data);
+
+            return turns.map((turn, index) => {
+               const type = getRapidExchangeBaseType(turn);
+               const previous = turns[index - 1];
+               const next = turns[index + 1];
+               const inExchange = Boolean(
+                  type &&
+                     (areRapidExchangeNeighbors(previous, turn, type) ||
+                        areRapidExchangeNeighbors(turn, next, type)),
+               );
+
+               return { ...turn, type, inExchange };
+            });
+         }
+
+         function getRapidExchangeStats(data) {
+            const analyzedTurns = analyzeRapidExchangeTurns(data);
+            const turnCount = analyzedTurns.length;
+            const countType = (type) =>
+               analyzedTurns.filter((turn) => turn.inExchange && turn.type === type)
+                  .length;
+
+            const stichomythiaTurns = countType("sticho");
+            const distichomythiaTurns = countType("dysticho");
+            const hemistichomythiaTurns = countType("hemi");
+            const rapidExchangeTurns = analyzedTurns.filter(
+               ({ inExchange }) => inExchange,
+            ).length;
+            const rate = (count) => (turnCount ? (count / turnCount) * 100 : 0);
+
+            return {
+               turnCount,
+               stichomythiaTurns,
+               distichomythiaTurns,
+               hemistichomythiaTurns,
+               rapidExchangeTurns,
+               stichomythiaRate: rate(stichomythiaTurns),
+               distichomythiaRate: rate(distichomythiaTurns),
+               hemistichomythiaRate: rate(hemistichomythiaTurns),
+               rapidExchangeRate: rate(rapidExchangeTurns),
+               analyzedTurns,
+            };
+         }
+
+         function getStichomythiaStats(data) {
+            const stats = getRapidExchangeStats(data);
+            return {
+               turnCount: stats.turnCount,
+               oneLineTurns: stats.stichomythiaTurns,
+               rate: stats.stichomythiaRate,
+            };
+         }
+
+         function getRapidExchangeMetricValue(stats, metricKey) {
+            switch (metricKey) {
+               case "stichomythiaRate":
+                  return stats.stichomythiaRate;
+               case "distichomythiaRate":
+                  return stats.distichomythiaRate;
+               case "hemistichomythiaRate":
+                  return stats.hemistichomythiaRate;
+               case "rapidExchangeRate":
+                  return stats.rapidExchangeRate;
+               default:
+                  return 0;
+            }
+         }
+
+         function buildRapidExchangeProgression(
+            data,
+            metricKey,
+            segmentCount = 5,
+            mode = "lines",
+         ) {
+            const metricLines = buildMetricLines(data);
+            const stats = getRapidExchangeStats(data);
+            const turns = stats.analyzedTurns;
+            const buckets = Array.from({ length: segmentCount }, () => ({
+               turnCount: 0,
+               matchingTurns: 0,
+            }));
+            if (!metricLines.length || !turns.length) {
+               return buckets.map(() => 0);
+            }
+
+            const verseToPosition = new Map();
+            let total = metricLines.length;
+
+            if (mode === "syllables") {
+               total = metricLines.reduce(
+                  (sum, line) => sum + (Number(line.vowelsNumber) || 0),
+                  0,
+               );
+
+               if (!total) {
+                  return buildRapidExchangeProgression(
+                     data,
+                     metricKey,
+                     segmentCount,
+                     "lines",
+                  );
+               }
+
+               let cumulativeBefore = 0;
+               metricLines.forEach((line) => {
+                  const lineSyllables = Number(line.vowelsNumber) || 0;
+                  verseToPosition.set(
+                     String(line.verseNumber),
+                     cumulativeBefore + lineSyllables / 2,
+                  );
+                  cumulativeBefore += lineSyllables;
+               });
+            } else {
+               metricLines.forEach((line, index) => {
+                  verseToPosition.set(String(line.verseNumber), index + 0.5);
+               });
+            }
+
+            turns.forEach((turn) => {
+               const positions = turn.verseNumbers
+                  .map((verseNumber) => verseToPosition.get(verseNumber))
+                  .filter((value) => Number.isFinite(value));
+               if (!positions.length) return;
+
+               const turnPosition = average(positions);
+               const ratio = Math.max(
+                  0,
+                  Math.min(0.999999999, turnPosition / total),
+               );
+               const segmentIndex = Math.min(
+                  segmentCount - 1,
+                  Math.floor(ratio * segmentCount),
+               );
+
+               buckets[segmentIndex].turnCount++;
+               const matches =
+                  metricKey === "rapidExchangeRate"
+                     ? turn.inExchange
+                     : turn.inExchange &&
+                       ((metricKey === "stichomythiaRate" && turn.type === "sticho") ||
+                        (metricKey === "distichomythiaRate" && turn.type === "dysticho") ||
+                        (metricKey === "hemistichomythiaRate" && turn.type === "hemi"));
+               if (matches) buckets[segmentIndex].matchingTurns++;
+            });
+
+            return buckets.map(({ turnCount, matchingTurns }) =>
+               turnCount ? (matchingTurns / turnCount) * 100 : 0,
+            );
+         }
+
+         function buildStichomythiaProgression(
+            data,
+            segmentCount = 5,
+            mode = "lines",
+         ) {
+            return buildRapidExchangeProgression(
+               data,
+               "stichomythiaRate",
+               segmentCount,
+               mode,
+            );
+         }
+
          function scrollToAnalysisResults() {
             const resultsSection =
                DOM.additionalMetrics ||
@@ -6630,9 +7147,39 @@
                label: "Średnia długość odcinka izosylabicznego",
                unit: "",
             },
+            metricEntropy: {
+               label: "Entropia metryczna",
+               unit: " bit",
+               note: "Entropia Shannona (log₂) rozkładu rzeczywistych wersów według liczby sylab. Fragmenty P_1 + P_2 są scalane przed obliczeniem.",
+            },
+            sharedLineIndex: {
+               label: "Indeks współdzielenia wersu",
+               unit: "%",
+               note: "Odsetek rzeczywistych wersów zrekonstruowanych z fragmentów P_1 + P_2 wśród wszystkich rzeczywistych wersów dramatu.",
+            },
             interactionAverage: {
                label: "Średnia długość wypowiedzi jednej postaci",
                unit: "",
+            },
+            stichomythiaRate: {
+               label: "Indeks stychomytii",
+               unit: "%",
+               note: "Odsetek tur należących do co najmniej dwuelementowej serii naprzemiennych, dokładnie jednowersowych replik. Wersy współdzielone P_1/P_2 są wyłączone z tej kategorii.",
+            },
+            distichomythiaRate: {
+               label: "Indeks dystychomytii",
+               unit: "%",
+               note: "Odsetek tur należących do co najmniej dwuelementowej serii naprzemiennych, dokładnie dwuwersowych replik.",
+            },
+            hemistichomythiaRate: {
+               label: "Indeks hemistychomytii",
+               unit: "%",
+               note: "Odsetek tur tworzących wykrytą parę P_1 + P_2, czyli podział jednego wersu między dwóch kolejnych mówców. Standardowo zjawisko to opisuje się jako hemistychomytię / antilabę.",
+            },
+            rapidExchangeRate: {
+               label: "Łączny indeks hemi-, dy- i stychomytii",
+               unit: "%",
+               note: "Odsetek wszystkich tur dialogowych należących do jednej z trzech rozłącznych kategorii: stychomytii, dystychomytii albo hemistychomytii (antylaby).",
             },
             sentenceAverageWords: {
                label: "Średnia długość zdania — słowa",
@@ -7270,6 +7817,24 @@
                   return metricLineCount
                      ? average(getIsosyllabicSegments(metricLines))
                      : 0;
+
+               case "metricEntropy":
+                  return calculateMetricEntropy(metricLines);
+
+               case "sharedLineIndex":
+                  return calculateSharedLineIndex(metricLines);
+
+               case "stichomythiaRate":
+                  return getRapidExchangeStats(data).stichomythiaRate;
+
+               case "distichomythiaRate":
+                  return getRapidExchangeStats(data).distichomythiaRate;
+
+               case "hemistichomythiaRate":
+                  return getRapidExchangeStats(data).hemistichomythiaRate;
+
+               case "rapidExchangeRate":
+                  return getRapidExchangeStats(data).rapidExchangeRate;
 
                case "interactionAverage": {
                   const speechBlocks = [];
@@ -8502,6 +9067,10 @@
             "asideOccurrences",
             "isosyllabicAverage",
             "interactionAverage",
+            "stichomythiaRate",
+            "distichomythiaRate",
+            "hemistichomythiaRate",
+            "rapidExchangeRate",
             "sentenceAverageWords",
             "sentenceAverageSyllables",
             "hypotaxisRate",
@@ -8753,6 +9322,24 @@
                      ? average(getIsosyllabicSegments(metricLines))
                      : 0;
 
+               case "metricEntropy":
+                  return calculateMetricEntropy(metricLines);
+
+               case "sharedLineIndex":
+                  return calculateSharedLineIndex(metricLines);
+
+               case "stichomythiaRate":
+                  return getRapidExchangeStats(data).stichomythiaRate;
+
+               case "distichomythiaRate":
+                  return getRapidExchangeStats(data).distichomythiaRate;
+
+               case "hemistichomythiaRate":
+                  return getRapidExchangeStats(data).hemistichomythiaRate;
+
+               case "rapidExchangeRate":
+                  return getRapidExchangeStats(data).rapidExchangeRate;
+
                case "interactionAverage": {
                   const speechBlocks = [];
                   let previousActor = null;
@@ -8854,6 +9441,22 @@
          }
 
          function calculateComparisonMetricProgression(data, metricKey, mode) {
+            if (
+               [
+                  "stichomythiaRate",
+                  "distichomythiaRate",
+                  "hemistichomythiaRate",
+                  "rapidExchangeRate",
+               ].includes(metricKey)
+            ) {
+               return buildRapidExchangeProgression(
+                  data,
+                  metricKey,
+                  COMPARISON_PROGRESS_LABELS.length,
+                  mode,
+               );
+            }
+
             return buildComparisonProgressSegments(data, mode).map((segment) =>
                calculateComparisonMetricFromData(segment, metricKey),
             );
