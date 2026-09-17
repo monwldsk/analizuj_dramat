@@ -224,12 +224,12 @@ Bohaterowie posiadający mniej niż 1% udziału mogą zostać zgrupowani w kateg
 
 ## Średnia długość wypowiedzi jednej postaci
 
-Wypowiedź jest definiowana jako ciąg kolejnych fragmentów przypisanych temu samemu bohaterowi.
+Wypowiedź jest definiowana jako ciąg kolejnych wersów przypisanych temu samemu bohaterowi.
 
 Wskaźnik:
 
 ```text
-liczba fragmentów wypowiedzi /
+liczba wersów wypowiedzi /
 liczba bloków wypowiedzi
 ```
 
