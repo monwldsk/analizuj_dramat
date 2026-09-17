@@ -3636,18 +3636,18 @@
                   Stychomytia i formy pokrewne w toku dramatu
                </h3>
                <p class="note">
-                  Wykres pokazuje udział tur należących do stychomytii, dystychomytii,
-                 hemistychomytii (antylaby) oraz ich łączny udział w kolejnych
-                  20-procentowych odcinkach dramatu, wyznaczonych według kolejności
-                  rzeczywistych wersów.
+                  Wykres pokazuje objętość stychomytii, dystychomytii i
+                  hemistychomytii (antylaby): udział rzeczywistych wersów objętych
+                  danym zjawiskiem w kolejnych 20-procentowych odcinkach dramatu.
                </p>
                <div class="chart-box">
                   <canvas id="stichomythiaProgressChart"></canvas>
                </div>
                <div class="metric-chart-note">
                   Punkt 20% odpowiada przedziałowi 0–20%, punkt 40% — 20–40% itd.
-                  Cała tura jest przypisywana do jednego przedziału według swego
-                  środkowego położenia; wspólny wers P_1 + P_2 nie jest dzielony.
+                  Każdy rzeczywisty wers trafia do przedziału zgodnie ze swoim
+                  położeniem w dramacie. Wers należący do co najmniej jednej pary
+                  jest liczony w objętości tylko raz; P_1 + P_2 stanowią jeden wers.
                </div>
             </section>
 
@@ -3911,22 +3911,22 @@
                            Entropia metryczna
                         </option>
                         <option value="sharedLineIndex">
-                           Indeks współdzielenia wersu
+                           Indeks rozłamania wersu (przez didaskalium lub antylabę)
                         </option>
                         <option value="interactionAverage" selected>
                            Średnia długość wypowiedzi jednej postaci
                         </option>
                         <option value="stichomythiaRate">
-                           Indeks stychomytii
+                           Objętość stychomytii
                         </option>
                         <option value="distichomythiaRate">
-                           Indeks dystychomytii
+                           Objętość dystychomytii
                         </option>
                         <option value="hemistichomythiaRate">
-                           Indeks hemistychomytii (antylaby)
+                           Objętość hemistychomytii (antylaby)
                         </option>
                         <option value="rapidExchangeRate">
-                           Łączny indeks hemi-, dy- i stychomytii
+                           Łączna objętość hemi-, dy- i stychomytii
                         </option>
                         <option value="sentenceAverageWords">
                            Średnia długość zdania — słowa
@@ -6030,7 +6030,7 @@
 
             DOM.metrics.sharedLineIndex.innerHTML = `
                <div class="metric-card-top">
-                 <div class="metric-card-label">Indeks współdzielenia wersu</div>
+                 <div class="metric-card-label">Indeks rozłamania wersu (przez didaskalium lub antylabę)</div>
                </div>
                <div class="metric-card-value">
                  ${rate.toFixed(2)}%
@@ -6046,50 +6046,50 @@
 
             DOM.metrics.stichomythia.innerHTML = `
                <div class="metric-card-top">
-                 <div class="metric-card-label">Indeks stychomytii</div>
+                 <div class="metric-card-label">Objętość stychomytii</div>
                </div>
                <div class="metric-card-value">
                  ${stats.stichomythiaRate.toFixed(2)}%
-                 ${infoTip("Odsetek wszystkich tur dialogowych należących do co najmniej dwuelementowej serii naprzemiennych, dokładnie jednowersowych replik. Liczone są pełne, niewspółdzielone wersy; izolowana jednowersowa replika nie jest uznawana za stychomytię.")}
+                 ${infoTip("Objętość = liczba unikalnych rzeczywistych wersów należących do co najmniej jednej pary stychomytycznej / liczba wszystkich rzeczywistych wersów dramatu × 100. Para stychomytyczna to dwie bezpośrednio sąsiadujące tury różnych mówców, z których każda obejmuje dokładnie 1 pełny wers; tury z P_1/P_2 są wyłączone. W ciągu A → B → A są 2 przypadki, ale objętość wynosi 3 wersy.")}
                </div>
                <div class="metric-card-secondary">
-                 Tury stychomytii: <strong>${stats.stichomythiaTurns}</strong> / <strong>${stats.turnCount}</strong>
+                 Przypadki (pary): <strong>${stats.stichomythiaCases}</strong>; wersy objęte stychomytią: <strong>${stats.stichomythiaVerses}</strong> / <strong>${stats.verseCount}</strong>
                </div>`;
 
             DOM.metrics.distichomythia.innerHTML = `
                <div class="metric-card-top">
-                 <div class="metric-card-label">Indeks dystychomytii</div>
+                 <div class="metric-card-label">Objętość dystychomytii</div>
                </div>
                <div class="metric-card-value">
                  ${stats.distichomythiaRate.toFixed(2)}%
-                 ${infoTip("Odsetek wszystkich tur dialogowych należących do co najmniej dwuelementowej serii naprzemiennych replik obejmujących dokładnie dwa pełne wersy. Tury zawierające fragment wersu współdzielonego P_1/P_2 nie są zaliczane do dystychomytii.")}
+                 ${infoTip("Objętość = liczba unikalnych rzeczywistych wersów należących do co najmniej jednej pary dystychomytycznej / liczba wszystkich rzeczywistych wersów dramatu × 100. Para dystychomytyczna to dwie bezpośrednio sąsiadujące tury różnych mówców, z których każda obejmuje dokładnie 2 pełne wersy; tury z P_1/P_2 są wyłączone. Nakładające się pary nie powodują ponownego liczenia tych samych wersów.")}
                </div>
                <div class="metric-card-secondary">
-                 Tury dystychomytii: <strong>${stats.distichomythiaTurns}</strong> / <strong>${stats.turnCount}</strong>
+                 Przypadki (pary): <strong>${stats.distichomythiaCases}</strong>; wersy objęte dystychomytią: <strong>${stats.distichomythiaVerses}</strong> / <strong>${stats.verseCount}</strong>
                </div>`;
 
             DOM.metrics.hemistichomythia.innerHTML = `
                <div class="metric-card-top">
-                 <div class="metric-card-label">Indeks hemistychomytii (antylaby)</div>
+                 <div class="metric-card-label">Objętość hemistychomytii (antylaby)</div>
                </div>
                <div class="metric-card-value">
                  ${stats.hemistichomythiaRate.toFixed(2)}%
-                 ${infoTip("Indeks antylaby, czyli wymiany 1-wersowej wykrywanej jako P_1 + P_2: jeden wers metryczny jest podzielony między kolejnych mówców. Wskaźnik oznacza odsetek tur uczestniczących w takich parach wśród wszystkich tur dialogowych.")}
+                 ${infoTip("Objętość = liczba rzeczywistych wersów P_1 + P_2, w których między P_1 i P_2 zmienia się mówca, / liczba wszystkich rzeczywistych wersów dramatu × 100. Didaskalia pomiędzy P_1 i P_2 nie wykluczają antylaby. P_1 i P_2 tego samego mówcy nie są liczone. Jeden wers P_1 + P_2 ma objętość jednego wersu i stanowi jeden przypadek.")}
                </div>
                <div class="metric-card-secondary">
-                 Tury półwersowe: <strong>${stats.hemistichomythiaTurns}</strong> / <strong>${stats.turnCount}</strong>
+                 Przypadki antylaby: <strong>${stats.hemistichomythiaCases}</strong>; wersy objęte antylabą: <strong>${stats.hemistichomythiaVerses}</strong> / <strong>${stats.verseCount}</strong>
                </div>`;
 
             DOM.metrics.rapidExchange.innerHTML = `
                <div class="metric-card-top">
-                 <div class="metric-card-label">Łączny indeks hemi-, dy- i stychomytii</div>
+                 <div class="metric-card-label">Łączna objętość hemi-, dy- i stychomytii</div>
                </div>
                <div class="metric-card-value">
                  ${stats.rapidExchangeRate.toFixed(2)}%
-                 ${infoTip("Odsetek wszystkich tur dialogowych, które należą do wykrytej serii stychomytii, dystychomytii albo hemistychomytii (antylaby). Kategorie są rozłączne, a każda tura jest liczona najwyżej raz.")}
+                 ${infoTip("Objętość łączna = liczba unikalnych rzeczywistych wersów należących do stychomytii, dystychomytii lub hemistychomytii (antylaby) / liczba wszystkich rzeczywistych wersów dramatu × 100. Ten sam wers jest liczony tylko raz, nawet gdy należy do dwóch nakładających się par. Liczba przypadków jest raportowana osobno.")}
                </div>
                <div class="metric-card-secondary">
-                 Tury krótkiej wymiany: <strong>${stats.rapidExchangeTurns}</strong> / <strong>${stats.turnCount}</strong>
+                 Wszystkie przypadki: <strong>${stats.rapidExchangeCases}</strong>; wersy objęte zjawiskami: <strong>${stats.rapidExchangeVerses}</strong> / <strong>${stats.verseCount}</strong>
                </div>`;
          }
 
@@ -6157,8 +6157,7 @@
                      },
                      y: {
                         beginAtZero: true,
-                        max: 100,
-                        title: { display: true, text: "Udział tur (%)" },
+                        title: { display: true, text: "Objętość wersowa (%)" },
                      },
                   },
                },
@@ -6914,69 +6913,162 @@
          }
 
          function getRapidExchangeBaseType(turn) {
-            if (turn.hasSharedLine) return "hemi";
+            // Stychomytia i dystychomytia dotyczą wyłącznie pełnych wersów.
+            // Każda tura zawierająca P_1/P_2 jest z tych kategorii wyłączona.
+            if (!turn || turn.hasSharedLine) return null;
             if (turn.length === 1) return "sticho";
             if (turn.length === 2) return "dysticho";
             return null;
          }
 
-         function areRapidExchangeNeighbors(left, right, type) {
-            if (!left || !right || left.actor === right.actor) return false;
-            if (getRapidExchangeBaseType(left) !== type) return false;
-            if (getRapidExchangeBaseType(right) !== type) return false;
+         function getHemistichomythiaOccurrences(data) {
+            const sharedVerses = new Map();
 
-            if (type === "hemi") {
-               return left.sharedVerseNumbers.some((verseNumber) =>
-                  right.sharedVerseNumbers.includes(verseNumber),
-               );
-            }
+            data.forEach((row) => {
+               if (
+                  row.actor === "DIDASKALIA" ||
+                  row.verseNumber === "" ||
+                  (row.sharedLine !== "P_1" && row.sharedLine !== "P_2")
+               ) {
+                  return;
+               }
 
-            return true;
+               const key = String(row.verseNumber);
+               if (!sharedVerses.has(key)) {
+                  sharedVerses.set(key, {
+                     verseNumber: row.verseNumber,
+                     p1: null,
+                     p2: null,
+                  });
+               }
+
+               const sharedVerse = sharedVerses.get(key);
+               if (row.sharedLine === "P_1" && !sharedVerse.p1) {
+                  sharedVerse.p1 = row;
+               } else if (row.sharedLine === "P_2" && !sharedVerse.p2) {
+                  sharedVerse.p2 = row;
+               }
+            });
+
+            return [...sharedVerses.values()]
+               .filter(({ p1, p2 }) => {
+                  const p1Actor = String(p1?.actor || "");
+                  const p2Actor = String(p2?.actor || "");
+                  return p1 && p2 && p1Actor && p2Actor && p1Actor !== p2Actor;
+               })
+               .map(({ verseNumber, p1, p2 }) => ({
+                  type: "hemi",
+                  verseNumbers: [String(verseNumber)],
+                  actors: [String(p1.actor), String(p2.actor)],
+               }));
          }
 
-         function analyzeRapidExchangeTurns(data) {
+         function analyzeRapidExchangeOccurrences(data) {
             const turns = getSpeechTurns(data);
+            const occurrences = [];
 
-            return turns.map((turn, index) => {
-               const type = getRapidExchangeBaseType(turn);
-               const previous = turns[index - 1];
-               const next = turns[index + 1];
-               const inExchange = Boolean(
-                  type &&
-                     (areRapidExchangeNeighbors(previous, turn, type) ||
-                        areRapidExchangeNeighbors(turn, next, type)),
-               );
+            // Jedna para dwóch bezpośrednio sąsiadujących pełnych tur = 1 przypadek.
+            // W dłuższym ciągu każda sąsiednia para jest liczona osobno.
+            for (let index = 0; index < turns.length - 1; index++) {
+               const left = turns[index];
+               const right = turns[index + 1];
 
-               return { ...turn, type, inExchange };
-            });
+               if (!left || !right || left.actor === right.actor) continue;
+
+               const leftType = getRapidExchangeBaseType(left);
+               const rightType = getRapidExchangeBaseType(right);
+
+               if (
+                  leftType &&
+                  leftType === rightType &&
+                  (leftType === "sticho" || leftType === "dysticho")
+               ) {
+                  occurrences.push({
+                     type: leftType,
+                     verseNumbers: [
+                        ...new Set([
+                           ...left.verseNumbers,
+                           ...right.verseNumbers,
+                        ]),
+                     ],
+                     actors: [left.actor, right.actor],
+                     turnIndexes: [index, index + 1],
+                  });
+               }
+            }
+
+            // Hemistychomytia / antylaba: P_1 + P_2 w obrębie tego samego
+            // rzeczywistego wersu, ale tylko wtedy, gdy między częściami
+            // rzeczywiście zmienia się mówca. Didaskalia między P_1 i P_2
+            // nie wykluczają antylaby.
+            occurrences.push(...getHemistichomythiaOccurrences(data));
+
+            return { turns, occurrences };
          }
 
          function getRapidExchangeStats(data) {
-            const analyzedTurns = analyzeRapidExchangeTurns(data);
-            const turnCount = analyzedTurns.length;
+            const { turns, occurrences } = analyzeRapidExchangeOccurrences(data);
+            const turnCount = turns.length;
+            const verseCount = buildMetricLines(data).length;
             const countType = (type) =>
-               analyzedTurns.filter((turn) => turn.inExchange && turn.type === type)
-                  .length;
+               occurrences.filter((occurrence) => occurrence.type === type).length;
+            const collectVerseNumbers = (type = null) => {
+               const verseNumbers = new Set();
 
-            const stichomythiaTurns = countType("sticho");
-            const distichomythiaTurns = countType("dysticho");
-            const hemistichomythiaTurns = countType("hemi");
-            const rapidExchangeTurns = analyzedTurns.filter(
-               ({ inExchange }) => inExchange,
-            ).length;
-            const rate = (count) => (turnCount ? (count / turnCount) * 100 : 0);
+               occurrences.forEach((occurrence) => {
+                  if (type && occurrence.type !== type) return;
+                  occurrence.verseNumbers.forEach((verseNumber) =>
+                     verseNumbers.add(String(verseNumber)),
+                  );
+               });
+
+               return verseNumbers;
+            };
+
+            // Liczba przypadków pozostaje osobną statystyką. W dłuższym ciągu
+            // A → B → A są dwa przypadki (dwie sąsiednie pary).
+            const stichomythiaCases = countType("sticho");
+            const distichomythiaCases = countType("dysticho");
+            const hemistichomythiaCases = countType("hemi");
+            const rapidExchangeCases = occurrences.length;
+
+            // Wskaźniki procentowe mierzą OBJĘTOŚĆ zjawiska: liczymy unikalne
+            // rzeczywiste wersy należące do co najmniej jednego przypadku.
+            // Dzięki temu np. A → B → A ma dwa przypadki stychomytii, ale
+            // objętość 3 wersów, a nie 4. P_1 + P_2 stanowią jeden wers.
+            const stichomythiaVerseNumbers = collectVerseNumbers("sticho");
+            const distichomythiaVerseNumbers = collectVerseNumbers("dysticho");
+            const hemistichomythiaVerseNumbers = collectVerseNumbers("hemi");
+            const rapidExchangeVerseNumbers = collectVerseNumbers();
+
+            const stichomythiaVerses = stichomythiaVerseNumbers.size;
+            const distichomythiaVerses = distichomythiaVerseNumbers.size;
+            const hemistichomythiaVerses = hemistichomythiaVerseNumbers.size;
+            const rapidExchangeVerses = rapidExchangeVerseNumbers.size;
+            const rate = (volumeVerses) =>
+               verseCount ? (volumeVerses / verseCount) * 100 : 0;
 
             return {
                turnCount,
-               stichomythiaTurns,
-               distichomythiaTurns,
-               hemistichomythiaTurns,
-               rapidExchangeTurns,
-               stichomythiaRate: rate(stichomythiaTurns),
-               distichomythiaRate: rate(distichomythiaTurns),
-               hemistichomythiaRate: rate(hemistichomythiaTurns),
-               rapidExchangeRate: rate(rapidExchangeTurns),
-               analyzedTurns,
+               verseCount,
+               stichomythiaCases,
+               distichomythiaCases,
+               hemistichomythiaCases,
+               rapidExchangeCases,
+               stichomythiaVerses,
+               distichomythiaVerses,
+               hemistichomythiaVerses,
+               rapidExchangeVerses,
+               stichomythiaVerseNumbers,
+               distichomythiaVerseNumbers,
+               hemistichomythiaVerseNumbers,
+               rapidExchangeVerseNumbers,
+               stichomythiaRate: rate(stichomythiaVerses),
+               distichomythiaRate: rate(distichomythiaVerses),
+               hemistichomythiaRate: rate(hemistichomythiaVerses),
+               rapidExchangeRate: rate(rapidExchangeVerses),
+               turns,
+               occurrences,
             };
          }
 
@@ -6984,7 +7076,7 @@
             const stats = getRapidExchangeStats(data);
             return {
                turnCount: stats.turnCount,
-               oneLineTurns: stats.stichomythiaTurns,
+               oneLinePairs: stats.stichomythiaCases,
                rate: stats.stichomythiaRate,
             };
          }
@@ -7012,12 +7104,14 @@
          ) {
             const metricLines = buildMetricLines(data);
             const stats = getRapidExchangeStats(data);
-            const turns = stats.analyzedTurns;
+            const turns = stats.turns;
+            const occurrences = stats.occurrences;
             const buckets = Array.from({ length: segmentCount }, () => ({
-               turnCount: 0,
-               matchingTurns: 0,
+               verseCount: 0,
+               matchingVerses: 0,
             }));
-            if (!metricLines.length || !turns.length) {
+
+            if (!metricLines.length) {
                return buckets.map(() => 0);
             }
 
@@ -7054,35 +7148,57 @@
                });
             }
 
-            turns.forEach((turn) => {
-               const positions = turn.verseNumbers
-                  .map((verseNumber) => verseToPosition.get(verseNumber))
+            const getSegmentIndex = (verseNumbers) => {
+               const positions = verseNumbers
+                  .map((verseNumber) => verseToPosition.get(String(verseNumber)))
                   .filter((value) => Number.isFinite(value));
-               if (!positions.length) return;
+               if (!positions.length) return null;
 
-               const turnPosition = average(positions);
+               const position = average(positions);
                const ratio = Math.max(
                   0,
-                  Math.min(0.999999999, turnPosition / total),
+                  Math.min(0.999999999, position / total),
                );
-               const segmentIndex = Math.min(
+               return Math.min(
                   segmentCount - 1,
                   Math.floor(ratio * segmentCount),
                );
+            };
 
-               buckets[segmentIndex].turnCount++;
+            // Zbieramy unikalne wersy należące do wybranego zjawiska.
+            // Para może nakładać się na następną parę (A → B → A), dlatego
+            // ten sam wers może zostać policzony w objętości tylko jeden raz.
+            const matchingVerseNumbers = new Set();
+            occurrences.forEach((occurrence) => {
                const matches =
-                  metricKey === "rapidExchangeRate"
-                     ? turn.inExchange
-                     : turn.inExchange &&
-                       ((metricKey === "stichomythiaRate" && turn.type === "sticho") ||
-                        (metricKey === "distichomythiaRate" && turn.type === "dysticho") ||
-                        (metricKey === "hemistichomythiaRate" && turn.type === "hemi"));
-               if (matches) buckets[segmentIndex].matchingTurns++;
+                  metricKey === "rapidExchangeRate" ||
+                  (metricKey === "stichomythiaRate" &&
+                     occurrence.type === "sticho") ||
+                  (metricKey === "distichomythiaRate" &&
+                     occurrence.type === "dysticho") ||
+                  (metricKey === "hemistichomythiaRate" &&
+                     occurrence.type === "hemi");
+
+               if (!matches) return;
+               occurrence.verseNumbers.forEach((verseNumber) =>
+                  matchingVerseNumbers.add(String(verseNumber)),
+               );
             });
 
-            return buckets.map(({ turnCount, matchingTurns }) =>
-               turnCount ? (matchingTurns / turnCount) * 100 : 0,
+            // W każdym odcinku procent oznacza udział wersów objętych
+            // zjawiskiem wśród wszystkich rzeczywistych wersów tego odcinka.
+            metricLines.forEach((line) => {
+               const verseNumber = String(line.verseNumber);
+               const segmentIndex = getSegmentIndex([verseNumber]);
+               if (segmentIndex === null) return;
+               buckets[segmentIndex].verseCount++;
+               if (matchingVerseNumbers.has(verseNumber)) {
+                  buckets[segmentIndex].matchingVerses++;
+               }
+            });
+
+            return buckets.map(({ verseCount, matchingVerses }) =>
+               verseCount ? (matchingVerses / verseCount) * 100 : 0,
             );
          }
 
@@ -7153,7 +7269,7 @@
                note: "Entropia Shannona (log₂) rozkładu rzeczywistych wersów według liczby sylab. Fragmenty P_1 + P_2 są scalane przed obliczeniem.",
             },
             sharedLineIndex: {
-               label: "Indeks współdzielenia wersu",
+               label: "Indeks rozłamania wersu (przez didaskalium lub antylabę)",
                unit: "%",
                note: "Odsetek rzeczywistych wersów zrekonstruowanych z fragmentów P_1 + P_2 wśród wszystkich rzeczywistych wersów dramatu.",
             },
@@ -7162,24 +7278,24 @@
                unit: "",
             },
             stichomythiaRate: {
-               label: "Indeks stychomytii",
+               label: "Objętość stychomytii",
                unit: "%",
-               note: "Odsetek tur należących do co najmniej dwuelementowej serii naprzemiennych, dokładnie jednowersowych replik. Wersy współdzielone P_1/P_2 są wyłączone z tej kategorii.",
+               note: "Odsetek unikalnych rzeczywistych wersów należących do co najmniej jednej pary stychomytycznej. Para to dwie bezpośrednio sąsiadujące tury różnych mówców, każda dokładnie jednowersowa i bez P_1/P_2. Nakładające się pary nie dublują wersów w objętości.",
             },
             distichomythiaRate: {
-               label: "Indeks dystychomytii",
+               label: "Objętość dystychomytii",
                unit: "%",
-               note: "Odsetek tur należących do co najmniej dwuelementowej serii naprzemiennych, dokładnie dwuwersowych replik.",
+               note: "Odsetek unikalnych rzeczywistych wersów należących do co najmniej jednej pary dystychomytycznej. Para to dwie bezpośrednio sąsiadujące tury różnych mówców, każda dokładnie dwuwersowa i bez P_1/P_2. Nakładające się pary nie dublują wersów w objętości.",
             },
             hemistichomythiaRate: {
-               label: "Indeks hemistychomytii",
+               label: "Objętość hemistychomytii",
                unit: "%",
-               note: "Odsetek tur tworzących wykrytą parę P_1 + P_2, czyli podział jednego wersu między dwóch kolejnych mówców. Standardowo zjawisko to opisuje się jako hemistychomytię / antilabę.",
+               note: "Odsetek rzeczywistych wersów P_1 + P_2, w których mówca P_1 jest inny niż mówca P_2. Didaskalia między P_1 i P_2 nie wykluczają antylaby; P_1 i P_2 tego samego mówcy nie są liczone.",
             },
             rapidExchangeRate: {
-               label: "Łączny indeks hemi-, dy- i stychomytii",
+               label: "Łączna objętość hemi-, dy- i stychomytii",
                unit: "%",
-               note: "Odsetek wszystkich tur dialogowych należących do jednej z trzech rozłącznych kategorii: stychomytii, dystychomytii albo hemistychomytii (antylaby).",
+               note: "Odsetek unikalnych rzeczywistych wersów należących do co najmniej jednego z trzech zjawisk: stychomytii, dystychomytii lub hemistychomytii (antylaby). Ten sam wers jest liczony tylko raz.",
             },
             sentenceAverageWords: {
                label: "Średnia długość zdania — słowa",
