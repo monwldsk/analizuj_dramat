@@ -10,7 +10,7 @@ Narzędzie zostało pomyślane przede wszystkim jako pomoc w **eksploracji tekst
 
 Wersja działająca online dostępna jest przez GitHub Pages:
 
-`monwldsk.github.io/analizuj_dramat/`
+[monwldsk.github.io/analizuj_dramat/](https://monwldsk.github.io/analizuj_dramat/)
 
 ---
 
@@ -19,18 +19,22 @@ Wersja działająca online dostępna jest przez GitHub Pages:
 Narzędzie umożliwia:
 
 - analizę tekstu wklejonego bezpośrednio do aplikacji;
-- wczytywanie własnych plików `.txt`;
-- wybór tekstu z dołączonej biblioteki dramatów;
+- wczytywanie własnych plików `.txt` z dysku lub metodą drag & drop;
+- wybór tekstu z dołączonej biblioteki dramatów oraz wyszukiwanie po autorze lub tytule;
 - automatyczne przypisywanie wersów do mówiących postaci;
 - rozpoznawanie didaskaliów;
 - przybliżone liczenie sylab;
 - wykrywanie wersów współdzielonych przez dwie postaci;
 - analizę dominujących formatów sylabicznych;
-- porównywanie struktury wersyfikacyjnej wypowiedzi różnych bohaterów;
-- obliczanie dodatkowych wskaźników stylistycznych i składniowych;
+- obliczanie wskaźników wersyfikacyjnych, dialogowych, składniowych, interpunkcyjnych i leksykalnych;
 - wizualizację wyników na wykresach;
+- analizę udziału poszczególnych bohaterów w tekście dialogowym;
+- porównywanie struktury wersyfikacyjnej wypowiedzi różnych bohaterów;
+- tabelaryczne porównanie do 8 bohaterów według dodatkowych wskaźników stylistycznych i składniowych;
 - eksport tabeli analitycznej do XLSX;
-- porównywanie dowolnej liczby dramatów według wybranego wskaźnika.
+- porównywanie dowolnej liczby dramatów według wybranego wskaźnika;
+- śledzenie zmian wybranych wskaźników w kolejnych 20-procentowych odcinkach dramatu;
+- eksperymentalne porównanie wyników parsera TXT z analizą strukturalną TEI/XML (**BETA**).
 
 ---
 
@@ -43,11 +47,15 @@ Tekst dzielony jest na linie. Parser próbuje następnie określić funkcję ka�
 W uproszczeniu:
 
 ```text
+
 PUSTELNIK
 
 Kto jestem?… jeszcze rano… powiedzieć nie mogę.
+
 Idę z daleka, nie wiem, z piekła czyli z raju,
+
 A dążę do tegoż kraju.
+
 Tymczasem małą dam tobie przestrogę.
 
 KSIĄDZ
@@ -55,6 +63,7 @@ KSIĄDZ
 / na stronie /
 
 Trzeba z nim, widzę, innego sposobu.
+
 ```
 
 ### Nazwy postaci
@@ -64,9 +73,13 @@ Linia zapisana wielkimi literami jest interpretowana jako oznaczenie mówiącej 
 Przykład:
 
 ```text
+
 KONRAD
+
 GUSTAW
+
 PUSTELNIK
+
 ```
 
 Od tego miejsca kolejne wersy zostają przypisane wykrytej postaci aż do pojawienia się kolejnej nazwy.
@@ -78,13 +91,17 @@ Linia zawierająca znak `/` traktowana jest jako didaskalium.
 Przykład:
 
 ```text
+
 / na stronie /
+
 ```
 
 Tak rozpoznana linia otrzymuje kategorię:
 
 ```text
+
 DIDASKALIA
+
 ```
 
 ### Pomijane linie
@@ -92,6 +109,7 @@ DIDASKALIA
 Parser ignoruje:
 
 - puste linie;
+
 - linie rozpoczynające się od `++`.
 
 ---
@@ -103,16 +121,17 @@ Narzędzie obsługuje sytuację, w której jeden wers metryczny jest podzielony 
 Jeżeli druga część wersu posiada wyraźne wcięcie, parser może potraktować obie linie jako części tego samego wersu:
 
 ```text
+
 DZIECI
 
 / czytają /
 
 „Onego czasu…”
 
-
 KSIĄDZ
 
                         Kto tam? kto tam stuka?
+
 ```
 
 W implementacji druga część jest rozpoznawana jako współdzielona przy wcięciu odpowiadającym co najmniej ok. 20 spacjom. Tabulator liczony jest jako większe wcięcie.
@@ -120,8 +139,11 @@ W implementacji druga część jest rozpoznawana jako współdzielona przy wcię
 Fragmenty oznaczane są jako:
 
 ```text
+
 P_1
+
 P_2
+
 ```
 
 i otrzymują ten sam numer wersu.
@@ -141,15 +163,25 @@ Liczba sylab jest szacowana na podstawie samogłosek.
 Algorytm uwzględnia wybrane charakterystyczne dla polszczyzny połączenia literowe, m.in.:
 
 ```text
+
 ie
+
 ia
+
 iu
+
 ię
+
 ią
+
 io
+
 ii
+
 iy
+
 ió
+
 ```
 
 które są na potrzeby obliczenia traktowane jako jeden ośrodek sylabiczny (głoska "i" nie pełni w większości takich przypadków funkcji sylabotwórczej).
@@ -157,7 +189,9 @@ które są na potrzeby obliczenia traktowane jako jeden ośrodek sylabiczny (gł
 Następnie liczona jest liczba wystąpień samogłosek:
 
 ```text
+
 a e i o u ą ę ó y
+
 ```
 
 ## Ważne ograniczenie
@@ -167,10 +201,15 @@ Nie jest to pełny analizator fonologiczny ani słownikowy sylabifikator języka
 Algorytm może pomylić się m.in. przy:
 
 - nietypowych połączeniach samogłosek;
+
 - granicach morfemów (wtedy ciąg np. "ia" będzie tworzył 2 sylaby);
+
 - niektórych zapożyczeniach;
+
 - dyftongach (np. au czy oi - jak w wyrazach "pauza" czy "sinusoida");
+
 - nazwach własnych;
+
 - wyjątkach fonetycznych.
 
 Z tego względu wyniki należy traktować jako **przybliżenie odpowiednie przede wszystkim dla analiz statystycznych większych tekstów**.
@@ -186,7 +225,9 @@ Narzędzie oblicza rozkład wersów według liczby sylab.
 Pozwala to określić m.in.:
 
 - dominujące formaty sylabiczne całego dramatu;
+
 - dominujące formaty w wypowiedziach poszczególnych bohaterów;
+
 - różnice wersyfikacyjne pomiędzy postaciami.
 
 Formaty występujące w < 1% wersów są grupowane w zbiorczą kategorię.
@@ -200,8 +241,11 @@ Odcinek izosylabiczny jest rozumiany jako ciąg kolejnych rzeczywistych wersów 
 Obliczana jest:
 
 ```text
+
 średnia długość =
+
 suma długości odcinków izosylabicznych / liczba odcinków
+
 ```
 
 Dodatkowo wyznaczany jest wskaźnik częstości zmiany liczby sylab pomiędzy kolejnymi wersami.
@@ -229,8 +273,11 @@ Wypowiedź jest definiowana jako ciąg kolejnych wersów przypisanych temu samem
 Wskaźnik:
 
 ```text
+
 liczba wersów wypowiedzi /
+
 liczba bloków wypowiedzi
+
 ```
 
 może służyć jako proste przybliżenie dynamiki interakcji dialogowej.
@@ -246,17 +293,25 @@ Narzędzie próbuje automatycznie podzielić wypowiedzi bohaterów na zdania.
 Uwzględniane są m.in.:
 
 - `.`
+
 - `...`
+
 - `…`
+
 - `?`
+
 - `!`
 
 Serie znaków, np.:
 
 ```text
+
 ?!
+
 !!!
+
 ...
+
 ```
 
 traktowane są jako jedno zakończenie zdania.
@@ -264,14 +319,19 @@ traktowane są jako jedno zakończenie zdania.
 Parser posiada również prostą obsługę:
 
 - typowych skrótów;
+
 - inicjałów;
+
 - liczb dziesiętnych;
+
 - kropki występującej wewnątrz zdania.
 
 Dla wykrytych zdań obliczana jest:
 
 - średnia liczba słów;
+
 - średnia przybliżona liczba sylab;
+
 - liczba wykrytych zdań.
 
 Didaskalia są wyłączane z tej analizy.
@@ -285,40 +345,71 @@ Narzędzie wykorzystuje algorytm oparty na obecności językowych sygnałów pod
 Do dość niezawodnych markerów należą m.in.:
 
 ```text
+
 że
+
 iż
+
 żeby
+
 aby
+
 ażeby
+
 ponieważ
+
 gdyż
+
 bo
+
 jeśli
+
 jeżeli
+
 gdyby
+
 choć
+
 chociaż
+
 skoro
+
 zanim
+
 dopóki
+
 odkąd
+
 gdy
+
 ```
 
 Uwzględniane są również bardziej kontekstowe formy, np.:
 
 ```text
+
 czy
+
 kiedy
+
 gdzie
+
 dokąd
+
 skąd
+
 dlaczego
+
 kto
+
 co
+
 który
+
 która
+
 które
+
 ```
 
 Dla markerów wieloznacznych analizowane jest dodatkowo ich położenie względem granic składniowych.
@@ -326,6 +417,7 @@ Dla markerów wieloznacznych analizowane jest dodatkowo ich położenie względe
 Wynikiem jest:
 
 - liczba zdań zakwalifikowanych jako hipotaktyczne;
+
 - ich procentowy udział wśród wszystkich wykrytych zdań.
 
 **Nie jest to zatem pełny parser składniowy.**
@@ -339,24 +431,43 @@ Narzędzie mierzy odsetek zdań zawierających jawne leksykalne wykładniki rela
 Uwzględniane są m.in.:
 
 ```text
+
 bo
+
 bowiem
+
 albowiem
+
 ponieważ
+
 gdyż
+
 jako że
+
 dlatego że
+
 więc
+
 zatem
+
 toteż
+
 przeto
+
 dlatego
+
 tedy
+
 w rezultacie
+
 w konsekwencji
+
 z tego powodu
+
 w takim razie
+
 tak że
+
 ```
 
 Jedno zdanie liczone jest najwyżej jeden raz niezależnie od liczby markerów.
@@ -372,16 +483,27 @@ Dla każdego rzeczywistego wersu sprawdzane jest jego zakończenie.
 Za sygnały zamknięcia uznawane są m.in.:
 
 ```text
+
 .
+
 ,
+
 !
+
 ?
+
 ;
+
 …
+
 :
+
 -
+
 —
+
 –
+
 ```
 
 Wskaźnik określa procent wersów, które **nie kończą się takim znakiem interpunkcyjnym**.
@@ -397,15 +519,21 @@ Nie należy utożsamiać go automatycznie z liczbą przerzutni. Rozpoznanie prze
 Obliczane są:
 
 ```text
+
 gęstość wykrzyknień =
+
 liczba znaków ! / liczba wersów metrycznych × 100
+
 ```
 
 oraz:
 
 ```text
+
 gęstość pytań =
+
 liczba znaków ? / liczba wersów metrycznych × 100
+
 ```
 
 Didaskalia nie są wliczane do długości dramatu używanej w mianowniku ułamka.
@@ -421,10 +549,15 @@ Program oblicza frekwencję wybranych form zaimkowych pierwszej osoby.
 Uwzględniane są m.in.:
 
 ```text
+
 ja, mnie, mi, mną,
+
 mój, mojego, mojemu, moim,
+
 moja, mojej, moją,
+
 moje, moi, moich, moimi
+
 ```
 
 Wynik podawany jest jako liczba wystąpień na 1000 słów.
@@ -434,10 +567,15 @@ Wynik podawany jest jako liczba wystąpień na 1000 słów.
 Analogicznie analizowane są m.in.:
 
 ```text
+
 my, nas, nam, nami,
+
 nasz, naszego, naszemu, naszym,
+
 nasza, naszej, naszą,
+
 nasze, nasi, naszych, naszymi
+
 ```
 
 Wskaźniki rejestrują zatem jedynie określone jawne formy leksykalne.
@@ -451,53 +589,77 @@ Program oblicza trzy dodatkowe wskaźniki.
 ### Gęstość metakomentarza
 
 ```text
+
 liczba didaskaliów /
+
 liczba wersów metrycznych × 100
+
 ```
 
 ### Nasycenie didaskaliów wypowiedziami „na stronie”
 
 ```text
+
 liczba didaskaliów zawierających „na stronie” /
+
 liczba wszystkich didaskaliów × 100
+
 ```
 
 ### Gęstość apartu względem długości dramatu
 
 ```text
+
 liczba didaskaliów zawierających „na stronie” /
+
 liczba wersów metrycznych × 100
+
 ```
 
 ---
 
 # Analiza postaci
 
-Po przeanalizowaniu dramatu można wygenerować dodatkowe wizualizacje dla wybranych bohaterów.
+Po przeanalizowaniu dramatu można dodatkowo badać rozkład i właściwości wypowiedzi poszczególnych bohaterów.
 
 Dostępne są:
 
-- wykresy kołowe rozkładu formatów sylabicznych;
-- możliwość połączenia kilku bohaterów w jedną grupę;
-- wykres słupkowy porównujący formaty sylabiczne wielu postaci;
-- wykres procentowego udziału wypowiedzi wszystkich bohaterów w całym tekście dialogowym.
+- wykres procentowego udziału wypowiedzi wszystkich bohaterów w całym tekście dialogowym;
+- wykresy kołowe rozkładu formatów sylabicznych dla wybranych bohaterów;
+- możliwość połączenia kilku bohaterów w jedną grupę na potrzeby analizy metrycznej;
+- wspólny wykres słupkowy porównujący formaty sylabiczne wielu postaci;
+- tabelaryczne porównanie **maksymalnie 8 bohaterów** według dodatkowych wskaźników.
+
+W tabeli porównawczej bohaterów uwzględniane są:
+
+- średnia długość wypowiedzi;
+- gęstość pytań i wykrzyknień na 100 wersów;
+- niezgodność granicy wersowej i syntagmatycznej;
+- referencja pierwszoosobowa w liczbie pojedynczej i mnogiej na 1000 słów;
+- udział zdań hipotaktycznych;
+- udział zdań z jawnym wykładnikiem relacji kauzalnej lub wynikowej;
+- średnia liczba słów w zdaniu;
+- średnia liczba sylab w zdaniu.
+
+Dla składni, długości zdań i referencji pierwszoosobowej analizowane są wyłącznie wypowiedzi wybranego bohatera. W przypadku wersów współdzielonych `P_1 + P_2` wskaźnik granicy wersowej odnosi się do całego zrekonstruowanego wersu.
 
 ---
 
 # Analiza porównawcza dramatów
 
-Osobny moduł pozwala porównać większą liczbę tekstów.
+Osobny moduł pozwala porównać większą liczbę tekstów na wspólnym wykresie.
 
 Można:
 
 1. wybrać dramaty z biblioteki;
 2. dodać własne pliki `.txt`;
-3. zmienić nazwy pozycji;
-4. ustawić ich kolejność;
-5. wybrać jeden z dostępnych wskaźników;
-6. wygenerować wspólny wykres.
+3. skorzystać ze skrótu zaznaczającego przygotowany zestaw dramatów Juliusza Słowackiego;
+4. zmienić nazwy pozycji;
+5. ustawić ich kolejność na wykresie;
+6. wybrać jeden z dostępnych wskaźników;
+7. wygenerować wspólny wykres porównawczy.
 
-Porównywać można m.in.:
+Porównywać można:
 
 - średnią długość odcinka izosylabicznego;
 - średnią długość wypowiedzi;
@@ -510,10 +672,63 @@ Porównywać można m.in.:
 - gęstość pytań;
 - referencję pierwszoosobową w liczbie pojedynczej;
 - referencję pierwszoosobową w liczbie mnogiej;
-- gęstość didaskaliów;
-- udział wypowiedzi „na stronie”.
+- gęstość metakomentarza (didaskaliów);
+- **liczbę wystąpień apartu** (`„na stronie”`);
+- nasycenie didaskaliów wypowiedziami „na stronie”;
+- gęstość apartu względem długości dramatu.
 
 Biblioteczne teksty są buforowane w pamięci przeglądarki podczas porównania, aby nie pobierać ich ponownie dla każdego obliczenia.
+
+## Zmiany wskaźnika w toku dramatu
+
+Dla wybranych wskaźników moduł porównawczy generuje również dwa wykresy przebiegu wartości w toku dramatu. Tekst każdego dramatu jest dzielony na pięć kolejnych odcinków:
+
+```text
+0–20%
+20–40%
+40–60%
+60–80%
+80–100%
+```
+
+Wartość wskaźnika jest obliczana osobno dla każdego odcinka. Wers współdzielony `P_1 + P_2` pozostaje zawsze w jednym segmencie i nie jest rozcinany między dwa przedziały.
+
+Położenie w dramacie może być wyznaczane na dwa sposoby:
+
+- **według liczby sylab** — na podstawie skumulowanej liczby sylab w rzeczywistych wersach wypowiedzi;
+- **według liczby wersów** — na podstawie kolejności rzeczywistych wersów, tak aby każdy dramat dochodził do 100% niezależnie od długości.
+
+Analiza przebiegu jest obecnie dostępna dla: liczby wystąpień apartu, średniej długości odcinka izosylabicznego, średniej długości wypowiedzi, obu miar długości zdania, hipotaksy, relacji kauzalnych/wynikowych, gęstości pytań i wykrzyknień, obu wskaźników referencji pierwszoosobowej oraz gęstości metakomentarza. Nie jest generowana dla wskaźnika granicy wersowej ani dwóch względnych wskaźników apartu.
+
+---
+
+# Porównanie TXT z TEI/XML — BETA
+
+Aplikacja zawiera eksperymentalny moduł kontrolny pozwalający porównać analizę tego samego dramatu wykonaną dwiema metodami:
+
+- przez dotychczasowy parser pliku `.txt`, oparty na konwencjach typograficznych;
+- przez osobny parser **TEI/XML**, wykorzystujący strukturę dokumentu.
+
+Parser TEI/XML korzysta m.in. z:
+
+```text
+<sp>
+<speaker>
+<l>
+<stage>
+@who
+<particDesc>
+```
+
+Sekcja BETA pozwala użyć domyślnej pary plików porównawczych lub wskazać własny plik TXT i XML na czas bieżącej sesji. Przed uruchomieniem analizy pokazuje podgląd obu źródeł.
+
+Wynik porównania obejmuje:
+
+- tabelę kontrolną podstawowych cech parsowania;
+- porównanie udziału wersów przypadających na postaci;
+- porównanie głównych wskaźników analitycznych i różnic `XML − TXT`.
+
+W tabeli udziałów parser próbuje mapować etykiety wykryte w TXT do encji wskazanych w TEI przez `@who`, dzięki czemu różne etykiety odnoszące się do tej samej postaci mogą zostać zestawione jako jedna encja. Moduł TEI/XML nie zastępuje jeszcze głównego przepływu analizy TXT i ma status **BETA**.
 
 ---
 
@@ -524,29 +739,43 @@ Najlepiej używać zwykłych plików UTF-8 `.txt`.
 Minimalny przykład:
 
 ```text
+
 DZIECI
+
 Jezus, Maryja!
 
 KSIĄDZ
+
                         Któż to jest na progu?
+
 / zmieszany /
+
 Ktoś ty taki?… po co?… na co?
 
 DZIECI
+
 Ach, trup, trup! upiór, ladaco!
+
 W imię Ojca!… zgiń, przepadaj!
 
 KSIĄDZ
+
 Ktoś ty, bracie? odpowiadaj.
+
 ```
 
 Najważniejsze zasady:
 
 1. nazwa bohatera powinna znajdować się w osobnej linii i być zapisana WIELKIMI LITERAMI;
+
 2. każda linia wypowiedzi powinna odpowiadać jednemu wersowi lub fragmentowi wersu;
+
 3. didaskalia powinny zawierać `/`;
+
 4. należy usunąć elementy pozatekstowe, takie jak metadane wydania, ISBN, informacje techniczne czy spis treści;
+
 5. nagłówki zapisane wielkimi literami mogą zostać błędnie rozpoznane jako nazwy postaci;
+
 6. sposób przygotowania tekstu ma wpływ na wyniki.
 
 Parser jest szczególnie dobrze dopasowany do konwencji spotykanej w tekstowych eksportach utworów z serwisu Wolne Lektury.
@@ -557,18 +786,26 @@ Parser jest szczególnie dobrze dopasowany do konwencji spotykanej w tekstowych 
 
 Podstawowym wynikiem analizy jest tabela:
 
-| Pole | Znaczenie |
-|---|---|
-| Nr wersu | numer rzeczywistego wersu |
-| Treść wersu | tekst analizowanej linii |
-| Liczba sylab | wynik liczenia sylab na podstawie wykrycia samogłosek w pozycji zgłoskotwórczej |
-| Bohater | rozpoznana postać lub `DIDASKALIA` |
-| Wers współdzielony | oznaczenie `P_1` / `P_2` |
+\| Pole | Znaczenie |
+
+\|---|---|
+
+\| Nr wersu | numer rzeczywistego wersu |
+
+\| Treść wersu | tekst analizowanej linii |
+
+\| Liczba sylab | wynik liczenia sylab na podstawie wykrycia samogłosek w pozycji zgłoskotwórczej |
+
+\| Bohater | rozpoznana postać lub `DIDASKALIA` |
+
+\| Wers współdzielony | oznaczenie `P_1` / `P_2` |
 
 Tabelę można wyeksportować do pliku:
 
 ```text
+
 wyniki.xlsx
+
 ```
 
 Eksport generowany jest bezpośrednio w przeglądarce.
@@ -577,7 +814,9 @@ Eksport generowany jest bezpośrednio w przeglądarce.
 
 # Biblioteka
 
-Biblioteka ma przede wszystkim charakter demonstracyjny.
+Biblioteka ma przede wszystkim charakter demonstracyjny i zawiera teksty przygotowane pod wymagania parsera. Są to głównie pliki `.txt` oparte na zasobach Wolnych Lektur, uzupełnione również o utwory spoza tego zbioru.
+
+Pozycje można filtrować na bieżąco przez wyszukiwarkę działającą po **autorze lub tytule**. Wybrany tekst jest ładowany do aplikacji i analizowany tym samym mechanizmem co tekst wklejony lub własny plik `.txt`.
 
 ---
 
@@ -590,8 +829,11 @@ Projekt nie wymaga budowania aplikacji, instalowania frameworków JavaScript ani
 Za pomocą GitHub CLI:
 
 ```bash
+
 gh repo clone monwldsk/analizuj_dramat
+
 cd analizuj_dramat
+
 ```
 
 ### 2. Uruchom prosty serwer HTTP
@@ -599,7 +841,9 @@ cd analizuj_dramat
 Przykładowo:
 
 ```bash
+
 python3 -m http.server 8000
+
 ```
 
 Następnie otwórz w przeglądarce serwer lokalny na porcie `8000`.
@@ -619,6 +863,7 @@ analizuj_dramat/
 ├── README.md
 └── assets/
     ├── biblioteka/
+    ├── comparison_tei_vs_txt/
     ├── card_icons/
     ├── charts/
     └── ...
@@ -628,11 +873,14 @@ Większość logiki aplikacji znajduje się obecnie bezpośrednio w `index.html`
 
 - HTML interfejsu;
 - CSS;
-- parser dramatu;
+- parser dramatu TXT;
+- eksperymentalny parser i moduł porównawczy TEI/XML;
 - algorytm liczenia sylab;
 - obliczanie wskaźników;
+- analiza i porównywanie bohaterów;
 - obsługa wykresów;
-- analiza porównawcza;
+- analiza porównawcza wielu dramatów;
+- analiza zmian wskaźników w toku dramatu;
 - eksport danych.
 
 ---
@@ -645,7 +893,8 @@ Projekt wykorzystuje:
 - CSS3;
 - JavaScript (bez frameworków);
 - Chart.js — generowanie wykresów;
-- SheetJS / XLSX — eksport wyników do arkusza.
+- SheetJS / XLSX — eksport wyników do arkusza;
+- natywny `DOMParser` przeglądarki — odczyt dokumentów TEI/XML w module BETA.
 
 Obliczenia dotyczące wczytanego dramatu wykonywane są po stronie klienta (w przeglądarce użytkownika).
 
@@ -668,10 +917,15 @@ Struktura rekonstruowana jest z formatowania zwykłego pliku tekstowego.
 Nie istnieje semantyczne oznaczenie typu:
 
 ```xml
+
 <speaker>
+
 <stage>
+
 <l>
+
 <sp>
+
 ```
 
 jak w TEI/XML.
@@ -694,23 +948,36 @@ Obecność określonego spójnika lub wyrażenia nie musi w każdym kontekście 
 
 Brak interpunkcji na końcu wersu nie jest równoznaczny z wystąpieniem przerzutni.
 
-
 ---
+
+### TEI/XML — moduł BETA
+
+Obsługa TEI/XML ma obecnie charakter kontrolny i eksperymentalny. Parser oczekuje dokumentu w przestrzeni nazw TEI i wykorzystuje określony podzbiór struktury dramatu (`<sp>`, `<speaker>`, `<l>`, `<stage>`, `@who`, opisy osób i grup). Nie należy traktować go jeszcze jako pełnej obsługi wszystkich wariantów kodowania TEI ani jako zamiennika głównego parsera TXT.
 
 # Jak interpretować wyniki?
 
 Najbardziej użyteczny model pracy z narzędziem to:
 
 ```text
+
 tekst
+
   ↓
+
 pomiar
+
   ↓
+
 różnica / anomalia
+
   ↓
+
 hipoteza
+
   ↓
+
 close reading
+
 ```
 
 Wynik ilościowy powinien być punktem wyjścia do ponownej analizy tekstu.
@@ -723,22 +990,15 @@ Takie pytanie wymaga następnie powrotu do konkretnego fragmentu dramatu.
 
 ---
 
-# Dlaczego TXT, a nie TEI/XML?
+# TXT jako format podstawowy i TEI/XML jako kierunek rozwoju
 
-Obecny format zapewnia niski próg wejścia: użytkownik może wkleić tekst lub otworzyć prosty plik `.txt`.
+TXT pozostaje podstawowym formatem wejściowym aplikacji, ponieważ zapewnia niski próg wejścia: użytkownik może wkleić tekst albo otworzyć prosty plik `.txt` bez wcześniejszego znakowania strukturalnego.
 
-W konsekwencji program rekonstruuje strukturę dramatu na podstawie przyjętych reguł rozpoznawania poszczególnych elementów, co nie daje jednak 100% skuteczności.
+W konsekwencji główny parser musi rekonstruować strukturę dramatu na podstawie konwencji typograficznych, co nie daje 100% skuteczności.
 
-Docelowym kierunkiem rozwoju jest obsługa TEI/XML, gdzie takie elementy jak:
+Równolegle projekt zawiera już **eksperymentalny parser TEI/XML (BETA)** wykorzystywany w sekcji porównawczej TXT ↔ TEI/XML. W takim formacie mówca, wypowiedź, wers, didaskalium oraz inne elementy mogą być zapisane strukturalnie zamiast odgadywane z formatowania.
 
-- mówca
-- wypowiedź
-- wers
-- didaskalium
-- akt
-- scena
-
-byłyby oznaczone strukturalnie, a nie odgadywane z formatowania.
+Obecny moduł TEI/XML służy przede wszystkim do kontroli różnic pomiędzy podejściem heurystycznym i strukturalnym. Pełne włączenie TEI/XML do głównego przepływu analizy pozostaje dalszym etapem rozwoju.
 
 ---
 
@@ -746,16 +1006,16 @@ byłyby oznaczone strukturalnie, a nie odgadywane z formatowania.
 
 Najważniejsze potencjalne rozszerzenia:
 
-- obsługa TEI/XML;
+- pełna integracja TEI/XML z głównym przepływem analizy, wykraczająca poza moduł porównawczy BETA;
 - raport jakości parsowania tekstu;
 - walidacja skuteczności algorytmu liczenia formatu wierszowego na ręcznie opisanym korpusie;
 - eksport wszystkich wskaźników do CSV/XLSX/JSON;
-- eksport wyników analizy porównawczej;
+- eksport wyników analizy porównawczej i przebiegów wskaźników;
 - podział kodu na moduły;
-- automatyczne testy jednostkowe parsera;
+- automatyczne testy jednostkowe parserów i obliczeń wskaźników;
 - większy i bardziej zróżnicowany korpus dramatów;
 - pełniejsza analiza składniowa;
-- rozbudowa narzędzia o analizę dynamiki zmian poszczególnych wskaźników w toku dramatu;
+- rozszerzenie analizy zmian w toku dramatu na wszystkie wskaźniki i — przy danych strukturalnych — na akty oraz sceny;
 - analiza sieci interakcji postaci;
 - generowanie raportu reprodukowalnego dla konkretnego pliku i wersji algorytmu.
 
@@ -766,9 +1026,14 @@ Najważniejsze potencjalne rozszerzenia:
 Przy powoływaniu się na wyniki narzędzia warto zapisać:
 
 - wersję lub commit repozytorium;
+
 - dokładny plik źródłowy;
+- w przypadku porównania TXT ↔ TEI/XML — oba użyte pliki źródłowe;
+
 - źródło i wydanie analizowanego tekstu;
+
 - ewentualne zmiany dokonane przed analizą;
+
 - datę wykonania obliczeń.
 
 Pozwala to ograniczyć problem różnic pomiędzy wydaniami i sposobami formatowania tego samego dramatu.
@@ -777,12 +1042,16 @@ Pozwala to ograniczyć problem różnic pomiędzy wydaniami i sposobami formatow
 
 # Status projektu
 
-Projekt ma charakter badawczo-eksploracyjny.
+Projekt ma charakter badawczo-eksploracyjny. Główny przepływ opiera się na plikach TXT, a obsługa TEI/XML pozostaje eksperymentalnym modułem BETA.
 
 Nie jest pełnym systemem NLP ani automatycznym interpretatorem tekstu literackiego. Jego zadaniem jest dostarczenie mierzalnych cech, które mogą wspomagać:
 
 - close reading;
+
 - badania wersologiczne;
+
 - stylistykę ilościową;
+
 - dydaktykę;
+
 - eksplorację większych zbiorów dramatów.
