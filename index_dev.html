@@ -8246,6 +8246,86 @@
                unit: "",
             },
             {
+               group: "Objętość stychomytii",
+               label: "Objętość",
+               key: "stichomythiaRate",
+               unit: "%",
+            },
+            {
+               group: "Objętość stychomytii",
+               label: "Liczba przypadków (par)",
+               key: "stichomythiaCases",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Objętość stychomytii",
+               label: "Wersy objęte zjawiskiem",
+               key: "stichomythiaVerses",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Objętość dystychomytii",
+               label: "Objętość",
+               key: "distichomythiaRate",
+               unit: "%",
+            },
+            {
+               group: "Objętość dystychomytii",
+               label: "Liczba przypadków (par)",
+               key: "distichomythiaCases",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Objętość dystychomytii",
+               label: "Wersy objęte zjawiskiem",
+               key: "distichomythiaVerses",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Objętość hemistychomytii (antylaby)",
+               label: "Objętość",
+               key: "hemistichomythiaRate",
+               unit: "%",
+            },
+            {
+               group: "Objętość hemistychomytii (antylaby)",
+               label: "Liczba przypadków antylaby",
+               key: "hemistichomythiaCases",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Objętość hemistychomytii (antylaby)",
+               label: "Wersy objęte zjawiskiem",
+               key: "hemistichomythiaVerses",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Łączna objętość hemi-, dy- i stychomytii",
+               label: "Objętość",
+               key: "rapidExchangeRate",
+               unit: "%",
+            },
+            {
+               group: "Łączna objętość hemi-, dy- i stychomytii",
+               label: "Wszystkie przypadki",
+               key: "rapidExchangeCases",
+               unit: "",
+               digits: 0,
+            },
+            {
+               group: "Łączna objętość hemi-, dy- i stychomytii",
+               label: "Unikalne wersy objęte zjawiskami",
+               key: "rapidExchangeVerses",
+               unit: "",
+               digits: 0,
+            },
+            {
                group: "Średnia długość zdania",
                label: "Średnia — słowa",
                key: "sentenceAverageWords",
@@ -8855,6 +8935,9 @@
             const asideStageDirectionCount = stageDirections.filter(
                ({ line }) => line.toLowerCase().includes("na stronie"),
             ).length;
+            // Ta sama logika co w głównej analizie: osobno liczba przypadków,
+            // osobno objętość mierzona unikalnymi rzeczywistymi wersami.
+            const rapidExchangeStats = getRapidExchangeStats(data);
 
             const isosyllabicSegments = metricLineCount
                ? getIsosyllabicSegments(metricLines)
@@ -8901,6 +8984,18 @@
                interactionAverage: speechBlocks.length
                   ? average(speechBlocks)
                   : 0,
+               stichomythiaRate: rapidExchangeStats.stichomythiaRate,
+               stichomythiaCases: rapidExchangeStats.stichomythiaCases,
+               stichomythiaVerses: rapidExchangeStats.stichomythiaVerses,
+               distichomythiaRate: rapidExchangeStats.distichomythiaRate,
+               distichomythiaCases: rapidExchangeStats.distichomythiaCases,
+               distichomythiaVerses: rapidExchangeStats.distichomythiaVerses,
+               hemistichomythiaRate: rapidExchangeStats.hemistichomythiaRate,
+               hemistichomythiaCases: rapidExchangeStats.hemistichomythiaCases,
+               hemistichomythiaVerses: rapidExchangeStats.hemistichomythiaVerses,
+               rapidExchangeRate: rapidExchangeStats.rapidExchangeRate,
+               rapidExchangeCases: rapidExchangeStats.rapidExchangeCases,
+               rapidExchangeVerses: rapidExchangeStats.rapidExchangeVerses,
                sentenceAverageWords: sentenceStats.averageWords,
                sentenceAverageSyllables: sentenceStats.averageSyllables,
                sentenceCount: sentenceStats.sentenceCount,
