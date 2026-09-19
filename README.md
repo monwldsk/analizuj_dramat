@@ -1046,6 +1046,8 @@ Projekt ma charakter badawczo-eksploracyjny. Główny przepływ opiera się na p
 
 Nie jest pełnym systemem NLP ani automatycznym interpretatorem tekstu literackiego. Jego zadaniem jest dostarczenie mierzalnych cech, które mogą wspomagać:
 
+- distant reading;
+
 - close reading;
 
 - badania wersologiczne;
