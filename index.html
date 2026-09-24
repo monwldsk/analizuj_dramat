@@ -2649,7 +2649,7 @@
                   <p class="lead">
                      Strona umożliwia cyfrową analizę tekstu dowolnego
                      wierszowanego dramatu (napisanego w języku polskim) pod kątem
-                     parametrów <span><strong>wersologicznych</strong></span>, <span><strong>dramatologicznych</strong></span> i <span><strong>stylometrycznych</strong></span>, takich jak m.in.:
+                     parametrów <span><strong>wersologicznych</strong></span>, <span><strong>dramatologicznych</strong></span> i <span><strong>stylometrycznych</strong></span>, takich jak:
                   </p>
                </header>
 
@@ -2767,12 +2767,12 @@
                         <div class="num">08</div>
                      </div>
                      <div class="card-title">
-                        Wskaźnik częstości tekstu pobocznego oraz jego nasycenia wypowiedziami „na
+                        Wskaźnik częstości tekstu pobocznego oraz wypowiedzi „na
                         stronie”
                      </div>
                      <div class="rule"></div>
                      <p>Liczba segmentów didaskaliowych wzgl. liczby wersów
-                        tekstu dialogowego oraz gęstość apartu.</p>
+                        tekstu dialogowego oraz częstość dyspozycji wykonawczych dot. apartu.</p>
                   </article>
 
                   <article class="card reveal" data-category="dialog">
@@ -3957,11 +3957,11 @@
                            Indeks gęstości metakomentarza (didaskaliów)
                         </option>
                         <option value="asideStageFunction">
-                           Wskaźnik nasycenia didaskaliów wypowiedziami „na
+                           Wskaźnik nasycenia didaskaliów instrukcjami wykonawczymi dotyczącymi wypowiedzi „na
                            stronie”
                         </option>
                         <option value="asideDramaLength">
-                           Wskaźnik gęstości apartu względem długości dramatu
+                           Wskaźnik częstości apartu względem długości dramatu
                         </option>
                      </select>
                   </div>
@@ -5924,13 +5924,13 @@
             );
 
             DOM.metrics.asideStageFunction.innerHTML = metricHtml(
-               "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”:",
+               "Wskaźnik nasycenia didaskaliów instrukcje wykonawcze zw. z wypowiedziami „na stronie”:",
                `${asideStageFunctionDensity}%`,
                "Wskaźnik = liczba didaskaliów zawierających tekst „na stronie” / liczba wszystkich wykrytych didaskaliów × 100.",
             );
 
             DOM.metrics.asideDramaLength.innerHTML = metricHtml(
-               "Wskaźnik gęstości apartu względem długości dramatu:",
+               "Wskaźnik częstości apartu względem długości dramatu:",
                `${asideDramaLengthDensity}%`,
                "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba rzeczywistych wersów dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
             );
@@ -7336,11 +7336,11 @@
                unit: "%",
             },
             asideStageFunction: {
-               label: "Wskaźnik nasycenia didaskaliów wypowiedziami „na stronie”",
+               label: "Wskaźnik nasycenia didaskaliów instrukcjami wykonawczymi dot. wypowiedzi „na stronie”",
                unit: "%",
             },
             asideDramaLength: {
-               label: "Wskaźnik gęstości apartu względem długości dramatu",
+               label: "Wskaźnik częstości apartu względem długości dramatu",
                unit: "%",
                note: "Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”, / liczba rzeczywistych wersów dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.",
             },
@@ -8425,7 +8425,7 @@
             },
             {
                group: "Apart względem długości dramatu",
-               label: "Gęstość apartu",
+               label: "Częstość apartu",
                key: "asideDramaLength",
                unit: "%",
             },
