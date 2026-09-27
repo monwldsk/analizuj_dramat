@@ -4,7 +4,6 @@
       <meta charset="UTF-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <title>Cyfrowa analiza dramatu</title>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
       <script
          data-goatcounter="https://monikaisyd.goatcounter.com/count"
          async
@@ -2554,6 +2553,27 @@
             font: inherit;
          }
 
+         .beta-tei-preview-download {
+            display: none;
+            padding: 9px 12px;
+            border-top: 1px solid #dce7f8;
+            background: #f8fbff;
+            font-size: 11px;
+         }
+
+         .beta-tei-preview-download.is-visible {
+            display: block;
+         }
+
+         .beta-tei-preview-download a {
+            font-weight: 700;
+            text-decoration: none;
+         }
+
+         .beta-tei-preview-download a:hover {
+            text-decoration: underline;
+         }
+
          .beta-xml-tag-bracket { color: #6b7280; }
          .beta-xml-tag-name { color: #005fb8; font-weight: 700; }
          .beta-xml-attr-name { color: #8a3b00; }
@@ -2697,9 +2717,106 @@
             max-width: 300px;
          }
 
+      
+
+         /* ===== Loader analizy ===== */
+         .analysis-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 10000;
+            display: grid;
+            place-items: center;
+            padding: 20px;
+            background: rgba(6, 31, 55, 0.34);
+            backdrop-filter: blur(3px);
+         }
+
+         .analysis-loader[hidden] {
+            display: none !important;
+         }
+
+         .analysis-loader-card {
+            width: min(460px, calc(100vw - 32px));
+            padding: 24px;
+            border: 1px solid #dce7f8;
+            border-radius: 18px;
+            background: #fff;
+            box-shadow: 0 24px 70px rgba(9, 42, 78, 0.24);
+         }
+
+         .analysis-loader-top {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+         }
+
+         .analysis-loader-spinner {
+            flex: 0 0 34px;
+            width: 34px;
+            height: 34px;
+            border: 3px solid #d7e7fa;
+            border-top-color: #0b72d9;
+            border-radius: 50%;
+            animation: analysis-loader-spin 0.75s linear infinite;
+         }
+
+         .analysis-loader-title {
+            margin: 0;
+            color: #07345b;
+            font-size: 17px;
+            font-weight: 800;
+         }
+
+         .analysis-loader-status {
+            margin: 4px 0 0;
+            color: #62748a;
+            font-size: 13px;
+            line-height: 1.45;
+         }
+
+         .analysis-loader-progress {
+            overflow: hidden;
+            height: 8px;
+            margin-top: 18px;
+            border-radius: 999px;
+            background: #eaf4ff;
+         }
+
+         .analysis-loader-progress-bar {
+            width: 0%;
+            height: 100%;
+            border-radius: inherit;
+            background: linear-gradient(90deg, #0b72d9, #2f69d9);
+            transition: width 0.18s ease;
+         }
+
+         @keyframes analysis-loader-spin {
+            to { transform: rotate(360deg); }
+         }
+
+         @media (prefers-reduced-motion: reduce) {
+            .analysis-loader-spinner { animation: none; }
+            .analysis-loader-progress-bar { transition: none; }
+         }
+
       </style>
    </head>
    <body>
+      <div id="analysisLoader" class="analysis-loader" hidden aria-live="polite" aria-busy="true">
+         <div class="analysis-loader-card" role="status" aria-atomic="true">
+            <div class="analysis-loader-top">
+               <div class="analysis-loader-spinner" aria-hidden="true"></div>
+               <div>
+                  <p class="analysis-loader-title">Analizuję dramat</p>
+                  <p id="analysisLoaderStatus" class="analysis-loader-status">Przygotowuję dane…</p>
+               </div>
+            </div>
+            <div class="analysis-loader-progress" aria-hidden="true">
+               <div id="analysisLoaderProgressBar" class="analysis-loader-progress-bar"></div>
+            </div>
+         </div>
+      </div>
+
       <main class="container">
          <div class="title-container-desktop">
             <img
@@ -4225,6 +4342,9 @@
                            <span id="betaTxtPreviewMeta" class="beta-tei-preview-meta">Ładowanie…</span>
                         </div>
                         <pre class="beta-tei-preview"><code id="betaTxtPreview">Ładowanie pliku TXT…</code></pre>
+                        <div id="betaTxtPreviewDownload" class="beta-tei-preview-download">
+                           <a id="betaTxtPreviewDownloadLink" href="#" download>Pobierz pełny plik TXT</a>
+                        </div>
                      </section>
 
                      <section class="beta-tei-preview-card">
@@ -4233,6 +4353,9 @@
                            <span id="betaXmlPreviewMeta" class="beta-tei-preview-meta">Ładowanie…</span>
                         </div>
                         <pre class="beta-tei-preview"><code id="betaXmlPreview">Ładowanie pliku TEI/XML…</code></pre>
+                        <div id="betaXmlPreviewDownload" class="beta-tei-preview-download">
+                           <a id="betaXmlPreviewDownloadLink" href="#" download>Pobierz pełny plik TEI/XML</a>
+                        </div>
                      </section>
                   </div>
 
@@ -4480,18 +4603,40 @@
          });
 
          document.querySelectorAll(".card").forEach((card) => {
-            card.addEventListener("pointermove", (e) => {
+            let pointerFrame = null;
+            let pointerRect = null;
+            let latestPointerEvent = null;
+
+            card.addEventListener("pointerenter", () => {
+               pointerRect = card.getBoundingClientRect();
+            });
+
+            card.addEventListener("pointermove", (event) => {
                if (
                   window.matchMedia("(prefers-reduced-motion: reduce)").matches
                )
                   return;
-               const rect = card.getBoundingClientRect();
-               const x = (e.clientX - rect.left) / rect.width - 0.5;
-               const y = (e.clientY - rect.top) / rect.height - 0.5;
-               card.style.transform = `translateY(-7px) rotateX(${(-y * 2.3).toFixed(2)}deg) rotateY(${(x * 2.3).toFixed(2)}deg)`;
+
+               latestPointerEvent = event;
+               if (pointerFrame) return;
+
+               pointerFrame = requestAnimationFrame(() => {
+                  pointerFrame = null;
+                  const e = latestPointerEvent;
+                  const rect = pointerRect || card.getBoundingClientRect();
+                  if (!e || !rect.width || !rect.height) return;
+
+                  const x = (e.clientX - rect.left) / rect.width - 0.5;
+                  const y = (e.clientY - rect.top) / rect.height - 0.5;
+                  card.style.transform = `translateY(-7px) rotateX(${(-y * 2.3).toFixed(2)}deg) rotateY(${(x * 2.3).toFixed(2)}deg)`;
+               });
             });
 
             card.addEventListener("pointerleave", () => {
+               if (pointerFrame) cancelAnimationFrame(pointerFrame);
+               pointerFrame = null;
+               pointerRect = null;
+               latestPointerEvent = null;
                card.style.transform = "";
             });
          });
@@ -4675,6 +4820,9 @@
             txtFileInput: document.getElementById("txtFileInput"),
             librarySearch: document.getElementById("librarySearch"),
             libraryNoResults: document.getElementById("libraryNoResults"),
+            analysisLoader: document.getElementById("analysisLoader"),
+            analysisLoaderStatus: document.getElementById("analysisLoaderStatus"),
+            analysisLoaderProgressBar: document.getElementById("analysisLoaderProgressBar"),
             buttons: {
                analyze: document.getElementById("analyzeButton"),
                clear: document.getElementById("clearButton"),
@@ -4765,6 +4913,17 @@
             renderedCharts: [],
          };
 
+         // ===== Optymalizacje wydajności =====
+         const PERFORMANCE_CONFIG = Object.freeze({
+            tablePreviewRows: 500,
+            betaPreviewChars: 60000,
+         });
+         const metricLinesCache = new WeakMap();
+         const rapidExchangeStatsCache = new WeakMap();
+         let sentenceCacheText = null;
+         let sentenceCacheSentences = null;
+         let xlsxLoadPromise = null;
+
          const actorPickerState = {
             mode: null,
             actors: [],
@@ -4773,13 +4932,42 @@
             maxSelection: Infinity,
          };
 
+         function nextPaint() {
+            return new Promise((resolve) => {
+               requestAnimationFrame(() => requestAnimationFrame(resolve));
+            });
+         }
+
+         function showAnalysisLoader(status = "Przygotowuję dane…", progress = 4) {
+            if (!DOM.analysisLoader) return;
+            DOM.analysisLoader.hidden = false;
+            updateAnalysisLoader(status, progress);
+            document.body.setAttribute("aria-busy", "true");
+         }
+
+         function updateAnalysisLoader(status, progress) {
+            if (DOM.analysisLoaderStatus && status) {
+               DOM.analysisLoaderStatus.textContent = status;
+            }
+            if (DOM.analysisLoaderProgressBar && Number.isFinite(progress)) {
+               const safeProgress = Math.max(0, Math.min(100, progress));
+               DOM.analysisLoaderProgressBar.style.width = `${safeProgress}%`;
+            }
+         }
+
+         function hideAnalysisLoader() {
+            if (!DOM.analysisLoader) return;
+            DOM.analysisLoader.hidden = true;
+            document.body.removeAttribute("aria-busy");
+         }
+
          function init() {
             bindEvents();
             loadDefaultText();
          }
 
          function bindEvents() {
-            DOM.buttons.analyze.addEventListener("click", analyzeText);
+            DOM.buttons.analyze.addEventListener("click", () => void analyzeText());
             DOM.buttons.clear.addEventListener("click", clearText);
             DOM.buttons.pieCharts.addEventListener("click", generatePieCharts);
             DOM.buttons.barCharts.addEventListener("click", generateBarCharts);
@@ -4855,6 +5043,9 @@
             }
          }
          async function loadLibraryText(path) {
+            showAnalysisLoader("Ładuję wybrany dramat…", 5);
+            await nextPaint();
+
             try {
                const response = await fetch(path);
                if (!response.ok)
@@ -4862,11 +5053,14 @@
 
                const text = await response.text();
                DOM.inputText.value = text;
+               updateAnalysisLoader("Tekst załadowany. Rozpoczynam analizę…", 10);
+               await nextPaint();
 
                // automatyczna analiza po załadowaniu
-               analyzeText();
+               await analyzeText({ loaderAlreadyVisible: true });
             } catch (error) {
                console.error(error);
+               hideAnalysisLoader();
                alert("Nie udało się załadować wybranego dramatu.");
             }
          }
@@ -4874,6 +5068,8 @@
          function clearText() {
             DOM.inputText.value = "";
             state.analyzedData = [];
+            sentenceCacheText = null;
+            sentenceCacheSentences = null;
             clearAllCharts();
             resetMetrics();
             resetActorMetricsComparison();
@@ -4882,22 +5078,46 @@
             DOM.actionButtons.style.display = "none";
          }
 
-         function analyzeText() {
+         async function analyzeText({ loaderAlreadyVisible = false } = {}) {
             const inputText = DOM.inputText.value.trim();
 
             if (!inputText) {
+               hideAnalysisLoader();
                alert("Nie wprowadzono wartości.");
                return;
             }
 
-            clearAllCharts();
-            resetActorMetricsComparison();
-            state.analyzedData = parseDramaText(inputText);
-            renderResultsTable(state.analyzedData);
-            calculateAdditionalMetrics();
+            const startedAt = performance.now();
+            if (!loaderAlreadyVisible) {
+               showAnalysisLoader("Przygotowuję analizę…", 5);
+            }
 
-            DOM.resultTable.classList.remove("hidden");
-            DOM.actionButtons.style.display = "flex";
+            try {
+               await nextPaint();
+               clearAllCharts();
+               resetActorMetricsComparison();
+
+               updateAnalysisLoader("Rozpoznaję wersy, didaskalia i mówców…", 18);
+               state.analyzedData = parseDramaText(inputText);
+               await nextPaint();
+
+               updateAnalysisLoader("Przygotowuję podgląd tabeli…", 34);
+               renderResultsTable(state.analyzedData);
+               await nextPaint();
+
+               await calculateAdditionalMetricsAsync();
+
+               DOM.resultTable.classList.remove("hidden");
+               DOM.actionButtons.style.display = "flex";
+               updateAnalysisLoader("Gotowe", 100);
+               await nextPaint();
+
+               const elapsed = performance.now() - startedAt;
+               console.info(`Analiza zakończona w ${elapsed.toFixed(0)} ms.`);
+            } finally {
+               hideAnalysisLoader();
+            }
+
             scrollToAnalysisResults();
          }
 
@@ -4979,6 +5199,11 @@
          }
 
          function buildMetricLines(data) {
+            if (Array.isArray(data)) {
+               const cached = metricLinesCache.get(data);
+               if (cached) return cached;
+            }
+
             const metricLines = [];
             const metricLinesByVerse = new Map();
 
@@ -5025,6 +5250,7 @@
                }
             });
 
+            if (Array.isArray(data)) metricLinesCache.set(data, metricLines);
             return metricLines;
          }
 
@@ -5045,38 +5271,83 @@
          }
 
          function renderResultsTable(data) {
-            DOM.resultTableBody.innerHTML = "";
+            DOM.resultTableBody.replaceChildren();
 
-            data.forEach(
+            const fragment = document.createDocumentFragment();
+            const visibleRows = data.slice(0, PERFORMANCE_CONFIG.tablePreviewRows);
+
+            visibleRows.forEach(
                ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => {
-                  const row = DOM.resultTableBody.insertRow();
-                  row.insertCell(0).textContent = verseNumber;
-                  row.insertCell(1).textContent = line;
-                  row.insertCell(2).textContent = vowelsNumber;
-                  row.insertCell(3).textContent = actor;
-                  row.insertCell(4).textContent = sharedLine;
+                  const row = document.createElement("tr");
+                  [verseNumber, line, vowelsNumber, actor, sharedLine].forEach(
+                     (value) => {
+                        const cell = document.createElement("td");
+                        cell.textContent = value;
+                        row.appendChild(cell);
+                     },
+                  );
+                  fragment.appendChild(row);
                },
             );
+
+            if (data.length > visibleRows.length) {
+               const infoRow = document.createElement("tr");
+               const infoCell = document.createElement("td");
+               infoCell.colSpan = 5;
+               infoCell.textContent = `Podgląd ograniczony do ${visibleRows.length.toLocaleString("pl-PL")} z ${data.length.toLocaleString("pl-PL")} rekordów. Eksport XLSX zawiera komplet danych.`;
+               infoCell.style.padding = "10px";
+               infoCell.style.textAlign = "center";
+               infoCell.style.fontWeight = "700";
+               infoRow.appendChild(infoCell);
+               fragment.appendChild(infoRow);
+            }
+
+            DOM.resultTableBody.appendChild(fragment);
          }
 
-         function exportToExcel() {
-            const workbook = XLSX.utils.book_new();
-            const rows = [
-               ["Nr wersu", "Treść wersu", "Liczba sylab", "Bohater", "SL"],
-               ...state.analyzedData.map(
-                  ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => [
-                     verseNumber,
-                     line,
-                     vowelsNumber,
-                     actor,
-                     sharedLine,
-                  ],
-               ),
-            ];
-            const worksheet = XLSX.utils.aoa_to_sheet(rows);
+         async function ensureXlsxLoaded() {
+            if (window.XLSX) return window.XLSX;
+            if (xlsxLoadPromise) return xlsxLoadPromise;
 
-            XLSX.utils.book_append_sheet(workbook, worksheet, "Wyniki");
-            XLSX.writeFile(workbook, "wyniki.xlsx");
+            xlsxLoadPromise = new Promise((resolve, reject) => {
+               const script = document.createElement("script");
+               script.src = "https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js";
+               script.async = true;
+               script.onload = () => resolve(window.XLSX);
+               script.onerror = () => {
+                  xlsxLoadPromise = null;
+                  reject(new Error("Nie udało się załadować biblioteki XLSX."));
+               };
+               document.head.appendChild(script);
+            });
+
+            return xlsxLoadPromise;
+         }
+
+         async function exportToExcel() {
+            try {
+               const XLSX = await ensureXlsxLoaded();
+               const workbook = XLSX.utils.book_new();
+               const rows = [
+                  ["Nr wersu", "Treść wersu", "Liczba sylab", "Bohater", "SL"],
+                  ...state.analyzedData.map(
+                     ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => [
+                        verseNumber,
+                        line,
+                        vowelsNumber,
+                        actor,
+                        sharedLine,
+                     ],
+                  ),
+               ];
+               const worksheet = XLSX.utils.aoa_to_sheet(rows);
+
+               XLSX.utils.book_append_sheet(workbook, worksheet, "Wyniki");
+               XLSX.writeFile(workbook, "wyniki.xlsx");
+            } catch (error) {
+               console.error(error);
+               alert("Nie udało się przygotować eksportu XLSX.");
+            }
          }
 
          function generatePieCharts() {
@@ -5958,34 +6229,34 @@
             reader.onload = (event) => {
                DOM.inputText.value = event.target.result;
                // automatyczna analiza po wczytaniu pliku
-               analyzeText();
+               void analyzeText();
             };
             reader.readAsText(file, "UTF-8");
          }
 
-         function calculateAdditionalMetrics() {
+         async function calculateAdditionalMetricsAsync() {
             if (!state.analyzedData.length) return;
 
             resetMetrics(false);
+            updateAnalysisLoader("Porządkuję dane do wskaźników…", 43);
 
-            // Dwie reprezentacje są celowo utrzymywane równolegle:
-            // 1) speechFragments – surowe fragmenty przypisane bohaterom;
-            //    na nich liczymy dynamikę wypowiedzi i udział mówców.
-            // 2) metricLines – rzeczywiste wersy; P_1 + P_2 są
-            //    scalane w jeden wers, także gdy rozdziela je didaskalium.
-            const speechFragments = state.analyzedData.filter(
-               ({ actor }) => actor !== "DIDASKALIA",
-            );
+            // Zbieramy fragmenty mowy i didaskalia w jednym przebiegu.
+            const speechFragments = [];
+            const stageDirections = [];
+            state.analyzedData.forEach((row) => {
+               if (row.actor === "DIDASKALIA") stageDirections.push(row);
+               else speechFragments.push(row);
+            });
+
             const metricLines = buildMetricLines(state.analyzedData);
-            const stageDirections = state.analyzedData.filter(
-               ({ actor }) => actor === "DIDASKALIA",
-            );
-
             const metricLineCount = metricLines.length;
             const stageDirectionCount = stageDirections.length;
-            const asideStageDirectionCount = stageDirections.filter(
-               ({ line }) => line.toLowerCase().includes("na stronie"),
-            ).length;
+            let asideStageDirectionCount = 0;
+            stageDirections.forEach(({ line }) => {
+               if (line.toLowerCase().includes("na stronie")) {
+                  asideStageDirectionCount++;
+               }
+            });
 
             renderStageDirectionMetrics({
                metricLineCount,
@@ -5993,9 +6264,7 @@
                asideStageDirectionCount,
             });
 
-            const dashboard = document.getElementById(
-               "metricsDashboardContent",
-            );
+            const dashboard = document.getElementById("metricsDashboardContent");
             const emptyState = document.getElementById("metricsEmptyState");
 
             if (metricLineCount === 0) {
@@ -6012,30 +6281,33 @@
             const allSpeechText = metricLines.map(({ line }) => line).join(" ");
             const words = getWords(allSpeechText);
 
+            updateAnalysisLoader("Liczę metrykę i strukturę dialogu…", 56);
             renderPunctuationMetric(allSpeechText, metricLineCount);
             renderIsosyllabicMetric(metricLines, metricLineCount);
             renderMetricEntropyMetric(metricLines);
             renderSharedLineIndexMetric(metricLines);
             renderRapidExchangeMetrics(state.analyzedData);
-            renderStichomythiaProgressChart(state.analyzedData);
-
-            // Tego wskaźnika NIE liczymy na scalonych wersach.
-            // P_1/P_2 pozostają odrębnymi fragmentami przypisanymi bohaterom,
-            // żeby nie zniekształcać struktury dialogowej.
             renderInteractionDensityMetric(speechFragments);
-
-            renderSentenceLengthMetric(allSpeechText);
-            renderHypotaxisMetric(allSpeechText);
-            renderCausalCohesionMetric(allSpeechText);
-
             renderLineBreakingMetric(metricLines, metricLineCount);
             renderSelfReferenceMetric(words);
             renderSelfReferencePluralMetric(words);
-            renderMetricDistributionChart(metricLines, metricLineCount);
+            await nextPaint();
 
-            // Udział bohaterów nadal dotyczy ich rzeczywistych fragmentów mowy,
-            // a nie sztucznie scalonych wersów wieloosobowych.
+            updateAnalysisLoader("Analizuję zdania i relacje składniowe…", 72);
+            // splitIntoSentences() korzysta ze wspólnego cache, więc tekst jest
+            // segmentowany tylko raz dla wszystkich trzech wskaźników.
+            renderSentenceLengthMetric(allSpeechText);
+            renderHypotaxisMetric(allSpeechText);
+            renderCausalCohesionMetric(allSpeechText);
+            await nextPaint();
+
+            updateAnalysisLoader("Rysuję wykresy…", 86);
+            renderStichomythiaProgressChart(state.analyzedData);
+            renderMetricDistributionChart(metricLines, metricLineCount);
             renderSpeakerShareChart(state.analyzedData);
+            await nextPaint();
+
+            updateAnalysisLoader("Finalizuję wyniki…", 96);
          }
 
          function resetMetrics(hide = true) {
@@ -6705,8 +6977,19 @@
                .filter(Boolean);
          }
 
-         function getSentenceLengthStats(text) {
+         function getCachedSentences(text) {
+            if (text === sentenceCacheText && sentenceCacheSentences) {
+               return sentenceCacheSentences;
+            }
+
             const sentences = splitIntoSentences(text);
+            sentenceCacheText = text;
+            sentenceCacheSentences = sentences;
+            return sentences;
+         }
+
+         function getSentenceLengthStats(text) {
+            const sentences = getCachedSentences(text);
             const sentenceLengths = sentences
                .map((sentence) => ({
                   words: getWords(sentence).length,
@@ -6724,7 +7007,7 @@
          }
 
          function getHypotaxisStats(text) {
-            const sentences = splitIntoSentences(text);
+            const sentences = getCachedSentences(text);
             const hypotacticCount =
                sentences.filter(isHypotacticSentence).length;
 
@@ -6738,7 +7021,7 @@
          }
 
          function getCausalCohesionStats(text) {
-            const sentences = splitIntoSentences(text);
+            const sentences = getCachedSentences(text);
             const causalCount = sentences.filter(isCausalSentence).length;
 
             return {
@@ -6914,7 +7197,9 @@
                   const sentence = normalizedText
                      .slice(sentenceStart, sentenceEnd + 1)
                      .trim();
-                  if (getWords(sentence).length) sentences.push(sentence);
+                  // Równoważne warunkowi getWords(sentence).length > 0,
+                  // ale bez tworzenia tablicy słów dla każdego zdania.
+                  if (/\p{L}/u.test(sentence)) sentences.push(sentence);
                   sentenceStart = sentenceEnd + 1;
                   index = sentenceEnd + 1;
                   continue;
@@ -6946,8 +7231,15 @@
             const nextChar = text[periodIndex + 1] || "";
             if (/\d/.test(previousChar) && /\d/.test(nextChar)) return false;
 
-            const beforePeriod = text.slice(0, periodIndex);
-            const tokenMatch = beforePeriod.match(
+            // Poprzednio wykonywaliśmy text.slice(0, periodIndex) dla każdej
+            // kropki. Dla długiego dramatu dawało to koszt zbliżony do O(n²).
+            // Skanujemy tylko lokalny token bez kopiowania całego prefiksu tekstu.
+            let tokenStart = periodIndex - 1;
+            while (tokenStart >= 0 && /[\p{L}.]/u.test(text[tokenStart])) {
+               tokenStart--;
+            }
+            const localBeforePeriod = text.slice(tokenStart + 1, periodIndex);
+            const tokenMatch = localBeforePeriod.match(
                /([\p{L}]+(?:\.[\p{L}]+)*)$/u,
             );
             const token = (tokenMatch?.[1] || "").toLowerCase();
@@ -7155,6 +7447,11 @@
          }
 
          function getRapidExchangeStats(data) {
+            if (Array.isArray(data)) {
+               const cached = rapidExchangeStatsCache.get(data);
+               if (cached) return cached;
+            }
+
             const { turns, occurrences } = analyzeRapidExchangeOccurrences(data);
             const turnCount = turns.length;
             const verseCount = buildMetricLines(data).length;
@@ -7196,7 +7493,7 @@
             const rate = (volumeVerses) =>
                verseCount ? (volumeVerses / verseCount) * 100 : 0;
 
-            return {
+            const result = {
                turnCount,
                verseCount,
                stichomythiaCases,
@@ -7218,6 +7515,9 @@
                turns,
                occurrences,
             };
+
+            if (Array.isArray(data)) rapidExchangeStatsCache.set(data, result);
+            return result;
          }
 
          function getStichomythiaStats(data) {
@@ -8371,6 +8671,10 @@
             xmlText: "",
             txtLabel: BETA_DEFAULT_SOURCES.txt.label,
             xmlLabel: BETA_DEFAULT_SOURCES.xml.label,
+            txtDownloadUrl: BETA_DEFAULT_SOURCES.txt.url,
+            xmlDownloadUrl: BETA_DEFAULT_SOURCES.xml.url,
+            txtObjectUrl: "",
+            xmlObjectUrl: "",
             defaultsPromise: null,
          };
 
@@ -8586,6 +8890,7 @@
             const button = document.getElementById("betaRunComparisonButton");
             const txtInput = document.getElementById("betaTxtFileInput");
             const xmlInput = document.getElementById("betaXmlFileInput");
+            const details = document.getElementById("betaTeiComparisonDetails");
             if (!button) return;
 
             button.addEventListener("click", runBetaTeiComparison);
@@ -8596,7 +8901,21 @@
                betaHandleSourceFileChange("xml", xmlInput.files?.[0]),
             );
 
-            betaTeiSourceState.defaultsPromise = betaLoadDefaultSources();
+            // Ciężkie pliki porównawcze nie są pobierane ani renderowane
+            // podczas startu strony. Ładujemy je dopiero po otwarciu sekcji BETA.
+            details?.addEventListener("toggle", () => {
+               if (details.open) betaEnsureDefaultSourcesLoaded();
+            });
+         }
+
+         function betaEnsureDefaultSourcesLoaded() {
+            if (betaTeiSourceState.txtText && betaTeiSourceState.xmlText) {
+               return Promise.resolve(true);
+            }
+            if (!betaTeiSourceState.defaultsPromise) {
+               betaTeiSourceState.defaultsPromise = betaLoadDefaultSources();
+            }
+            return betaTeiSourceState.defaultsPromise;
          }
 
          async function betaFetchDefaultSource(source) {
@@ -8617,13 +8936,24 @@
                   betaFetchDefaultSource(BETA_DEFAULT_SOURCES.xml),
                ]);
 
-               betaTeiSourceState.txtText = txtText;
-               betaTeiSourceState.xmlText = xmlText;
-               betaTeiSourceState.txtLabel = BETA_DEFAULT_SOURCES.txt.label;
-               betaTeiSourceState.xmlLabel = BETA_DEFAULT_SOURCES.xml.label;
-
-               betaRenderSourcePreview("txt", txtText, betaTeiSourceState.txtLabel);
-               betaRenderSourcePreview("xml", xmlText, betaTeiSourceState.xmlLabel);
+               if (!betaTeiSourceState.txtText) {
+                  betaStoreSource(
+                     "txt",
+                     txtText,
+                     BETA_DEFAULT_SOURCES.txt.label,
+                     BETA_DEFAULT_SOURCES.txt.url,
+                  );
+                  betaRenderSourcePreview("txt", txtText, betaTeiSourceState.txtLabel);
+               }
+               if (!betaTeiSourceState.xmlText) {
+                  betaStoreSource(
+                     "xml",
+                     xmlText,
+                     BETA_DEFAULT_SOURCES.xml.label,
+                     BETA_DEFAULT_SOURCES.xml.url,
+                  );
+                  betaRenderSourcePreview("xml", xmlText, betaTeiSourceState.xmlLabel);
+               }
                betaSetStatus(
                   "Możesz od razu uruchomić porównanie na domyślnie wczytanym przykładzie albo nadpisać pliki.",
                );
@@ -8643,7 +8973,7 @@
                const source = BETA_DEFAULT_SOURCES[kind];
                try {
                   const text = await betaFetchDefaultSource(source);
-                  betaStoreSource(kind, text, source.label);
+                  betaStoreSource(kind, text, source.label, source.url);
                   betaRenderSourcePreview(kind, text, source.label);
                   betaHideComparisonResults();
                   betaSetStatus(
@@ -8658,7 +8988,8 @@
 
             try {
                const text = await file.text();
-               betaStoreSource(kind, text, file.name);
+               const objectUrl = URL.createObjectURL(file);
+               betaStoreSource(kind, text, file.name, objectUrl, true);
                betaRenderSourcePreview(kind, text, file.name);
                betaHideComparisonResults();
                betaSetStatus(
@@ -8670,14 +9001,80 @@
             }
          }
 
-         function betaStoreSource(kind, text, label) {
+         function betaStoreSource(kind, text, label, downloadUrl = "", isObjectUrl = false) {
+            const objectUrlKey = kind === "txt" ? "txtObjectUrl" : "xmlObjectUrl";
+            const previousObjectUrl = betaTeiSourceState[objectUrlKey];
+            if (previousObjectUrl && previousObjectUrl !== downloadUrl) {
+               URL.revokeObjectURL(previousObjectUrl);
+            }
+
             if (kind === "txt") {
                betaTeiSourceState.txtText = text;
                betaTeiSourceState.txtLabel = label;
+               betaTeiSourceState.txtDownloadUrl = downloadUrl;
+               betaTeiSourceState.txtObjectUrl = isObjectUrl ? downloadUrl : "";
             } else {
                betaTeiSourceState.xmlText = text;
                betaTeiSourceState.xmlLabel = label;
+               betaTeiSourceState.xmlDownloadUrl = downloadUrl;
+               betaTeiSourceState.xmlObjectUrl = isObjectUrl ? downloadUrl : "";
             }
+         }
+
+         function betaCountLines(text) {
+            if (!text) return 0;
+            let lines = 1;
+            for (let index = 0; index < text.length; index++) {
+               if (text.charCodeAt(index) === 10) lines++;
+            }
+            return lines;
+         }
+
+         function betaGetPreviewText(text) {
+            if (!text || text.length <= PERFORMANCE_CONFIG.betaPreviewChars) {
+               return { text: text || "", truncated: false };
+            }
+
+            let preview = text.slice(0, PERFORMANCE_CONFIG.betaPreviewChars);
+            const lastLineBreak = preview.lastIndexOf("\n");
+            if (lastLineBreak > PERFORMANCE_CONFIG.betaPreviewChars * 0.75) {
+               preview = preview.slice(0, lastLineBreak + 1);
+            }
+            return { text: preview, truncated: true };
+         }
+
+         function betaUpdatePreviewDownload(kind, label, truncated) {
+            const container = document.getElementById(
+               kind === "txt" ? "betaTxtPreviewDownload" : "betaXmlPreviewDownload",
+            );
+            const link = document.getElementById(
+               kind === "txt"
+                  ? "betaTxtPreviewDownloadLink"
+                  : "betaXmlPreviewDownloadLink",
+            );
+            if (!container || !link) return;
+
+            const downloadUrl =
+               kind === "txt"
+                  ? betaTeiSourceState.txtDownloadUrl
+                  : betaTeiSourceState.xmlDownloadUrl;
+
+            const shouldShow = Boolean(truncated && downloadUrl);
+            container.classList.toggle("is-visible", shouldShow);
+            if (!shouldShow) {
+               link.removeAttribute("href");
+               return;
+            }
+
+            link.href = downloadUrl;
+            link.download = (label || (kind === "txt" ? "plik.txt" : "plik.xml"))
+               .split("/")
+               .pop();
+            link.textContent =
+               kind === "txt"
+                  ? "Pobierz pełny plik TXT"
+                  : "Pobierz pełny plik TEI/XML";
+            link.title = `Pobierz cały plik: ${label}`;
          }
 
          function betaRenderSourcePreview(kind, text, label) {
@@ -8689,15 +9086,24 @@
             );
             if (!code) return;
 
+            const preview = betaGetPreviewText(text);
+            const previewSuffix = preview.truncated
+               ? "\n\n[… podgląd skrócony dla wydajności …]"
+               : "";
+
             if (kind === "xml") {
-               code.innerHTML = betaHighlightXml(text);
+               // Kolorujemy tylko ograniczony fragment, zamiast tworzyć tysiące
+               // elementów <span> dla całego dokumentu TEI.
+               code.innerHTML = betaHighlightXml(preview.text) + escapeHtml(previewSuffix);
             } else {
-               code.textContent = text;
+               code.textContent = preview.text + previewSuffix;
             }
 
+            betaUpdatePreviewDownload(kind, label, preview.truncated);
+
             if (meta) {
-               const lineCount = text ? text.split(/\r?\n/).length : 0;
-               meta.textContent = `${lineCount} wierszy · ${text.length.toLocaleString("pl-PL")} znaków`;
+               const lineCount = betaCountLines(text);
+               meta.textContent = `${lineCount.toLocaleString("pl-PL")} wierszy · ${text.length.toLocaleString("pl-PL")} znaków${preview.truncated ? " · podgląd skrócony" : ""}`;
                meta.title = label;
             }
          }
@@ -8737,8 +9143,8 @@
             const xmlInput = document.getElementById("betaXmlFileInput");
             const button = document.getElementById("betaRunComparisonButton");
 
-            if (betaTeiSourceState.defaultsPromise) {
-               await betaTeiSourceState.defaultsPromise;
+            if (!betaTeiSourceState.txtText || !betaTeiSourceState.xmlText) {
+               await betaEnsureDefaultSourcesLoaded();
             }
 
             if (button) button.disabled = true;
