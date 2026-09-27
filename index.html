@@ -3151,11 +3151,11 @@
                </div>
                <section class="case-studies-section" id="caseStudiesAccordion">
                   <div class="case-studies-header">
-                     <h2>Studia przypadku</h2>
+                     <h2>Cyfrowa analiza dramatu w praktyce – przykłady</h2>
                      <p>
-                        Poniższe studia pokazują, jak analiza cyfrowa może
+                        Poniższe przykłady pokazują, jak analiza cyfrowa może
                         wspierać interpretację konkretnych problemów badawczych.
-                        Rozwiń wybraną belkę, aby zobaczyć szczegóły analizy.
+                        Rozwiń wybraną belkę, aby zobaczyć szczegóły.
                      </p>
                   </div>
 
@@ -10654,35 +10654,6 @@
             if (resultsSection) resultsSection.hidden = true;
          };
 
-
-         const caseStudyItems = document.querySelectorAll(
-            "#caseStudiesAccordion .case-study-item",
-         );
-
-         caseStudyItems.forEach((item) => {
-            item.addEventListener("toggle", () => {
-               if (!item.open) return;
-
-               const summary = item.querySelector(".case-study-summary");
-               const summaryTopBefore = summary
-                  ? summary.getBoundingClientRect().top
-                  : null;
-
-               caseStudyItems.forEach((otherItem) => {
-                  if (otherItem !== item) otherItem.open = false;
-               });
-
-               if (summary && summaryTopBefore !== null) {
-                  requestAnimationFrame(() => {
-                     const summaryTopAfter = summary.getBoundingClientRect().top;
-                     window.scrollBy({
-                        top: summaryTopAfter - summaryTopBefore,
-                        behavior: "auto",
-                     });
-                  });
-               }
-            });
-         });
 
          init();
          initComparisonAnalysis();
