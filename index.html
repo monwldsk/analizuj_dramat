@@ -667,6 +667,73 @@
          .rymkiewicz-image-container img {
             width: 100%;
          }
+
+         /* ===== Studia przypadku ===== */
+         .case-studies-header {
+            margin-bottom: 18px;
+         }
+
+         .case-studies-header h2 {
+            margin-bottom: 8px;
+         }
+
+         .case-studies-header p {
+            margin: 0;
+            color: #65758b;
+            line-height: 1.55;
+         }
+
+         .case-study-item {
+            margin-top: 12px;
+            border: 1px solid #dce7f8;
+            border-radius: 14px;
+            background: #fff;
+            overflow: hidden;
+         }
+
+         .case-study-summary {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 18px;
+            color: var(--color-primary);
+            background: #eef6ff;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            list-style: none;
+         }
+
+         .case-study-summary::-webkit-details-marker {
+            display: none;
+         }
+
+         .case-study-summary::after {
+            content: "▾";
+            margin-left: auto;
+            font-size: 18px;
+            transition: transform 0.2s ease;
+         }
+
+         .case-study-item[open] > .case-study-summary::after {
+            transform: rotate(180deg);
+         }
+
+         .case-study-content {
+            padding: 22px 18px 8px;
+         }
+
+         @media screen and (max-width: 600px) {
+            .case-study-summary {
+               align-items: flex-start;
+               padding: 14px 15px;
+               font-size: 15px;
+            }
+
+            .case-study-content {
+               padding: 18px 12px 6px;
+            }
+         }
          :root {
             --bg: #f7f9fc;
             --surface: rgba(255, 255, 255, 0.94);
@@ -2619,6 +2686,16 @@
             align-items: center;
             gap: 6px;
          }
+         .charts-case-study {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin: 16px auto;
+
+         }
+         .charts-case-study img {
+            max-width: 300px;
+         }
 
       </style>
    </head>
@@ -2955,9 +3032,21 @@
                <div class="banner-separator-mobile">
                   <img src="assets/separator_short.png" alt="baner_mobile" />
                </div>
-               <h2>
-                  Studium przypadku: Twórczość dramatyczna Juliusza Słowackiego
-               </h2>
+               <section class="case-studies-section" id="caseStudiesAccordion">
+                  <div class="case-studies-header">
+                     <h2>Studia przypadku</h2>
+                     <p>
+                        Poniższe studia pokazują, jak analiza cyfrowa może
+                        wspierać interpretację konkretnych problemów badawczych.
+                        Rozwiń wybraną belkę, aby zobaczyć szczegóły analizy.
+                     </p>
+                  </div>
+
+                  <details class="case-study-item">
+                     <summary class="case-study-summary">
+                        <span>Studium przypadku I: Twórczość dramatyczna Juliusza Słowackiego</span>
+                     </summary>
+                     <div class="case-study-content">
                <div>
                   Poniżej podano konkretny przykład zastosowania badań cyfrowych
                   do analizy twórczości Juliusza Słowackiego. W analizie wzięto
@@ -3127,6 +3216,68 @@
                      alt="Slowacki i Rymkiewicz"
                   />
                </div>
+                     </div>
+                  </details>
+
+                  <details class="case-study-item">
+                     <summary class="case-study-summary">
+                        <span>Studium przypadku II: Analiza profili wersyfikacyjnych IV cz. <i>Dziadów</i> Adama Mickiewicza</span>
+                     </summary>
+                     <div class="case-study-content">
+                        Porównajmy wersyfikacyjnie wypowiedzi Pustelnika, Gustawa (czyli Pustelnika od momentu ujawnienia tożsamości) i Księdza:
+                        <div class="charts-case-study">
+                           <img src="assets/other_case_studies/chart_pustelnik.png" alt="chart">
+                            <img src="assets/other_case_studies/chart_gustaw.png" alt="chart">
+                             <img src="assets/other_case_studies/chart_ksiadz.png" alt="chart">
+                        </div>
+                        Okazuje się, że bohaterowie synchronizują się metrycznie ze sposobem wypowiedzi Księdza<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Jeśli porównamy profile Księdza sprzed rozpoznania Gustawa i po - zauważymy, że Ksiądz także stopniowo ogranicza użycie 8-zgłoskowca, choć w jego przypadku ten udział nie jest aż tak obszerny objętościowo jak w przypadku Pustelnika.')"
+                     >[1]</span
+                  >. Zastanawiający jest także spadek udziału 8-zgłoskowca w wypowiedziach Pustelnika na rzecz dominujących w wypowiedziach Księdza wzorców klasycznych, głównie 13-zgłoskowca. Obserwacje te domagają się komentarza z perspektywy nie tylko tradycyjnej linii interpretacji sporu światopoglądowego bohaterów<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. np. J. Kleiner, Mickiewicz: Dzieje Gustawa, t. 1, Lublin 1995 lub Z. Stefanowska, Próba zdrowego rozumu. Studia o Mickiewiczu, Warszawa 1976.')"
+                     >[2]</span> 
+                     (czy uwag Kleinera o „nieorganiczności” ostatniej godziny dramatu<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. J. Kleiner, dz. cyt., s. 436.')"
+                     >[3]</span>), lecz także ogólnej semantyki form wierszowych w polskiej literaturze (8-zgłoskowiec związany był z kobiecością, 13-zgłoskowiec z męskością)<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. L. Pszczołowska, D. Urbańska, Wiersz polski. Tematyczna i stylistyczna dystrybucja form polskiego wiersza w 2. połowie XIX wieku, [w:] Słowiańska metryka porównawcza, t. 3: Semantyka form wierszowych, red. L. Pszczołowska, Wrocław 1988.')"
+                     >[4]</span>. Ta ostatnia perspektywa – w połączeniu z inspirowanymi J. Kristevą<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. J. Kristeva, Revolution in Poetic Language, trans. M. Waller, New York 1984.')"
+                     >[5]</span> uwagami L. Magnone na temat 8-zgłoskowca<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. L. Magnone, Kristeva – Leśmian – Konopnicka, „Pamiętnik Literacki” 2008, z. 4.')"
+                     >[6]</span> – pozwala zastanowić się również nad nowszymi tezami interpretacyjnymi, np. obserwacją M. Kuziaka dotyczącą semiotycznego (w sensie Kristevej) potencjału utworu Mickiewicza<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('Zob. M. Kuziak, Tajemnica intertekstualności Mickiewicza. Wokół IV części „Dziadów”, [w:] tegoż, Inny Mickiewicz, Gdańsk 2013.')"
+                     >[7]</span>. Uwzględnienie danych wersyfikacyjnych skłania do pytania, czy zaproponowany przez badacza moment przesilenia między porządkiem semiotycznym (kobiecym) i symbolicznym (męskim) nie ujawnia się już w środku dramatu, a nie dopiero w końcowym pouczeniu i późniejszej twórczości poety. Stwierdzenie Kuziaka, że język Pustelnika-Gustawa „w myśl koncepcji Kristevej jest bliższy językowi kobiecemu” i przeciwstawianie go męskiej mowie Księdza wydaje się zbyt daleko idącym uogólnieniem nieuwzględniającym procesu synchronizacji głosów obu interlokutorów w kierunku tego, co autorka <i>La Révolution du langage poétique</i> przypisuje męskości. Przy okazji, w zaproponowanej tu możliwości odczytania IV części <i>Dziadów</i> jako inscenizacji przejścia z semiotycznego do symbolicznego wspomniana wyżej konstatacja Kleinera o „nieorganiczności” trzeciej godziny, w której bohater w nieuzasadniony sposób zmienia się w dziwnie trzeźwego, traci swoje umotywowanie.
+                     </div>
+                  </details>
+
+                  <details class="case-study-item">
+                     <summary class="case-study-summary">
+                        <span>Studium przypadku III: Poetyka dramatu romantycznego</span>
+                     </summary>
+                     <div class="case-study-content">
+                        Gdy dostępność literatury, nie tylko romantycznej, w standardzie TEI będzie większa, otworzą się nowe perspektywy badań nad poetyką dramatu romantycznego jako dzieła otwartego (oraz szerzej: nad problematyką genologiczną). Ilościowe analizy porównawcze z wykorzystaniem metod cyfrowych pozwolą np. ocenić, czy romantyczną formę otwartą charakteryzuje ponadprzeciętny stopień dezintegracji płaszczyzn komunikacji (chociażby poprzez zwiększoną frekwencję wypowiedzi „na stronie” czy „do siebie”) albo czy zwizualizowana krzywa zaniku apartu w kolejnych aktach i scenach w toku dramatycznego „dziania się” (interpretowana jako przejaw wygaszania polifonii w miarę zmierzania akcji do rozwiązania) jest mniej stroma niż w dramacie klasycznym.
+                     </div>
+                  </details>
+
+                  <details class="case-study-item">
+                     <summary class="case-study-summary">
+                        <span>Studium przypadku IV: Teoria komunikacji literackiej</span>
+                     </summary>
+                     <div class="case-study-content">
+                       Analizy cyfrowe otwierają także nowe możliwości badań nad teorią komunikacji literackiej. Pozwalają na przykład ocenić, czy zachodzi związek między zanikiem metakomentarza (a więc osłabieniem obecności „ja” autorskiego) a potrzebą wzmocnienia funkcji fatycznej wobec wirtualnego odbiorcy za pomocą apartu (wypowiedzi „na stronie”). W przypadku literatury romantycznej ustalenie tego związku mogłoby pomóc m.in. zweryfikować na materiale dramatycznym zaobserwowaną przez R. Dąbrowskiego na przykładach epickich ewolucję relacji nadawczo-odbiorczych u Słowackiego: od komunikacji „arystotelesowskiej, która pojmuje twórczość poetycką głównie jako kreowanie tekstu, przedmiotu artystycznego” (czyli gdzie „ja” autorskie jest najważniejsze), do charakterystycznej w późniejszym okresie komunikacji „platońskiej, zakładającej dialogiczną, aktywną i interakcyjną wizję porozumiewania się za pomocą znaków kultury” (gdzie najważniejsza jest interakcja z odbiorcą)<span
+                     style="color: #0073ce; cursor: pointer"
+                     onclick="alert('R. Dąbrowski, Słowackiego dialog z odbiorcą. Podmiot mówiący, narracja, dialog w „Podróży do Ziemi Świętej z Neapolu”, „Beniowskim” i „Królu-Duchu”, Kraków 1996, s. 150.')"
+                     >[1]</span>.
+                     </div>
+                  </details>
+               </section>
                <div class="banner-separator">
                   <img src="assets/separator_long.png" alt="baner" />
                </div>
@@ -3821,7 +3972,7 @@
                   <h3>1. Wybierz teksty z biblioteki</h3>
                   <p class="comparison-panel-intro">
                      Utwory Juliusza Słowackiego widoczne na wykresach z
-                     opisanego wyżej studium przypadku są zaznaczone domyślnie.
+                     opisanego wyżej <i><strong>Studium przypadku I</strong></i> są zaznaczone domyślnie.
                   </p>
                   <input
                      id="comparisonLibrarySearch"
@@ -10097,6 +10248,35 @@
             if (resultsSection) resultsSection.hidden = true;
          };
 
+
+         const caseStudyItems = document.querySelectorAll(
+            "#caseStudiesAccordion .case-study-item",
+         );
+
+         caseStudyItems.forEach((item) => {
+            item.addEventListener("toggle", () => {
+               if (!item.open) return;
+
+               const summary = item.querySelector(".case-study-summary");
+               const summaryTopBefore = summary
+                  ? summary.getBoundingClientRect().top
+                  : null;
+
+               caseStudyItems.forEach((otherItem) => {
+                  if (otherItem !== item) otherItem.open = false;
+               });
+
+               if (summary && summaryTopBefore !== null) {
+                  requestAnimationFrame(() => {
+                     const summaryTopAfter = summary.getBoundingClientRect().top;
+                     window.scrollBy({
+                        top: summaryTopAfter - summaryTopBefore,
+                        behavior: "auto",
+                     });
+                  });
+               }
+            });
+         });
 
          init();
          initComparisonAnalysis();
