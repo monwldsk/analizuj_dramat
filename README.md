@@ -1016,7 +1016,7 @@ Najważniejsze potencjalne rozszerzenia:
 - większy i bardziej zróżnicowany korpus dramatów;
 - pełniejsza analiza składniowa;
 - rozszerzenie analizy zmian w toku dramatu na wszystkie wskaźniki i — przy danych strukturalnych — na akty oraz sceny;
-- analiza sieci interakcji postaci;
+- analiza sieci interakcji postaci (jak w DraCor);
 - generowanie raportu reprodukowalnego dla konkretnego pliku i wersji algorytmu.
 
 ---
