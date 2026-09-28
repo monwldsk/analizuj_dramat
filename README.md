@@ -30,7 +30,7 @@ Narzędzie umożliwia:
 - wizualizację wyników na wykresach;
 - analizę udziału poszczególnych bohaterów w tekście dialogowym;
 - porównywanie struktury wersyfikacyjnej wypowiedzi różnych bohaterów;
-- tabelaryczne porównanie do 8 bohaterów według dodatkowych wskaźników stylistycznych i składniowych;
+- tabelaryczne porównanie do 8 bohaterów według dodatkowych wskaźników stylometrycznych i składniowych;
 - eksport tabeli analitycznej do XLSX;
 - porównywanie dowolnej liczby dramatów według wybranego wskaźnika;
 - śledzenie zmian wybranych wskaźników w kolejnych 20-procentowych odcinkach dramatu;
@@ -1052,7 +1052,7 @@ Nie jest pełnym systemem NLP ani automatycznym interpretatorem tekstu literacki
 
 - badania wersologiczne;
 
-- stylistykę ilościową;
+- stylometrię;
 
 - dydaktykę;
 
