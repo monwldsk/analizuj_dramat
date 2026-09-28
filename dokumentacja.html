@@ -149,40 +149,45 @@
       <h1>Dokumentacja metod i wskaźników analizy</h1>
       <p class="lead">Dokumentacja aktualizowana na bieżąco.</p>
       <h2>I. Algorytm wyliczania zróżnicowania wersyfikacyjnego</h2>
-      <p class="algorythm-description">Skrypt przelicza liczbę sylab dla każdego wersu na
-         podstawie identyfikacji samogłosek, które w danej
-         pozycji pełnią funkcję sylabotwórczą. Nie robi tego w
-         100% bezbłędnie – nie wykryje np., że kombinacja [ia]
-         występująca na granicy morfemów (jak w wyrazie
-         <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo
-         będzie 7-sylabowe), ponieważ [i] – dość wyjątkowo jak na
-         język polski (bo pomimo sąsiedztwa innej samogłoski z
-         prawej strony) – będzie ośrodkiem osobnej sylaby. Nie
-         wykryje także dyftongów takich jak [au] (por.
-         <i>t<u>au</u>-to-lo-gia</i>, ale
-         <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por.
-         <i>si-nu-s<u>oi</u>-da</i>, ale
-         <i>He-l<u>o</u>-<u>i</u>-sa</i>).
-      </p>
-      <p>
-         Mimo to próba oceny poprawności algorytmu przyniosła obiecujące wyniki. Na materiale IV części
-         <i>Dziadów</i>
-         porównanie automatycznie wyliczonej liczby sylab z ręczną weryfikacją wykazało tylko jeden przypadek błędnego
-         rozpoznania. Przy czym nie wpłynął on na końcowe rezultaty, bo dotyczył didaskalium, a dokładniej wyrażenia „po
-         p<u>au</u>zie”, w którym algorytm
-         potraktował sekwencję [au] jako należącą do dwóch sylab, nie jako dyftong. Wynik ten sugeruje, że opisane wyżej
-         wyjątki mogą mieć niewielki wpływ na statystyki wyliczane dla dłuższych tekstów. Ze względu na ograniczony
-         zakres tej próby nie pozwala ona jednak jeszcze na wiarygodne określenie poziomu błędu metody. W dalszym etapie
-         algorytm zostanie poddany systematycznej walidacji na ręcznie oznaczonej próbce referencyjnej, co pozwoli
-         dokładniej oszacować jego skuteczność.
-      </p>
-      <p>
-         Algorytm potrafi wykryć antylabę lub wers rozłamany przez didaskalium. W obu przypadkach przed wyliczeniami
-         statystyk wers jest scalany (konwencja oznaczenia części składowych takiego wersu to: P_1, P_2). W analizie
-         wersyfikacyjnej
-         brany jest pod uwagę wyłącznie tekst dialogowy.
-      </p>
-
+      <div class="algorythm-description">
+         <p>Skrypt przelicza liczbę sylab dla każdego wersu na
+            podstawie identyfikacji samogłosek, które w danej
+            pozycji pełnią funkcję sylabotwórczą. Nie robi tego w
+            100% bezbłędnie – nie wykryje np., że kombinacja [ia]
+            występująca na granicy morfemów (jak w wyrazie
+            <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo
+            będzie 7-sylabowe), ponieważ [i] – dość wyjątkowo jak na
+            język polski (bo pomimo sąsiedztwa innej samogłoski z
+            prawej strony) – będzie ośrodkiem osobnej sylaby. Nie
+            wykryje także dyftongów takich jak [au] (por.
+            <i>t<u>au</u>-to-lo-gia</i>, ale
+            <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por.
+            <i>si-nu-s<u>oi</u>-da</i>, ale
+            <i>He-l<u>o</u>-<u>i</u>-sa</i>).
+         </p>
+         <p>
+            Mimo to próba oceny poprawności algorytmu przyniosła obiecujące wyniki. Na materiale IV części
+            <i>Dziadów</i>
+            porównanie automatycznie wyliczonej liczby sylab z ręczną weryfikacją wykazało tylko jeden przypadek
+            błędnego
+            rozpoznania. Przy czym nie wpłynął on na końcowe rezultaty, bo dotyczył didaskalium, a dokładniej wyrażenia
+            „po
+            p<u>au</u>zie”, w którym algorytm
+            potraktował sekwencję [au] jako należącą do dwóch sylab, nie jako dyftong. Wynik ten sugeruje, że opisane
+            wyżej
+            wyjątki mogą mieć niewielki wpływ na statystyki wyliczane dla dłuższych tekstów. Ze względu na ograniczony
+            zakres tej próby nie pozwala ona jednak jeszcze na wiarygodne określenie poziomu błędu metody. W dalszym
+            etapie
+            algorytm zostanie poddany systematycznej walidacji na ręcznie oznaczonej próbce referencyjnej, co pozwoli
+            dokładniej oszacować jego skuteczność.
+         </p>
+         <p>
+            Algorytm potrafi wykryć antylabę lub wers rozłamany przez didaskalium. W obu przypadkach przed wyliczeniami
+            statystyk wers jest scalany (konwencja oznaczenia części składowych takiego wersu to: P_1, P_2). W analizie
+            wersyfikacyjnej
+            brany jest pod uwagę wyłącznie tekst dialogowy.
+         </p>
+      </div>
       <h2>II. Pozostałe wskaźniki</h2>
       <div class="metrics-grid">
          <div class="metric-card">
