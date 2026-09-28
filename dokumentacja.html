@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   <title>Dokumentacja metod i wskaźników analizy</title>
+   <style>
+      :root {
+         --color-primary: #002e52;
+         --color-accent: #0073ce;
+         --color-bg: #eeeeee;
+         --color-surface: #ffffff;
+         --color-border: #dce7f8;
+         --color-muted: #65758b;
+         --shadow-card: 0 2px 14px rgba(0, 0, 0, 0.1);
+      }
+
+      * {
+         box-sizing: border-box;
+      }
+
+      body {
+         margin: 0;
+         padding: 20px;
+         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         color: #10233f;
+         background: var(--color-bg);
+         line-height: 1.5;
+      }
+
+      a {
+         color: var(--color-accent);
+      }
+
+      .container {
+         width: min(100%, 1200px);
+         margin: 0 auto;
+         padding: 30px 40px;
+         border-radius: 24px;
+         background: var(--color-surface);
+         box-shadow: var(--shadow-card);
+      }
+
+      .back-link {
+         display: inline-block;
+         margin-bottom: 26px;
+         font-weight: 700;
+         text-decoration: none;
+      }
+
+      .back-link:hover,
+      .back-link:focus-visible {
+         text-decoration: underline;
+      }
+
+      h1 {
+         margin: 0 0 12px;
+         color: var(--color-primary);
+         font-size: clamp(28px, 4vw, 42px);
+         line-height: 1.1;
+      }
+
+      .lead {
+         margin: 0 0 28px;
+         color: var(--color-muted);
+      }
+
+      .metrics-grid {
+         display: grid;
+         grid-template-columns: repeat(2, minmax(0, 1fr));
+         gap: 12px;
+      }
+
+      .metric-card {
+         min-width: 0;
+         padding: 18px;
+         border: 1px solid var(--color-border);
+         border-radius: 14px;
+         background: linear-gradient(180deg, #fff, #fbfdff);
+         box-shadow: 0 4px 14px rgba(29, 58, 108, 0.04);
+      }
+
+      .metric-card-label {
+         color: #10233f;
+         font-size: 15px;
+         font-weight: 800;
+         line-height: 1.35;
+      }
+
+      .metric-card-secondary {
+         margin-top: 8px;
+         color: var(--color-muted);
+         font-size: 13px;
+         line-height: 1.55;
+      }
+
+      @media (max-width: 760px) {
+         body {
+            padding: 8px;
+         }
+
+         .container {
+            padding: 24px 16px;
+         }
+
+         .metrics-grid {
+            grid-template-columns: 1fr;
+         }
+      }
+   </style>
+</head>
+
+<body>
+   <main class="container">
+      <a class="back-link" href="https://monwldsk.github.io/analizuj_dramat/">← Powrót do strony głównej</a>
+      <h1>Dokumentacja metod i wskaźników analizy</h1>
+      <p class="lead">Opisy metod i wskaźników wykorzystywanych w analizie dramatu.</p>
+      <h2>I. Algorytm wyliczania zróżnicowania wersyfikacyjnego</h2>
+      <p>Skrypt przelicza liczbę sylab dla każdego wersu na
+         podstawie identyfikacji samogłosek, które w danej
+         pozycji pełnią funkcję sylabotwórczą. Nie robi tego w
+         100% bezbłędnie – nie wykryje np., że kombinacja [ia]
+         występująca na granicy morfemów (jak w wyrazie
+         <i>miniaparatura</i>) utworzy 2 sylaby (stąd całe słowo
+         będzie 7-sylabowe), ponieważ [i] – dość wyjątkowo jak na
+         język polski (bo pomimo sąsiedztwa innej samogłoski z
+         prawej strony) – będzie ośrodkiem osobnej sylaby. Nie
+         wykryje także dyftongów takich jak [au] (por.
+         <i>t<u>au</u>-to-lo-gia</i>, ale
+         <i>n<u>a</u>-<u>u</u>ka</i>) lub [oi] (por.
+         <i>si-nu-s<u>oi</u>-da</i>, ale
+         <i>He-l<u>o</u>-<u>i</u>-sa</i>).
+      </p>
+      <p>
+         Mimo to próba oceny poprawności algorytmu przyniosła obiecujące wyniki. Na materiale IV części
+         <i>Dziadów</i>
+         porównanie automatycznie wyliczonej liczby sylab z ręczną weryfikacją wykazało tylko jeden przypadek błędnego
+         rozpoznania. Przy czym nie wpłynął on na końcowe rezultaty, bo dotyczył didaskalium, a dokładniej wyrażenia „po
+         p<u>au</u>zie”, w którym algorytm
+         potraktował sekwencję [au] jako należącą do dwóch sylab, nie jako dyftong. Wynik ten sugeruje, że opisane wyżej
+         wyjątki mogą mieć niewielki wpływ na statystyki wyliczane dla dłuższych tekstów. Ze względu na ograniczony
+         zakres tej próby nie pozwala ona jednak jeszcze na wiarygodne określenie poziomu błędu metody. W dalszym etapie
+         algorytm zostanie poddany systematycznej walidacji na ręcznie oznaczonej próbce referencyjnej, co pozwoli
+         dokładniej oszacować jego skuteczność.
+      </p>
+      <p>
+         Algorytm potrafi wykryć antylabę lub wers rozłamany przez didaskalium. W obu przypadkach przed wyliczeniami
+         statystyk wers jest scalany (konwencja oznaczenia części składowych takiego wersu to: P_1, P_2).
+      </p>
+
+      <h2>II. Pozostałe wskaźniki</h2>
+      <div class="metrics-grid">
+         <div class="metric-card">
+            <div class="metric-card-label">Średnia długość odcinka izosylabicznego</div>
+            <div class="metric-card-secondary">
+               Odcinek izosylabiczny to ciąg kolejnych rzeczywistych wersów mających tę samą liczbę sylab. Fragmenty P_1
+               + P_2 (czyli wersy rozłamane przez didaskalium lub antylabę) są wcześniej scalane, a ich liczby sylab
+               sumowane. Średnia długość = suma długości takich odcinków
+               / liczba odcinków.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Wskaźnik częstości zmiany liczby sylab</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba zmian liczby sylab między sąsiednimi rzeczywistymi wersami / liczba możliwych przejść
+               między wersami × 100. Fragmenty P_1 + P_2 są wcześniej scalane, a ich liczby sylab sumowane.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Entropia metryczna</div>
+            <div class="metric-card-secondary">
+               Entropia Shannona mierzy niepewność / zróżnicowanie rozkładu. Tutaj kategoriami są formaty wierszowe
+               według liczby sylab. Uwzględnia zarówno liczbę różnych formatów, jak i równomierność ich użycia: H = 0,
+               gdy wszystkie wersy mają ten sam format; dwa równie częste formaty dają H = 1 bit; cztery równie częste –
+               H = 2 bity. Logarytm ma podstawę 2, stąd jednostka „bit”. Fragmenty P_1 + P_2 są wcześniej scalane i
+               traktowane jako jeden wers.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Indeks rozłamania wersu (przez didaskalium lub antylabę)</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba rzeczywistych wersów zrekonstruowanych z fragmentów P_1 + P_2 / liczba wszystkich
+               rzeczywistych wersów po wyłączeniu didaskaliów × 100. Wers współdzielony jest liczony jeden raz,
+               niezależnie od liczby tworzących go fragmentów.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Średnia długość wypowiedzi jednej postaci</div>
+            <div class="metric-card-secondary">
+               Wypowiedź jednej postaci jest liczona jako ciąg kolejnych linijek przypisanych temu samemu bohaterowi.
+               Wskaźnik = liczba wszystkich linijek wypowiedzi po wyłączeniu didaskaliów / liczba bloków wypowiedzi.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Objętość stychomytii</div>
+            <div class="metric-card-secondary">
+               Objętość = liczba unikalnych rzeczywistych wersów należących do co najmniej jednej pary stychomytycznej /
+               liczba wszystkich rzeczywistych wersów dramatu × 100. Para stychomytyczna to dwie bezpośrednio
+               sąsiadujące tury różnych mówców, z których każda obejmuje dokładnie 1 pełny wers; tury z P_1/P_2 są
+               wyłączone. W ciągu A → B → A są 2 przypadki, ale objętość wynosi 3 wersy.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Objętość dystychomytii</div>
+            <div class="metric-card-secondary">
+               Objętość = liczba unikalnych rzeczywistych wersów należących do co najmniej jednej pary dystychomytycznej
+               / liczba wszystkich rzeczywistych wersów dramatu × 100. Para dystychomytyczna to dwie bezpośrednio
+               sąsiadujące tury różnych mówców, z których każda obejmuje dokładnie 2 pełne wersy; tury z P_1/P_2 są
+               wyłączone. Nakładające się pary nie powodują ponownego liczenia tych samych wersów.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Objętość hemistychomytii (antylaby)</div>
+            <div class="metric-card-secondary">
+               Objętość = liczba rzeczywistych wersów P_1 + P_2, w których między P_1 i P_2 zmienia się mówca, / liczba
+               wszystkich rzeczywistych wersów dramatu × 100. Didaskalia pomiędzy P_1 i P_2 nie wykluczają antylaby. P_1
+               i P_2 tego samego mówcy nie są liczone. Jeden wers P_1 + P_2 ma objętość jednego wersu i stanowi jeden
+               przypadek.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Łączna objętość hemi-, dy- i stychomytii</div>
+            <div class="metric-card-secondary">
+               Objętość łączna = liczba unikalnych rzeczywistych wersów należących do stychomytii, dystychomytii lub
+               hemistychomytii (antylaby) / liczba wszystkich rzeczywistych wersów dramatu × 100. Ten sam wers jest
+               liczony tylko raz, nawet gdy należy do dwóch nakładających się par. Liczba przypadków jest raportowana
+               osobno.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Średnia długość zdania – słowa</div>
+            <div class="metric-card-secondary">
+               Zdanie jest liczone od początku tekstu lub od poprzedniego znaku kończącego do kropki, wielokropka („...”
+               lub „…”), pytajnika albo wykrzyknika. Serie znaków końcowych, np. „?!”, są traktowane jako jedno
+               zakończenie. Pojedyncza kropka nie zamyka zdania w typowych skrótach, inicjałach ani liczbach
+               dziesiętnych; jeśli nie występuje na końcu dramatu, kolejny właściwy znak musi być wielką literą. Końcowy
+               fragment bez znaku zamykającego nie jest liczony. Didaskalia są wyłączone. Wynik to średnia liczba słów w
+               tak wykrytych zdaniach.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Średnia długość zdania – sylaby</div>
+            <div class="metric-card-secondary">
+               Zdania są wykrywane według tych samych zasad co przy średniej długości zdania w słowach: od początku
+               tekstu lub poprzedniego znaku kończącego do kropki, wielokropka, pytajnika albo wykrzyknika, z
+               pominięciem typowych skrótów, inicjałów i liczb dziesiętnych. Didaskalia są wyłączone. Wynik to średnia
+               liczba sylab w tak wykrytych zdaniach.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Odsetek zdań hipotaktycznych</div>
+            <div class="metric-card-secondary">
+               Za zdanie hipotaktyczne uznawane jest wykryte wcześniej zdanie zawierające sygnał podporządkowania
+               składniowego. Jednoznaczne spójniki podrzędne, m.in. „że”, „iż”, „żeby”, „aby”, „ponieważ”, „gdyż”,
+               „jeśli”, „jeżeli”, „gdyby”, „choć”, „skoro”, „zanim”, „dopóki”, „odkąd” i „gdy”, są wykrywane
+               bezpośrednio. Formy wieloznaczne, m.in. „czy”, „kiedy”, „gdzie”, „kto”, „co” oraz formy zaimka „który”,
+               są liczone tylko wtedy, gdy ich pozycja wskazuje na człon podrzędny. Didaskalia są wyłączone. Jest to
+               uproszczone rozwiązanie, a nie pełny parser składniowy.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Odsetek zdań z jawnym wykładnikiem relacji kauzalnej lub wynikowej</div>
+            <div class="metric-card-secondary">
+               Odsetek zdań zawierających językowe wykładniki relacji przyczynowo-skutkowej lub wynikowego wnioskowania.
+               Obliczony na podstawie jawnych wykładników leksykalnych. Jedno zdanie jest liczone najwyżej raz,
+               niezależnie od liczby wykładników. Uwzględniane są m.in. „bo”, „bowiem”, „albowiem”, „ponieważ”, „gdyż”,
+               „jako że”, „dlatego że”, „więc”, „zatem”, „toteż”, „przeto”, „dlatego”, „tedy”, „w rezultacie”, „w
+               konsekwencji”, „z tego powodu”, „w takim razie” i „tak że”. „Skoro” jest liczone z wyjątkiem konstrukcji
+               „skoro tylko”; „to” nie jest liczone samodzielnie; „stąd” jest liczone jako marker mimo możliwego
+               znaczenia przestrzennego. Ze względu na wieloznaczność niektórych wykładników wynik należy traktować jako
+               przybliżenie. Didaskalia są wyłączone.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Wskaźnik niezgodności granicy wersowej i syntagmatycznej</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba rzeczywistych wersów, które nie kończą się znakiem interpunkcyjnym zamykającym
+               strukturę składniową, czyli kropką, przecinkiem, wykrzyknikiem, średnikiem, wielokropkiem, dwukropkiem,
+               myślnikiem lub pauzą / liczba wszystkich rzeczywistych wersów po wyłączeniu didaskaliów × 100. Dla wersów
+               współdzielonych lub przełamanych didaskaliami (P_1 + P_2) badane jest zakończenie całego scalonego wersu,
+               czyli końcówka P_2. Wskaźnik nie jest równoznaczny z wykryciem przerzutni.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Gęstość wykrzyknień [na 100 wersów]</div>
+            <div class="metric-card-secondary">
+               Gęstość wykrzyknień = liczba znaków „!” podzielona przez liczbę rzeczywistych wersów po wyłączeniu
+               didaskaliów × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Gęstość pytań [na 100 wersów]</div>
+            <div class="metric-card-secondary">
+               Gęstość pytań = liczba znaków „?” podzielona przez liczbę rzeczywistych wersów po wyłączeniu didaskaliów
+               × 100. Fragmenty P_1 + P_2 są liczone jako jeden wers.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Wskaźnik referencji pierwszoosobowej (l. poj.)</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba wystąpień form: ja, mnie, mi, mną, mój, mojego, mojemu, moim, moja, mojej, moją, moje,
+               moi, moich, moimi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów × 1000.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Wskaźnik referencji pierwszoosobowej (l. mn.)</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba wystąpień form: my, nas, nam, nami, nasz, naszego, naszemu, naszym, nasza, naszej,
+               naszą, nasze, nasi, naszych, naszymi / liczba wszystkich słów w wypowiedziach po wyłączeniu didaskaliów ×
+               1000.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Indeks gęstości metakomentarza (didaskaliów)</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba wykrytych didaskaliów / liczba rzeczywistych wersów dramatu po wyłączeniu didaskaliów ×
+               100. Fragmenty P_1 + P_2 są liczone jako jeden wers.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Wskaźnik nasycenia didaskaliów instrukcjami wykonawczymi dotyczącymi
+               wypowiedzi „na stronie”</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba didaskaliów zawierających tekst „na stronie” / liczba wszystkich wykrytych didaskaliów
+               × 100.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Wskaźnik częstości apartu względem długości dramatu</div>
+            <div class="metric-card-secondary">
+               Wskaźnik = liczba wszystkich wypowiedzi „na stronie”, czyli didaskaliów zawierających tekst „na stronie”,
+               / liczba rzeczywistych wersów dramatu po wyłączeniu didaskaliów × 100. Fragmenty P_1 + P_2 są liczone
+               jako jeden wers.
+            </div>
+         </div>
+         <div class="metric-card">
+            <div class="metric-card-label">Liczba wystąpień apartu</div>
+            <div class="metric-card-secondary">
+               Liczba didaskaliów zawierających tekst „na stronie”. Na wykresach przebiegu wartość jest liczona osobno w
+               każdym 20-procentowym odcinku dramatu.
+            </div>
+         </div>
+
+      </div>
+   </main>
+</body>
+
+</html>
