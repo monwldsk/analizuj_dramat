@@ -116,6 +116,11 @@
          background: var(--color-muted);
       }
 
+      #resultTable tbody tr.stage-direction-row>td {
+         color: #6f2dbd;
+         background: #f3e8ff;
+      }
+
       .container {
          max-width: var(--max-width);
          margin: auto;
@@ -3939,7 +3944,7 @@
                         <th>Treść wersu</th>
                         <th>Lb. sylab</th>
                         <th>Bohater</th>
-                        <th>Wers współdziel.</th>
+                        <th>Wers rozłamany</th>
                      </tr>
                   </thead>
                   <tbody></tbody>
@@ -5235,6 +5240,9 @@
          visibleRows.forEach(
             ({ verseNumber, line, vowelsNumber, actor, sharedLine }) => {
                const row = document.createElement("tr");
+               if (actor === "DIDASKALIA") {
+                  row.classList.add("stage-direction-row");
+               }
                [verseNumber, line, vowelsNumber, actor, sharedLine].forEach(
                   (value) => {
                      const cell = document.createElement("td");
