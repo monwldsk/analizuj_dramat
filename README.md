@@ -86,7 +86,7 @@ Od tego miejsca kolejne wersy zostają przypisane wykrytej postaci aż do pojawi
 
 ### Didaskalia
 
-Linia zawierająca znak `/` traktowana jest jako didaskalium.
+Linia zawierająca znak `/` traktowana jest jako didaskalia.
 
 Przykład:
 
@@ -148,7 +148,7 @@ P_2
 
 i otrzymują ten sam numer wersu.
 
-Didaskalium umieszczone pomiędzy `P_1` i `P_2` nie przerywa potencjalnego wersu współdzielonego.
+Didaskalia umieszczone pomiędzy `P_1` i `P_2` nie przerywają potencjalnego wersu współdzielonego.
 
 Na potrzeby analizy metrycznej `P_1` i `P_2` są następnie scalane w jeden rzeczywisty wers, a liczby sylab obu fragmentów są sumowane.
 
@@ -996,7 +996,7 @@ TXT pozostaje podstawowym formatem wejściowym aplikacji, ponieważ zapewnia nis
 
 W konsekwencji główny parser musi rekonstruować strukturę dramatu na podstawie konwencji typograficznych, co nie daje 100% skuteczności.
 
-Równolegle projekt zawiera już **eksperymentalny parser TEI/XML (BETA)** wykorzystywany w sekcji porównawczej TXT ↔ TEI/XML. W takim formacie mówca, wypowiedź, wers, didaskalium oraz inne elementy mogą być zapisane strukturalnie zamiast odgadywane z formatowania.
+Równolegle projekt zawiera już **eksperymentalny parser TEI/XML (BETA)** wykorzystywany w sekcji porównawczej TXT ↔ TEI/XML. W takim formacie mówca, wypowiedź, wers, didaskalia oraz inne elementy mogą być zapisane strukturalnie zamiast odgadywane z formatowania.
 
 Obecny moduł TEI/XML służy przede wszystkim do kontroli różnic pomiędzy podejściem heurystycznym i strukturalnym. Pełne włączenie TEI/XML do głównego przepływu analizy pozostaje dalszym etapem rozwoju.
 
