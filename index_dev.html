@@ -26,6 +26,8 @@
          --radius-control: 6px;
          --max-width: 1200px;
          --border: #d9e8f8;
+         --violet: #f4ecff;
+         --violet-text: #8a4ed1;
       }
 
       * {
@@ -2926,6 +2928,18 @@
             transition: none;
          }
       }
+
+      .back-link {
+         display: inline-block;
+         margin-bottom: 26px;
+         font-weight: 700;
+         text-decoration: none;
+      }
+
+      .back-link:hover,
+      .back-link:focus-visible {
+         text-decoration: underline;
+      }
    </style>
 </head>
 
@@ -2946,11 +2960,14 @@
    </div>
 
    <main class="container">
+      <a class="back-link" href="https://monwldsk.github.io/cyfrowa-analiza-literatury/">← Kliknij, aby przejść do
+         listy wszystkich dostępnych
+         narzędzi</a>
       <div class="title-container-desktop">
-         <img src="assets/baner_main_op.png" alt="Baner główny - cyfrowa analiza dramatu" />
+         <img src="assets/baner_main_op_drama_version.png" alt="Baner główny - cyfrowa analiza dramatu" />
       </div>
       <div class="title-container-mobile">
-         <img src="assets/baner_mobile.png" alt="Baner - Cyfrowa analiza dramatu" />
+         <img src="assets/baner_mobile_drama_version.png" alt="Baner - Cyfrowa analiza dramatu" />
       </div>
       <section class="info-note">
          <div>
@@ -3197,7 +3214,9 @@
             <h2>O narzędziu</h2>
             <div>
                <p>
-                  Narzędzie ma charakter eksploracyjny i służy przede
+                  Narzędzie jest jednym z modułów projektu <a
+                     href="https://monwldsk.github.io/cyfrowa-analiza-literatury/" target="_blank">Cyfrowa analiza
+                     literatury ↗</a>. Ma charakter eksploracyjny i służy przede
                   wszystkim do wstępnego rozpoznania ilościowych właściwości
                   tekstu dramatycznego. Prezentowane wskaźniki nie powinny
                   być traktowane jako samodzielne miary złożonych zjawisk
